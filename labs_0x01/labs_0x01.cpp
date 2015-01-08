@@ -68,6 +68,10 @@ void chapter_02 () {
     cout << endl;
 }
 
+void chapted_03 () {
+
+}
+
 void Labs_0x01() {
     chapter_02();
 }
