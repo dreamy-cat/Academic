@@ -22,3 +22,11 @@ float function_4 (float f) {
     std::cout << "Function 4 with argument float = " << f << " has called. Return float+1." << endl;
     return (f+1);
 }
+
+void function_5(string *str) {
+    *str += "function_5";
+}
+
+void function_6(string &str) {
+    str += "function_6";
+}

@@ -121,7 +121,53 @@ void chapter_03 () {
             if (d == 2) break;
         }
     } else cout << "Error open file: ./labs_0x01/files/chapter-03.txt" << endl;
-    // Task 4.
+    // Task 4. Short.
+    cout << "Menu: 1,2,3."  << endl;
+    while (true) {
+        char c;
+        cin >> c;
+        switch (c) {
+        case '1':
+            cout << "First item.\n";
+            break;
+        case '2':
+            cout << "Second item.\n";
+            break;
+        case '3':
+            cout << "Third. Exit.\n";
+            break;
+        default:
+            cout << "Enter 1,2 of 3 for exit.\n";
+        }
+        if (c == '3') break;
+    }
+    // Task 5.
+    int a, x = 1, y = 2, z = 2;
+    a = x + y - 2/2 + z;
+    cout << "a = x + y - 2/2 + z = " << a << endl;
+    a = x + (y - 2)/(z + 2);
+    cout << "a = x + (y - 2)/(z + 2) = " << a << endl;
+    // Task 6.
+    char cat;
+    int dog;
+    float fish;
+    double bird;
+    cout << "Types and memory.\n";
+    cout << "Char 'cat'. Size =  " << sizeof(cat) << " bytes. Address: " << (long)&cat << endl;
+    cout << "Int 'dog'. Size = " << sizeof(dog) << " bytes. Address: " << (long)&dog << endl;
+    cout << "Float 'fish'. Size = " << sizeof(fish) << " bytes. Address: " << (long)&fish << endl;
+    cout << "Double 'bird'. Size = " << sizeof(bird) << " bytes. Address: " << (long)&bird << endl;
+    cout << "Function chapter_03 address: " << (long)&chapter_03 << endl;
+    // Task 7.
+    string str = "Calls: ";
+    string* str1 = &str;
+    string& str2 = str;
+    function_5(str1);
+    str += " ";
+    function_6(str2);
+    cout << str1 << endl << str2 << endl;
+    // Task 8.
+
 }
 
 void Labs_0x01() {
