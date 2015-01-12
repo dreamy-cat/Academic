@@ -75,15 +75,15 @@ void chapter_02 () {
 void chapter_03 () {
     cout << "Chapter's 3 tasks.\n";
     // Task 1.
-    function_1();
+    function_3_1();
     char c = 'a';
-    c =  function_2(c);
+    c =  function_3_2(c);
     cout << "Return value = '" << c << "'\n";
     int ix = 0;
-    ix = function_3(ix);
+    ix = function_3_3(ix);
     cout << "Return value = " << ix << "\n";
     float f = 2;
-    f = function_4(f);
+    f = function_3_4(f);
     cout << "Return value = " << f << "\n";
     // Task 2.
     cout << "Primary numbers: ";
@@ -162,12 +162,48 @@ void chapter_03 () {
     string str = "Calls: ";
     string* str1 = &str;
     string& str2 = str;
-    function_5(str1);
+    function_3_5(str1);
     str += " ";
-    function_6(str2);
+    function_3_6(str2);
     cout << str1 << endl << str2 << endl;
-    // Task 8.
-
+    // Task 8. Skip, because gcc doesn't support trigraph.
+    // Task 9.
+    for (int i = 0; i < 3; i++) function_3_7();
+    // Task 10. Undefined reference, if 'fs' loacate in other file.
+    extern int fs;
+    cout << "Static int = " << fs << endl;
+    // Tasks 11-13.
+    double p1, p2;
+    cout << "Double arguments 1 & 2:\n";
+    cin >> p1;
+    cin >> p2;
+    cout << "p1 > p2 is " << (p1 > p2) << endl;
+    cout << "p1 < p2 is " << (p1 < p2) << endl;
+    cout << "p1 >= p2 is " << (p1 >= p2) << endl;
+    cout << "p1 <= p2 is " << (p1 <= p2) << endl;
+    cout << "p1 == p2 is " << (p1 == p2) << endl;
+    cout << "p1 != p2 is " << (p1 != p2) << endl;
+    cout << "p1 && p2 is " << (p1 && p2) << endl;
+    cout << "p1 || p2 is " << (p1 || p2) << endl;
+    cout << "Binary p1 | p2 = " << ((int)p1 | (int)p2) << endl;
+    cout << "Binary p1 & p2 = " << ((int)p1 & (int)p2) << endl;
+    unsigned char b1 , b2;
+    int n1, n2;
+    cout << "Byte arguments 1 & 2:\n";
+    cin >> n1; cin >> n2;
+    b1 = n1; b2 = n2;
+    cout << "Binary arguments b1 & b2:" << toBinary(b1) << " " << toBinary(b2) << endl;
+    cout << "b1 | b2 = " << toBinary(b1 | b2) << endl;
+    cout << "b1 & b2 = " << toBinary(b1 & b2) << endl;
+    cout << "b1 ^ b2 = " << toBinary(b1 ^ b2) << endl;
+    cout << "~b1 = " << toBinary(~b1) << endl;
+    cout << "~b2 = " << toBinary(~b2) << endl;
+    unsigned char mask = 0x5a;
+    cout << "Binary mask 0x5a = " << toBinary(mask) << endl;
+    cout << "b1 | mask = " << toBinary(b1 | mask) << endl;
+    b2 &= mask;
+    cout << "b2 & mask = " << toBinary(b2) << endl;
+    cout << "b2 ^ b1 = " << toBinary(b2 ^ b1) << endl;
 }
 
 void Labs_0x01() {
