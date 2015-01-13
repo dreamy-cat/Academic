@@ -204,6 +204,56 @@ void chapter_03 () {
     b2 &= mask;
     cout << "b2 & mask = " << toBinary(b2) << endl;
     cout << "b2 ^ b1 = " << toBinary(b2 ^ b1) << endl;
+    for (int i = 0; i < 4; i++) {
+        rolByte(b1);
+        rorByte(b2);
+        cout << "Rotate left b1: " << toBinary(b1) << " , rotate right b2: " << toBinary(b2) << endl;
+    }
+    // Task 14.
+    (b2 > 0) ? cout << "b2 > 0, using operator '?'\n" : cout << "b2 <= 0, using operator '?'\n";
+    // Task 15.
+    struct_3_1 st1;
+    struct_3_1* st1Ptr;
+    st1.s1 = "String 1";
+    st1.s2 = "String 2";
+    st1.n = 3;
+    st1Ptr = &st1;
+    cout << "String 1 from struct_3_1 = " << st1Ptr->s1 << ", string 2 from struct_3_1 = " << st1Ptr->s2 << endl;
+    cout << "Int from struct_3_1 = " << st1Ptr->n << endl;
+    // Task 16.
+    for (int i = red; i <= blue; i++) cout << "Color number " << i << " ";
+    cout << endl;
+    // Task 17. Deleting element 'double' decrease size.
+    union_3_1 union1;
+    union1.i = 17;
+    cout << "Union_3_1 int = " << union1.i << ", char = " << union1.c << ", double = " << union1.d << endl;
+    // Task 18. May be worked, in old compilers. Offset = 3.
+    int m1[2] = {0, 1};
+    int m2[2] = {2, 3};
+    int* ptrInt = &m1[1];
+    ptrInt += 3;
+    cout << "Pointer out of range, int = " << *ptrInt << endl;
+    // Task 19.
+    int im[3];
+    char cm[3];
+    float fm[3];
+    long lm[3];
+    cout << "Addresses of arrays int, char, float, long: " << endl;
+    for (int i = 0; i < 3; i++)
+        cout << "int:" << (long)&im[i] << " char:" << (long)&cm[i] << " float:" << (long)&fm[i] << " long:" << (long)&lm[i] << endl;
+    // Task 20.
+    point_3_20 pts[3];
+    cout << "Size of array = " << sizeof(pts) << ", size of point_3_20 = " << sizeof(point_3_20) << endl;
+    cout << "Addresses of elements structure_3_20: " << (long)&pts[0].i << " : " << (long)&pts[0].j << " : " << (long)&pts[0].k << endl;
+    // Task 21.
+    string ms[3];
+    cout << "String array: ";
+    for (int i = 0; i < 3; i++) {
+        ms[i] = "string ";
+        ms[i].push_back('0'+i);
+        cout << ms[i] + " ";
+    }
+    cout << endl;
 }
 
 void Labs_0x01() {

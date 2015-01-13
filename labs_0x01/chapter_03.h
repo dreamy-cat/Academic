@@ -28,5 +28,32 @@ static int fs;
 // Task 12.
 
 string toBinary(unsigned char n);
+void rolByte(unsigned char& n);
+void rorByte(unsigned char& n);
+
+// Task 15.
+
+typedef struct struct_3_1 {
+    string s1,s2;
+    int n;
+} struct_3_1;
+
+//Task 16.
+
+enum colors {red, green, blue};
+
+// Task 17.
+
+union union_3_1 {
+    int i;
+    char c;
+    double d;
+};
+
+// Task 20.
+
+typedef struct {
+    int i, j, k;
+} point_3_20;
 
 #endif
