@@ -53,3 +53,35 @@ void rolByte (unsigned char& n) {
 void rorByte (unsigned char& n) {
     if (n & 0x01) n = (n >> 1) + 0x80; else n = n >> 1;
 }
+
+void setInt(void* ptr, int n, int value) {
+    int* elem = static_cast<int*>(ptr);
+    for (int i = 0; i < n; i++) *elem++ = value;
+}
+
+void outDoubleArray(double* ptr, int size) {
+    cout << "Double array: ";
+    for (int i = 0; i < size; i++) cout << *ptr++ << " ";
+    cout << endl;
+}
+
+void outDoubleBinary(double d) {
+    unsigned char* ptr = (unsigned char*)&d;
+    string bits;
+    unsigned char mask;
+    cout << "Double parts of " << d << ":\n";
+    for (int i = 0; i < 6; i++) {
+        bits += toBinary(*ptr++) + " ";
+    }
+    bits += toBinary(*ptr & 0x0F);
+    cout << "Fraction = " << bits << endl;
+    bits.clear();
+    mask = 0xF0;
+    bits += toBinary(((*ptr & mask) >> 4) | ((*(ptr+1) & 0x0F) << 4) ) + " ";
+    bits += toBinary(*(++ptr) & 0x07);
+    cout << "Exponent: " << bits << endl;
+    mask = 0x80;
+    bits.clear();
+    bits += toBinary( (*ptr & mask) >> 7 );
+    cout << "Sign: " << bits << endl;
+}

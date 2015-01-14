@@ -2,6 +2,7 @@
 #define CHAPTER_03_H
 
 #include <string>
+#include <cstdlib>
 
 using namespace std;
 
@@ -55,5 +56,25 @@ union union_3_1 {
 typedef struct {
     int i, j, k;
 } point_3_20;
+
+// Task 23.
+
+typedef union {
+    int i;
+    char c;
+    float f;
+} primitiv_3_23;
+
+// Task 26.
+
+void setInt(void* ptr, int n, int value);
+
+// Task 28.
+
+void outDoubleArray(double* ptr, int size);
+
+// Task 29.
+
+void outDoubleBinary(double d);
 
 #endif

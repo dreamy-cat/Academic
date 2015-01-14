@@ -254,6 +254,60 @@ void chapter_03 () {
         cout << ms[i] + " ";
     }
     cout << endl;
+    // Task 22.
+    const char param1[] = "1024";
+    const char param2[] = "3.3";
+    cout << "Long argument from string = " << atol(param1) << ", float argument from string =  " << atof(param2) << endl;
+    // Task 23.
+    primitiv_3_23 union2[3];
+    primitiv_3_23* prim_3_23 = union2;
+    cout << "Size of union 'prim' = " << sizeof(union2) << ", address = " << (long)union2 << ", pointer = " << (long)prim_3_23 << endl;
+    prim_3_23++;
+    cout << "Next pointer = " << (long)prim_3_23 << endl;
+    // Task 24.
+    long lArray[10];
+    for (int i = 0; i < 10; i++) lArray[i] = i;
+    long* lPtr = lArray;
+    cout << "*lPtr = " << *lPtr << ", *++lPtr = " << *++lPtr << ", *(lPtr+5) = " << *(lPtr+5) << endl;
+    long* lPtr2 = lPtr + 5;
+    cout << "*lPtr2 = " << *lPtr2 << ", *(lPtr2-4) = " << *(lPtr2-4) << ", *--lPtr2 = " << *--lPtr2 << endl;
+    cout << "lPtr2 - lPtr = " << lPtr2-lPtr << endl;
+    // Task 25.
+    float f2 = 1;
+    unsigned char* f2Ptr = (unsigned char*)&f2;
+    cout << "Float " << f2 << " in memory:\n";
+    for (int i = 0; i < sizeof(float); i++) {
+        string offS = "Offset ";
+        offS.push_back('0'+i);
+        cout << offS << ": " << toBinary(*f2Ptr++) << endl;
+    }
+    // Task 26.
+    int iArr[5];
+    void* arrPtr = static_cast<void*>(&iArr);
+    setInt(arrPtr,5,3);
+    cout << "Set all elements in array int[5] = ";
+    for (int i = 0; i < 5; i++) cout << iArr[i] << " ";
+    cout << endl;
+    // Task 27.
+    const double mcd[3] = {1, 2, 3};
+    volatile double mvd[3];
+    cout << "Const and volatile arrays of doulbe: ";
+    for (int i = 0; i < 3; i++) {
+        *(const_cast<double*>(&mcd[i])) = i;
+        *(const_cast<double*>(&mvd[i])) = i + 1;
+        cout << mcd[i] << "," << mvd[i] << " ";
+    }
+    cout << endl;
+    // Task 28. Extra task.
+    double dm[3];
+    for (int i = 0; i < 3; i++) dm[i] = 0;
+    outDoubleArray(dm,3);
+    unsigned char* dArrayPtr = reinterpret_cast<unsigned char*>(dm);
+    for (int i = 0; i < sizeof(dm); i++) *dArrayPtr++ = 1;
+    outDoubleArray(dm,3);
+    // Task 29.
+    double td = -1;
+    outDoubleBinary(td);
 }
 
 void Labs_0x01() {
