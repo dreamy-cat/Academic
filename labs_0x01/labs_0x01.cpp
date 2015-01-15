@@ -308,6 +308,13 @@ void chapter_03 () {
     // Task 29.
     double td = -1;
     outDoubleBinary(td);
+    // Task 30. Think about it later.
+    // Task 31.
+#ifdef DEBUG
+    cout << "Testing define flag." << endl;
+#endif
+    // Task 32.
+
 }
 
 void Labs_0x01() {

@@ -77,4 +77,10 @@ void outDoubleArray(double* ptr, int size);
 
 void outDoubleBinary(double d);
 
+// Task 31.
+
+#define DEBUG
+
+// Task 32.
+
 #endif
