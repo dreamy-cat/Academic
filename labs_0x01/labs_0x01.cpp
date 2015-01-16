@@ -308,13 +308,21 @@ void chapter_03 () {
     // Task 29.
     double td = -1;
     outDoubleBinary(td);
-    // Task 30. Think about it later.
+    // Task 30 & 35. Think about it later.
     // Task 31.
 #ifdef DEBUG
     cout << "Testing define flag." << endl;
 #endif
     // Task 32.
-
+    int (*fPtr)(double d) = function_3_8;
+    (*fPtr)(1.0);
+    // Task 33. Bonus.
+    float (*(*fPtr2)(int))(char) = function_3_9;
+    float (*fPtr3)(char) = (*fPtr2)(1);
+    (*fPtr3)('S');
+    // Task 34.
+    string (*funcTable[])() = {function_3_11, function_3_12, function_3_13};
+    for (int i = 0; i < 3; i++) cout << ((*funcTable[i])()) << endl;
 }
 
 void Labs_0x01() {

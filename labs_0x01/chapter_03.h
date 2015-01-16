@@ -83,4 +83,17 @@ void outDoubleBinary(double d);
 
 // Task 32.
 
+int function_3_8(double d);
+
+// Task 33.
+
+float (*function_3_9(int n))(char d);
+float function_3_10(char c);
+
+// Task 34.
+
+string function_3_11();
+string function_3_12();
+string function_3_13();
+
 #endif

@@ -85,3 +85,31 @@ void outDoubleBinary(double d) {
     bits += toBinary( (*ptr & mask) >> 7 );
     cout << "Sign: " << bits << endl;
 }
+
+int function_3_8(double d) {
+    cout << "Function 3_8 has called.\n";
+    return 1;
+}
+
+float function_3_10(char c) {
+    cout << "Function 3_10 has called. Char = " << c << endl;
+    return (3.1);
+}
+
+float (*function_3_9(int n))(char d) {
+    cout << "Function 3_9 has called.\n";
+    float (*fPtr)(char) = function_3_10;
+    return fPtr;
+}
+
+string function_3_11() {
+    return "Function 3_11 has called.";
+}
+
+string function_3_12() {
+    return "Function 3_12 has called.";
+}
+
+string function_3_13() {
+    return "Function 3_13 has called.";
+}
