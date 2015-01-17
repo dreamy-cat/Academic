@@ -2,9 +2,11 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <assert.h>
 
 #include "labs_0x01.h"
 #include "chapter_03.h"
+#include "chapter_04.h"
 
 using namespace std;
 
@@ -325,8 +327,20 @@ void chapter_03 () {
     for (int i = 0; i < 3; i++) cout << ((*funcTable[i])()) << endl;
 }
 
+void chapter_04() {
+    cout << "Chapter's 4 tasks.\n";
+    // Task 1. Not possible to use C flag. Try it later in separate project.
+    // Task 2-6.
+    structure_4_1 struc1;
+    struc1.function_1(&struc1,1);
+    struc1.function_2(&struc1);
+    class_4_1 class1;
+
+}
+
 void Labs_0x01() {
     // chapter_02();
-    chapter_03();
+    // chapter_03();
+    chapter_04();
 }
 
