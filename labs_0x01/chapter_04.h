@@ -17,4 +17,18 @@ public:
     class_4_1();
 };
 
+struct Stash {
+    int size;
+    int quantity;
+    int next;
+    static const int increment = 4;
+    unsigned char* storage;
+    void initialize(int sz);
+    void cleanup();
+    int add(const void* element);
+    void* fetch(int index);
+    int count();
+    void inflate(int increase);
+};
+
 #endif

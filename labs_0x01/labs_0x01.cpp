@@ -335,6 +335,17 @@ void chapter_04() {
     struc1.function_1(&struc1,1);
     struc1.function_2(&struc1);
     class_4_1 class1;
+    // Task 7.
+    Stash stashDouble;
+    stashDouble.initialize(sizeof(double));
+    for (int i = 0; i < 8; i++) {
+        double d = i;
+        stashDouble.add((void*)&d);
+    }
+    cout << "Fetch elements from storage: ";
+    for (int i = 0; i < 8; i++) cout << *(double*)stashDouble.fetch(i) << " ";
+    cout << endl;
+    stashDouble.cleanup();
 
 }
 
