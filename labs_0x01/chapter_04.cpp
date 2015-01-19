@@ -67,17 +67,16 @@ void Stack::initialize() {
     head = 0;
 }
 
-void Stack::push(void *data) {
+void Stack::push(double *data) {
     Link* newLink = new Link;
     newLink->value = data;
-    head->next = head;
-    size++;
+    newLink->next = head;
     head = newLink;
 }
 
-void* Stack::pop() {
+double* Stack::pop() {
     if (head == 0) return 0;
-    void* rVal = head->value;
+    double* rVal = head->value;
     Link* oldHead = head;
     head = head->next;
     delete oldHead;

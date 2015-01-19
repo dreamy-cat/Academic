@@ -346,6 +346,12 @@ void chapter_04() {
     for (int i = 0; i < 8; i++) cout << *(double*)stashDouble.fetch(i) << " ";
     cout << endl;
     stashDouble.cleanup();
+    // Task 8.
+    double d8 = 1.0;
+    Stack stackDouble;
+    stackDouble.initialize();
+    stackDouble.push(&d8);
+    cout << "Pop double value from stack = " << *stackDouble.pop() << endl;
 
 }
 

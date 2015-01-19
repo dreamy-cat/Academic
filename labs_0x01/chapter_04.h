@@ -31,14 +31,14 @@ struct Stash {
 
 struct Stack {
     struct Link {
-        void* value;
+        double* value;
         Link* next;
     };
     Link* head;
     int size, valSize;
     void initialize();
-    void push(void* data);
-    void* pop();
+    void push(double* data);
+    double *pop();
 };
 
 #endif
