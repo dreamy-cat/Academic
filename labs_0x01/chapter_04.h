@@ -3,8 +3,6 @@
 
 #include <string>
 
-using namespace std;
-
 struct structure_4_1 {
     int n;
     void function_1(structure_4_1* strucPtr, int m);
@@ -12,7 +10,7 @@ struct structure_4_1 {
 };
 
 class class_4_1 {
-    string s;
+    std::string s;
 public:
     class_4_1();
 };
@@ -29,6 +27,18 @@ struct Stash {
     void* fetch(int index);
     int count();
     void inflate(int increase);
+};
+
+struct Stack {
+    struct Link {
+        void* value;
+        Link* next;
+    };
+    Link* head;
+    int size, valSize;
+    void initialize();
+    void push(void* data);
+    void* pop();
 };
 
 #endif

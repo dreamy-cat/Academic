@@ -60,3 +60,26 @@ void Stash::cleanup() {
         delete []storage;
     }
 }
+
+// Task 8.
+
+void Stack::initialize() {
+    head = 0;
+}
+
+void Stack::push(void *data) {
+    Link* newLink = new Link;
+    newLink->value = data;
+    head->next = head;
+    size++;
+    head = newLink;
+}
+
+void* Stack::pop() {
+    if (head == 0) return 0;
+    void* rVal = head->value;
+    Link* oldHead = head;
+    head = head->next;
+    delete oldHead;
+    return rVal;
+}

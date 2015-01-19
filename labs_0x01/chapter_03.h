@@ -4,8 +4,6 @@
 #include <string>
 #include <cstdlib>
 
-using namespace std;
-
 // Task 1.
 
 void function_3_1 (void* ptr = 0);
@@ -15,8 +13,8 @@ float function_3_4 (float f);
 
 // Task 7.
 
-void function_3_5(string* str);
-void function_3_6(string& str);
+void function_3_5(std::string* str);
+void function_3_6(std::string& str);
 
 // Task 9.
 
@@ -28,14 +26,14 @@ static int fs;
 
 // Task 12.
 
-string toBinary(unsigned char n);
+std::string toBinary(unsigned char n);
 void rolByte(unsigned char& n);
 void rorByte(unsigned char& n);
 
 // Task 15.
 
 typedef struct struct_3_1 {
-    string s1,s2;
+    std::string s1,s2;
     int n;
 } struct_3_1;
 
@@ -92,8 +90,8 @@ float function_3_10(char c);
 
 // Task 34.
 
-string function_3_11();
-string function_3_12();
-string function_3_13();
+std::string function_3_11();
+std::string function_3_12();
+std::string function_3_13();
 
 #endif
