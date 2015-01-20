@@ -82,3 +82,54 @@ double* Stack::pop() {
     delete oldHead;
     return rVal;
 }
+
+// Task 13.
+
+Class_4_13::Class_4_13(string newTitle) {
+    title = newTitle;
+    period = 0;
+}
+
+Class_4_13::~Class_4_13() {
+
+}
+
+void Class_4_13::give(string cust) {
+    if (period != 0) return;
+    period = 7;
+    customer = cust;
+}
+
+void Class_4_13::get(string cust) {
+    if (period == 0) return;
+    customer.clear();
+    period = 0;
+}
+
+void Class_4_13::print() {
+    cout << "Title = " << title;
+}
+
+// Task 14.
+
+Stack2::Stack2(int maxSize) : maxSz(maxSize) {
+    mem = new Class_4_13*[maxSz];
+    stackPointer = 0;
+}
+
+Stack2::~Stack2() {
+    if (stackPointer > 0) {
+
+    }
+}
+
+void Stack2::push(Class_4_13 &clPtr) {
+    if (stackPointer >= maxSz) return;
+    mem[stackPointer] = new Class_4_13(clPtr.title);
+    *mem[stackPointer++] = clPtr;
+}
+
+Class_4_13 Stack2::pop() {
+    if (stackPointer > 0)
+        return *mem[--stackPointer];
+}

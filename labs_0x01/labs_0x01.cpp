@@ -352,6 +352,27 @@ void chapter_04() {
     stackDouble.initialize();
     stackDouble.push(&d8);
     cout << "Pop double value from stack = " << *stackDouble.pop() << endl;
+    // Task 9-10. Depends on compilers.
+    // Task 11-12.
+#ifdef TASK_11
+    cout << "Define TASK_11." << endl;
+#else
+    cout << "Not define TASK_11." << endl;
+    assert(0);
+#endif
+    // Task 13-14.
+    Class_4_13 cl1("Test 1"), cl2("Test 2");
+    cout << "Class_4_13 objects 1 & 2 = ";
+    cl1.print();
+    cout << " ";
+    cl2.print();
+    cout << endl;
+    Stack2 stackClass_4_13(5);
+    stackClass_4_13.push(cl1);
+    cl2 = stackClass_4_13.pop();
+    cout << "Stack test object 2 = object 1: ";
+    cl2.print();
+    cout << endl;
 
 }
 
@@ -360,4 +381,3 @@ void Labs_0x01() {
     // chapter_03();
     chapter_04();
 }
-
