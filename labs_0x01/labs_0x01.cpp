@@ -373,6 +373,66 @@ void chapter_04() {
     cout << "Stack test object 2 = object 1: ";
     cl2.print();
     cout << endl;
+    // Task 15.
+    cout << "Size of char = " << sizeof(char) << endl;
+    cout << "Size of int = " << sizeof(int) << endl;
+    cout << "Size of long = " << sizeof(long) << endl;
+    cout << "Size of void* = " << sizeof(void*) << endl;
+    cout << "Size of float = " << sizeof(float) << endl;
+    cout << "Size of double = " << sizeof(double) << endl;
+    // Task 16. Ready, old version remains commented.
+    // Task 17.
+    int *intPtr = new int (128);
+    long *longPtr = new long (128);
+    char *charPtr = new char (128);
+    float *floatPtr = new float (128);
+    cout << "Addresses of pointers to int, long, char, float : ";
+    cout << (long)intPtr << " " << (long)longPtr << " " << (long)charPtr << " " << (long)floatPtr << endl;
+    // Task 18.
+    const char str1[] = "Task 18 test string";
+    char* str2 = function_4_1(str1);
+    cout << "Original string = " <<  str1 << ", address: " << (long)str1 << endl;
+    cout << "Copy string = " << str2 << ", address: " << (long)str2 << endl;
+    delete []str2;
+    structure_4_2 struc2;
+    struc2.n1 = 0;
+    struc2.substructure.n2 = 1;
+    struc2.printN();
+    struc2.substructure.printN();
+    // Task 20. Size > 0, becuase of addresses.
+    cout << "Size of structure_4_3 = " << sizeof(structure_4_3) << endl;
+    cout << "Size of structure_4_4 = " << sizeof(structure_4_4) << endl;
+    cout << "Size of structure_4_5 = " << sizeof(structure_4_5) << endl;
+    // Task 21. Compiles ok.
+    enum_1 en1;
+    union_4_1 un1;
+    // Task 22-23.
+    Stack3 stack_3;
+    structure_4_6 struc;
+    stack_3.init(8);
+    struc.wrapinit(8);
+    int actualRead = 0;
+    fstream textFile;
+    string textLine;
+    textFile.open("labs_0x01/files/chapter-04.txt");
+    if (textFile.is_open()) {
+        cout << "File labs_0x01/files/chapter-04.txt:\n";
+        while (getline(textFile, textLine, '\n')) {
+            cout << "Line : " << textLine << endl;
+            Stash3 line;
+            line.text = textLine;
+            //stack_3.push(line);
+            struc.wrapPush(line);
+            actualRead++;
+        }
+        cout << "Actual lines read " << actualRead << endl;
+        cout << "Lines from stack : " << endl;
+        for (int i = 0; i < actualRead; i++) {
+            //Stash3 line = stack_3.pop();
+            Stash3 line = struc.wrapPop();
+            cout << line.text << endl;
+        }
+    } else cout << "Error open file /labs_0x01/files/chapte r-04.txt" << endl;
 
 }
 

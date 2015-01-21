@@ -25,7 +25,7 @@ class_4_1::class_4_1() {
 void Stash::initialize(int sz) {
     size = sz;
     quantity = 0;
-    storage = 0;
+    storage.clear();
     next = 0;
 }
 
@@ -38,10 +38,13 @@ int Stash::add(const void *element) {
 }
 
 void Stash::inflate(int increase) {
-    unsigned char* newStorage = new unsigned char[(quantity+increase)*size];
+    //unsigned char* newStorage = new unsigned char[(quantity+increase)*size];
+    storage.resize(quantity+increase*size);
+/*
     for (int i = 0; i < quantity*size; i++) newStorage[i] = storage[i];
     delete []storage;
     storage = newStorage;
+    */
     quantity += increase;
 }
 
@@ -51,13 +54,16 @@ int Stash::count() {
 
 void* Stash::fetch(int index) {
     if (index >= next) return 0;
-    return (storage + index*size);
+    //return (storage + index*size);
+    return (void*)&storage[index*size];
 }
 
 void Stash::cleanup() {
-    if (storage != 0) {
+//    if (storage != 0) {
+    if (!storage.empty()) {
         cout << "Freeing memory.\n";
-        delete []storage;
+//        delete []storage;
+        storage.clear();
     }
 }
 
@@ -133,3 +139,58 @@ Class_4_13 Stack2::pop() {
     if (stackPointer > 0)
         return *mem[--stackPointer];
 }
+
+// Task 18.
+
+char* function_4_1 (const char *original) {
+    int size = 0;
+    while (*(original+size++) != '\0');
+    char* copy = new char(size);
+    for (int i = 0; i <= size; i++) copy[i] = original[i];
+    return copy;
+}
+
+// Task 19.
+
+void structure_4_2::printN() {
+    cout << "Structure_4_2 N = " << n1 << endl;
+}
+
+void structure_4_2::structure_4_2_1::printN() {
+    cout << "Structure_4_2_1 N = " << n2 << endl;
+}
+
+//Task 22.
+
+void Stack3::init(int size) {
+    maxSz = size;
+    stackPointer = 0;
+    mem = new Stash3*[maxSz];
+}
+
+void Stack3::push(Stash3 element) {
+    if (stackPointer >= maxSz) return;
+    Stash3* newStash = new Stash3;
+    *newStash = element;
+    mem[stackPointer++] = newStash;
+}
+
+Stash3 Stack3::pop() {
+    if (stackPointer == 0) return Stash3();
+    Stash3 val = *mem[--stackPointer];
+    delete mem[stackPointer];
+    return val;
+}
+
+void structure_4_6::wrapinit(int size) {
+    stack.init(size);
+}
+
+void structure_4_6::wrapPush(Stash3 &element) {
+    stack.push(element);
+}
+
+Stash3 structure_4_6::wrapPop() {
+    return (stack.pop());
+}
+

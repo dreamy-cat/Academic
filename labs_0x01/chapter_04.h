@@ -2,6 +2,7 @@
 #define CHAPTER_04_H
 
 #include <string>
+#include <vector>
 
 #define TASK_11
 
@@ -22,7 +23,8 @@ struct Stash {
     int quantity;
     int next;
     static const int increment = 4;
-    unsigned char* storage;
+//    unsigned char* storage;
+    std::vector<unsigned char> storage;
     void initialize(int sz);
     void cleanup();
     int add(const void* element);
@@ -64,6 +66,66 @@ public:
     void push(Class_4_13& clPtr);
     Class_4_13 pop();
     ~Stack2();
+};
+
+char* function_4_1(const char* original);
+
+// Task 19.
+
+struct structure_4_2 {
+    int n1;
+    void printN();
+    struct structure_4_2_1 {
+        int n2;
+        void printN();
+    } substructure;
+};
+
+// Task 20.
+
+struct structure_4_3 {
+    int a;
+    char c;
+};
+
+struct structure_4_4 {
+    void alpha();
+    void beta();
+};
+
+struct structure_4_5 {
+
+};
+
+// Task 21.
+
+enum enum_1 {alpha, beta, gamma};
+union union_4_1 {
+    int a;
+    char c;
+};
+
+// Task 22.
+
+struct Stash3 {
+    std::string text;
+};
+
+struct Stack3 {
+    Stash3** mem;
+    int maxSz, stackPointer;
+    void init(int size);
+    void push(Stash3 element);
+    Stash3 pop();
+};
+
+// Task 23.
+
+struct structure_4_6 {
+    Stack3 stack;
+    void wrapinit(int size);
+    void wrapPush(Stash3& element);
+    Stash3 wrapPop();
 };
 
 #endif
