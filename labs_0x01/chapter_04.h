@@ -128,4 +128,13 @@ struct structure_4_6 {
     Stash3 wrapPop();
 };
 
+// Task 24.
+
+struct List {
+    int n;
+    List* next;
+    void createList(List* start, int size);
+    void printList(List* start);
+};
+
 #endif

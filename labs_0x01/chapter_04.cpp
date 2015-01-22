@@ -194,3 +194,22 @@ Stash3 structure_4_6::wrapPop() {
     return (stack.pop());
 }
 
+// Task 24.
+
+void List::createList(List *start, int size) {
+    for (int i = 0; i < size; i++) {
+        start->n = i;
+        if (i < size - 1) {
+            start->next = new List;
+            start = start->next;
+        }
+    }
+    start->next = NULL;
+}
+
+void List::printList(List* start) {
+    while (start != NULL) {
+        cout << start->n << " ";
+        start = start->next;
+    }
+}

@@ -433,7 +433,12 @@ void chapter_04() {
             cout << line.text << endl;
         }
     } else cout << "Error open file /labs_0x01/files/chapte r-04.txt" << endl;
-
+    // Task 24-25.
+    List list1;
+    list1.createList(&list1,4);
+    cout << "List size 4 elements: ";
+    list1.printList(&list1);
+    cout << endl;
 }
 
 void Labs_0x01() {
