@@ -7,6 +7,7 @@
 #include "labs_0x01.h"
 #include "chapter_03.h"
 #include "chapter_04.h"
+#include "chapter_05.h"
 
 using namespace std;
 
@@ -441,8 +442,49 @@ void chapter_04() {
     cout << endl;
 }
 
+void chapter_05 () {
+    cout << "Chapter's 5 tasks.\n";
+    // Task 1. Only public members compiles.
+    Class_5_1 class1;
+    class1.a = 0;
+    class1.f1();
+    /*
+    class1.b = 0;
+    class1.f2();
+    class1.c = 0;
+    class1.f3();
+    */
+    // Task 2.
+    Structure_5_1 x;
+    x.a = "Structure_5_1.a";
+    x.b = "Structure_5_1.b";
+    x.c = "Structure_5_1.c";
+    x.s[0] = x.a;
+    x.s[1] = x.b;
+    x.s[2] = x.c;
+    Class_5_1_2 class2;
+    class2.setString("String 1",0);
+    class2.setString("String 2",1);
+    class2.setString("String 3",2);
+    cout << "Strings from Class_5_1_2: ";
+    for (int i = 0; i < 3; i++) cout << class2.getString(i) << " ";
+    cout << endl;
+    // Task 3.
+    Class_5_3 class3;
+    function_5_3(&class3);
+    // Task 4.
+    Class_5_4_1 class41;
+    Class_5_4_2 class42;
+    class41.f(&class42);
+    class42.f(&class41);
+    // Task 5.
+    Class_5_5_1 class51;
+    Class_5_5_2 class52;
+    Class_5_5_3 class53;
+    class52.printA(&class51);
+    class53.f(&class51);
+}
+
 void Labs_0x01() {
-    // chapter_02();
-    // chapter_03();
-    chapter_04();
+    chapter_05();
 }
