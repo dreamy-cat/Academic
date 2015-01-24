@@ -34,3 +34,20 @@ void Class_5_5_2::printA(Class_5_5_1* ptr) {
 void Class_5_5_3::f(Class_5_5_1* ptr) {
     cout << "Class_5_5_3 print 'a' from Class_5_5_1: " << ptr->a << endl;
 }
+
+void Class_5_6_1::display() {
+    cout << "Display function of Class_5_6_1. Char from Class_5_6_2 = " << this->cl.a << endl;
+}
+
+void Class_5_6_1::Class_5_6_2::display() {
+    cout << "Display function of Class_5_6_1::Class_5_6_2. Char from Class_5_6_3 = " << this->cl.b << endl;
+}
+
+void Class_5_6_1::Class_5_6_2::Class_5_6_3::display() {
+    cout << "Display function of Class_5_6_1::Class_5_6_2::Class_5_6_3." << endl;
+}
+
+void Class_5_8::showMap() {
+    cout << "Address of this [Class_5_8] and members: ";
+    cout << (long)this << " " << (long)&this->a << " " << (long)&this->b << " " << (long)&this->c << endl;
+}

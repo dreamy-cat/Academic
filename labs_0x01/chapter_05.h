@@ -65,5 +65,37 @@ public:
     void printA(Class_5_5_1 *ptr);
 };
 
+class Class_5_6_1;
+class Class_5_6_2;
+class Class_5_6_3;
+
+class Class_5_6_1 {
+public:
+    void display();
+    class Class_5_6_2 {
+        friend class Class_5_6_1;
+    public:
+        void display();
+        class Class_5_6_3 {
+            friend class Class_5_6_2;
+        public:
+            void display();
+        private:
+            static const char b = 'b';
+        } cl;
+    private:
+        static const char a = 'a';
+    } cl;
+};
+
+class Class_5_8 {
+public:
+    void showMap();
+    int a;
+protected:
+    int b;
+private:
+    int c;
+};
 
 #endif

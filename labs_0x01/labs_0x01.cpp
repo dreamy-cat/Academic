@@ -483,6 +483,17 @@ void chapter_05 () {
     Class_5_5_3 class53;
     class52.printA(&class51);
     class53.f(&class51);
+    // Task 6-7.
+    Class_5_6_1 class61;
+    Class_5_6_1::Class_5_6_2 class62;
+    Class_5_6_1::Class_5_6_2::Class_5_6_3 class63;
+    class61.display();
+    class62.display();
+    class63.display();
+    // Task 8.
+    Class_5_8 class5;
+    class5.showMap();
+    // Task 9. See chapter 4.
 }
 
 void Labs_0x01() {
