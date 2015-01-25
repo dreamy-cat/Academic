@@ -39,6 +39,10 @@ void Class_5_6_1::display() {
     cout << "Display function of Class_5_6_1. Char from Class_5_6_2 = " << this->cl.a << endl;
 }
 
+void Class_5_6_1::print() {
+    cout << "Class_5_6_1 char = " << c << endl;
+}
+
 void Class_5_6_1::Class_5_6_2::display() {
     cout << "Display function of Class_5_6_1::Class_5_6_2. Char from Class_5_6_3 = " << this->cl.b << endl;
 }
@@ -50,4 +54,20 @@ void Class_5_6_1::Class_5_6_2::Class_5_6_3::display() {
 void Class_5_8::showMap() {
     cout << "Address of this [Class_5_8] and members: ";
     cout << (long)this << " " << (long)&this->a << " " << (long)&this->b << " " << (long)&this->c << endl;
+}
+
+Stack_5::Stack_5(int maxSz) {
+    maxSize = maxSz;
+    storage = new void*[maxSz];
+    sp = 0;
+}
+
+void Stack_5::push(void* value) {
+    if (sp == maxSize) return;
+    storage[sp++] = value;
+}
+
+void* Stack_5::pop() {
+    if (sp == 0) return NULL;
+    return storage[--sp];
 }

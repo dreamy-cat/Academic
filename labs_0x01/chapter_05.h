@@ -72,6 +72,7 @@ class Class_5_6_3;
 class Class_5_6_1 {
 public:
     void display();
+    void print();
     class Class_5_6_2 {
         friend class Class_5_6_1;
     public:
@@ -86,6 +87,7 @@ public:
     private:
         static const char a = 'a';
     } cl;
+    char c;
 };
 
 class Class_5_8 {
@@ -96,6 +98,16 @@ protected:
     int b;
 private:
     int c;
+};
+
+class Stack_5 {
+public:
+    Stack_5 (int maxSz);
+    void push(void *value);
+    void *pop();
+private:
+    void** storage;
+    int sp, maxSize;
 };
 
 #endif

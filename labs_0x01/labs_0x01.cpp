@@ -494,6 +494,35 @@ void chapter_05 () {
     Class_5_8 class5;
     class5.showMap();
     // Task 9. See chapter 4.
+    // Task 10.
+    cout << "Store 4 objects of Class_5_6_1 in Stash.\n";
+    Stash stash;
+    stash.initialize(sizeof(Class_5_6_1));
+    for (int i = 0; i < 4; i++) {
+        Class_5_6_1* clPtr = new Class_5_6_1;
+        clPtr->c = '0'+i;
+        stash.add(clPtr);
+    }
+    cout << "Fetch 4 objects of Class_5_6_1 from Stash.\n";
+    for (int i = 0; i < 4; i++) {
+        Class_5_6_1* clPtr = (Class_5_6_1*)stash.fetch(i);
+        clPtr->print();
+    }
+    // Task 11. See chapter 4.
+    // Task 12.
+    cout << "Push 4 objects of Class_5_6_1 in Stack_5.\n";
+    Stack_5 stack(5);
+    for (int i = 0; i < 4; i++) {
+        Class_5_6_1* clPtr = new Class_5_6_1;
+        clPtr->c = '0'+i;
+        stack.push((void*)clPtr);
+    }
+    cout << "Pop 4 objects of Class_5_6_1 from Stack_5.\n";
+    for (int i = 0; i < 4; i++) {
+        Class_5_6_1* clPtr = (Class_5_6_1*)stack.pop();
+        clPtr->print();
+    }
+
 }
 
 void Labs_0x01() {
