@@ -522,7 +522,18 @@ void chapter_05 () {
         Class_5_6_1* clPtr = (Class_5_6_1*)stack.pop();
         clPtr->print();
     }
-
+    // Task 13-14. Not compile, if changes in _05_1.cpp.
+    StackOfInt st;
+    st.stack1 = new StackImp_1(3);
+    st.stack2 = new StackImp_2(3);
+    cout << "Push 3 values to StackImp_1 & StackImp_2 objects.\n";
+    for (int i = 0; i < 3; i++) {
+        st.stack1->push(i);
+        st.stack2->push(i);
+    }
+    cout << "Pop 3 values from StackImp_1 & StackImp_2 objects : ";
+    for (int i = 0; i < 3; i++) cout << st.stack1->pop() << " " << st.stack2->pop() << " ";
+    cout << endl;
 }
 
 void Labs_0x01() {

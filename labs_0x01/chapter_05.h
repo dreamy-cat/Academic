@@ -2,6 +2,7 @@
 #define CHAPTER_05_H
 
 #include <string>
+#include "chapter_05_1.h"
 
 class Class_5_1 {
 public:
@@ -108,6 +109,12 @@ public:
 private:
     void** storage;
     int sp, maxSize;
+};
+
+class StackOfInt {
+public:
+    StackImp_1* stack1;
+    StackImp_2* stack2;
 };
 
 #endif
