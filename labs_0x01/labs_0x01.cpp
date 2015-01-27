@@ -8,6 +8,7 @@
 #include "chapter_03.h"
 #include "chapter_04.h"
 #include "chapter_05.h"
+#include "chapter_06.h"
 
 using namespace std;
 
@@ -536,6 +537,12 @@ void chapter_05 () {
     cout << endl;
 }
 
+void chapter_06() {
+    cout << "Chapter's 6 tasks.\n";
+    // Tasks 1-2.
+    Simple class1;
+}
+
 void Labs_0x01() {
-    chapter_05();
+    chapter_06();
 }
