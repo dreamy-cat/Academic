@@ -4,10 +4,10 @@
 
 using namespace std;
 
-Simple::Simple() {
-    cout << "Class Simple constructor has called." << endl;
+Simple::Simple(int i) : a(i) {
+    cout << "Class Simple constructor has called. Int a = " <<  a << endl;
 }
 
 Simple::~Simple() {
-    cout << "Class Simple destructor has called." << endl;
+    cout << "Class Simple destructor has called. Int a = " << a << endl;
 }

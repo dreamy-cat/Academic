@@ -3,8 +3,10 @@
 
 class Simple {
 public:
-    Simple();
+    Simple(int i);
     ~Simple();
+private:
+    int a;
 };
 
 #endif // CHAPTER_06_H

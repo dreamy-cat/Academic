@@ -539,8 +539,20 @@ void chapter_05 () {
 
 void chapter_06() {
     cout << "Chapter's 6 tasks.\n";
-    // Tasks 1-2.
-    Simple class1;
+    // Tasks 1-4.
+    Simple class1(0), class2(1);
+    for (int i = 0; i < 2; i++) {
+        Simple class3(2);
+        goto jump;
+    }
+jump: ;
+    // Task 5. May be in old standard, but works fine.
+    int i = 0;
+    cout << "Counters in 'for' i,j : ";
+    for (; i < 3; i++) for (int i = 0; i < 3; i++) cout << i << " " << i << " ";
+    cout << endl;
+
+
 }
 
 void Labs_0x01() {
