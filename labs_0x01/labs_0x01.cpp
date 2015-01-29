@@ -546,13 +546,37 @@ void chapter_06() {
         goto jump;
     }
 jump: ;
-    // Task 5. May be in old standard, but works fine.
+    // Task 5. May be in old standard, but works fine now.
     int i = 0;
     cout << "Counters in 'for' i,j : ";
     for (; i < 3; i++) for (int i = 0; i < 3; i++) cout << i << " " << i << " ";
     cout << endl;
+    // Task 6.
+    Class_6_6 class66;
+    cout << "Class_6_6 int = " << class66.read();
+    class66.change(1);
+    cout << " after change int = " << class66.read() << endl;
+    // Task 7.
+    double dm[3] = { 1.0, 2.0 };
+    cout << "Vector of double : ";
+    for (int i = 0; i < sizeof(dm)/sizeof(double); i++) cout << dm[i] << " ";
+    double dm2[] = { 1.0, 2.0, 3.0 };
+    cout << endl << "Second vector of double : ";
+    for (int i = 0; i < sizeof(dm2)/sizeof(double); i++) cout << dm2[i] << " ";
+    cout << endl;
+    // Task 8.
+    string sm[3] = { "one", "two", "three" };
+    Stack6 class68;
+    cout << "Push strings to stack : ";
+    for (int i = 0; i < 3; i++) {
+        cout << sm[i] << " ";
+        class68.push(sm[i]);
+    }
+    cout << "\nPop strings from stack : ";
+    for (int i = 0; i < 3; i++) cout << class68.pop() << " ";
+    cout << endl;
 
-
+    cout << endl;
 }
 
 void Labs_0x01() {
