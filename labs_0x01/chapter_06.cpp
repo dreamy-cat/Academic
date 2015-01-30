@@ -12,6 +12,10 @@ Simple::~Simple() {
     cout << "Class Simple destructor has called. Int a = " << a << endl;
 }
 
+void Simple::printA() {
+    cout << a << " ";
+}
+
 Class_6_6::Class_6_6() {
     simplePtr = new Simple(0);
 }
@@ -42,4 +46,12 @@ string Stack6::pop() {
         storage.pop_back();
         return val;
     }
+}
+
+Class_6_10::Class_6_10(int a) {
+
+}
+
+void Class_6_10::function() {
+    cout << "Simple function of Class_6_10." << endl;
 }

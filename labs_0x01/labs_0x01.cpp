@@ -575,7 +575,14 @@ jump: ;
     cout << "\nPop strings from stack : ";
     for (int i = 0; i < 3; i++) cout << class68.pop() << " ";
     cout << endl;
-
+    // Task 9.
+    Simple class9[] = { Simple(1), Simple(2), Simple(3) };
+    cout << "Class Simple vector, print a : ";
+    for (int i = 0; i < sizeof(class9)/sizeof(Simple); i++) class9[i].printA();
+    cout << endl;
+    // Task 10. Just for constructor test.
+    Class_6_10 class10(0);
+    class10.function();
     cout << endl;
 }
 

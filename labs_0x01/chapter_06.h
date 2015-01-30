@@ -9,6 +9,7 @@ public:
     Simple(int i);
     ~Simple();
     int b;
+    void printA ();
 private:
     int a;
 };
@@ -30,6 +31,13 @@ public:
     std::string pop();
 private:
     std::vector<std::string> storage;
+};
+
+class Class_6_10 {
+public:
+    Class_6_10(int a);
+    void function();
+
 };
 
 #endif // CHAPTER_06_H
