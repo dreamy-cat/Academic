@@ -9,6 +9,7 @@
 #include "chapter_04.h"
 #include "chapter_05.h"
 #include "chapter_06.h"
+#include "chapter_07.h"
 
 using namespace std;
 
@@ -586,6 +587,14 @@ jump: ;
     cout << endl;
 }
 
+void chapter_07() {
+    cout << "Chapter's 7 tasks.\n";
+    // Task 1.
+    Text class1("labs_0x01/files/chapter-07.txt");
+    cout << "File chapter-07.txt : " << "\n" << class1.txt;
+
+}
+
 void Labs_0x01() {
-    chapter_06();
+    chapter_07();
 }
