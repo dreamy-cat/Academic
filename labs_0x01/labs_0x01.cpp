@@ -592,7 +592,11 @@ void chapter_07() {
     // Task 1.
     Text class1("labs_0x01/files/chapter-07.txt");
     cout << "File chapter-07.txt : " << "\n" << class1.txt;
-
+    // Task 2.
+    Message class2("Initial string.");
+    class2.print();
+    class2.print("With string. ");
+    // Task 3. Intresting...
 }
 
 void Labs_0x01() {

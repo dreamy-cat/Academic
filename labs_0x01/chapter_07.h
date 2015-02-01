@@ -10,4 +10,14 @@ public:
     std::string txt;
 };
 
+class Message {
+public:
+    Message(std::string init);
+    void print();
+    void print(std::string pr);
+private:
+    std::string msg;
+
+};
+
 #endif
