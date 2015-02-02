@@ -597,6 +597,30 @@ void chapter_07() {
     class2.print();
     class2.print("With string. ");
     // Task 3. Intresting...
+    // Task 4. May be not right
+    Class_7_4 class4;
+    class4.f();
+    class4.f(1);
+    class4.f(1,2);
+    class4.f(1,2,3);
+    // Task 5.
+    function_7_5(1, 2);
+    // Task 6.
+    Stash7 stashOfInt(sizeof(int));
+    Stash7 stashOfChar(sizeof(char), 8);
+    for (int i = 0; i < 16; i++) {
+        stashOfInt.add((void*)&i);
+        char c = 'a' + i;
+        stashOfChar.add((void*)&c);
+    }
+    cout << "Stash of int : ";
+    for (int i = 0; i < stashOfInt.count(); i++) cout << *((int*)stashOfInt.fectch(i)) << " ";
+    cout << "\nStash of char : ";
+    for (int i = 0; i < stashOfChar.count(); i++) cout << *((char*)stashOfChar.fectch(i)) << " ";
+    cout << endl;
+    // Task 7.
+    string string7[] = {"one", "two", "three"};
+
 }
 
 void Labs_0x01() {
