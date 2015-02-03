@@ -619,7 +619,24 @@ void chapter_07() {
     for (int i = 0; i < stashOfChar.count(); i++) cout << *((char*)stashOfChar.fectch(i)) << " ";
     cout << endl;
     // Task 7.
-    string string7[] = {"one", "two", "three"};
+    string strings_1[] = {"one", "two", "three"};
+    Stack7 r(strings_1, 3);
+    cout << "Pop strings values : ";
+    for (int i = 0; i < 3; i++) cout << r.pop() << " ";
+    cout << endl;
+    // Task 8.
+    SuperVar sv[3] = { SuperVar(char('a')), SuperVar(int(1)), SuperVar(float(3.0)) };
+    for (int i = 0; i < 3; i++) sv[i].print((SuperVar::vartype)i);
+    // Task 9.
+    string s1 = "First test string.", s2 = "Add string.", s3 = "Using default constructor.";
+    String_9 s_91(s1.data());
+    s_91.print(cout);
+    s_91.concat(const_cast<char*>(s2.data()));
+    s_91.print(cout);
+    String_9 s_92;
+    s_92.print(cout);
+    s_92.concat(const_cast<char*>(s3.data()));
+    s_92.print(cout);
 
 }
 

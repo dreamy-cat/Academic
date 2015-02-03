@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <cstring>
 
 #include "chapter_07.h"
 
@@ -91,9 +92,9 @@ Stack7::Stack7() {
     storage.clear();
 }
 
-Stack7::Stack7(string value, int size) {
+Stack7::Stack7(string values[], int size) {
     storage.clear();
-    for (int i = 0; i < size; i++) storage.push_back(value);
+    for (int i = 0; i < size; i++) storage.push_back(values[i]);
 }
 
 void Stack7::push(string value) {
@@ -101,5 +102,95 @@ void Stack7::push(string value) {
 }
 
 string Stack7::pop() {
-    if (!storage.empty()) storage.pop_back();
+    if (!storage.empty()) {
+        string value = storage.back();
+        storage.pop_back();
+        return value;
+    }
+}
+
+#ifdef TASK_8
+
+SuperVar::SuperVar(char ch) {
+    c = ch;
+}
+
+SuperVar::SuperVar(int ii) {
+    i = ii;
+}
+
+SuperVar::SuperVar(float ff) {
+    f = ff;
+}
+
+void SuperVar::print(vartype t) {
+    switch (t) {
+    case character:
+        cout << "character: " << c << endl;
+        break;
+    case integer:
+        cout << "integer: " << i << endl;
+        break;
+    case floating:
+        cout << "floating: " << f << endl;
+        break;
+    default:
+        break;
+    }
+}
+
+Mem::Mem(int sz) {
+    mem = 0;
+    size = 0;
+    ensureMinSize(sz);
+}
+
+Mem::~Mem() {
+    delete []mem;
+}
+
+int Mem::msize() {
+    return size;
+}
+
+void Mem::ensureMinSize(int minSize) {
+    if (size < minSize) {
+        unsigned char* newmem = new unsigned char[minSize];
+        memset(newmem + size, 0, minSize - size);
+        for (int i = 0; i < size; i++) newmem[i] = mem[i];
+        delete []mem;
+        mem = newmem;
+        size = minSize;
+    }
+}
+
+unsigned char* Mem::pointer(int minSize) {
+    ensureMinSize(minSize);
+    return mem;
+}
+
+#endif // TASK_8
+
+String_9::String_9() : buf(0) { }
+
+String_9::String_9(const char *str) {
+    buf = new Mem(strlen(str) + 1);
+    // cout << str << strlen(str) << buf->msize() << endl;
+    strcpy((char*)buf->pointer(), str);
+}
+
+String_9::~String_9() {
+    delete buf;
+}
+
+void String_9::concat(char *str) {
+    if (!buf) {
+        buf = new Mem;
+    }
+    strcat((char*)buf->pointer(buf->msize() + strlen(str) + 1), str);
+}
+
+void String_9::print(ostream &os) {
+    if (!buf) return;
+    os << buf->pointer() << endl;
 }

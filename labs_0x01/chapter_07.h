@@ -3,6 +3,9 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
+
+#define TASK_8
 
 class Text {
 public:
@@ -47,11 +50,52 @@ private:
 class Stack7 {
 public:
     Stack7();
-    Stack7(std::string value, int size);
+    Stack7(std::string values[], int size);
     void push(std::string value);
     std::string pop();
 private:
     std::vector<std::string> storage;
+};
+
+#ifdef TASK_8
+
+class SuperVar {
+    union {
+        char c;
+        int i;
+        float f;
+    };
+public:
+    enum vartype { character, integer, floating };
+    SuperVar(char ch);
+    SuperVar(int ii);
+    SuperVar(float ff);
+    void print(vartype t);
+};
+
+#endif  //Task_8.
+
+class Mem {
+public:
+    Mem(int sz = 0);
+    ~Mem();
+    int msize();
+    unsigned char* pointer(int minSize = 0);
+private:
+    unsigned char* mem;
+    int size;
+    void ensureMinSize(int minSize);
+};
+
+class String_9 {
+public:
+    String_9();
+    String_9(const char* str);
+    ~String_9();
+    void concat(char* str);
+    void print(std::ostream& os);
+private:
+    Mem* buf;
 };
 
 #endif
