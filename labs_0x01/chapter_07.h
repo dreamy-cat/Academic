@@ -81,8 +81,9 @@ public:
     ~Mem();
     int msize();
     unsigned char* pointer(int minSize = 0);
+    bool moved();
 private:
-    unsigned char* mem;
+    unsigned char* mem, *prevMem;
     int size;
     void ensureMinSize(int minSize);
 };
@@ -96,6 +97,22 @@ public:
     void print(std::ostream& os);
 private:
     Mem* buf;
+};
+
+class StashMem {
+public:
+    StashMem(int sz, int initQuantity = 0);
+    ~StashMem();
+    int add (void* element);
+    int count();
+    void* fectch(int index);
+private:
+    void inflate(int increase);
+    Mem* storage;
+    int size;
+    int quantity;
+    int next;
+    const int increment;
 };
 
 #endif

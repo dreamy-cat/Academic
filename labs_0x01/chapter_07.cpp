@@ -140,7 +140,7 @@ void SuperVar::print(vartype t) {
 }
 
 Mem::Mem(int sz) {
-    mem = 0;
+    mem = prevMem = 0;
     size = 0;
     ensureMinSize(sz);
 }
@@ -169,6 +169,15 @@ unsigned char* Mem::pointer(int minSize) {
     return mem;
 }
 
+bool Mem::moved() {
+    if (pointer() != prevMem) {
+        prevMem = pointer();
+        return true;
+    }
+    return false;
+}
+
+
 #endif // TASK_8
 
 String_9::String_9() : buf(0) { }
@@ -193,4 +202,33 @@ void String_9::concat(char *str) {
 void String_9::print(ostream &os) {
     if (!buf) return;
     os << buf->pointer() << endl;
+}
+
+StashMem::StashMem(int sz, int initQuantity) : increment(5) {
+    if (initQuantity < 0) initQuantity = 0;
+    storage = new Mem(initQuantity);
+    size = sz;
+    quantity = next = 0;
+}
+
+StashMem::~StashMem() {
+    if (storage != 0) delete storage;
+}
+
+int StashMem::add(void *element) {
+    // if (next >= quantity) storage->pointer(next * size);
+    int startOffset = next * size;
+    unsigned char* e = (unsigned char*)element;
+    for (int i = 0; i < size; i++) storage->pointer((next+1) * size)[startOffset + i] = e[i];
+    next++;
+    return (next - 1);
+}
+
+void* StashMem::fectch(int index) {
+    if (index < 0 && index > next) return 0;
+    return (void*)(storage->pointer() + index * size);
+}
+
+int StashMem::count() {
+    return next;
 }

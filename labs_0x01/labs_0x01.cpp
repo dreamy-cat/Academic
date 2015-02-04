@@ -637,7 +637,23 @@ void chapter_07() {
     s_92.print(cout);
     s_92.concat(const_cast<char*>(s3.data()));
     s_92.print(cout);
-
+    // Task 10.
+    StashMem stashMemOfInt(sizeof(int));
+    StashMem stashMemOfChar(sizeof(char), 8);
+    for (int i = 0; i < 16; i++) {
+        stashMemOfInt.add((void*)&i);
+        char c = 'a' + i;
+        stashMemOfChar.add((void*)&c);
+    }
+    cout << "StashMem class. Integers : ";
+    for (int i = 0; i < stashMemOfInt.count(); i++) cout << *((int*)stashMemOfInt.fectch(i)) << " ";
+    cout << "\nStashMem class. Chars : ";
+    for (int i = 0; i < stashMemOfChar.count(); i++) cout << *((char*)stashMemOfChar.fectch(i)) << " ";
+    cout << endl;
+    // Task 11.
+    Mem mem1(5);
+    cout << "Mem class pointer moved : " << mem1.moved() << ". ";
+    cout << "And after second call : " << mem1.moved() << endl;
 }
 
 void Labs_0x01() {
