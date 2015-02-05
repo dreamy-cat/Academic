@@ -8,5 +8,7 @@ void chapter_03();
 void chapter_04();
 void chapter_05();
 void chapter_06();
+void chapter_07();
+void chapter_08();
 
 #endif

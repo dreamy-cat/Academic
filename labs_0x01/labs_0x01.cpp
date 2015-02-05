@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <ctime>
 #include <assert.h>
 
 #include "labs_0x01.h"
@@ -10,6 +11,7 @@
 #include "chapter_05.h"
 #include "chapter_06.h"
 #include "chapter_07.h"
+#include "chapter_08.h"
 
 using namespace std;
 
@@ -656,6 +658,25 @@ void chapter_07() {
     cout << "And after second call : " << mem1.moved() << endl;
 }
 
+void chapter_08() {
+    cout << "Chapter's 8 tasks.\n";
+    // Tasks 1-2. Not possible in this project.
+    const int i1 = 1, i2 = 1, i3 = 1;
+    const int im1[i1 + i2 + i3] = { 1, 2, 3 };
+    // Task 3.
+    const char c1 = 'a';
+    const int i4 = 0;
+    const float f1 = 0;
+    const double f2 = 0;
+    // Task 4.
+    cout << "Task's 4, constant int = " << iTask4 << endl;
+    // Task 5. Compiler error, if using any other type, not pointer.
+    time_t timer;
+    time(&timer);
+    const char* ch1 = ctime(&timer);
+    cout << "Current date & time : " << ch1;
+}
+
 void Labs_0x01() {
-    chapter_07();
+    chapter_08();
 }
