@@ -5,4 +5,6 @@
 
 const int iTask4 = 1;
 
+const int int7 = 7;
+
 #endif // CHAPTER_08_H

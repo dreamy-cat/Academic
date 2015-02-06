@@ -675,6 +675,31 @@ void chapter_08() {
     time(&timer);
     const char* ch1 = ctime(&timer);
     cout << "Current date & time : " << ch1;
+    // Task 6. Can't change constant string.
+    const char string6[] = "Task's 6 string.";
+    cout << "Task's 6 string : " << string6 << endl;
+    // Task 7.
+    extern const int int7;
+    cout << "External constant integer : " << int7 << endl;
+    // Task 8. Increment of read-only location.
+    const long lm1[3] = {1, 2, 3};
+    const long* lmPtr1 = &lm1[0];
+    cout << "Long array, first element = " << *lmPtr1 << ".";
+    lmPtr1++;
+    cout << " After increasing pointer, second element = " << *lmPtr1 << endl;
+    // (*lmPtr1)++;
+    // Task 9. Ok, be carefull.
+    double dm1[3] = {1.0, 2.0, 3.0};
+    double* const dmPtr = &dm1[0];
+    cout << "First element of double array : " << *dmPtr << ". ";
+    (*dmPtr)++;
+    cout << "After increasing : " << *dmPtr << endl;
+    // dmPtr++;
+    // Task 10. Errors, as expected.
+    const int int10 = 0;
+    const int* const intPtr1 = &int10;
+//    intPtr1++;
+//    (*intPtr1)++;
 }
 
 void Labs_0x01() {
