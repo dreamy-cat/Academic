@@ -700,6 +700,79 @@ void chapter_08() {
     const int* const intPtr1 = &int10;
 //    intPtr1++;
 //    (*intPtr1)++;
+    // Task 11. Compile error. Invalid conversation.
+    int d = 1;
+    const int e = 2;
+    int* u = &d;
+    // int* v = &e;
+    int* w = (int*)&e;
+    // Task 12. No errors. Non constant object can be modified.
+    char string12[] = "String 12.";
+    char* strPtr = string12;
+    strPtr[9] = '!';
+    cout << "String 12 = " << string12 << endl;
+    // Task 13. Error. Increment of read-only parameter c.
+    // Task 14.
+    float float14 = 1.0;
+    cout << "Function 14. ";
+    function_8_14(float14);
+    // Task 15.
+    function_8_15_1() = Class_8_15(1);
+    function_8_15_1().modify();
+    // Invalid initialization of non-const reference of type 'Class_8_15&' from an Rvalue of type 'Class_8_15'
+    // function_8_15_3(function_8_15_1());
+    // Passing 'const Class_8_15' as 'this' argument of 'Class_8_15& Class_8_15::operator=(const Class_8_15&)' discard qualifiers.
+    // function_8_15_2() = Class_8_15(1);
+    // Passing 'const Class_8_15' as 'this' argument of 'void Class_8_15::modify()' discards qualifiers
+    // function_8_15_2().modify();
+    // Invalid initialization of non-const reference of type 'Class_8_15&' from an Rvalue of type 'const Class_8_15'
+    // function_8_15_3(function_8_15_2());
+    // Task 16.
+    int x = 0;
+    int* ip = &x;
+    const int* cip = &x;
+    function_8_16_1(ip);
+    // Invalid conversation from 'const int*' to 'int*'
+    // function_8_16_1(cip);
+    function_8_16_2(ip);
+    function_8_16_2(cip);
+    // Ivalid conversation from 'const cahr*' to 'char*'
+    // char* cp = function_8_16_3();
+    const char* ccp = function_8_16_3();
+    // Invalid conversation from 'const int*' to 'int*'
+    // int* ip2 = function_8_16_4();
+    const int* const ccip = function_8_16_4();
+    const int* cip2 = function_8_16_4();
+    // Task 17.
+    int xr = 0;
+    int& ipr = xr;
+    const int& cipr = xr;
+    function_8_17_1(ipr);
+    // Invalid initialization of reference of type 'int&' from expression 'const int'
+    // function_8_17_1(cipr);
+    function_8_17_2(ipr);
+    function_8_17_2(cipr);
+    // Invalid initialization of reference of type 'const cahr&' to 'const char'
+    // char& cpr = function_8_17_3();
+    const char& ccpr = function_8_17_3();
+    // Invalid initialization of reference of type 'int&' from expression 'const int'
+    // int& ipr2 = function_8_17_4();
+    const int& ccipr = function_8_17_4();
+    const int& cip2r = function_8_17_4();
+    // Task 18.
+    // Invalid initialization of non-const reference of type 'Class_8_18&' from an Rvalue of type 'Class_8_18'
+    // function_8_18_2(function_8_18_1());
+    function_8_18_3(function_8_18_1());
+    // Task 19.
+    Class_8_19 class19((float)1.0, (float)2.0);
+    // Task 20.
+    StringStack8 stack8;
+    string iceCream[] = {"pralines & cream", "fudge ripple", "rocky road"};
+    for (int i = 0; i < 3; i++) stack8.push(&iceCream[i]);
+    const string* ice;
+    cout << "Ice cream from stack :\t";
+    while ((ice = stack8.pop()) != 0) cout << *ice << "\t";
+    cout << endl;
 }
 
 void Labs_0x01() {
