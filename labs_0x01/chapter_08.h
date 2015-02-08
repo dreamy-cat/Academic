@@ -69,4 +69,28 @@ private:
     int index;
 };
 
+class Class_8_21 {
+public:
+    Class_8_21(int ia);
+private:
+    enum { one, two, three };
+    const int a;
+    char mchar[three];
+};
+
+class Class_8_22 {
+public:
+    Class_8_22(int ii);
+    int function() const;
+private:
+    int i;
+};
+
+class Class_8_23 {
+public:
+    Class_8_23();
+    void function_1 ();
+    void function_2 () const;
+};
+
 #endif // CHAPTER_08_H

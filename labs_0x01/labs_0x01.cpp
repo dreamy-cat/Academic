@@ -773,6 +773,15 @@ void chapter_08() {
     cout << "Ice cream from stack :\t";
     while ((ice = stack8.pop()) != 0) cout << *ice << "\t";
     cout << endl;
+    // Tasks 21-22. Ok in .h & .cpp.
+    // Task 23.
+    Class_8_23 class23_1;
+    const Class_8_23 class23_2;
+    class23_1.function_1();
+    class23_1.function_2();
+    // passing 'const Class_8_23' as 'this' argument of 'void Class_8_23::function_1()' discards qualifiers
+    // class23_2.function_1();
+    class23_2.function_2();
 }
 
 void Labs_0x01() {

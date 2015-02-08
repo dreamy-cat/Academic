@@ -100,3 +100,22 @@ const string* StringStack8::pop() {
     }
     return 0;
 }
+
+Class_8_21::Class_8_21(int ia) : a(ia) {}
+
+Class_8_22::Class_8_22(int ii) : i(ii) {}
+
+int Class_8_22::function() const {
+    // Prototype for 'int Class_8_22::function()' does not match any in class 'Class_8_22'
+    return i;
+}
+
+Class_8_23::Class_8_23 () {}
+
+void Class_8_23::function_1() {
+    cout << "Class_8_23 function 1." << endl;
+}
+
+void Class_8_23::function_2() const {
+    cout << "Class_8_23 constant function 2." << endl;
+}
