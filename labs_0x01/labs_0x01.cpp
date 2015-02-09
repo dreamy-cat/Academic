@@ -782,6 +782,29 @@ void chapter_08() {
     // passing 'const Class_8_23' as 'this' argument of 'void Class_8_23::function_1()' discards qualifiers
     // class23_2.function_1();
     class23_2.function_2();
+    // Task 24-25 see in .h & .cpp.
+    // Task 26
+    Quoter8 class26_1;
+    const Quoter8 class26_2;
+    class26_1.lastQuote();
+    class26_2.lastQuote();
+    cout << "Quotes : " << endl;
+    for (int i = 0; i < 3; i++) cout << class26_1.quote() << endl;
+    // Task 27.
+    Class_8_27 class27_1;
+    volatile Class_8_27 class27_2;
+    class27_1.function_1();
+    class27_1.function_2();
+    // Passing 'volatile Class_8_27' as this argument of 'void Class_8_27::function_1()' discards qualifiers
+    // class27_2.function_1();
+    class27_2.function_2();
+    // Task 28. No error, may be not correct.
+    Class_8_28_1 class28_1, *class28_1Ptr;
+    Class_8_28_2 class28_2;
+    class28_1.function_1();
+    void* classPtr = &class28_2;
+    class28_1Ptr = (Class_8_28_1*)classPtr;
+    class28_1Ptr->function_1();
 }
 
 void Labs_0x01() {

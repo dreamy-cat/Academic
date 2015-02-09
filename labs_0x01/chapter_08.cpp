@@ -119,3 +119,62 @@ void Class_8_23::function_1() {
 void Class_8_23::function_2() const {
     cout << "Class_8_23 constant function 2." << endl;
 }
+
+Class_8_24::Class_8_24 () {}
+
+void Class_8_24::function_1() {
+    int a;
+    a++;
+}
+
+void Class_8_24::function_2() const {
+    // Passing 'const Class_8_24' as 'this' argument of 'void Class_8_24::function_1()' discards qualifiers
+    // function_1();
+}
+
+Class_8_25::Class_8_25 () : i(0), j(0) {}
+
+void Class_8_25::function_1() const {
+    // increment of member 'Class_8_25::i' in read-only object
+    // i++;
+    j++;
+}
+
+Quoter8::Quoter8 () {
+    lastquote = -1;
+    srand(0);
+}
+
+int Quoter8::lastQuote() const {
+    return lastquote;
+}
+
+const char* Quoter8::quote() const {
+    static const char* quotes[] = {
+        "Is it ... Atomic?",
+        "There is no scientific evidence.",
+        "Are we having fun yet?"
+    };
+    const int qsize = sizeof(quotes)/sizeof(*quotes);
+    int qnum = rand() % qsize;
+    while (lastquote >= 0 && qnum == lastquote) qnum = rand() % qsize;
+    return quotes[lastquote = qnum];
+}
+
+Class_8_27::Class_8_27 () {}
+
+void Class_8_27::function_1() {
+    b++;
+}
+
+void Class_8_27::function_2() volatile {
+    b++;
+}
+
+Class_8_28_1::Class_8_28_1 () {}
+
+void Class_8_28_1::function_1() {
+    cout << "Class 28_1 Function_1." << endl;
+}
+
+Class_8_28_2::Class_8_28_2 () {}

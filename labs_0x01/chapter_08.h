@@ -2,7 +2,9 @@
 #define CHAPTER_08_H
 
 #include <iostream>
+#include <cstdlib>
 #include "memory.h"
+
 
 const int iTask4 = 1;
 
@@ -91,6 +93,53 @@ public:
     Class_8_23();
     void function_1 ();
     void function_2 () const;
+};
+
+class Class_8_24 {
+public:
+    Class_8_24();
+private:
+    void function_1 ();
+    void function_2 () const;
+};
+
+class Class_8_25 {
+public:
+    Class_8_25 ();
+    void function_1 () const;
+private:
+    int i;
+    mutable int j;
+};
+
+class Quoter8 {
+public:
+    Quoter8();
+    int lastQuote() const;
+    const char* quote() const;
+private:
+    mutable int lastquote;
+};
+
+class Class_8_27 {
+public:
+    Class_8_27();
+    void function_1 ();
+    void function_2 () volatile;
+private:
+    char a;
+    volatile char b;
+};
+
+class Class_8_28_1 {
+public:
+    Class_8_28_1();
+    void function_1 ();
+};
+
+class Class_8_28_2 {
+public:
+    Class_8_28_2();
 };
 
 #endif // CHAPTER_08_H
