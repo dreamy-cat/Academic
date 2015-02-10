@@ -807,6 +807,23 @@ void chapter_08() {
     class28_1Ptr->function_1();
 }
 
+void chapter_09 () {
+    cout << "Chapter's 9 tasks.\n";
+    // Task 1.
+    // 'x' was not declared in this scope
+// #define F (x) (x+1)
+#define F(x) (x+1)
+    int i1 = F(1);
+    cout << "F(1) = " << i1 << endl;
+    // Task 2.
+#define FLOOR1(x,b) x<=b?1:0
+    cout << "Macros FLOOR first version result : ";
+    if (FLOOR1(5,3)) cout << "true" << endl; else cout << "false" << endl;
+    cout << "Macors FLOOR incorrect result : ";
+    int a = 0x0F;
+    if (FLOOR1(a&0x0F,a&0x07)) cout << "true" << endl; else cout << "false" << endl;
+}
+
 void Labs_0x01() {
-    chapter_08();
+    chapter_09();
 }
