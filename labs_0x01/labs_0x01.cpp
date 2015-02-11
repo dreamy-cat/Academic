@@ -12,6 +12,7 @@
 #include "chapter_06.h"
 #include "chapter_07.h"
 #include "chapter_08.h"
+#include "chapter_09.h"
 
 using namespace std;
 
@@ -822,6 +823,37 @@ void chapter_09 () {
     cout << "Macors FLOOR incorrect result : ";
     int a = 0x0F;
     if (FLOOR1(a&0x0F,a&0x07)) cout << "true" << endl; else cout << "false" << endl;
+    // Task 3.
+#define BAND(x) (((x)>5 && (x)<10) ? (x) : 0)
+    cout << "Testing macro BAND.\n";
+    for (int i = 4; i < 11; i++) {
+        int a = i;
+        cout << "a = " << a << " " << "BAND(a+1) = " << BAND((a+1));
+        cout << ", a = " << a << endl;
+    }
+    // Task 4-5. Strange, recheck.
+    time_t time;
+    tm local;
+    local = *std::localtime(&time);
+    cout << "Starting second : " << local.tm_sec;
+    for (int i = 0; i < 1000; i++)
+        for(int j = 0; j < 100000; j++) function_9_4_1();
+    local = *std::localtime(&time);
+    cout << " after calling standart function : " << local.tm_sec;
+    for (int i = 0; i < 1000; i++)
+        for(int j = 0; j < 100000; j++) function_9_4_2();
+    local = *std::localtime(&time);
+    cout << ", after calling inline function : " << local.tm_sec << endl;
+    // Task 6. in .h, .cpp
+    Class_9_6 class6;
+    cout << "Address of class6 : " << (long)&class6 << ", address of 'this' in class function t() : ";
+    class6.t();
+    cout << endl;
+    // Task 7.
+    Class_9_7 class7('a');
+    cout << "Result of memset char text[] : ";
+    class7.print();
+
 }
 
 void Labs_0x01() {
