@@ -853,6 +853,30 @@ void chapter_09 () {
     Class_9_7 class7('a');
     cout << "Result of memset char text[] : ";
     class7.print();
+    // Task 8.
+    Structure_9_8 struc90;
+    Structure_9_8::Structure_9_8_1 struc91(&struc90);
+    cout << "Values from Structure_9_8_1 : ";
+    for (int i = 0; i < 3; i++) { struc91.set(i); struc91.next(); }
+    for (int i = 0; i < 3; i++) { struc91.previous(); cout << struc91.read() << " "; }
+    cout << endl;
+    // Task 9.
+    string strings1[] = { "one", "two", "three" };
+    StringStack9 stack9;
+    cout << "Strings of class StringStacks9 : ";
+    for (int i = 0; i < 3; i++) stack9.push(&strings1[i]);
+    for (int i = 0; i < 3; i++) cout << *stack9.pop() << " ";
+    cout << endl;
+    // Task 10-11.
+    Color9 class10(Color9::blue);
+    class10.color(Color9::blue);
+    cout << "Color from Color9 class : " << class10.color() << endl;
+    // Task 12. See task 4-5. Later.
+    // Task 13.
+    Class_9_13 class13;
+    class13.function_1();
+    // Task 14.
+    Class_9_14_2 class14;
 
 }
 

@@ -38,6 +38,88 @@ private:
 public:
     Structure_9_8() { memset(a, 0, sz * sizeof(int)); }
     struct Structure_9_8_1;
+    friend struct Structure_9_8_1;
+    struct Structure_9_8_1 {
+    private:
+        Structure_9_8* h;
+        int* p;
+    public:
+        Structure_9_8_1(Structure_9_8* rv) {
+            h = rv;
+            p = rv->a;
+        }
+
+        void next() {
+            if (p < &(h->a[sz-1])) p++;
+        }
+
+        void previous() {
+            if (p > &(h->a[0])) p--;
+        }
+
+        void top() {
+            p = &(h->a[0]);
+        }
+
+        void end() {
+            p = &(h->a[sz-1]);
+        }
+
+        int read() {
+            return *p;
+        }
+
+        void set(int i) {
+            *p = i;
+        }
+    };
+};
+
+class StringStack9 {
+public:
+    StringStack9() : index(0) { memset(stack, 0, size * sizeof(std::string*)); }
+    void push(const std::string* s) { if (index < size) stack[index++] = s; }
+    const std::string* pop() {
+        if (index > 0) {
+            const std::string* r = stack[--index];
+            stack[index] = 0;
+            return r;
+        }
+        return 0;
+    }
+
+private:
+    static const int size = 5;
+    const std::string* stack[size];
+    int index;
+};
+
+class Color9 {
+public:
+    enum Hue { red, blue, yellow };
+    Color9(Hue cl) : clr(cl) {}
+    void color (Hue cl) { clr = cl; }
+    Hue color () { return clr; }
+private:
+    Hue clr;
+};
+
+class Class_9_13 {
+public:
+    Class_9_13() {}
+    void function_1 () { function_2(); }
+    void function_2 () { std::cout << "Class_9_13, function_2." << std::endl; }
+};
+
+class Class_9_14_1 {
+public:
+    Class_9_14_1 () { std::cout << "Class_9_14_1 constructor." << std::endl; }
+};
+
+class Class_9_14_2 {
+public:
+    Class_9_14_2 () { std::cout << "Class_9_14_2 constructor." << std::endl; }
+    Class_9_14_1 obj;
 };
 
 #endif // CHAPTER_09_H
