@@ -142,4 +142,25 @@ public:
     Class_8_28_2();
 };
 
+#define FIELD(a) private: char* a##_string; int a##_size; int a##_index; public: char* a##_get() { return a##_string; }
+
+class Record9 {
+public:
+    Record9 (char* str) {
+        one_string = str;
+        two_string = str;
+        three_string = str;
+    }
+    char* select (int index) {
+        if (index == 0) return one_string;
+        if (index == 1) return two_string;
+        if (index == 2) return three_string;
+        return 0;
+    }
+private:
+    FIELD(one);
+    FIELD(two);
+    FIELD(three);
+};
+
 #endif // CHAPTER_08_H

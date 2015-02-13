@@ -877,6 +877,27 @@ void chapter_09 () {
     class13.function_1();
     // Task 14.
     Class_9_14_2 class14;
+    // Task 15. Not convinient without suppress console output.
+    const int maxObjs = 4;
+    Class_9_14_2* objects[maxObjs];
+    for (int i = 0; i < maxObjs; i++) {
+        objects[i] = new Class_9_14_2;
+    }
+    // Task 16.
+#define DEBUG16(x) cout << "Debug macros : " #x " " << x << endl;
+    string str16 = "Task 16";
+    while (!str16.empty()) {
+        DEBUG16(str16[str16.size() - 1]);
+        str16.resize(str16.size()-1);
+    }
+    // Task 17.
+#define TRACE16(s) cout << "Trace marcos : " << #s << endl , s;
+    TRACE16(cout << "Trace paramter.\n");
+    // Task 18-19. Very strange, may be not correct.
+    char txt18[] = "Task 18.";
+    Record9 class18 (txt18);
+    cout << "Class Record9, select method : " << class18.select(1) << endl;
+    cout << "Class Record9, one_get method : " << class18.one_get() << endl;
 
 }
 
