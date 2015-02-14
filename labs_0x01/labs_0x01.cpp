@@ -898,7 +898,15 @@ void chapter_09 () {
     Record9 class18 (txt18);
     cout << "Class Record9, select method : " << class18.select(1) << endl;
     cout << "Class Record9, one_get method : " << class18.one_get() << endl;
-
+    // Task 20. Need arguments, not possible.
+    // Task 21.
+#define IFOPEN(var,name) \
+    ifstream var; \
+    var.open(name); \
+    if (var.is_open()) cout << "File " << name << " open. Ok.\n"; else cout << "Error open " << name << " file.\n"; \
+    var.close();
+    IFOPEN(textFile,"labs_0x01/files/chapter-02.txt");
+    // Task 22. Bonus.
 }
 
 void Labs_0x01() {
