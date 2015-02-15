@@ -13,6 +13,7 @@
 #include "chapter_07.h"
 #include "chapter_08.h"
 #include "chapter_09.h"
+#include "chapter_10.h"
 
 using namespace std;
 
@@ -909,6 +910,26 @@ void chapter_09 () {
     // Task 22. Bonus.
 }
 
+void chapter_10() {
+    cout << "Chapter's 10 tasks.\n";
+    // Task 1.
+    int arrayInt[5] = { 1, 2, 3, 4, -1 };
+    function_10_1(arrayInt);
+    cout << "Integer array with static address : ";
+    for (int i = 0; i < 5; i++) cout << function_10_1() << " ";
+    cout << endl;
+    // Task 2. Classic.
+    cout << "Fibonacci sequence : ";
+    for (int i = 0; i < 12; i++) cout << numberFibbonaci() << " ";
+    cout << endl << "After reset sequence : ";
+    numberFibbonaci(true);
+    for (int i = 0; i < 12; i++) cout << numberFibbonaci() << " ";
+    cout << endl;
+    // Task 3.
+    Class_10_3 class3(5);
+    class3.print();
+}
+
 void Labs_0x01() {
-    chapter_09();
+    chapter_10();
 }

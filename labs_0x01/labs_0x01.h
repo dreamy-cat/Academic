@@ -11,5 +11,6 @@ void chapter_06();
 void chapter_07();
 void chapter_08();
 void chapter_09();
+void chapter_10();
 
 #endif
