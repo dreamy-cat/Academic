@@ -25,4 +25,26 @@ private:
     static int var2;
 };
 
+class Class_10_4 {
+public:
+    Class_10_4 ();
+    void count ();
+    void print ();
+    void decrement();
+private:
+    static int counter;
+};
+
+void function_10_4 ();
+
+class Class_10_5 {
+public:
+    Class_10_5(Class_10_4* ptr);
+    ~Class_10_5();
+private:
+    Class_10_4* clPtr;
+};
+
+void function_10_5 (Class_10_4* ptr);
+
 #endif // CHAPTER_10_H

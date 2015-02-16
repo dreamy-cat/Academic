@@ -928,6 +928,14 @@ void chapter_10() {
     // Task 3.
     Class_10_3 class3(5);
     class3.print();
+    // Task 4-6.
+    cout << "Counter of static Class_10_4.\n";
+    for (int i = 0; i < 3; i++) function_10_4();
+    Class_10_4 class4;
+    function_10_5(&class4);
+    Class_10_5* class5 = new Class_10_5(&class4);
+    delete class5;
+    // Task 7. Same as previous.
 }
 
 void Labs_0x01() {
