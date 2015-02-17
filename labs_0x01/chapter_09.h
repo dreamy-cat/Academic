@@ -4,6 +4,10 @@
 #include <iostream>
 #include "memory.h"
 
+// Chapter 10, task 10.
+
+static int chapter10Int = 0;
+
 void function_9_4_1();
 
 inline void function_9_4_2() {

@@ -63,3 +63,30 @@ void function_10_5 (Class_10_4* ptr) {
     cout << "In function_10_5.\n";
     static Class_10_5 cl(ptr);
 }
+
+Class_10_8::Class_10_8(char cc) : c(cc) {
+    cout << "Constructor of Class_10_8, init char = " << c << endl;
+}
+
+Class_10_8::~Class_10_8() {
+    cout << "Destructor of Class_10_8, char = " << c << endl;
+}
+
+void function_10_8_1() {
+    static Class_10_8 cl8_1('c');
+}
+
+void function_10_8_2() {
+    static Class_10_8 cl8_2('b');
+}
+
+Class_10_11::Class_10_11 (int ii) : i(ii) {}
+
+void Class_10_11::print () {
+    cout << "Class_10_11 int i = " << i << endl;
+}
+
+Class_10_11 cl10_1(3);
+
+// Undefined reference
+// static Class_10_11 cl10_1(3);

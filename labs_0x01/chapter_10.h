@@ -47,4 +47,24 @@ private:
 
 void function_10_5 (Class_10_4* ptr);
 
+class Class_10_8 {
+public:
+    Class_10_8(char cc);
+    ~Class_10_8();
+private:
+    char c;
+};
+
+void function_10_8_2();
+
+void function_10_8_1();
+
+class Class_10_11 {
+public:
+    Class_10_11 (int ii);
+    void print ();
+private:
+    int i;
+};
+
 #endif // CHAPTER_10_H

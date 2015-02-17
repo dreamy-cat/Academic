@@ -936,6 +936,19 @@ void chapter_10() {
     Class_10_5* class5 = new Class_10_5(&class4);
     delete class5;
     // Task 7. Same as previous.
+    // Task 8. Correct, static objects was created in order by name of functions in _10.cpp file.
+    cout << "Task 8. Class_10_8.\n";
+    Class_10_8 cl8('a');
+    function_10_8_1();
+    function_10_8_2();
+    // Task 9. Udefined refecrence, as expected. May be not correct.
+    //extern ofstream stream9;
+    //stream9 << "Tasks9, test.\n";
+    // Task 10. Worked, but it's not convinient in current project.
+    // Task 11.
+    extern Class_10_11 cl10_1;
+    cl10_1.print();
+
 }
 
 void Labs_0x01() {
