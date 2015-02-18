@@ -90,3 +90,46 @@ Class_10_11 cl10_1(3);
 
 // Undefined reference
 // static Class_10_11 cl10_1(3);
+
+void function_10_13 () {
+    cout << "In function_10_13." << endl;
+}
+
+int Class_10_14::index = 0;
+
+const unsigned char Class_10_14::byte = 0;
+
+unsigned char Class_10_14::flag = 0;
+
+unsigned char Class_10_14::buf[Class_10_14::bufsize];
+
+Class_10_14::Class_10_14 () {}
+
+void Class_10_14::isr() {
+    cout << "Class_10_14 isr method." << endl;
+    flag = 0;
+    buf[index++] = byte;
+    if (index >= bufsize) index = 0;
+}
+
+char Class_10_14::read (int index) const {
+    if (index < 0 || index >= bufsize) return '0';
+    return buf[index];
+}
+
+void NameSpace_16_1::function_16_1() {}
+
+void NameSpace_16_1::function_16_2() {
+    NameSpace_16_1::function_16_1();
+}
+
+void NameSpace_16_2::function_16_3() {
+    using namespace NameSpace_16_1;
+    function_16_1();
+}
+
+void NameSpace_16_2::function_16_4() {}
+
+void function_10_18() {
+   function_10_17();
+}

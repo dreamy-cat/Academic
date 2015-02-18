@@ -945,10 +945,30 @@ void chapter_10() {
     //extern ofstream stream9;
     //stream9 << "Tasks9, test.\n";
     // Task 10. Worked, but it's not convinient in current project.
-    // Task 11.
+    // Task 11-12. See chapter_10.cpp.
     extern Class_10_11 cl10_1;
     cl10_1.print();
-
+    // Task 13.
+    function_10_13();
+    // Task 14.
+    volatile Class_10_14 cl14;
+    cl14.isr();
+    // Passing 'volatile Class_10_14' as 'this' argument of 'char Class_10_14::read(int) const' discards qualifiers
+    // cl14.read(0);
+    // Task 15.
+    auto int i15_1 = 0;
+    register int i15_2 = 1;
+    cout << "Auto and register integers : " << i15_1 << " " << i15_2 << endl;
+    // Task 16.
+    namespace nm16 = NameSpace_16_2;
+    using namespace nm16;
+    nm16::function_16_1();
+    nm16::function_16_2();
+    function_16_3();
+    function_16_4();
+    // Task 17-18.
+    function_10_17();
+    function_10_18();
 }
 
 void Labs_0x01() {

@@ -67,4 +67,42 @@ private:
     int i;
 };
 
+void function_10_13 ();
+
+// Task 13. Undefined reference.
+// static void function_10_13 ();
+
+class Class_10_14 {
+public:
+    Class_10_14();
+    // void isr() volatile;
+    static void isr();
+    char read (int index) const;
+private:
+    static const unsigned char byte;
+    static unsigned char flag;
+    enum { bufsize = 100 };
+    static unsigned char buf[bufsize];
+    static int index;
+};
+
+namespace NameSpace_16_1 {
+    void function_16_1 ();
+    void function_16_2 ();
+}
+
+namespace NameSpace_16_2 {
+    using namespace NameSpace_16_1;
+    void function_16_3();
+    void function_16_4();
+}
+
+namespace {
+    void function_10_17() {
+        std::cout << "Function_10_17. Anonymous namespace." << std::endl;
+    }
+}
+
+void function_10_18 ();
+
 #endif // CHAPTER_10_H
