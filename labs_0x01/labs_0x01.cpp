@@ -14,6 +14,7 @@
 #include "chapter_08.h"
 #include "chapter_09.h"
 #include "chapter_10.h"
+#include "chapter_10_1.h"
 
 using namespace std;
 
@@ -969,6 +970,18 @@ void chapter_10() {
     // Task 17-18.
     function_10_17();
     function_10_18();
+    // Task 19.
+    NameSpace_10_19::Class_10_19 cl19;
+    function_10_19();
+    // Task 20. May not correct...
+    arithmetic();
+    // Task 21.
+    using namespace NameSpace_10_20_2;
+    Integer a(3);
+    a.setSign(positive);
+    cout << "NameSpace_10_20_2, get sign from Integer without operator '::' : " << a.getSign() << endl;
+    NameSpace_10_20_2::a.setSign(negative);
+    cout << "NameSpace_10_20_2, get sign from Integer with operator '::' : " << NameSpace_10_20_2::a.getSign() << endl;
 }
 
 void Labs_0x01() {

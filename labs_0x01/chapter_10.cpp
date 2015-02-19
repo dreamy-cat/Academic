@@ -133,3 +133,19 @@ void NameSpace_16_2::function_16_4() {}
 void function_10_18() {
    function_10_17();
 }
+
+void function_10_19() {
+    cout << "Friend function for NameSpace_10_19." << endl;
+}
+
+// Otherwise need to create separate .h
+
+
+void arithmetic () {
+    using namespace NameSpace_10_20_1;
+    Integer int1(1), int2(2);
+    cout << "Sign of Integers of NameSpace_10_20_1: " << int1.getSign() << " " << int2.getSign() << endl;
+}
+
+
+

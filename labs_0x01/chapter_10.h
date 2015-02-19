@@ -105,4 +105,28 @@ namespace {
 
 void function_10_18 ();
 
+namespace NameSpace_10_19 {
+    class Class_10_19 {
+    public:
+        friend void function_10_19();
+    };
+}
+
+void function_10_19();
+
+namespace NameSpace_10_20_1 {
+    enum sign { positive, negative };
+    class Integer {
+        int i;
+        sign s;
+    public:
+        Integer(int ii) : i(ii), s(i >= 0 ? positive : negative) {}
+        sign getSign() const { return s; }
+        void setSign(sign sgn) { s = sgn; }
+    };
+}
+
+void arithmetic();
+
+
 #endif // CHAPTER_10_H
