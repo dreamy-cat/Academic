@@ -1,3 +1,1 @@
-#include "chapter_10_1.h"
-
 // Just for testing CMake...

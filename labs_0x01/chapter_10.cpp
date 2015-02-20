@@ -140,12 +140,25 @@ void function_10_19() {
 
 // Otherwise need to create separate .h
 
-
 void arithmetic () {
     using namespace NameSpace_10_20_1;
     Integer int1(1), int2(2);
     cout << "Sign of Integers of NameSpace_10_20_1: " << int1.getSign() << " " << int2.getSign() << endl;
 }
 
+double Class_10_26::doubleP = 1;
+long Class_10_26::longP = 3;
 
+Class_10_26::Class_10_26() {}
 
+void Class_10_26::print() { cout << "Class_10_26. Double and long parameters : " << doubleP << " " << longP << endl; }
+
+Class_10_27_1 Class_10_27_2::cl(3);
+
+Class_10_27_2::Class_10_27_2() {}
+
+void Class_10_27_2::function_1() {
+    cout << "Class_10_27_2 static function_1 : ";
+    cl.print();
+    cout << endl;
+}

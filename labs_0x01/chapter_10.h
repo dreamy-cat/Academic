@@ -128,5 +128,84 @@ namespace NameSpace_10_20_1 {
 
 void arithmetic();
 
+namespace NameSpace_10_22_1 {
+    class Class_10_22 {
+    public:
+        Class_10_22() { std::cout << "First namespace. Class_10_22 constructor." << std::endl; }
+    };
+}
+
+namespace NameSpace_10_22_2 {
+class Class_10_22 {
+public:
+    Class_10_22() { std::cout << "Second namespace. Class_10_22 constructor." << std::endl; }
+};
+}
+
+namespace NameSpace_10_24_1 {
+    class Class_10_24_1 {
+
+    };
+    class Class_10_24_2 {
+
+    };
+}
+
+namespace NameSpace_10_24_2 {
+    class Class_10_24_3 {
+
+    };
+    class Class_10_24_4 {
+
+    };
+    class Class_10_24_5 {
+
+    };
+    class Class_10_24_6 {
+    public:
+        Class_10_24_3 c3[3];
+        Class_10_24_4 c4[4];
+        Class_10_24_5 c5[5];
+        int integer_24_1, integer_24_2, integer_24_3;
+    };
+}
+
+namespace NameSpace_10_24_3 {
+    using namespace NameSpace_10_24_1;
+    using namespace NameSpace_10_24_2;
+}
+
+class Class_10_25 {
+public:
+    Class_10_25(std::string iStr) : str(iStr) {}
+    void print() { std::cout << "String parameter, Class_10_25 = " << str << std::endl; }
+private:
+    std::string str;
+};
+
+class Class_10_26 {
+public:
+    Class_10_26();
+    void print();
+private:
+    static long longP;
+    static double doubleP;
+};
+
+class Class_10_27_1 {
+public:
+    Class_10_27_1(int ii) : i(ii) {}
+    void print () { std::cout << "Class_10_27_1, integer = " << i; }
+private:
+    int i;
+};
+
+class Class_10_27_2 {
+public:
+    Class_10_27_2();
+    static void function_1();
+private:
+    static Class_10_27_1 cl;
+};
 
 #endif // CHAPTER_10_H

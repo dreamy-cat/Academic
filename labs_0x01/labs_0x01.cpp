@@ -982,6 +982,26 @@ void chapter_10() {
     cout << "NameSpace_10_20_2, get sign from Integer without operator '::' : " << a.getSign() << endl;
     NameSpace_10_20_2::a.setSign(negative);
     cout << "NameSpace_10_20_2, get sign from Integer with operator '::' : " << NameSpace_10_20_2::a.getSign() << endl;
+    // Task 22-23. If in global, no difference.
+    using namespace NameSpace_10_22_1;
+    // using namespace NameSpace_10_22_2;
+    // Reference to 'Class_10_22' is ambiguous.
+    Class_10_22 class22_1;
+    NameSpace_10_22_2::Class_10_22 class22_2;
+    // Task 24. Ok, but not as expected.
+    using namespace NameSpace_10_24_3;
+    Class_10_24_1 cl24_1;
+    Class_10_24_2 cl24_2;
+    Class_10_24_6 cl24_6;
+    // Task 25.
+    Class_10_25 cl25("Test string 25.");
+    cl25.print();
+    // Task 26.
+    Class_10_26 cl26;
+    cl26.print();
+    // Task 27.
+    Class_10_27_2 cl27;
+    cl27.function_1();
 }
 
 void Labs_0x01() {
