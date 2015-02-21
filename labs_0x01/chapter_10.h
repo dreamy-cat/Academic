@@ -208,4 +208,41 @@ private:
     static Class_10_27_1 cl;
 };
 
+class Class_10_28 {
+public:
+    Class_10_28(const int* aPtr);
+    static void function_1();
+private:
+    int ar1[3];
+    const int* ar2;
+};
+
+class Class_10_29_1 {
+public:
+    Class_10_29_1 (std::string init);
+    void print() const;
+private:
+    std::string str;
+};
+
+class Class_10_29_2 {
+public:
+    Class_10_29_2();
+    static void printArray();
+private:
+    static Class_10_29_1 ar1[3];
+    static const Class_10_29_1 ar2[3];
+};
+
+class Class_10_31 {
+public:
+    Class_10_31(int ii) : i(ii) {}
+    static Class_10_31* instance() { return &inst; }
+    int value() { return i; }
+private:
+    Class_10_31(const Class_10_31&);
+    static Class_10_31 inst;
+    int i;
+};
+
 #endif // CHAPTER_10_H

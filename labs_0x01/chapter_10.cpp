@@ -162,3 +162,41 @@ void Class_10_27_2::function_1() {
     cl.print();
     cout << endl;
 }
+
+Class_10_28::Class_10_28(const int *aPtr) : ar2(aPtr) {
+    for (int i = 0; i < 3; i++) ar1[i] = i;
+}
+
+void Class_10_28::function_1() {
+    // Invalid use of member 'Class_10_28::ar1' in static member function.
+    // Invalid use of member 'Class_10_28::ar2' in static member function.
+    // for (int i = 0; i < 3; i++) cout << ar1[i] << " " << ar2[i] << " ";
+}
+
+Class_10_29_1::Class_10_29_1(std::string init) : str(init) {}
+
+void Class_10_29_1::print() const {
+    cout << "Class_10_29_1, string = " << str;
+}
+
+Class_10_29_2::Class_10_29_2() {}
+
+Class_10_29_1 Class_10_29_2::ar1[3] = {Class_10_29_1("first"), Class_10_29_1("second"), Class_10_29_1("third") };
+
+const Class_10_29_1 Class_10_29_2::ar2[] = {Class_10_29_1("fourth"), Class_10_29_1("fifth"), Class_10_29_1("sixth") };
+
+void Class_10_29_2::printArray() {
+    cout << "Static array of class Class_10_29_1 : ";
+    for (int i = 0; i < 3; i++) {
+        ar1[i].print();
+        cout << " ";
+    }
+    cout << "\nStatic const array of class Class_10_29_1 : ";
+    for (int i = 0; i < 3; i++) {
+        ar2[i].print();
+        cout << " ";
+    }
+}
+
+Class_10_31 Class_10_31::inst(7);
+

@@ -1002,6 +1002,22 @@ void chapter_10() {
     // Task 27.
     Class_10_27_2 cl27;
     cl27.function_1();
+    // Task 28. Too short.
+    // Task 29. Constructor using string.
+    Class_10_29_2 cl29;
+    cl29.printArray();
+    // Task 30.
+    struct Structure_30 {
+        Structure_30() : i(0) {}
+        int i;
+    };
+    Structure_30 struc30[3];
+    cout << "Array of Structure_30 : ";
+    for (int i = 0; i < 3; i++) cout << struc30[i].i << " ";
+    cout << endl;
+    // Task 31.
+    Class_10_31* ptr31 = Class_10_31::instance();
+    cout << "Value from Class_10_31, singletone : " << ptr31->value() << endl;
 }
 
 void Labs_0x01() {
