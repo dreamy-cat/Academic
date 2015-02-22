@@ -245,4 +245,17 @@ private:
     int i;
 };
 
+class Mirror_32 {
+public:
+    Mirror_32() : mPtr(0), flag(true) {}
+    Mirror_32(Mirror_32* iPtr) : mPtr(iPtr), flag(false) {}
+    Mirror_32* test() {
+        if (mPtr != 0) return this; else return 0;
+    }
+
+private:
+    Mirror_32* mPtr;
+    bool flag;
+};
+
 #endif // CHAPTER_10_H

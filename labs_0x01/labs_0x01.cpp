@@ -1018,6 +1018,10 @@ void chapter_10() {
     // Task 31.
     Class_10_31* ptr31 = Class_10_31::instance();
     cout << "Value from Class_10_31, singletone : " << ptr31->value() << endl;
+    // Task 32-35. Rethink
+    Mirror_32 cl32_1;
+    Mirror_32 cl32_2(&cl32_1);
+    cout << "Address of calling cl32_2 : " << (long)cl32_2.test() << endl;
 }
 
 void Labs_0x01() {
