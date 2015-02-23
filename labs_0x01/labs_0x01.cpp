@@ -15,6 +15,7 @@
 #include "chapter_09.h"
 #include "chapter_10.h"
 #include "chapter_10_1.h"
+#include "chapter_11.h"
 
 using namespace std;
 
@@ -1024,6 +1025,41 @@ void chapter_10() {
     cout << "Address of calling cl32_2 : " << (long)cl32_2.test() << endl;
 }
 
+void chapter_11 () {
+    cout << "Chapter's 11 tasks.\n";
+    // Task 1. Not possible to using C compiler.
+    int* intPtr1;
+    char* charPtr1;
+    void* voidPtr1 = charPtr1;
+    // Invalid conversation from 'void*' to 'int*'
+    // intPtr1 = voidPtr1;
+    // Task 2.
+    int int2 = 0;
+    int& r = int2;
+    cout << "Integer reference = " << r << endl;
+    r++;
+    cout << "Integer reference = " << r << endl;
+    // Task 3.
+    // a. ref3 declared as reference but not initialized
+    int int3 = 3;
+    int& ref3 = int3;
+    // Worked but
+    cout << "Task's 3 reference = " << ref3 << endl;
+    ref3 = int2;
+    cout << "Task's 3 reference = " << ref3 << endl;
+    // Only values.
+    ref3 = 0;
+    // Task 4.
+    int int4 = 4;
+    cout << "Task's 4 integer = " << int4 << ", after calling function_11_4 integer = ";
+    function_11_4(int4);
+    cout << int4 << endl;
+    // Task 5.
+    Class_11_5 cl5;
+    const Class_11_5* cl5Addr = &cl5;
+
+}
+
 void Labs_0x01() {
-    chapter_10();
+    chapter_11();
 }
