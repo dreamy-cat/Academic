@@ -1057,7 +1057,32 @@ void chapter_11 () {
     // Task 5.
     Class_11_5 cl5;
     const Class_11_5* cl5Addr = &cl5;
-
+    // Task 6.
+    int ar1[3] = {1, 2, 3};
+    int* element = &ar1[0];
+    function_11_6(element);
+    cout << "Function_11_6 has called, result : " << *element << endl;
+    // Task 7.
+    int int7_1 = 1, int7_2 = 2;
+    int* ar7[2] = {&int7_1, &int7_2};
+    int** elem7 = &ar7[0];
+    function_11_7(elem7);
+    cout << "Function_11_7 has called, result : " << **elem7 << endl;
+    // Task 8. Positive.
+    char c8 = 'a';
+    char& cRef = c8;
+    cout << "Task's 8 char = " << cRef;
+    function_11_8(cRef);
+    cout << ", after function_11_8 = " << cRef << endl;
+    // Task 9. see .h and .cpp files.
+    // Tasks 10-13. Bonus. See .cpp file.
+    char c11 = 'a';
+    int i11 = 1;
+    float f11 = 0;
+    double d11 = 0;
+    function_11_11(c11, i11, f11, d11);
+    Structure_13 st13;
+    st13 = function_11_13(st13);
 }
 
 void Labs_0x01() {
