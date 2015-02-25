@@ -1,6 +1,8 @@
 #ifndef CHAPTER_11_H
 #define ChAPTER_11_H
 
+#include <iostream>
+
 int& function_11_4(int& i);
 
 class Class_11_5 {
@@ -44,5 +46,36 @@ struct Structure_13 {
 };
 
 Structure_13 function_11_13(Structure_13 st);
+
+void function_11_14(int r);
+
+class Class_11_15_1 {
+public:
+    Class_11_15_1() { std::cout << "Class_11_15_1 constructor." << std::endl; }
+    Class_11_15_1(const Class_11_15_1& r) { std::cout << "Copy constructor of Class_11_15_1." << std::endl; t = r.t; }
+    int t;
+};
+
+class Class_11_15_2 {
+public:
+    Class_11_15_2() { std::cout << "Class_11_15_2 constructor." << std::endl; }
+//    Class_11_15_2(const Class_11_15_2& l) { std::cout << "Making copy of Class_11_15_2." << std::endl; s = l.s; }
+    int s;
+    Class_11_15_1 clP;
+};
+
+void function_11_15(int i, Class_11_15_2 cl);
+
+class Class_11_16 {
+public:
+    Class_11_16();
+    Class_11_16(const Class_11_16&r);
+private:
+    std::string str;
+};
+
+void function_11_16_1(Class_11_16 cl);
+
+Class_11_16 function_11_16_2();
 
 #endif

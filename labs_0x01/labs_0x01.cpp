@@ -1077,12 +1077,23 @@ void chapter_11 () {
     // Task 9. see .h and .cpp files.
     // Tasks 10-13. Bonus. See .cpp file.
     char c11 = 'a';
-    int i11 = 1;
+    int i11 = 10;
     float f11 = 0;
     double d11 = 0;
     function_11_11(c11, i11, f11, d11);
     Structure_13 st13;
     st13 = function_11_13(st13);
+    // Task 14.
+    function_11_14(3);
+    // Task 15.
+    Class_11_15_2 cl15;
+    cl15.s = 3;
+    cl15.clP.t = 5;
+    function_11_15(1, cl15);
+    // Task 16.
+    Class_11_16 cl16;
+    function_11_16_1(cl16);
+    Class_11_16 cl16_2 = function_11_16_2();
 }
 
 void Labs_0x01() {

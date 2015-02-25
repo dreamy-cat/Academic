@@ -217,3 +217,75 @@ Structure_13 function_11_13(Structure_13 st) {
  402 020f C3       		ret
  403              		.cfi_endproc
 */
+
+void function_11_14(int r) {
+    cout << "Function_11_14 has called." << endl;
+    if (--r) function_11_14(r);
+}
+
+// Function_11_14 code.
+/*
+.text
+ 412              		.globl	_Z14function_11_14i
+ 413              		.type	_Z14function_11_14i, @function
+ 414              	_Z14function_11_14i:
+ 415              	.LFB993:
+ 416              		.cfi_startproc
+ 417 0210 55       		pushq	%rbp
+ 418              		.cfi_def_cfa_offset 16
+ 419              		.cfi_offset 6, -16
+ 420 0211 4889E5   		movq	%rsp, %rbp
+ 421              		.cfi_def_cfa_register 6
+ 422 0214 4883EC10 		subq	$16, %rsp
+ 423 0218 897DFC   		movl	%edi, -4(%rbp)
+ 424 021b BE000000 		movl	$.LC2, %esi
+ 424      00
+ 425 0220 BF000000 		movl	$_ZSt4cout, %edi
+ 425      00
+ 426 0225 E8000000 		call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc
+ 426      00
+ 427 022a BE000000 		movl	$_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_, %esi
+ 427      00
+ 428 022f 4889C7   		movq	%rax, %rdi
+GAS LISTING /tmp/ccvgcuT1.s 			page 9
+
+
+ 429 0232 E8000000 		call	_ZNSolsEPFRSoS_E
+ 429      00
+ 430 0237 836DFC01 		subl	$1, -4(%rbp)
+ 431 023b 837DFC00 		cmpl	$0, -4(%rbp)
+ 432 023f 0F95C0   		setne	%al
+ 433 0242 84C0     		testb	%al, %al
+ 434 0244 740A     		je	.L23
+ 435 0246 8B45FC   		movl	-4(%rbp), %eax
+ 436 0249 89C7     		movl	%eax, %edi
+ 437 024b E8000000 		call	_Z14function_11_14i
+ 437      00
+ 438              	.L23:
+ 439 0250 C9       		leave
+ 440              		.cfi_def_cfa 7, 8
+ 441 0251 C3       		ret
+ 442              		.cfi_endproc
+*/
+
+void function_11_15(int i, Class_11_15_2 cl) {
+    i++;
+    cout << "Class_11_15_2 integer = " << cl.s << endl;
+    cout << "Class_11_15_1 integer = " << cl.clP.t << endl;
+}
+
+Class_11_16::Class_11_16 () {
+    cout << "Class_11_16 constructor." << endl;
+}
+
+Class_11_16::Class_11_16(const Class_11_16& r) {
+    cout << "Class_11_16 copy constructor." << endl;
+    str = r.str;
+}
+
+void function_11_16_1(Class_11_16 cl) {}
+
+Class_11_16 function_11_16_2() {
+    Class_11_16 local;
+    return local;
+}
