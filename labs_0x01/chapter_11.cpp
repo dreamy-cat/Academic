@@ -289,3 +289,37 @@ Class_11_16 function_11_16_2() {
     Class_11_16 local;
     return local;
 }
+
+Class_11_17::Class_11_17(double i) {
+    dPtr = new double(i);
+    cout << "Class_11_17 constructor, double =  " << *dPtr << endl;
+}
+
+Class_11_17::~Class_11_17() {
+    cout << "Class_11_17 destructor, double = " << *dPtr << endl;
+    *dPtr = -1;
+    delete dPtr;
+    dPtr = 0;
+}
+
+Class_11_17::Class_11_17(const Class_11_17 &l) {
+    cout << "Class_11_17, copy constructor." << endl;
+    dPtr = new double(*l.dPtr);
+}
+
+void function_11_17(Class_11_17 value) {
+    cout << "Function_11_17, double = " << *value.dPtr << endl;
+}
+
+Class_11_18::Class_11_18() {
+    cout << "Class_11_18 constructor." << endl;
+}
+
+Class_11_18::Class_11_18(const Class_11_18 &l, int i) {
+    cout << "Class_11_18 copy constructor." << endl;
+    i++;
+}
+
+void function_11_18(Class_11_18 value) {
+    cout << "In function_11_18." << endl;
+}

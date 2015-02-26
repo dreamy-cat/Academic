@@ -1094,6 +1094,12 @@ void chapter_11 () {
     Class_11_16 cl16;
     function_11_16_1(cl16);
     Class_11_16 cl16_2 = function_11_16_2();
+    // Task 17.
+    Class_11_17 cl17(3);
+    function_11_17(cl17);
+    // Task 18.
+    Class_11_18 cl18;
+    function_11_18(cl18);
 }
 
 void Labs_0x01() {

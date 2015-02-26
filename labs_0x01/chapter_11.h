@@ -78,4 +78,22 @@ void function_11_16_1(Class_11_16 cl);
 
 Class_11_16 function_11_16_2();
 
+class Class_11_17 {
+public:
+    Class_11_17(double i);
+    Class_11_17(const Class_11_17& l);
+    ~Class_11_17();
+    double* dPtr;
+};
+
+void function_11_17(Class_11_17 value);
+
+class Class_11_18 {
+public:
+    Class_11_18();
+    Class_11_18(const Class_11_18& l, int i = 0);
+};
+
+void function_11_18(Class_11_18 value);
+
 #endif
