@@ -1090,16 +1090,28 @@ void chapter_11 () {
     cl15.s = 3;
     cl15.clP.t = 5;
     function_11_15(1, cl15);
-    // Task 16.
+    // Task 16. Try again
     Class_11_16 cl16;
     function_11_16_1(cl16);
     Class_11_16 cl16_2 = function_11_16_2();
+    cl16_2.str = "new 2";
     // Task 17.
     Class_11_17 cl17(3);
     function_11_17(cl17);
     // Task 18.
     Class_11_18 cl18;
     function_11_18(cl18);
+    // Task 19.
+    Class_11_19_2 cl19;
+    cl19.function_1(cl19);
+    // Task 20.
+    // ivalid initialization of non-const reference of type 'Class_11_20&' from an rvalue 'Class_11_20'.
+    function_11_20_2(function_11_20_1());
+    // Task 21.
+    Class_11_21 cl21;
+    // 'Class_11_21::Class_11_21(const Class_11_21&)' is private
+    // function_11_21(cl21);
+    // Task 22. Not clear...
 }
 
 void Labs_0x01() {

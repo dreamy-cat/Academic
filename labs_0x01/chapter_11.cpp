@@ -287,6 +287,7 @@ void function_11_16_1(Class_11_16 cl) {}
 
 Class_11_16 function_11_16_2() {
     Class_11_16 local;
+    local.str = "new";
     return local;
 }
 
@@ -322,4 +323,46 @@ Class_11_18::Class_11_18(const Class_11_18 &l, int i) {
 
 void function_11_18(Class_11_18 value) {
     cout << "In function_11_18." << endl;
+}
+
+Class_11_19_1::Class_11_19_1() {
+    cout << "Class_11_19_1 constructor." << endl;
+}
+
+Class_11_19_1::Class_11_19_1(const Class_11_19_1&) {
+    cout << "Class_11_19_1 copy constructor." << endl;
+}
+
+Class_11_19_2::Class_11_19_2() {
+    cout << "Class_11_19_2 constructor." << endl;
+}
+
+void Class_11_19_2::function_1(Class_11_19_2 clV) {
+    cout << "In Class_11_19_2::function_1." << endl;
+}
+
+Class_11_20::Class_11_20() {}
+
+Class_11_20 function_11_20_1() {
+    Class_11_20 local;
+    return local;
+}
+
+void function_11_20_2(const Class_11_20 &value) {
+    cout << "Function_11_20_2." << endl;
+}
+
+Class_11_21::Class_11_21() {}
+
+void function_11_21(Class_11_21 cl) {}
+
+Class_11_22::Class_11_22() {}
+
+Class_11_22* Class_11_22::clone() const {
+    Class_11_22* newObject = new Class_11_22;
+    return newObject;
+}
+
+void function_11_22(const Class_11_22& value) {
+    Class_11_22* cl = value.clone();
 }

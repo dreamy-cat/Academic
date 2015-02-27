@@ -70,7 +70,6 @@ class Class_11_16 {
 public:
     Class_11_16();
     Class_11_16(const Class_11_16&r);
-private:
     std::string str;
 };
 
@@ -95,5 +94,49 @@ public:
 };
 
 void function_11_18(Class_11_18 value);
+
+class Class_11_19_1 {
+public:
+    Class_11_19_1();
+    Class_11_19_1(const Class_11_19_1&);
+};
+
+class Class_11_19_2 {
+public:
+    Class_11_19_2();
+    void function_1(Class_11_19_2 clV);
+private:
+    Class_11_19_1 cl;
+};
+
+class Class_11_20 {
+public:
+    Class_11_20();
+};
+
+Class_11_20 function_11_20_1();
+
+void function_11_20_2(const Class_11_20 &value);
+
+class Class_11_21 {
+public:
+    Class_11_21();
+private:
+    Class_11_21(const Class_11_21&);
+};
+
+void function_11_21(Class_11_21 cl);
+
+class Class_11_22 {
+public:
+    Class_11_22();
+    Class_11_22* clone() const;
+private:
+    Class_11_22(const Class_11_22&);
+};
+
+void function_11_22(const Class_11_22& value);
+
+
 
 #endif
