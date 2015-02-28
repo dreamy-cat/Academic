@@ -366,3 +366,9 @@ Class_11_22* Class_11_22::clone() const {
 void function_11_22(const Class_11_22& value) {
     Class_11_22* cl = value.clone();
 }
+
+Class_11_24::Class_11_24(double di) : d(di) {}
+
+void Class_11_24::print() {
+    cout << "Class_11_24 double = " << d << endl;
+}

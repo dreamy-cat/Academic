@@ -1112,6 +1112,17 @@ void chapter_11 () {
     // 'Class_11_21::Class_11_21(const Class_11_21&)' is private
     // function_11_21(cl21);
     // Task 22. Not clear...
+    // Task 23. Copy constructor instead of constructor overload.
+    // Task 24.
+    Class_11_24 cl24(3);
+    Class_11_24* clPtr = &cl24;
+    double Class_11_24::*clDouble = &Class_11_24::d;
+    void (Class_11_24::*printPtr)() = &Class_11_24::print;
+    cout << "Double from Class_11_24. Call as object = " << cl24.*clDouble << endl;
+    cout << "Double from Class_11_24. Call as pointer = " << clPtr->*clDouble << endl;
+    cout << "Calling function print(), Class_11_24." << endl;
+    (clPtr->*printPtr)();
+
 }
 
 void Labs_0x01() {

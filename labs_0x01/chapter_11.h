@@ -137,6 +137,11 @@ private:
 
 void function_11_22(const Class_11_22& value);
 
-
+class Class_11_24 {
+public:
+    Class_11_24(double di);
+    void print();
+    double d;
+};
 
 #endif
