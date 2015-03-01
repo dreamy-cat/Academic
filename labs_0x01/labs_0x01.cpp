@@ -1122,7 +1122,21 @@ void chapter_11 () {
     cout << "Double from Class_11_24. Call as pointer = " << clPtr->*clDouble << endl;
     cout << "Calling function print(), Class_11_24." << endl;
     (clPtr->*printPtr)();
-
+    // Task 25.
+    int ar25[3] = {1, 2, 3};
+    Class_11_25 cl25(ar25);
+    int (Class_11_25::*intPtr)[3] = &Class_11_25::ar;
+    cout << "Elements of array in Class_11_25 : ";
+    for (int i = 0; i < 3; i++) {
+        cout << (cl25.*intPtr)[i] << " ";
+    }
+    cout << endl;
+    // Task 26.
+    Class_11_26 cl26;
+    int (Class_11_26::*f1Ptr)(float) const = &Class_11_26::f;
+    int (Class_11_26::*f2Ptr)(bool) const = &Class_11_26::f;
+    cout << "Return of function f(float) from Class_11_26 : " << (cl26.*f1Ptr)(float(1.0)) << endl;
+    cout << "Return of function f(bool) from Class_11_26 : " << (cl26.*f2Ptr)(bool(true)) << endl;
 }
 
 void Labs_0x01() {

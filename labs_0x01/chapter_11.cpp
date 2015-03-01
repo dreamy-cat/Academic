@@ -372,3 +372,7 @@ Class_11_24::Class_11_24(double di) : d(di) {}
 void Class_11_24::print() {
     cout << "Class_11_24 double = " << d << endl;
 }
+
+Class_11_25::Class_11_25(int iAr[]) {
+    for (int i = 0; i < 3; i++) ar[i] = iAr[i];
+}

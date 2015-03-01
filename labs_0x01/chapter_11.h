@@ -144,4 +144,16 @@ public:
     double d;
 };
 
+class Class_11_25 {
+public:
+    Class_11_25(int iAr[]);
+    int ar[3];
+};
+
+class Class_11_26 {
+public:
+    int f(float) const { return 1; }
+    int f(bool) const { return 3; }
+};
+
 #endif
