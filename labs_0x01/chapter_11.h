@@ -2,6 +2,9 @@
 #define ChAPTER_11_H
 
 #include <iostream>
+#include <cstring>
+#include <memory>
+
 
 int& function_11_4(int& i);
 
@@ -155,5 +158,33 @@ public:
     int f(float) const { return 1; }
     int f(bool) const { return 3; }
 };
+
+class Mem_11 {
+public:
+    Mem_11(int sz = 0);
+    Mem_11(const Mem_11&l);
+    ~Mem_11();
+    int msize() const;
+    unsigned char* pointer(int minSize = 0);
+private:
+    unsigned char* mem;
+    int size;
+    void ensureMinSize(int minSize);
+};
+
+class String_11 {
+public:
+    String_11(const char* str = 0);
+    String_11(const String_11& l);
+    ~String_11();
+    void concat(const char* str);
+    void print(std::ostream& os);
+private:
+    Mem_11* buf;
+};
+
+void function_11_23_1(String_11 stc);
+
+void function_11_23_2(Mem_11 m);
 
 #endif

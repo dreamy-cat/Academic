@@ -376,3 +376,68 @@ void Class_11_24::print() {
 Class_11_25::Class_11_25(int iAr[]) {
     for (int i = 0; i < 3; i++) ar[i] = iAr[i];
 }
+
+Mem_11::Mem_11(int sz) {
+    mem = 0;
+    size = 0;
+    if (sz) ensureMinSize(sz);
+}
+
+Mem_11::Mem_11(const Mem_11 &l) {
+    cout << "Copy constructor of Mem_11." << endl;
+    mem = new unsigned char[l.msize()];
+    size = l.msize();
+}
+
+Mem_11::~Mem_11() { delete []mem; }
+
+int Mem_11::msize() const { return size; }
+
+void Mem_11::ensureMinSize(int minSize) {
+    if (size < minSize) {
+        unsigned char* newmem = new unsigned char[minSize];
+        memset(newmem + size, 0, minSize - size);
+        memcpy(newmem, mem, size);
+        delete []mem;
+        mem = newmem;
+        size = minSize;
+    }
+}
+
+unsigned char* Mem_11::pointer(int minSize) {
+    if (minSize) ensureMinSize(minSize);
+    return mem;
+}
+
+String_11::String_11(const char *str) {
+    if (str) buf = new Mem_11(strlen(str) + 1); else buf = 0;
+    strcpy((char*)buf->pointer(), str);
+}
+
+String_11::String_11(const String_11 &l) {
+    cout << "Copy constructor of String_11." << endl;
+    buf = new Mem_11(l.buf->msize());
+    memcpy((char*)buf->pointer(), (char*)l.buf->pointer(), l.buf->msize());
+}
+
+String_11::~String_11() { delete buf; }
+
+void String_11::concat(const char *str) {
+    if (!buf) new Mem_11;
+    strcat((char*)buf->pointer(buf->msize() + strlen(str) + 1), str);
+}
+
+void String_11::print(ostream &os) {
+    if (!buf) return;
+    os << buf->pointer() << endl;
+}
+
+void function_11_23_1(String_11 stc) {
+    cout << "Function_11_23 has called. String : ";
+    stc.print(std::cout);
+}
+
+void function_11_23_2(Mem_11 m) {
+    cout << "Function_11_23 has called. Mem size : ";
+    cout << m.msize() << endl;
+}

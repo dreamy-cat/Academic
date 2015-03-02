@@ -1113,6 +1113,13 @@ void chapter_11 () {
     // function_11_21(cl21);
     // Task 22. Not clear...
     // Task 23. Copy constructor instead of constructor overload.
+    String_11 str23("Class String_11 string.");
+    str23.print(std::cout);
+    str23.concat(" And let's test a copy constructor.");
+    str23.print(std::cout);
+    function_11_23_1(str23);
+    Mem_11 mem23(16);
+    function_11_23_2(mem23);
     // Task 24.
     Class_11_24 cl24(3);
     Class_11_24* clPtr = &cl24;
