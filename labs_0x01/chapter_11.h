@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cstring>
 #include <memory>
-
+#include <vector>
 
 int& function_11_4(int& i);
 
@@ -186,5 +186,20 @@ private:
 void function_11_23_1(String_11 stc);
 
 void function_11_23_2(Mem_11 m);
+
+class Class_11_27;
+
+class Class_11_27 {
+public:
+    Class_11_27();
+    void add(void(Class_11_27::*f)());
+    void remove(void (Class_11_27::*f)());
+    void run();
+    void function_1();
+    void function_2();
+    void function_3();
+private:
+    std::vector<void(Class_11_27::*)()> functions;
+};
 
 #endif

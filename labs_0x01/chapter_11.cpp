@@ -441,3 +441,32 @@ void function_11_23_2(Mem_11 m) {
     cout << "Function_11_23 has called. Mem size : ";
     cout << m.msize() << endl;
 }
+
+Class_11_27::Class_11_27() {
+    functions.clear();
+}
+
+void Class_11_27::add(void (Class_11_27::*f)()) {
+    functions.push_back(f);
+}
+
+void Class_11_27::remove(void (Class_11_27::*f)()) {
+    for (vector<void(Class_11_27::*)()>::iterator it = functions.begin(); it < functions.end(); it++ )
+        if (*it == f) functions.erase(it);
+}
+
+void Class_11_27::run() {
+    for (vector<void(Class_11_27::*)()>::iterator it = functions.begin(); it < functions.end(); it++) (this->**it)();
+}
+
+void Class_11_27::function_1() {
+    cout << "Class_11_27, function_1." << endl;
+}
+
+void Class_11_27::function_2() {
+    cout << "Class_11_27, function_3." << endl;
+}
+
+void Class_11_27::function_3() {
+    cout << "Class_11_27, function_3." << endl;
+}

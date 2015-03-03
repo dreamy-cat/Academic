@@ -1144,6 +1144,15 @@ void chapter_11 () {
     int (Class_11_26::*f2Ptr)(bool) const = &Class_11_26::f;
     cout << "Return of function f(float) from Class_11_26 : " << (cl26.*f1Ptr)(float(1.0)) << endl;
     cout << "Return of function f(bool) from Class_11_26 : " << (cl26.*f2Ptr)(bool(true)) << endl;
+    // Task 27-28.
+    Class_11_27 cl27;
+    void (Class_11_27::*funcPtr)() = &Class_11_27::function_1;
+    cl27.add(funcPtr);
+    funcPtr = &Class_11_27::function_2;
+    cl27.add(funcPtr);
+    funcPtr = &Class_11_27::function_3;
+    cl27.add(funcPtr);
+    cl27.run();
 }
 
 void Labs_0x01() {
