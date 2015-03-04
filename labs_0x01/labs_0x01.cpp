@@ -16,6 +16,7 @@
 #include "chapter_10.h"
 #include "chapter_10_1.h"
 #include "chapter_11.h"
+#include "chapter_12.h"
 
 using namespace std;
 
@@ -1155,6 +1156,37 @@ void chapter_11 () {
     cl27.run();
 }
 
+void chapter_12() {
+    cout << "Chapter's 12 tasks.\n";
+    // Task 1. no 'operator++(int) declared for postfix '++'
+    Class_12_1 cl1;
+    ++cl1;
+    cl1++;
+    // Task 2-8. Prefix never used as right value.
+    Class_12_2 cl2_1(3), cl2_2(5), cl2_3(2);
+    cout << "Integers of Class_12_2 : " << endl;
+    cout << cl2_1; //.print(std::cout);
+    cout << cl2_2;
+    cout << "Operator '+' result, integer : ";
+    cl2_1 = cl2_1 + cl2_2;
+    cout << cl2_1;
+    cout << "Expression 'a + b - c' = ";
+    cl2_1 = cl2_1 + cl2_3 - cl2_2;
+    cout << cl2_1;
+    cout << "Class_12_2, prefix operator ++ : ";
+    ++cl2_1;
+    cout << cl2_1;
+    cl2_3 = cl2_1++;
+    cout << "Class_12_2, third object (c) = a++ : ";
+    cout << cl2_3;
+    cout << "Class_12_2, first object after postfix operator '++' = ";
+    cout << cl2_1;
+    cout << "Class_12_2, operator (-) for first object = ";
+    cl2_1 = -cl2_1;
+    cout << cl2_1;
+    // Task 9.
+}
+
 void Labs_0x01() {
-    chapter_11();
+    chapter_12();
 }
