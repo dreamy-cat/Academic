@@ -1184,7 +1184,63 @@ void chapter_12() {
     cout << "Class_12_2, operator (-) for first object = ";
     cl2_1 = -cl2_1;
     cout << cl2_1;
-    // Task 9.
+    // Task 9-10.
+    Class_12_9 cl9('a');
+    cout << cl9;
+    cin >> cl9;
+    cout << cl9;
+    cl9++;
+    cl9--;
+    // Task 11-12.
+    Number_12 cl11_1(1), cl11_2(2), cl11_3(3);
+    cout << "Class Number_12 (a+b) : " << cl11_1 + cl11_2;
+    cout << "Class Number_12 (c-b) : " << cl11_3 - cl11_2;
+    cout << "Class Number_12 (a*b*c) : " << cl11_1*cl11_2*cl11_3;
+    function_12_12(cl11_1);
+    // Task 13.
+    int ar13[] = { 1, 2 };
+    Class_12_13 cl13_1(&ar13[0]), cl13_2(&ar13[1]);
+    cl13_1.print();
+    cl13_2.print();
+    cl13_1 = cl13_2;
+    cout << "Objects after operator= : ";
+    cl13_1.print();
+    // Task 14-17. Public operator and copy constructor, not private.
+    // Rethink about optimization.
+    Bird_12 cl14_1(1), cl14_2(2), cl14_3(4);
+    cout << cl14_1 << cl14_2;
+    cl14_1 = cl14_2;
+    cout << "Class Bird_12 object after operator= : " << cl14_1;
+    cout << "Bird_12 object 1 + Bird_12 object 2 = " << cl14_1 + cl14_2;
+    cout << "Bird_12 object 2 - Bird_12 object 1 = " << cl14_2 - cl14_1;
+    cout << "Bird_12 object 3 * Bird_12 object 2 = " << cl14_3 * cl14_2;
+    cout << "Bird_12 object 3 / Bird_12 object 2 = " << cl14_3 / cl14_2;
+    BirdHouse_12 cl15_1(cl14_1, cl14_2, cl14_3, 1);
+    BirdHouse_12 cl15_2(cl14_2, cl14_3, cl14_3, 2);
+    BirdHouse_12 cl15_3(cl14_1, cl14_1, cl14_1, 3);
+    cl15_3 = cl15_2 = cl15_1;
+    cout << cl15_1 << cl15_2 << cl15_3;
+    BirdHouse_12 cl15_4(cl14_1, cl14_1, cl14_1, 4);
+    BirdHouse_12 cl15_5(cl14_1, cl14_1, cl14_1, 5);
+    cout << "BirdHouse object 4 + BirdHouse object 5 : \n" << cl15_4 << cl15_5;
+    cout << "Result of operator+ for objects above :\n" << cl15_4 + cl15_5;
+    cout << "Result of operator- for objects above :\n" << cl15_4 - cl15_5;
+    cout << "Result of operator* for objects above :\n" << cl15_4 * cl15_5;
+    cout << "Result of operator/ for objects above :\n" << cl15_4 / cl15_5;
+    // Task 18.
+    Obj_18_1 objects[3];
+    ObjContainer_18_1 cont18;
+    for (int i = 0; i < 3; i++) cont18.add(&objects[i]);
+    SmartPointer_18_1 it(cont18);
+    do {
+        it->f();
+        it->g();
+    } while (it++);
+    cout << "Decreasing iterator.\n";
+    while (it--) {
+        it->f();
+        it->g();
+    }
 }
 
 void Labs_0x01() {
