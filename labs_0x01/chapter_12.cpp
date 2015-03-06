@@ -224,14 +224,14 @@ const BirdHouse_12 operator/(const BirdHouse_12& left, const BirdHouse_12& right
     return BirdHouse_12(*p1, *p2, *p3, 25);
 }
 
-int Obj_18_1::i = 3;
-int Obj_18_1::j = 7;
+int Obj_18::i = 3;
+int Obj_18::j = 7;
 
-void Obj_18_1::f() const { cout << "Obj_18_1, i = " << i++ << endl; }
+void Obj_18::f() const { cout << "Obj_18_1, i = " << i++ << endl; }
 
-void Obj_18_1::g() const { cout << "Obj_18_1, j = " << j++ << endl; }
+void Obj_18::g() const { cout << "Obj_18_1, j = " << j++ << endl; }
 
-void ObjContainer_18_1::add(Obj_18_1 *obj) { a.push_back(obj); }
+void ObjContainer_18_1::add(Obj_18 *obj) { a.push_back(obj); }
 
 SmartPointer_18_1::SmartPointer_18_1(ObjContainer_18_1 &objC) : oc(objC) {
     index = 0;
@@ -257,7 +257,67 @@ bool SmartPointer_18_1::operator ++(int) {
     return operator++();
 }
 
-Obj_18_1* SmartPointer_18_1::operator ->() const {
+Obj_18* SmartPointer_18_1::operator ->() const {
     if (oc.a.empty())  return NULL;
     return oc.a[index];
+}
+
+void ObjContainer_18_2::add(Obj_18 *obj) {
+    a.push_back(obj);
+}
+
+ObjContainer_18_2::SmartPointer_18_2::SmartPointer_18_2(ObjContainer_18_2 &objC) : oc(objC){
+    index = 0;
+}
+
+bool ObjContainer_18_2::SmartPointer_18_2::operator++() {
+    if (index >= oc.a.size()) return false;
+    if (oc.a[++index] == 0) return false;
+    return true;
+}
+
+bool ObjContainer_18_2::SmartPointer_18_2::operator++(int) {
+    return operator++();
+}
+
+bool ObjContainer_18_2::SmartPointer_18_2::operator--() {
+    if (index <= 0) return false;
+    if (oc.a[--index] == 0) return false;
+    return true;
+}
+
+bool ObjContainer_18_2::SmartPointer_18_2::operator--(int) {
+    return operator--();
+}
+
+Obj_18* ObjContainer_18_2::SmartPointer_18_2::operator->() const {
+    if (oc.a.empty()) return NULL;
+    return oc.a[index];
+}
+
+ObjContainer_18_2::SmartPointer_18_2 ObjContainer_18_2::begin() {
+    return ObjContainer_18_2::SmartPointer_18_2(*this);
+}
+
+Class_12_19_1::Class_12_19_1() {
+    cout << "Class_12_19_1 constructor." << endl;
+}
+
+Class_12_19_2::Class_12_19_2() {
+    cout << "Class_12_19_2 constructor." << endl;
+}
+
+Class_12_19_2::Class_12_19_2(const Class_12_19_1 &) {
+    cout << "Class_12_19_2 copy constructor from Class_12_19_1." << endl;
+}
+
+
+// Task 20. 'Class_12_19_2& operator=(Class_12_19_2& r)' must be a nonstatic member function
+// Class_12_19_2& operator=(const Class_12_19_2& r) {}
+
+Class_12_21::Class_12_21(string is) : s(is) {}
+
+Class_12_21& Class_12_21::operator =(Class_12_21& r) {
+    s = r.s;
+    return *this;
 }

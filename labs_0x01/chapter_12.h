@@ -95,7 +95,7 @@ private:
     Bird_12& bird_3;
 };
 
-class Obj_18_1 {
+class Obj_18 {
 public:
     void f() const;
     void g() const;
@@ -105,10 +105,10 @@ private:
 
 class ObjContainer_18_1 {
 public:
-    void add(Obj_18_1* obj);
+    void add(Obj_18* obj);
     friend class SmartPointer_18_1;
 private:
-    std::vector<Obj_18_1*> a;
+    std::vector<Obj_18*> a;
 };
 
 class SmartPointer_18_1 {
@@ -118,10 +118,50 @@ public:
     bool operator++(int);
     bool operator--();
     bool operator--(int);
-    Obj_18_1* operator->() const;
+    Obj_18* operator->() const;
 private:
     int index;
     ObjContainer_18_1& oc;
+};
+
+class ObjContainer_18_2 {
+public:
+    void add(Obj_18* obj);
+    class SmartPointer_18_2;
+    SmartPointer_18_2 begin();
+    friend class SmartPointer_18_2;
+    class SmartPointer_18_2 {
+    public:
+        SmartPointer_18_2(ObjContainer_18_2& objC);
+        bool operator++();
+        bool operator++(int);
+        bool operator--();
+        bool operator--(int);
+        Obj_18* operator->() const;
+    private:
+        ObjContainer_18_2& oc;
+        int index;
+    };
+private:
+    std::vector<Obj_18*> a;
+};
+
+class Class_12_19_1 {
+public:
+    Class_12_19_1();
+};
+
+class Class_12_19_2 {
+public:
+    Class_12_19_2();
+    Class_12_19_2(const Class_12_19_1&);
+};
+
+class Class_12_21 {
+public:
+    Class_12_21(std::string is = "op=call");
+    Class_12_21& operator=(Class_12_21& r);
+    std::string s;
 };
 
 #endif

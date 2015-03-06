@@ -1228,7 +1228,7 @@ void chapter_12() {
     cout << "Result of operator* for objects above :\n" << cl15_4 * cl15_5;
     cout << "Result of operator/ for objects above :\n" << cl15_4 / cl15_5;
     // Task 18.
-    Obj_18_1 objects[3];
+    Obj_18 objects[3];
     ObjContainer_18_1 cont18;
     for (int i = 0; i < 3; i++) cont18.add(&objects[i]);
     SmartPointer_18_1 it(cont18);
@@ -1241,6 +1241,30 @@ void chapter_12() {
         it->f();
         it->g();
     }
+    cout << "Nested smart pointer :\n";
+    ObjContainer_18_2 cont18_2;
+    for (int i = 0; i < 3; i++) cont18_2.add(&objects[i]);
+    ObjContainer_18_2::SmartPointer_18_2 it2 = cont18_2.begin();
+    do {
+        it2->f();
+        it2->g();
+    } while (it2++);
+    cout << "Decreasing iterator.\n";
+    while (it2--) {
+        it2->f();
+        it2->g();
+    }
+    // Task 19. conversation from 'int' to non-scalar type 'Class_12_19_2' requested
+    Class_12_19_2 cl19_1;
+    Class_12_19_1 cl19_2;
+    cl19_1 = cl19_2;
+    // Task 20. see chapter_12.cpp
+    // Task 21. May be not correct.
+    Class_12_21 cl21_1("Class_12_21 string."), cl21_2;
+    cout << "Class_12_21 string = " << cl21_1.s;
+    cl21_1 = cl21_2;
+    cout << " after operator= : " << cl21_1.s << endl;
+
 }
 
 void Labs_0x01() {
