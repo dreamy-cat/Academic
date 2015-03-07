@@ -321,3 +321,49 @@ Class_12_21& Class_12_21::operator =(Class_12_21& r) {
     s = r.s;
     return *this;
 }
+
+Dog_12_1::Dog_12_1(const string &nm) : name(nm) {
+    cout << "Dog_12_1 constructor, name = " << *this << endl;
+}
+
+Dog_12_1::Dog_12_1(const Dog_12_1 *dp, const string &msg) : name(dp->name + msg) {
+    cout << "Dog_12_1 object copied : " << *this << " from " << *dp << endl;
+}
+
+Dog_12_1::~Dog_12_1() {
+    cout << "Dog_12_1 destructor : " << *this << endl;
+}
+
+void Dog_12_1::rename(string newName) {
+    name = newName;
+    cout << "Dog_12_1 renamed: " << *this << endl;
+}
+
+ostream& operator<<(ostream& os, const Dog_12_1& value) {
+    return os << "[" << value.name << "]";
+}
+
+DogHouse_12_1::DogHouse_12_1(Dog_12_1 *dog, const string nm) : p(dog), name(nm) {}
+
+DogHouse_12_1::~DogHouse_12_1() { delete p; }
+
+DogHouse_12_1::DogHouse_12_1(const DogHouse_12_1& r) {
+    p = new Dog_12_1(r.p, " copy constructed.");
+    name = r.name + " copy constructed.";
+}
+
+DogHouse_12_1& DogHouse_12_1::operator =(const DogHouse_12_1& r) {
+    if (&r != this) {
+        p = new Dog_12_1(r.p, " assigned.");
+        name = r.name + " assigned.";
+    }
+    return *this;
+}
+
+void DogHouse_12_1::rename(const string &newName) { name = newName; }
+
+Dog_12_1* DogHouse_12_1::getDog() const { return p; }
+
+ostream& operator<<(ostream& os, const DogHouse_12_1& value) {
+    return os << "[" << value.name << "] contains " << *value.p;
+}

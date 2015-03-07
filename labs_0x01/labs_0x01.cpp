@@ -1264,6 +1264,16 @@ void chapter_12() {
     cout << "Class_12_21 string = " << cl21_1.s;
     cl21_1 = cl21_2;
     cout << " after operator= : " << cl21_1.s << endl;
+    // Task 22. If new object doesn't create, then application crash, while trying to free memory.
+    DogHouse_12_1 dh1(new Dog_12_1("Dog-1"), "Dog's-1 house");
+    cout << dh1 << endl;
+    DogHouse_12_1 dh2 = dh1;
+    cout << dh2 << endl;
+    dh2.getDog()->rename("Dog-1-rename");
+    dh2.rename("Dog-1's house-rename");
+    cout << dh2 << endl;
+    dh1 = dh2;
+    cout << "After operator= : " << dh1 << endl;
 
 }
 

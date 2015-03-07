@@ -164,4 +164,29 @@ public:
     std::string s;
 };
 
+class Dog_12_1 {
+public:
+    Dog_12_1(const std::string& nm);
+    Dog_12_1(const Dog_12_1* dp, const std::string& msg);
+    ~Dog_12_1();
+    void rename(std::string newName);
+    friend std::ostream& operator<<(std::ostream& os, const Dog_12_1& value);
+private:
+    std::string name;
+};
+
+class DogHouse_12_1 {
+public:
+    DogHouse_12_1(Dog_12_1* dog, const std::string nm);
+    DogHouse_12_1(const DogHouse_12_1& r);
+    DogHouse_12_1& operator=(const DogHouse_12_1& r);
+    void rename(const std::string& newName);
+    Dog_12_1* getDog() const;
+    ~DogHouse_12_1();
+    friend std::ostream& operator<<(std::ostream& os, const DogHouse_12_1& value);
+private:
+    Dog_12_1* p;
+    std::string name;
+};
+
 #endif
