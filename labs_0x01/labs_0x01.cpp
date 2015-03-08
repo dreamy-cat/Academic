@@ -1274,7 +1274,23 @@ void chapter_12() {
     cout << dh2 << endl;
     dh1 = dh2;
     cout << "After operator= : " << dh1 << endl;
-
+    // Task 23.
+    cout << "Task 23.\n";
+    DogHouse_12_2 dh2_1(Dog_12_2::make("Fido"), "FidoHouse"), dh2_2(Dog_12_2::make("Spot"), "SpotHouse");
+    cout << "Entering copy-construction.\n";
+    DogHouse_12_2 dh2_3(dh2_1);
+    cout << "After copy-constructing bobs.\n";
+    cout << "fidos: " << dh2_1 << endl;
+    cout << "spots: " << dh2_2 << endl;
+    cout << "bobs: " << dh2_3 << endl;
+    cout << "Entering spots = fidos.\n";
+    dh2_2 = dh2_1;
+    cout << "After spots = fidos.\n";
+    cout << "spots: " << dh2_2 << endl;
+    cout << "Entering self assigment.\n";
+    dh2_3 = dh2_3;
+    cout << "After self-assigment.\n";
+    cout << "bobs: " << dh2_3 << endl;
 }
 
 void Labs_0x01() {

@@ -189,4 +189,41 @@ private:
     std::string name;
 };
 
+class Dog_12_2 {
+public:
+    Dog_12_2(const Dog_12_2& d);
+    ~Dog_12_2();
+    static Dog_12_2* make(const std::string nm);
+    void attach();
+    void detach();
+    Dog_12_2* unalias();
+    void rename(const std::string newName);
+    friend std::ostream& operator<<(std::ostream& os, const Dog_12_2& value);
+private:
+    std::string name;
+    int refcount;
+    Dog_12_2(const std::string nm);
+    Dog_12_2& operator=(const Dog_12_2& r);
+    static int constructorCount;
+    int lastCounter;
+};
+
+class DogHouse_12_2 {
+public:
+    DogHouse_12_2(Dog_12_2* dog, const std::string house);
+    ~DogHouse_12_2();
+    DogHouse_12_2(const DogHouse_12_2& dh);
+    DogHouse_12_2& operator=(const DogHouse_12_2& dh);
+    void renameHouse(const std::string newName);
+    void unalias();
+    void renameDog(const std::string newName);
+    Dog_12_2* getDog();
+    friend std::ostream& operator<<(std::ostream& os, const DogHouse_12_2& value);
+private:
+    Dog_12_2* p;
+    std::string name;
+    static int constructorCount;
+    int lastCounter;
+};
+
 #endif

@@ -367,3 +367,112 @@ Dog_12_1* DogHouse_12_1::getDog() const { return p; }
 ostream& operator<<(ostream& os, const DogHouse_12_1& value) {
     return os << "[" << value.name << "] contains " << *value.p;
 }
+
+// Task 23.
+
+int Dog_12_2::constructorCount = 0;
+int DogHouse_12_2::constructorCount = 0;
+
+Dog_12_2::Dog_12_2(const string nm) : name(nm), refcount(1) {
+    lastCounter = ++constructorCount;
+    cout << "Creating Dog, objects[" << lastCounter << "]: " << *this << endl;
+}
+
+Dog_12_2* Dog_12_2::make(const string nm) {
+    ++constructorCount;
+    return new Dog_12_2(nm);
+}
+
+Dog_12_2::Dog_12_2(const Dog_12_2 &d) {
+    lastCounter = ++constructorCount;
+    name = d.name + " copy";
+    refcount = 1;
+    cout << "Dog copy constructor, objects[" << lastCounter << "]: " << *this << endl;
+}
+
+Dog_12_2::~Dog_12_2() {
+    cout << "Deleting Dog[" << lastCounter << "]: " << *this << endl;
+}
+
+void Dog_12_2::attach() {
+    ++refcount;
+    cout << "Attached dog[" << lastCounter << "]: " << *this << endl;
+}
+
+void Dog_12_2::detach() {
+    if (refcount == 0) {
+        cout << "Refcount is null.";
+        return;
+    }
+    cout << "Detaching Dog[" << lastCounter << "]: " << *this << endl;
+    if (--refcount == 0) delete this;
+}
+
+Dog_12_2* Dog_12_2::unalias() {
+    cout << "Unaliasing Dog[" << lastCounter << "]: " << *this << endl;
+    if (refcount == 1) return this;
+    --refcount;
+    return new Dog_12_2(*this);
+}
+
+void Dog_12_2::rename(const string newName) {
+    name = newName;
+    cout << "Dog renamed to[" << lastCounter << "]: " << *this << endl;
+}
+
+ostream& operator<<(ostream& os, const Dog_12_2& value) {
+    return os << "[" << value.name << ":" << value.refcount << "]";
+}
+
+DogHouse_12_2::DogHouse_12_2(Dog_12_2 *dog, const string house) {
+    lastCounter = ++constructorCount;
+    p = dog;
+    name = house;
+    cout << "Created DogHouse, objects[" << lastCounter << "]: " << *this << endl;
+}
+
+DogHouse_12_2::~DogHouse_12_2() {
+    cout << "DogHouse destructor[" << lastCounter << "]: " << *this << endl;
+    p->detach();
+}
+
+DogHouse_12_2::DogHouse_12_2(const DogHouse_12_2 &dh) {
+    lastCounter = ++constructorCount;
+    p = dh.p;
+    name = "copy construced " + dh.name;
+    p->attach();
+    cout << "DogHouse copy-constructor, objects[" << lastCounter << "]: " << *this << endl;
+}
+
+DogHouse_12_2& DogHouse_12_2::operator=(const DogHouse_12_2& r) {
+    if (&r != this) {
+        name = r.name + " assigned.";
+        p->detach();
+        p = r.p;
+        p->attach();
+    }
+    cout << "DogHouse operator=[" << lastCounter << "]: " << *this << endl;
+    return *this;
+}
+
+void DogHouse_12_2::renameHouse(const string newName) {
+    name = newName;
+}
+
+void DogHouse_12_2::renameDog(const string newName) {
+    unalias();
+    p->rename(newName);
+}
+
+void DogHouse_12_2::unalias() {
+    p = p->unalias();
+}
+
+Dog_12_2* DogHouse_12_2::getDog() {
+    unalias();
+    return p;
+}
+
+ostream& operator<<(ostream& os, const DogHouse_12_2& value) {
+    return os << "[" << value.name << "] contains " << *value.p;
+}
