@@ -226,4 +226,18 @@ private:
     int lastCounter;
 };
 
+class Class_12_24_1 {
+public:
+    Class_12_24_1(std::string is);
+    std::string s;
+};
+
+class Class_12_24_2 {
+public:
+    Class_12_24_2(std::string is);
+    friend std::ostream& operator<<(std::ostream& os, const Class_12_24_2& value);
+private:
+    Class_12_24_1 cl1;
+};
+
 #endif

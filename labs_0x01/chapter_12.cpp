@@ -476,3 +476,15 @@ Dog_12_2* DogHouse_12_2::getDog() {
 ostream& operator<<(ostream& os, const DogHouse_12_2& value) {
     return os << "[" << value.name << "] contains " << *value.p;
 }
+
+Class_12_24_1::Class_12_24_1(std::string is) : s(is) {
+    cout << "Class_12_24_1 constructor s = " << s << endl;
+}
+
+Class_12_24_2::Class_12_24_2(std::string is) : cl1(is) {
+    cout << "Class_12_24_2 constructor, string = " << is << endl;
+}
+
+ostream& operator<<(ostream& os, const Class_12_24_2& value) {
+    cout << "Class_12_24_2::Class_12_24_1 string = " << value.cl1.s << endl;
+}

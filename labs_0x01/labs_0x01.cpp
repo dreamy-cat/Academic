@@ -1291,6 +1291,13 @@ void chapter_12() {
     dh2_3 = dh2_3;
     cout << "After self-assigment.\n";
     cout << "bobs: " << dh2_3 << endl;
+    // Task 24.
+    Class_12_24_1 cl24_1("String-24-1"), cl24_2("String-24-2");
+    Class_12_24_2 cl24_3("String-24-3"), cl24_4("String-24-4");
+    cl24_2 = cl24_1;
+    cout << "Class_12_24_1 object 2, string = " << cl24_2.s << endl;
+    cl24_4 = cl24_3;
+    cout << cl24_4;
 }
 
 void Labs_0x01() {
