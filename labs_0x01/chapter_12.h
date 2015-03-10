@@ -240,4 +240,50 @@ private:
     Class_12_24_1 cl1;
 };
 
+class Integer_12 {
+public:
+    Integer_12(long il = 0);
+    void print();
+    friend const Integer_12& operator+(const Integer_12& a);
+    friend const Integer_12 operator-(const Integer_12& a);
+    friend const Integer_12 operator~(const Integer_12& a);
+    friend Integer_12* operator&(Integer_12& a);
+    friend const int operator!(const Integer_12& a);
+    friend const Integer_12 operator++(Integer_12& a);
+    friend const Integer_12 operator++(Integer_12& a, int);
+    friend const Integer_12 operator--(Integer_12& a);
+    friend const Integer_12 operator--(Integer_12& a, int);
+    friend const Integer_12 operator+(Integer_12& left, Integer_12& right);
+    friend const Integer_12 operator-(Integer_12& left, Integer_12& right);
+    friend const Integer_12 operator*(Integer_12& left, Integer_12& right);
+    friend const Integer_12 operator/(Integer_12& left, Integer_12& right);
+    friend const Integer_12 operator%(Integer_12& left, Integer_12& right);
+    friend const Integer_12 operator^(Integer_12& left, Integer_12& right);
+    friend const Integer_12 operator&(Integer_12& left, Integer_12& right);
+    friend const Integer_12 operator|(Integer_12& left, Integer_12& right);
+    friend const Integer_12 operator<<(Integer_12& left, Integer_12& right);
+    friend const Integer_12 operator>>(Integer_12& left, Integer_12& right);
+    friend Integer_12& operator+=(Integer_12& left, Integer_12& right);
+    friend Integer_12& operator-=(Integer_12& left, Integer_12& right);
+    friend Integer_12& operator*=(Integer_12& left, Integer_12& right);
+    friend Integer_12& operator/=(Integer_12& left, Integer_12& right);
+    friend Integer_12& operator%=(Integer_12& left, Integer_12& right);
+    friend Integer_12& operator^=(Integer_12& left, Integer_12& right);
+    friend Integer_12& operator&=(Integer_12& left, Integer_12& right);
+    friend Integer_12& operator|=(Integer_12& left, Integer_12& right);
+    friend Integer_12& operator>>=(Integer_12& left, Integer_12& right);
+    friend Integer_12& operator<<=(Integer_12& left, Integer_12& right);
+    friend int operator==(const Integer_12& left, const Integer_12& right);
+    friend int operator!=(const Integer_12& left, const Integer_12& right);
+    friend int operator<(const Integer_12& left, const Integer_12& right);
+    friend int operator>(const Integer_12& left, const Integer_12& right);
+    friend int operator<=(const Integer_12& left, const Integer_12& right);
+    friend int operator>=(const Integer_12& left, const Integer_12& right);
+    friend int operator&&(const Integer_12& left, const Integer_12& right);
+    friend int operator||(const Integer_12& left, const Integer_12& right);
+private:
+    long i;
+    Integer_12* get();
+};
+
 #endif

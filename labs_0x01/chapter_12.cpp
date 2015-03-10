@@ -488,3 +488,217 @@ Class_12_24_2::Class_12_24_2(std::string is) : cl1(is) {
 ostream& operator<<(ostream& os, const Class_12_24_2& value) {
     cout << "Class_12_24_2::Class_12_24_1 string = " << value.cl1.s << endl;
 }
+
+Integer_12::Integer_12(long il) : i(il) {
+    cout << "Integer_12 constructor." << endl;
+}
+
+Integer_12* Integer_12::get() {
+    cout << "Integer_12, get()." << endl;
+    return this;
+}
+
+const Integer_12& operator+(const Integer_12& a) {
+    cout << "Intger_12, unary 'operator+'." << endl;
+    return a;
+}
+
+const Integer_12 operator-(const Integer_12& a) {
+    cout << "Intger_12, unary 'operator-'." << endl;
+    return Integer_12(-a.i);
+}
+
+const Integer_12 operator~(const Integer_12& a) {
+    cout << "Intger_12, unary 'operator~'." << endl;
+    return ~a.i;
+}
+
+Integer_12* operator&(Integer_12& a) {
+    cout << "Intger_12, unary 'operator&'." << endl;
+    return a.get();
+}
+
+const int operator!(const Integer_12& a) {
+    cout << "Intger_12, unary 'operator!'." << endl;
+    return !a.i;
+}
+
+const Integer_12 operator++(Integer_12& a) {
+    cout << "Intger_12, unary 'prefix operator++'." << endl;
+    a.i++;
+    return a.i;
+}
+
+const Integer_12 operator++(Integer_12& a, int) {
+    cout << "Intger_12, unary 'postfix operator++'." << endl;
+    Integer_12 r = a.i;
+    a.i++;
+    return r;
+}
+
+const Integer_12 operator--(Integer_12& a) {
+    cout << "Intger_12, unary 'prefix operator--'." << endl;
+    a.i--;
+    return a.i;
+}
+
+const Integer_12 operator--(Integer_12& a, int) {
+    cout << "Intger_12, unary 'postfix operator--'." << endl;
+    Integer_12 r = a.i;
+    a.i--;
+    return r;
+}
+
+const Integer_12 operator+(Integer_12& left, Integer_12& right) {
+    cout << "Intger_12, binary 'operator+'." << endl;
+    return Integer_12(left.i + right.i);
+}
+
+const Integer_12 operator-(Integer_12& left, Integer_12& right) {
+    cout << "Intger_12, binary 'operator-'." << endl;
+    return Integer_12(left.i - right.i);
+}
+
+const Integer_12 operator*(Integer_12& left, Integer_12& right) {
+    cout << "Intger_12, binary 'operator*'." << endl;
+    return Integer_12(left.i * right.i);
+}
+
+const Integer_12 operator/(Integer_12& left, Integer_12& right) {
+    cout << "Intger_12, binary 'operator/'." << endl;
+    if (right.i == 0) return Integer_12(0);
+    return Integer_12(left.i / right.i);
+}
+
+const Integer_12 operator%(Integer_12& left, Integer_12& right) {
+    cout << "Intger_12, binary 'operator%'." << endl;
+    if (right.i == 0) return Integer_12(0);
+    return Integer_12(left.i % right.i);
+}
+
+const Integer_12 operator^(Integer_12& left, Integer_12& right) {
+    cout << "Intger_12, binary 'operator^'." << endl;
+    return Integer_12(left.i ^ right.i);
+}
+
+const Integer_12 operator&(Integer_12& left, Integer_12& right) {
+    cout << "Intger_12, binary 'operator&'." << endl;
+    return Integer_12(left.i & right.i);
+}
+
+const Integer_12 operator|(Integer_12& left, Integer_12& right) {
+    cout << "Intger_12, binary 'operator|'." << endl;
+    return Integer_12(left.i | right.i);
+}
+
+const Integer_12 operator<<(Integer_12& left, Integer_12& right) {
+    cout << "Intger_12, binary 'operator<<'." << endl;
+    return Integer_12(left.i << right.i);
+}
+
+const Integer_12 operator>>(Integer_12& left, Integer_12& right) {
+    cout << "Intger_12, binary 'operator>>'." << endl;
+    return Integer_12(left.i >> right.i);
+}
+
+Integer_12& operator+=(Integer_12& left, Integer_12& right) {
+    cout << "Integer_12, binary 'operator+='." << endl;
+    left.i += right.i;
+    return left;
+}
+
+Integer_12& operator-=(Integer_12& left, Integer_12& right) {
+    cout << "Integer_12, binary 'operator-='." << endl;
+    left.i -= right.i;
+    return left;
+}
+
+Integer_12& operator*=(Integer_12& left, Integer_12& right) {
+    cout << "Integer_12, binary 'operator*='." << endl;
+    left.i *= right.i;
+    return left;
+}
+
+Integer_12& operator/=(Integer_12& left, Integer_12& right) {
+    cout << "Integer_12, binary 'operator/='." << endl;
+    if (right.i == 0) return left;
+    left.i /= right.i;
+    return left;
+}
+
+Integer_12& operator%=(Integer_12& left, Integer_12& right) {
+    cout << "Integer_12, binary 'operator%='." << endl;
+    if (right.i == 0) return left;
+    left.i %= right.i;
+    return left;
+}
+
+Integer_12& operator^=(Integer_12& left, Integer_12& right) {
+    cout << "Integer_12, binary 'operator^='." << endl;
+    left.i ^= right.i;
+    return left;
+}
+
+Integer_12& operator&=(Integer_12& left, Integer_12& right) {
+    cout << "Integer_12, binary 'operator&='." << endl;
+    left.i &= right.i;
+    return left;
+}
+
+Integer_12& operator|=(Integer_12& left, Integer_12& right) {
+    cout << "Integer_12, binary 'operator|='." << endl;
+    left.i |= right.i;
+    return left;
+}
+
+Integer_12& operator>>=(Integer_12& left, Integer_12& right) {
+    cout << "Integer_12, binary 'operator>>='." << endl;
+    left.i >>= right.i;
+    return left;
+}
+
+Integer_12& operator<<=(Integer_12& left, Integer_12& right) {
+    cout << "Integer_12, binary 'operator<<='." << endl;
+    left.i <<= right.i;
+    return left;
+}
+
+int operator==(const Integer_12& left, const Integer_12& right) {
+    cout << "Integer_12, binary 'operator=='." << endl;
+    return (left.i == right.i);
+}
+
+int operator!=(const Integer_12& left, const Integer_12& right) {
+    cout << "Integer_12, binary 'operator!='." << endl;
+    return (left.i != right.i);
+}
+
+int operator<(const Integer_12& left, const Integer_12& right) {
+    cout << "Integer_12, binary 'operator<'." << endl;
+    return (left.i < right.i);
+}
+
+int operator>(const Integer_12& left, const Integer_12& right) {
+    cout << "Integer_12, binary 'operator>'." << endl;
+    return (left.i < right.i);
+}
+
+int operator<=(const Integer_12& left, const Integer_12& right) {
+    cout << "Integer_12, binary 'operator<='." << endl;
+    return (left.i <= right.i);
+}
+
+int operator>=(const Integer_12& left, const Integer_12& right) {
+    cout << "Integer_12, binary 'operator>='." << endl;
+    return (left.i >= right.i);
+}
+
+int operator&&(const Integer_12& left, const Integer_12& right) {
+    cout << "Integer_12, binary 'operator&&'." << endl;
+    return (left.i && right.i);
+}
+
+int operator||(const Integer_12& left, const Integer_12& right) {
+    cout << "Integer_12, binary 'operator||'." << endl;
+    return (left.i || right.i);
+}
