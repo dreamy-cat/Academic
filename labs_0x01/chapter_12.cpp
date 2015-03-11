@@ -702,3 +702,54 @@ int operator||(const Integer_12& left, const Integer_12& right) {
     cout << "Integer_12, binary 'operator||'." << endl;
     return (left.i || right.i);
 }
+
+int Dog_26::run(int i) const {
+    cout << "Class_26, function 'run()'." << endl;
+    return 1;
+}
+
+int Dog_26::eat(int i) const {
+    cout << "Class_26, function 'eat()'." << endl;
+    return 2;
+}
+
+int Dog_26::sleep(int i) const {
+    cout << "Class_26, function 'sleep()'." << endl;
+    return 3;
+}
+
+void Dog_26::function_1() const {
+    cout << "Class_26, 'function_1'." << endl;
+}
+
+void Dog_26::function_2() const {
+    cout << "Class_26, 'function_2'." << endl;
+}
+
+Dog_26::FunctionObject_26::FunctionObject_26(Dog_26 *wp, pmf p) : ptr(wp), pmem(p) {
+    cout << "FunctionObject_26 constructor." << endl;
+}
+
+Dog_26::FunctionObject_26::FunctionObject_26(Dog_26* wp, pvt pv) : ptr(wp), pvoid(pv) {
+    cout << "FunctionObject_26 constructor for addition functions." << endl;
+}
+
+int Dog_26::FunctionObject_26::operator ()(int i) const {
+    cout << "FunctionObject_26, operator()." << endl;
+    return (ptr->*pmem)(i);
+}
+
+Dog_26::FunctionObject_26 Dog_26::operator ->*(pmf ptr) {
+    cout << "FunctionObject_26, operator->*." << endl;
+    return Dog_26::FunctionObject_26(this, ptr);
+}
+
+void Dog_26::FunctionObject_26::operator ()() const {
+    cout << "FunctionObject_26, operator() for addition functions." << endl;
+    return (ptr->*pvoid)();
+}
+
+Dog_26::FunctionObject_26 Dog_26::operator ->*(void (Dog_26::*pvt)() const) {
+    cout << "Function_26, operator->* for addition functions." << endl;
+    return Dog_26::FunctionObject_26(this, pvt);
+}

@@ -286,4 +286,29 @@ private:
     Integer_12* get();
 };
 
+class Dog_26 {
+public:
+    int run(int i) const;
+    int eat(int i) const;
+    int sleep(int i) const;
+    void function_1() const;
+    void function_2() const;
+    typedef int (Dog_26::*pmf)(int) const;
+    typedef void (Dog_26::*pvt)() const;
+    class FunctionObject_26 {
+    public:
+        FunctionObject_26(Dog_26* wp, pmf p);
+        FunctionObject_26(Dog_26* wp, pvt pv);
+        int operator()(int i) const;
+        void operator()() const;
+    private:
+        Dog_26* ptr;
+        pmf pmem;
+        pvt pvoid;
+    };
+    FunctionObject_26 operator->*(pmf p);
+    FunctionObject_26 operator->*(void (Dog_26::*pvt)() const);
+};
+
+
 #endif

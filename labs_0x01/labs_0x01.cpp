@@ -1339,6 +1339,20 @@ void chapter_12() {
     r25 = (cl25_1 <= cl25_2);
     r25 = (cl25_1 && cl25_2);
     r25 = (cl25_1 || cl25_2);
+    // Task 26.
+    cout << "Task 26.\n";
+    Dog_26 d26;
+    Dog_26::pmf ptr = &Dog_26::run;
+    cout << (d26->*ptr)(1) << endl;
+    ptr = &Dog_26::eat;
+    cout << (d26->*ptr)(1) << endl;
+    ptr = &Dog_26::sleep;
+    cout << (d26->*ptr)(1) << endl;
+    void (Dog_26::*ptv)() const;
+    ptv = &Dog_26::function_1;
+    (d26->*ptv)();
+    ptv = &Dog_26::function_2;
+    (d26->*ptv)();
 }
 
 void Labs_0x01() {
