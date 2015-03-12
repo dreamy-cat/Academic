@@ -310,5 +310,29 @@ public:
     FunctionObject_26 operator->*(void (Dog_26::*pvt)() const);
 };
 
+class Obj_27 {
+public:
+    typedef void (Obj_27::*fPtr)();
+    Obj_27(int id, fPtr p);
+    void function_1();
+    void function_2();
+    void operator()();
+    fPtr ptr;
+private:
+
+    int objectID;
+};
+
+class ObjContainer_27 {
+public:
+    ObjContainer_27();
+    void add(Obj_27 *obj);
+    void next();
+    void previous();
+    Obj_27 operator->*(void (Obj_27::*fP)());
+private:
+    std::vector<Obj_27*> a;
+    int index;
+};
 
 #endif

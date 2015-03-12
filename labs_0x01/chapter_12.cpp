@@ -753,3 +753,40 @@ Dog_26::FunctionObject_26 Dog_26::operator ->*(void (Dog_26::*pvt)() const) {
     cout << "Function_26, operator->* for addition functions." << endl;
     return Dog_26::FunctionObject_26(this, pvt);
 }
+
+Obj_27::Obj_27(int id, fPtr p) : objectID(id), ptr(p) {
+    cout << "Obj_27 constructor id = " << id << endl;
+}
+
+void Obj_27::function_1() {
+    cout << "Class Obj_27, function_1, id = " << objectID << endl;
+}
+
+void Obj_27::function_2() {
+    cout << "Class Obj_27, function_2, id = " << objectID << endl;
+}
+
+void Obj_27::operator()() {
+    cout << "Class Obj-27, operator(), id = " << objectID << endl;
+    return (this->*ptr)();
+}
+
+ObjContainer_27::ObjContainer_27() : index(0) {
+    cout << "Class ObjContainer_27 constructor." << endl;
+}
+
+void ObjContainer_27::add(Obj_27* obj) {
+    a.push_back(obj);
+}
+
+void ObjContainer_27::next() { if (index < a.size()-1) index++; }
+
+void ObjContainer_27::previous() { if (index > 0) index--; }
+
+Obj_27 ObjContainer_27::operator->*(void (Obj_27::*fP)() ) {
+    cout << "Class Obj_27, operator->*." << endl;
+    a[index]->ptr = fP;
+    return *(a[index]);
+    // return (Obj_27(0, fP));
+}
+

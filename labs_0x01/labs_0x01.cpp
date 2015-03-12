@@ -1353,6 +1353,15 @@ void chapter_12() {
     (d26->*ptv)();
     ptv = &Dog_26::function_2;
     (d26->*ptv)();
+    // Task 27. Rethink.
+    cout << "Task_27.\n";
+    Obj_27::fPtr ptr27 = &Obj_27::function_1;
+    Obj_27 obj27_1(1, ptr27);
+    ObjContainer_27 cont27;
+    cont27.add(&obj27_1);
+    (cont27->*ptr27)();
+    ptr27 = &Obj_27::function_2;
+    (cont27->*ptr27)();
 }
 
 void Labs_0x01() {
