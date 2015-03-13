@@ -790,3 +790,19 @@ Obj_27 ObjContainer_27::operator->*(void (Obj_27::*fP)() ) {
     // return (Obj_27(0, fP));
 }
 
+Apple_12::Apple_12(Orange_12) {
+    cout << "Consturctor class Apple_12." << endl;
+}
+
+Orange_12::Orange_12() {
+    cout << "Consturctor class Orange_12." << endl;
+}
+
+Orange_12::operator Apple_12() const {
+    cout << "Class Orange_12, operator Apple_12()" << endl;
+}
+
+void function_12_28(Apple_12 o) {
+    cout << "Function_12_28." << endl;
+}
+

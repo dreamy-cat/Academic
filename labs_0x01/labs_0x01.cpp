@@ -1362,6 +1362,10 @@ void chapter_12() {
     (cont27->*ptr27)();
     ptr27 = &Obj_27::function_2;
     (cont27->*ptr27)();
+    // Task 28.
+    Orange_12 cl28;
+    cout << "Task 28. Function called.";
+    function_12_28(cl28);
 }
 
 void Labs_0x01() {

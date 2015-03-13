@@ -335,4 +335,20 @@ private:
     int index;
 };
 
+class Orange_12;
+
+class Apple_12 {
+public:
+    explicit Apple_12(Orange_12);
+    operator Orange_12() const;
+};
+
+class Orange_12 {
+public:
+    Orange_12();
+    operator Apple_12() const;
+};
+
+void function_12_28(Apple_12 o);
+
 #endif
