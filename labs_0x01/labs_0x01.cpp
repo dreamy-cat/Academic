@@ -1364,8 +1364,20 @@ void chapter_12() {
     (cont27->*ptr27)();
     // Task 28.
     Orange_12 cl28;
-    cout << "Task 28. Function called.";
+    cout << "Task 28. Function called.\n";
     function_12_28(cl28);
+    // Task 29.
+    Number_12_1 n1(1), n2(3);
+    cout << "Nmber_12_1 reflexivity test." << endl;
+    n1 * n2;
+    n1 * 1;
+    3 * n2;
+    // Task 30.
+    Class_12_30_1 cl31_1(1);
+    Class_12_30_2 cl31_2(2);
+    func_30(cl31_1);
+    cl31_1 + cl31_2;
+    cl31_2 + cl31_1;
 }
 
 void Labs_0x01() {

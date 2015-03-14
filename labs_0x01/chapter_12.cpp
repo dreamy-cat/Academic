@@ -806,3 +806,48 @@ void function_12_28(Apple_12 o) {
     cout << "Function_12_28." << endl;
 }
 
+Number_12_1::Number_12_1(int ii) : i(ii) {
+    cout << "Class Number_12_1, constructor." << endl;
+}
+
+const Number_12_1 Number_12_1::operator +(const Number_12_1& right) const {
+    return Number_12_1(i + right.i);
+}
+
+const Number_12_1 operator-(const Number_12_1& left, const Number_12_1& right) {
+    return Number_12_1(left.i - right.i);
+}
+
+const Number_12_1 operator*(const Number_12_1& left, const Number_12_1& right) {
+    return Number_12_1(left.i * right.i);
+}
+
+Class_12_30_1::Class_12_30_1(int ii) : i(ii) {
+    cout << "Class_12_30_1 constructor." << endl;
+}
+
+Class_12_30_1::operator Class_12_30_2() const {
+    cout << "Class_12_30_1, operator (Class_12_30_2)." << endl;
+    return Class_12_30_1(i);
+}
+
+const Class_12_30_1 operator+(const Class_12_30_1& left, const Class_12_30_1& right) {
+    return Class_12_30_1(left.i + right.i);
+}
+
+Class_12_30_2::Class_12_30_2(int ii) : i(ii) {
+    cout << "Class_12_30_2 constructor." << endl;
+}
+
+Class_12_30_2::operator Class_12_30_1() const {
+    cout << "Class_12_30_2, operator (Class_12_30_1)." << endl;
+}
+/*
+const Class_12_30_2 Class_12_30_2::operator+(Class_12_30_2& right) {
+    return Class_12_30_2(i + right.i);
+}
+*/
+
+void func_30(Class_12_30_2 cl) {
+
+}

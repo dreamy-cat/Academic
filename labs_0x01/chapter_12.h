@@ -351,4 +351,37 @@ public:
 
 void function_12_28(Apple_12 o);
 
+class Number_12_1 {
+public:
+    Number_12_1(int ii = 0);
+    const Number_12_1 operator+(const Number_12_1& right) const;
+    friend const Number_12_1 operator-(const Number_12_1& left, const Number_12_1& right);
+    friend const Number_12_1 operator*(const Number_12_1& left, const Number_12_1& right);
+private:
+    int i;
+};
+
+class Class_12_30_2;
+
+class Class_12_30_1 {
+public:
+    Class_12_30_1(int ii);
+    operator Class_12_30_2() const;
+    friend const Class_12_30_1 operator+(const Class_12_30_1& left, const Class_12_30_1& right);
+private:
+    int i;
+};
+
+class Class_12_30_2 {
+public:
+    Class_12_30_2(int ii);
+    operator Class_12_30_1() const;
+    // Extra
+    // friend const Class_12_30_2 operator+(const Class_12_30_2& left, const Class_12_30_2& right);
+private:
+    int i;
+};
+
+void func_30(Class_12_30_2 cl);
+
 #endif
