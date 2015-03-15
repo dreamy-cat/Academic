@@ -1375,9 +1375,11 @@ void chapter_12() {
     // Task 30.
     Class_12_30_1 cl31_1(1);
     Class_12_30_2 cl31_2(2);
-    func_30(cl31_1);
     cl31_1 + cl31_2;
     cl31_2 + cl31_1;
+    // Task 31. call of overloaded 'function_31(Apple_12_1&)' is ambigious
+    Apple_12_1 cl31;
+    // function_31(cl31);
 }
 
 void Labs_0x01() {

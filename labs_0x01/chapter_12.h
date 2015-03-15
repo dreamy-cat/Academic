@@ -384,4 +384,17 @@ private:
 
 void func_30(Class_12_30_2 cl);
 
+class Orange_12_1;
+class Pear_12_1;
+
+class Apple_12_1 {
+public:
+    operator Orange_12_1() const;
+    operator Pear_12_1() const;
+};
+
+void function_31(Orange_12_1 value);
+
+void function_31(Pear_12_1 value);
+
 #endif
