@@ -397,4 +397,6 @@ void function_31(Orange_12_1 value);
 
 void function_31(Pear_12_1 value);
 
+void function_32();
+
 #endif

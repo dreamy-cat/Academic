@@ -1,7 +1,7 @@
 project(academic)
 cmake_minimum_required(VERSION 2.8)
 
-#Needs for tasks from chapter 11.
+#Needs for some tasks from chapter 11, 12.
 #set(CMAKE_CXX_FLAGS "-Wa,-alh")
 
 aux_source_directory(. SRC_LIST)

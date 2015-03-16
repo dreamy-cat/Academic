@@ -851,3 +851,71 @@ const Class_12_30_2 Class_12_30_2::operator+(Class_12_30_2& right) {
 void func_30(Class_12_30_2 cl) {
 
 }
+
+void function_32() {
+    double d1 = 8, d2 = 2, d3 = 0;
+    d3 = d1 + d2;
+    d3 = d1 - d2;
+    d3 = d1 * d2;
+    d3 = d1 / d2;
+}
+
+/* Code...
+
+ 8900              		.globl	_Z11function_32v
+ 8901              		.type	_Z11function_32v, @function
+ 8902              	_Z11function_32v:
+ 8903              	.LFB1491:
+ 8904              		.cfi_startproc
+ 8905 3d39 55       		pushq	%rbp
+ 8906              		.cfi_def_cfa_offset 16
+ 8907              		.cfi_offset 6, -16
+ 8908 3d3a 4889E5   		movq	%rsp, %rbp
+ 8909              		.cfi_def_cfa_register 6
+ 8910 3d3d 48B80000 		movabsq	$4620693217682128896, %rax
+ 8910      00000000
+ 8910      2040
+ 8911 3d47 488945E8 		movq	%rax, -24(%rbp)
+ 8912 3d4b 48B80000 		movabsq	$4611686018427387904, %rax
+ 8912      00000000
+ 8912      0040
+ 8913 3d55 488945F0 		movq	%rax, -16(%rbp)
+ 8914 3d59 B8000000 		movl	$0, %eax
+ 8914      00
+ 8915 3d5e 488945F8 		movq	%rax, -8(%rbp)
+ 8916 3d62 F20F1045 		movsd	-24(%rbp), %xmm0
+ 8916      E8
+ 8917 3d67 F20F5845 		addsd	-16(%rbp), %xmm0
+ 8917      F0
+ 8918 3d6c F20F1145 		movsd	%xmm0, -8(%rbp)
+ 8918      F8
+ 8919 3d71 F20F1045 		movsd	-24(%rbp), %xmm0
+ 8919      E8
+ 8920 3d76 F20F5C45 		subsd	-16(%rbp), %xmm0
+ 8920      F0
+ 8921 3d7b F20F1145 		movsd	%xmm0, -8(%rbp)
+ 8921      F8
+ 8922 3d80 F20F1045 		movsd	-24(%rbp), %xmm0
+ 8922      E8
+ 8923 3d85 F20F5945 		mulsd	-16(%rbp), %xmm0
+ 8923      F0
+ 8924 3d8a F20F1145 		movsd	%xmm0, -8(%rbp)
+ 8924      F8
+ 8925 3d8f F20F1045 		movsd	-24(%rbp), %xmm0
+ 8925      E8
+ 8926 3d94 F20F5E45 		divsd	-16(%rbp), %xmm0
+ 8926      F0
+ 8927 3d99 F20F1145 		movsd	%xmm0, -8(%rbp)
+ 8927      F8
+ 8928 3d9e 5D       		popq	%rbp
+ 8929              		.cfi_def_cfa 7, 8
+GAS LISTING /tmp/ccOp3L1h.s 			page 184
+
+
+ 8930 3d9f C3       		ret
+ 8931              		.cfi_endproc
+ 8932              	.LFE1491:
+ 8933              		.size	_Z11function_32v, .-_Z11function_32v
+
+
+*/
