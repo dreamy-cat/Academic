@@ -17,6 +17,7 @@
 #include "chapter_10_1.h"
 #include "chapter_11.h"
 #include "chapter_12.h"
+#include "chapter_13.h"
 
 using namespace std;
 
@@ -1382,6 +1383,19 @@ void chapter_12() {
     // function_31(cl31);
 }
 
+void chapter_13() {
+    cout << "Chapter's 13 tasks.\n";
+    // Task 1.
+    Counted cl1_1, cl1_2;
+    cl1_1.function_1();
+    cl1_2.function_1();
+    // Task 2.
+    Counted* clPtr2_1 = new Counted;
+    Counted* clPtr2_2 = new Counted[3];
+    delete []clPtr2_2;
+    delete clPtr2_1;
+}
+
 void Labs_0x01() {
-    chapter_12();
+    chapter_13();
 }
