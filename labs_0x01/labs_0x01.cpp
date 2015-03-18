@@ -1394,6 +1394,12 @@ void chapter_13() {
     Counted* clPtr2_2 = new Counted[3];
     delete []clPtr2_2;
     delete clPtr2_1;
+    // Task 3. Not good example, count() method doesn't work.
+    PStash cl3;
+    cl3.add((void*)&cl1_1);
+    cl3.add((void*)&cl1_2);
+    cl3.remove(1);
+    cl3.remove(0);
 }
 
 void Labs_0x01() {
