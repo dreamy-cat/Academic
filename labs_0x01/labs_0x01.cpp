@@ -1400,6 +1400,15 @@ void chapter_13() {
     cl3.add((void*)&cl1_2);
     cl3.remove(1);
     cl3.remove(0);
+    // Task 4-5.
+    vector<Counted*> vec4;
+    for (int i = 0; i < 3; i++) vec4.push_back(new Counted);
+    cout << "Objects of Counted in vector.\n";
+    for (int i = 0; i < 3; i++) {
+        cout << (long)vec4[i] << ": ";
+        vec4[i]->function_1();
+    }
+    for (int i = 0; i < 3; i++) delete vec4[i];
 }
 
 void Labs_0x01() {

@@ -12,7 +12,9 @@ Counted::~Counted() {
     cout << "Class Counted destructor. Id = " << id << endl;
 }
 
-void Counted::function_1() {}
+void Counted::function_1() {
+    cout << "Class Counted, function_1." << endl;
+}
 
 PStash::PStash() : quantity(0), next(0), storage(0) {}
 
