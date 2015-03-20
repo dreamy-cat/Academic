@@ -1409,6 +1409,17 @@ void chapter_13() {
         vec4[i]->function_1();
     }
     for (int i = 0; i < 3; i++) delete vec4[i];
+    // Task 6.
+    PStash cl6;
+    cl6.add((void*) new Counted);
+    cl6.add((void*) new Counted);
+    cout << "Counted objects from PSTash.\n";
+    for (int i = 0; i < 2; i++) {
+        Counted* ptr = (Counted*)cl6[i];
+        ptr->function_1();
+    }
+    cl6.remove(1);
+    cl6.remove(0);
 }
 
 void Labs_0x01() {
