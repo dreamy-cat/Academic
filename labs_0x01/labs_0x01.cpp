@@ -1420,6 +1420,14 @@ void chapter_13() {
     }
     cl6.remove(1);
     cl6.remove(0);
+    // Task 7.
+    Stack st7;
+    st7.initialize();
+    cout << "Task 7 with Stack structure from chapter 4, doubles : ";
+    for (int i = 0; i < 3; i++) st7.push(new double(i));
+    for (int i = 0; i < 3; i++) cout << *st7.pop() << " ";
+    cout << endl;
+
 }
 
 void Labs_0x01() {
