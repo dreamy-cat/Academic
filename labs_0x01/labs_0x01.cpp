@@ -1400,7 +1400,7 @@ void chapter_13() {
     cl3.add((void*)&cl1_2);
     cl3.remove(1);
     cl3.remove(0);
-    // Task 4-5.
+    // Tasks 4-5.
     vector<Counted*> vec4;
     for (int i = 0; i < 3; i++) vec4.push_back(new Counted);
     cout << "Objects of Counted in vector.\n";
@@ -1427,7 +1427,16 @@ void chapter_13() {
     for (int i = 0; i < 3; i++) st7.push(new double(i));
     for (int i = 0; i < 3; i++) cout << *st7.pop() << " ";
     cout << endl;
-
+    // Tasks 8-9.
+    Counted* ar8 = new Counted[3];
+    // invalid pointer
+    // delete ar8;
+    delete []ar8;
+    Counted* ptr9 = new Counted;
+    void* ptr9_1 = (void*)ptr9;
+    // deleting 'void*' is undefined
+    // delete ptr9_1;
+    delete ptr9;
 }
 
 void Labs_0x01() {
