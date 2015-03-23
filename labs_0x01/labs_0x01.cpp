@@ -1437,6 +1437,12 @@ void chapter_13() {
     // deleting 'void*' is undefined
     // delete ptr9_1;
     delete ptr9;
+    // Task 10. Bonus.
+    // Task 11.
+    Class_13_11* cl13_1 = new Class_13_11;
+    Class_13_11* cl13_2 = new Class_13_11[3];
+    delete cl13_1;
+    delete []cl13_2;
 }
 
 void Labs_0x01() {

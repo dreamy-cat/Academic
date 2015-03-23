@@ -29,4 +29,25 @@ private:
     void inflate(int increase);
 };
 
+class Framis_13 {
+public:
+    Framis_13();
+    ~Framis_13();
+    void* operator new(size_t);
+    void operator delete(void* m);
+private:
+    enum { maxSize = 16 };
+    char block[4];
+    static unsigned char pool[];
+    static bool alloc_map[];
+};
+
+class Class_13_11 {
+public:
+    void* operator new(size_t sz);
+    void operator delete(void* p);
+    void* operator new[](size_t sz);
+    void operator delete[](void* p);
+};
+
 #endif

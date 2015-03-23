@@ -60,3 +60,54 @@ void PStash::inflate(int increase) {
     delete []storage;
     storage = st;
 }
+
+void*  Class_13_11::operator new(size_t sz) {
+    cout << "Class_13_11 operator new." << endl;
+    return ::new char[sz];
+}
+
+void Class_13_11::operator delete(void *p) {
+    cout << "Class_13_11 operator delete." << endl;
+    ::delete [](Class_13_11*)p;
+}
+
+void* Class_13_11::operator new[](size_t sz) {
+    cout << "Class_13_11 operator new[]." << endl;
+    return new char[sz];
+}
+
+void Class_13_11::operator delete[](void* p) {
+    cout << "Class_13_11 operator delete[]." << endl;
+    ::delete [](Class_13_11*)p;
+}
+
+
+unsigned char Framis_13::pool[Framis_13::maxSize * sizeof(Framis_13)];
+bool Framis_13::alloc_map[Framis_13::maxSize] = { false };
+
+Framis_13::Framis_13() {
+    cout << "Framis_13 constructor." << endl;
+}
+
+Framis_13::~Framis_13() {
+    cout << "Framis_13 destructor." << endl;
+}
+
+void* Framis_13::operator new(size_t) {
+    for (int i = 0; i < maxSize; i++)
+        if (!alloc_map[i]) {
+            cout << "Using block " << i << ".\n";
+            alloc_map[i] = true;
+            return pool + (i * sizeof(Framis_13));
+        }
+    cout << "Out of memory.\n";
+}
+
+void Framis_13::operator delete(void* m) {
+    if (!m) return;
+    unsigned long block = (unsigned long)m - (unsigned long)pool;
+    block /= sizeof(Framis_13);
+    cout << "Freeing block " << block << endl;
+    alloc_map[block] = false;
+}
+
