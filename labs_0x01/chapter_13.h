@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <cstring>
+#include <vector>
+#include <string>
+#include "stdlib.h"
 
 class Counted {
 public:
@@ -37,9 +40,31 @@ public:
     void operator delete(void* m);
 private:
     enum { maxSize = 16 };
-    char block[4];
+    char data[4];
     static unsigned char pool[];
     static bool alloc_map[];
+};
+
+class Class_13_14 {
+public:
+    void* operator new(size_t sz, std::string str);
+    void operator delete(void* p);
+    static std::vector<std::string> storage;
+};
+
+class Widget_13 {
+public:
+    Widget_13();
+    ~Widget_13();
+    void* operator new(size_t sz);
+    void operator delete(void* p);
+    void* operator new[](size_t sz);
+    void operator delete[](void* p);
+    static std::vector<Widget_13*> storage;
+private:
+    enum { maxSize = 8 };
+    int vector[maxSize];
+
 };
 
 class Class_13_11 {

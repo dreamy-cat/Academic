@@ -1443,6 +1443,50 @@ void chapter_13() {
     Class_13_11* cl13_2 = new Class_13_11[3];
     delete cl13_1;
     delete []cl13_2;
+    // Task 12. Faster x4. Multiplier was decreased x10.
+    time_t time;
+    tm local;
+    time = std::time(NULL);
+    local = *std::localtime(&time);
+    int startTimer = local.tm_sec;
+    cout << "Starting second : " << startTimer;
+    for (int i = 0; i < 10000; i++) for (int j = 0; j < 1000; j++) {
+        Framis_13* framis_ptr = ::new Framis_13;
+        ::delete framis_ptr;
+    }
+    time = std::time(NULL);
+    local = *std::localtime(&time);
+    int finishTimer = local.tm_sec;
+    cout << ", after calling standart operators new & delete : " << finishTimer << endl;
+    cout << "After calling Framis operators: ";
+    for (int i = 0; i < 10000; i++) for (int j = 0; j < 1000; j++) {
+        Framis_13* framis_ptr = new Framis_13;
+        delete framis_ptr;
+    }
+    time = std::time(NULL);
+    local = *std::localtime(&time);
+    finishTimer = local.tm_sec;
+    cout << finishTimer << endl;
+    // Task 13. Bonus.
+    // Task 14.
+    char s14_1[8], s14_2[8];
+    sprintf(s14_1, "%d", __LINE__);
+    sprintf(s14_2, "%d", __LINE__);
+    Class_13_14* cl14_1 = new(string(s14_1)) Class_13_14;
+    Class_13_14* cl14_2 = new(string(s14_2)) Class_13_14;
+    cout << "Class_13_14, storage : ";
+    for (int i = 0; i < Class_13_14::storage.size(); i++)
+        cout << Class_13_14::storage[i] << " ";
+    cout << endl;
+    // Task 15.
+    Widget_13* cl15_1 = new Widget_13;
+    Widget_13* cl15_2 = new Widget_13[2];
+    // cout << "Widget_13 pointers : " << (long)cl15_2[0] << " " << (long)&cl15_2[1] << endl;
+    cout << "Widget_13, storage : ";
+    for (int i = 0; i < 2; i++) cout << (long)Widget_13::storage[i] << " ";
+    cout << endl;
+    delete []cl15_2;
+    delete cl15_1;
 }
 
 void Labs_0x01() {

@@ -86,17 +86,17 @@ unsigned char Framis_13::pool[Framis_13::maxSize * sizeof(Framis_13)];
 bool Framis_13::alloc_map[Framis_13::maxSize] = { false };
 
 Framis_13::Framis_13() {
-    cout << "Framis_13 constructor." << endl;
+    // cout << "Framis_13 constructor." << endl;
 }
 
 Framis_13::~Framis_13() {
-    cout << "Framis_13 destructor." << endl;
+    // cout << "Framis_13 destructor." << endl;
 }
 
 void* Framis_13::operator new(size_t) {
     for (int i = 0; i < maxSize; i++)
         if (!alloc_map[i]) {
-            cout << "Using block " << i << ".\n";
+            // cout << "Using block " << i << ".\n";
             alloc_map[i] = true;
             return pool + (i * sizeof(Framis_13));
         }
@@ -107,7 +107,56 @@ void Framis_13::operator delete(void* m) {
     if (!m) return;
     unsigned long block = (unsigned long)m - (unsigned long)pool;
     block /= sizeof(Framis_13);
-    cout << "Freeing block " << block << endl;
+    // cout << "Freeing block " << block << endl;
     alloc_map[block] = false;
 }
 
+vector<string> Class_13_14::storage;
+
+void* Class_13_14::operator new(size_t sz, std::string str) {
+    storage.push_back(str);
+    ::new char[sz];
+}
+
+void Class_13_14::operator delete(void* p) {
+    storage.pop_back();
+    ::delete (Class_13_14*)p;
+}
+
+Widget_13::Widget_13() {
+    cout << "Widget_13 constructor." << endl;
+}
+
+Widget_13::~Widget_13() {
+    cout << "Widget_13 destructor." << endl;
+}
+
+vector<Widget_13*> Widget_13::storage;
+
+void* Widget_13::operator new(size_t sz) {
+    cout << "Widget_13 operator new, size = " << sz << endl;
+    void* ptr = ::new char[sz];
+    Widget_13::storage.push_back((Widget_13*)ptr);
+    return ptr;
+}
+
+void* Widget_13::operator new[](size_t sz) {
+    cout << "Widget_13 opearator new[], size = " << sz << endl;
+    void* ptr = ::new char[sz];
+    Widget_13* ptrW = (Widget_13*)ptr;
+    for (int i = 0; i < sz / sizeof(Widget_13); i++)
+        Widget_13::storage.push_back(&ptrW[i]);
+    return ::new char[sz];
+}
+
+void Widget_13::operator delete(void* p) {
+    cout << "Widget_13 operator delete." << endl;
+    Widget_13::storage.pop_back();
+    ::delete (Widget_13*)p;
+}
+
+void Widget_13::operator delete[](void* p) {
+    cout << "Widget_13 operator delete[]." << endl;
+    Widget_13::storage.clear();
+    ::delete (Widget_13*)p;
+}
