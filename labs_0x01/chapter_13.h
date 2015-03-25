@@ -61,10 +61,16 @@ public:
     void* operator new[](size_t sz);
     void operator delete[](void* p);
     static std::vector<Widget_13*> storage;
+    static std::vector<int> storageMap;
 private:
     enum { maxSize = 8 };
-    int vector[maxSize];
+    int pool[maxSize];
+};
 
+class MemoryChecker {
+public:
+    MemoryChecker();
+    ~MemoryChecker();
 };
 
 class Class_13_11 {

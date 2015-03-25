@@ -1479,11 +1479,12 @@ void chapter_13() {
         cout << Class_13_14::storage[i] << " ";
     cout << endl;
     // Task 15.
+    MemoryChecker mChecker;
     Widget_13* cl15_1 = new Widget_13;
     Widget_13* cl15_2 = new Widget_13[2];
-    // cout << "Widget_13 pointers : " << (long)cl15_2[0] << " " << (long)&cl15_2[1] << endl;
+    cout << "Widget_13 pointers : " << (long)cl15_1 << " " << (long)&cl15_2[0] << " " << (long)&cl15_2[1] << endl;
     cout << "Widget_13, storage : ";
-    for (int i = 0; i < 2; i++) cout << (long)Widget_13::storage[i] << " ";
+    for (int i = 0; i < 3; i++) cout << (long)Widget_13::storage[i] << " ";
     cout << endl;
     delete []cl15_2;
     delete cl15_1;

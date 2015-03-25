@@ -132,31 +132,47 @@ Widget_13::~Widget_13() {
 }
 
 vector<Widget_13*> Widget_13::storage;
+vector<int> Widget_13::storageMap;
 
 void* Widget_13::operator new(size_t sz) {
     cout << "Widget_13 operator new, size = " << sz << endl;
     void* ptr = ::new char[sz];
     Widget_13::storage.push_back((Widget_13*)ptr);
+    Widget_13::storageMap.push_back(1);
     return ptr;
 }
 
 void* Widget_13::operator new[](size_t sz) {
     cout << "Widget_13 opearator new[], size = " << sz << endl;
     void* ptr = ::new char[sz];
-    Widget_13* ptrW = (Widget_13*)ptr;
+    // Add 8 bytes for array, may be as sizeof(long). Not a good trick, but it's work.
+    Widget_13* ptrW = (Widget_13*)((void*)((long)ptr+sizeof(long)));
     for (int i = 0; i < sz / sizeof(Widget_13); i++)
         Widget_13::storage.push_back(&ptrW[i]);
-    return ::new char[sz];
+    Widget_13::storageMap.push_back((sz - sizeof(long))/sizeof(Widget_13));
+    return ptr;
 }
 
 void Widget_13::operator delete(void* p) {
     cout << "Widget_13 operator delete." << endl;
-    Widget_13::storage.pop_back();
+    for (vector<Widget_13*>::iterator it = Widget_13::storage.begin(); it < Widget_13::storage.end(); it++)
+        if (*it == (Widget_13*)p) Widget_13::storage.erase(it);
     ::delete (Widget_13*)p;
 }
 
 void Widget_13::operator delete[](void* p) {
     cout << "Widget_13 operator delete[]." << endl;
-    Widget_13::storage.clear();
+    int index = 0;
+    for (vector<Widget_13*>::iterator it = Widget_13::storage.begin(); it < Widget_13::storage.end(); it++) {
+        if (*it == (Widget_13*)p) Widget_13::storage.erase(it,(it + Widget_13::storageMap[index]));
+        index++;
+    }
+    // Widget_13::storage.clear();
     ::delete (Widget_13*)p;
+}
+
+MemoryChecker::MemoryChecker() {}
+
+MemoryChecker::~MemoryChecker() {
+    cout << "Widget_13::storage size = " << Widget_13::storage.size() << endl;
 }
