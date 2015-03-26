@@ -18,6 +18,7 @@
 #include "chapter_11.h"
 #include "chapter_12.h"
 #include "chapter_13.h"
+#include "chapter_14.h"
 
 using namespace std;
 
@@ -1490,6 +1491,12 @@ void chapter_13() {
     delete cl15_1;
 }
 
+void chapter_14() {
+    cout << "Chapter's 14 tasks.\n";
+    // Task 1.
+    Car_14 cl1(1);
+}
+
 void Labs_0x01() {
-    chapter_13();
+    chapter_14();
 }

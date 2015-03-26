@@ -155,19 +155,27 @@ void* Widget_13::operator new[](size_t sz) {
 
 void Widget_13::operator delete(void* p) {
     cout << "Widget_13 operator delete." << endl;
-    for (vector<Widget_13*>::iterator it = Widget_13::storage.begin(); it < Widget_13::storage.end(); it++)
-        if (*it == (Widget_13*)p) Widget_13::storage.erase(it);
+    vector<int>::iterator itMap = Widget_13::storageMap.begin();
+    for (vector<Widget_13*>::iterator it = Widget_13::storage.begin(); it < Widget_13::storage.end(); it++) {
+        if (*it == (Widget_13*)p) {
+            Widget_13::storage.erase(it);
+            Widget_13::storageMap.erase(itMap);
+        }
+        itMap++;
+    }
     ::delete (Widget_13*)p;
 }
 
 void Widget_13::operator delete[](void* p) {
     cout << "Widget_13 operator delete[]." << endl;
-    int index = 0;
+    vector<int>::iterator itMap = Widget_13::storageMap.begin();
     for (vector<Widget_13*>::iterator it = Widget_13::storage.begin(); it < Widget_13::storage.end(); it++) {
-        if (*it == (Widget_13*)p) Widget_13::storage.erase(it,(it + Widget_13::storageMap[index]));
-        index++;
+        if (*it == (Widget_13*)(void*)((long)p + sizeof(long))) {
+            Widget_13::storage.erase(it,(it + *itMap));
+            Widget_13::storageMap.erase(itMap);
+        }
+        itMap++;
     }
-    // Widget_13::storage.clear();
     ::delete (Widget_13*)p;
 }
 
