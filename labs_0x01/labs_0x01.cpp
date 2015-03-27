@@ -1495,6 +1495,14 @@ void chapter_14() {
     cout << "Chapter's 14 tasks.\n";
     // Task 1.
     Car_14 cl1(1);
+    // Task 2.
+    Class_14_2_3 cl2;
+    // Task 3.
+    Class_14_3_3 cl3;
+    // Task 4-5.
+    Combined_D cl4(3);
+    // Task 6.
+    Derived_6_3 cl6(1);
 }
 
 void Labs_0x01() {
