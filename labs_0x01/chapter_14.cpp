@@ -87,3 +87,46 @@ Derived_6_2::~Derived_6_2() { cout << "Derived_6_2 destructor." << endl; }
 Derived_6_3::Derived_6_3(int ii) : Derived_6_2(ii), m1(ii), m2(ii) { cout << "Derived_6_3 constructor." << endl; }
 
 Derived_6_3::~Derived_6_3() { cout << "Derived_6_3 destructor." << endl; }
+
+int Base_7::f() const {
+    cout << "Base_7::f()." << endl;
+    return 1;
+}
+
+int Base_7::f(std::string) const { return 1; }
+
+int Base_7::h(int) {
+    cout << "int Base_7::h(int)." << endl;
+    return 5;
+}
+
+int Derived_7_1::h(int) {
+    cout << "int Derived_7_1::h(int)." << endl;
+    return 6;
+}
+
+int Derived_7_2::f() const {
+    cout << "Derived_7_2::f()." << endl;
+    return 2;
+}
+
+void Derived_7_3::f() const { cout << "Derived_7_3::f()." << endl; }
+
+int Derived_7_4::f(int) const {
+    cout << "Derived_7_4::f()." << endl;
+    return 4;
+}
+
+StringStack::StringStack() {
+    storage.clear();
+}
+
+void StringStack::push_back(std::string* string) {
+    storage.push_back(string);
+}
+
+const std::string* StringStack::operator[](int index) const {
+    return storage[index];
+}
+
+Class_14_10::Class_14_10(long i) { l = long(i); }

@@ -2,6 +2,7 @@
 #define CHAPTER_14_H
 
 #include <iostream>
+#include <vector>
 
 class Engine_14 {
 public:
@@ -156,7 +157,51 @@ private:
     Member_6_2 m2;
 };
 
+class Base_7 {
+public:
+    int f() const;
+    int f(std::string) const;
+    void g() {}
+    void h() {}
+    void h(std::string) {}
+    int h(int);
+};
 
+class Derived_7_1 : public Base_7 {
+public:
+    void g() const {}
+    int h(int);
+};
 
+class Derived_7_2 : public Base_7 {
+public:
+    int f() const;
+};
+
+class Derived_7_3 : public Base_7 {
+public:
+    void f() const;
+};
+
+class Derived_7_4 : public Base_7 {
+public:
+    int f(int) const;
+};
+
+class StringStack : public std::vector<void*> {
+public:
+    StringStack();
+    void push_back(std::string *string);
+    const std::string* operator[](int index) const;
+private:
+    std::vector<std::string*> storage;
+};
+
+class Class_14_10 {
+public:
+    Class_14_10(long i);
+private:
+    long l;
+};
 
 #endif

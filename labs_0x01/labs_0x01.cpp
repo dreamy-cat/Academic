@@ -1503,6 +1503,24 @@ void chapter_14() {
     Combined_D cl4(3);
     // Task 6.
     Derived_6_3 cl6(1);
+    // Task 7-8.
+    string s7 = "Task7";
+    Derived_7_1 cl7_1;
+    int i7 = cl7_1.f();
+    Derived_7_2 cl7_2;
+    // no matching for call to 'Derived_7_2::f(std::string&'
+    // cl7_2.f(s7);
+    Derived_7_3 cl7_3;
+    // note: candidate expects 0 arguments, 1 provided
+    // i7 = cl7_3.f();
+    Derived_7_4 cl7_4;
+    i7 = cl7_4.f(1);
+    cl7_1.h(1);
+    // Task 9. invalid conversation. Task not clear.
+    StringStack cl9;
+    void* ptr = (void*)&s7;
+    cl9.push_back(&s7);
+    // cl9.push_back(ptr);
 }
 
 void Labs_0x01() {
