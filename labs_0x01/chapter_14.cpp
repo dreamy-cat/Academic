@@ -130,3 +130,53 @@ const std::string* StringStack::operator[](int index) const {
 }
 
 Class_14_10::Class_14_10(long i) { l = long(i); }
+
+Asteroid::Asteroid() {
+    cout << "Asteroid constructor." << endl;
+}
+
+Asteroid::~Asteroid() {
+    cout << "Asteroid destructor." << endl;
+}
+
+PStash_14::PStash_14() : quantity(0), next(0), storage(0) {}
+
+int PStash_14::add(Asteroid *element) {
+    const int inflateSize = 10;
+    if (next >= quantity) inflate(inflateSize);
+    storage[next++] = element;
+    return (next - 1);
+}
+
+PStash_14::~PStash_14() {
+    for (int i = 0; i < next; i++)
+        if (storage[i] != 0) cout << "PStash_14 not empty." << endl;
+    delete []storage;
+}
+
+Asteroid* PStash_14::operator[](int index) const {
+    if (index < 0 || index >= quantity) {
+        cout << "PStash_14, operator[] index out of range.";
+        return NULL;
+    }
+    return storage[index];
+}
+
+Asteroid* PStash_14::remove(int index) {
+    Asteroid* r = operator[](index);
+    if (r != NULL) storage[index] = 0;
+    return r;
+}
+
+void PStash_14::inflate(int increase) {
+    Asteroid** newStorage = new Asteroid*[quantity + increase];
+    memset((void*)newStorage, 0, (quantity + increase)*sizeof(Asteroid));
+    memcpy((void*)newStorage, storage, quantity*sizeof(Asteroid));
+    quantity += increase;
+    delete []storage;
+    storage = newStorage;
+}
+
+int PStash_14::count() const {
+    return next;
+}

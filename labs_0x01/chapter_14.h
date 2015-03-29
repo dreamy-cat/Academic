@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <cstring>
 
 class Engine_14 {
 public:
@@ -203,5 +204,28 @@ public:
 private:
     long l;
 };
+
+class Asteroid {
+public:
+    Asteroid();
+    ~Asteroid();
+//    PStash_14 stash;
+};
+
+class PStash_14 : Asteroid {
+public:
+    PStash_14();
+    ~PStash_14();
+    int add(Asteroid* element);
+    Asteroid* operator[](int index) const;
+    Asteroid* remove(int index);
+    int count() const;
+private:
+    int quantity;
+    int next;
+    Asteroid** storage;
+    void inflate(int increase);
+};
+
 
 #endif

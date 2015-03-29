@@ -1521,6 +1521,20 @@ void chapter_14() {
     void* ptr = (void*)&s7;
     cl9.push_back(&s7);
     // cl9.push_back(ptr);
+    // Task 10 see in .h, .cpp file.
+    // Task 11.
+    PStash_14 cl11;
+    cout << "Testing task 11.\n";
+    for (int i = 0; i < 3; i++) {
+        cl11.add(new Asteroid);
+    }
+    for (int i = 0; i < 3; i++) cl11.remove(i);
+/*
+    Asteroid cl11_stash;
+    for (int i = 0; i < 3; i++) cl11_stash.stash.add(new Asteroid());
+    for (int i = 0; i < 3; i++) cl11_stash.stash.remove(i);
+    */
+
 }
 
 void Labs_0x01() {
