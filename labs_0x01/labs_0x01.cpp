@@ -1523,17 +1523,16 @@ void chapter_14() {
     // cl9.push_back(ptr);
     // Task 10 see in .h, .cpp file.
     // Task 11.
-    PStash_14 cl11;
+    PStash_14_A cl11;
     cout << "Testing task 11.\n";
     for (int i = 0; i < 3; i++) {
         cl11.add(new Asteroid);
     }
     for (int i = 0; i < 3; i++) cl11.remove(i);
-/*
-    Asteroid cl11_stash;
-    for (int i = 0; i < 3; i++) cl11_stash.stash.add(new Asteroid());
-    for (int i = 0; i < 3; i++) cl11_stash.stash.remove(i);
-    */
+    // Task 15.
+    cout << "Static functions.\n";
+    Class_14_15_2::function_1();
+    Class_14_15_2::function_2();
 
 }
 

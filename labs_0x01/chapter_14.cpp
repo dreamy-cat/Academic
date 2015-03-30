@@ -141,7 +141,7 @@ Asteroid::~Asteroid() {
 
 PStash_14::PStash_14() : quantity(0), next(0), storage(0) {}
 
-int PStash_14::add(Asteroid *element) {
+int PStash_14::add(void *element) {
     const int inflateSize = 10;
     if (next >= quantity) inflate(inflateSize);
     storage[next++] = element;
@@ -154,7 +154,7 @@ PStash_14::~PStash_14() {
     delete []storage;
 }
 
-Asteroid* PStash_14::operator[](int index) const {
+void* PStash_14::operator[](int index) const {
     if (index < 0 || index >= quantity) {
         cout << "PStash_14, operator[] index out of range.";
         return NULL;
@@ -162,16 +162,16 @@ Asteroid* PStash_14::operator[](int index) const {
     return storage[index];
 }
 
-Asteroid* PStash_14::remove(int index) {
-    Asteroid* r = operator[](index);
+void* PStash_14::remove(int index) {
+    void* r = operator[](index);
     if (r != NULL) storage[index] = 0;
     return r;
 }
 
 void PStash_14::inflate(int increase) {
-    Asteroid** newStorage = new Asteroid*[quantity + increase];
-    memset((void*)newStorage, 0, (quantity + increase)*sizeof(Asteroid));
-    memcpy((void*)newStorage, storage, quantity*sizeof(Asteroid));
+    void** newStorage = new void*[quantity + increase];
+    memset((void*)newStorage, 0, (quantity + increase)*sizeof(void*));
+    memcpy((void*)newStorage, storage, quantity*sizeof(void*));
     quantity += increase;
     delete []storage;
     storage = newStorage;
@@ -179,4 +179,58 @@ void PStash_14::inflate(int increase) {
 
 int PStash_14::count() const {
     return next;
+}
+
+PStash_14_A::PStash_14_A() : quantity(0), next(0), storage(0) {}
+
+int PStash_14_A::add(Asteroid *element) {
+    const int inflateSize = 10;
+    if (next >= quantity) inflate(inflateSize);
+    storage[next++] = element;
+    return (next - 1);
+}
+
+PStash_14_A::~PStash_14_A() {
+    for (int i = 0; i < next; i++)
+        if (storage[i] != 0) cout << "PStash_14_A not empty." << endl;
+    delete []storage;
+}
+
+Asteroid* PStash_14_A::operator[](int index) const {
+    if (index < 0 || index >= quantity) {
+        cout << "PStash_14_A, operator[] index out of range.";
+        return NULL;
+    }
+    return storage[index];
+}
+
+Asteroid* PStash_14_A::remove(int index) {
+    Asteroid* r = operator[](index);
+    if (r != NULL) storage[index] = 0;
+    return r;
+}
+
+void PStash_14_A::inflate(int increase) {
+    Asteroid** newStorage = new Asteroid*[quantity + increase];
+    memset((void*)newStorage, 0, (quantity + increase)*sizeof(PStash_14_A*));
+    memcpy((void*)newStorage, storage, quantity*sizeof(PStash_14_A*));
+    quantity += increase;
+    delete []storage;
+    storage = newStorage;
+}
+
+int PStash_14_A::count() const {
+    return next;
+}
+
+void Class_14_15_1::function_1() {
+    cout << "Class_14_15_1, function 1." << endl;
+}
+
+void Class_14_15_1::function_2() {
+    cout << "Class_14_15_1, function 2." << endl;
+}
+
+void Class_14_15_2::function_2() {
+    cout << "Class_14_15_2, function 2." << endl;
 }

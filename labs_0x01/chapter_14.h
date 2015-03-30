@@ -212,10 +212,25 @@ public:
 //    PStash_14 stash;
 };
 
-class PStash_14 : Asteroid {
+class PStash_14 {
 public:
     PStash_14();
     ~PStash_14();
+    int add(void* element);
+    void* operator[](int index) const;
+    void* remove(int index);
+    int count() const;
+private:
+    int quantity;
+    int next;
+    void** storage;
+    void inflate(int increase);
+};
+
+class PStash_14_A : PStash_14 {
+public:
+    PStash_14_A();
+    ~PStash_14_A();
     int add(Asteroid* element);
     Asteroid* operator[](int index) const;
     Asteroid* remove(int index);
@@ -227,5 +242,15 @@ private:
     void inflate(int increase);
 };
 
+class Class_14_15_1 {
+public:
+    static void function_1();
+    static void function_2();
+};
+
+class Class_14_15_2 : public Class_14_15_1 {
+public:
+    static void function_2();
+};
 
 #endif
