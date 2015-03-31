@@ -181,46 +181,94 @@ int PStash_14::count() const {
     return next;
 }
 
-PStash_14_A::PStash_14_A() : quantity(0), next(0), storage(0) {}
+PStash_14_1::PStash_14_1() { cout << "PStash_14_1 constructor." << endl; }
 
-int PStash_14_A::add(Asteroid *element) {
-    const int inflateSize = 10;
-    if (next >= quantity) inflate(inflateSize);
-    storage[next++] = element;
-    return (next - 1);
+int PStash_14_1::add(Asteroid *element) {
+    return PStash_14::add((void*)element);
 }
 
-PStash_14_A::~PStash_14_A() {
-    for (int i = 0; i < next; i++)
-        if (storage[i] != 0) cout << "PStash_14_A not empty." << endl;
-    delete []storage;
+PStash_14_1::~PStash_14_1() { cout << "PStash_14_1 destructor." << endl; }
+
+Asteroid* PStash_14_1::operator[](int index) const {
+    return (Asteroid*)PStash_14::operator [](index);
 }
 
-Asteroid* PStash_14_A::operator[](int index) const {
-    if (index < 0 || index >= quantity) {
-        cout << "PStash_14_A, operator[] index out of range.";
-        return NULL;
-    }
-    return storage[index];
+Asteroid* PStash_14_1::remove(int index) {
+    return (Asteroid*)PStash_14::remove(index);
 }
 
-Asteroid* PStash_14_A::remove(int index) {
-    Asteroid* r = operator[](index);
-    if (r != NULL) storage[index] = 0;
+int PStash_14_1::count() const {
+    return PStash_14::count();
+}
+
+PStash_14_2::PStash_14_2() { cout << "PStash_14_2 constructor." << endl; }
+
+int PStash_14_2::add(Asteroid *element) {
+    return p.add((void*)element);
+}
+
+PStash_14_2::~PStash_14_2() { cout << "PStash_14_2 destructor." << endl; }
+
+Asteroid* PStash_14_2::operator[](int index) const {
+    return (Asteroid*)p.operator [](index);
+}
+
+Asteroid* PStash_14_2::remove(int index) {
+    return (Asteroid*)p.remove(index);
+}
+
+int PStash_14_2::count() const {
+    return p.count();
+}
+
+PStash_14_3::PStash_14_3() { cout << "PStash_14_3 constructor." << endl; }
+
+int PStash_14_3::add(Asteroid *element) {
+    this->push_back((void*)element);
+    return this->size();
+}
+
+PStash_14_3::~PStash_14_3() { cout << "PStash_14_3 destructor." << endl; }
+
+Asteroid* PStash_14_3::operator[](int index) const {
+    return (Asteroid*)this->operator[](index);
+}
+
+Asteroid* PStash_14_3::remove(int index) {
+    vector<void*>::iterator it = this->begin();
+    for (int i = 0; i < index; i++) it++;
+    Asteroid* r = (Asteroid*)*it;
+    this->erase(it);
     return r;
 }
 
-void PStash_14_A::inflate(int increase) {
-    Asteroid** newStorage = new Asteroid*[quantity + increase];
-    memset((void*)newStorage, 0, (quantity + increase)*sizeof(PStash_14_A*));
-    memcpy((void*)newStorage, storage, quantity*sizeof(PStash_14_A*));
-    quantity += increase;
-    delete []storage;
-    storage = newStorage;
+int PStash_14_3::count() const {
+    return this->size();
 }
 
-int PStash_14_A::count() const {
-    return next;
+PStash_14_4::PStash_14_4() { cout << "PStash_14_4 constructor." << endl; }
+
+int PStash_14_4::add(Asteroid *element) {
+    v.push_back((void*)element);
+    return v.size();
+}
+
+PStash_14_4::~PStash_14_4() { cout << "PStash_14_4 destructor." << endl; }
+
+Asteroid* PStash_14_4::operator[](int index) const {
+    return (Asteroid*)v.operator[](index);
+}
+
+Asteroid* PStash_14_4::remove(int index) {
+    vector<void*>::iterator it = v.begin();
+    for (int i = 0; i < index; i++) it++;
+    Asteroid* r = (Asteroid*)*it;
+    v.erase(it);
+    return r;
+}
+
+int PStash_14_4::count() const {
+    return v.size();
 }
 
 void Class_14_15_1::function_1() {

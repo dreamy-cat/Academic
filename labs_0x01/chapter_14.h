@@ -227,19 +227,48 @@ private:
     void inflate(int increase);
 };
 
-class PStash_14_A : PStash_14 {
+class PStash_14_1 : PStash_14 {
 public:
-    PStash_14_A();
-    ~PStash_14_A();
+    PStash_14_1();
+    ~PStash_14_1();
+    int add(Asteroid* element);
+    Asteroid* operator[](int index) const;
+    Asteroid* remove(int index);
+    int count() const;
+};
+
+class PStash_14_2 {
+public:
+    PStash_14_2();
+    ~PStash_14_2();
     int add(Asteroid* element);
     Asteroid* operator[](int index) const;
     Asteroid* remove(int index);
     int count() const;
 private:
-    int quantity;
-    int next;
-    Asteroid** storage;
-    void inflate(int increase);
+    PStash_14 p;
+};
+
+class PStash_14_3 : std::vector<void*> {
+public:
+    PStash_14_3();
+    ~PStash_14_3();
+    int add(Asteroid* element);
+    Asteroid* operator[](int index) const;
+    Asteroid* remove(int index);
+    int count() const;
+};
+
+class PStash_14_4 {
+public:
+    PStash_14_4();
+    ~PStash_14_4();
+    int add(Asteroid* element);
+    Asteroid* operator[](int index) const;
+    Asteroid* remove(int index);
+    int count() const;
+private:
+    std::vector<void*> v;
 };
 
 class Class_14_15_1 {

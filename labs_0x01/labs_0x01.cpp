@@ -1523,12 +1523,25 @@ void chapter_14() {
     // cl9.push_back(ptr);
     // Task 10 see in .h, .cpp file.
     // Task 11.
-    PStash_14_A cl11;
+    PStash_14_1 cl11;
+    PStash_14_2 cl11_2;
     cout << "Testing task 11.\n";
     for (int i = 0; i < 3; i++) {
         cl11.add(new Asteroid);
+        cl11_2.add(new Asteroid);
     }
-    for (int i = 0; i < 3; i++) cl11.remove(i);
+    for (int i = 0; i < 3; i++) {
+        cl11.remove(i);
+        cl11_2.remove(i);
+    }
+    // Task 12.
+    cout << "Testing task 12 with vector.\n";
+    PStash_14_3 cl12_1;
+    PStash_14_4 cl12_2;
+    for (int i = 0; i < 3; i++) {
+        cl12_1.add(new Asteroid);
+        cl12_2.add(new Asteroid);
+    }
     // Task 15.
     cout << "Static functions.\n";
     Class_14_15_2::function_1();
