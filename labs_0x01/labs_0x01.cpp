@@ -1542,6 +1542,17 @@ void chapter_14() {
         cl12_1.add(new Asteroid);
         cl12_2.add(new Asteroid);
     }
+    // Task 13.
+    cout << "Task 13.\n";
+    Chess cl13_1;
+    Chess cl13_2(cl13_1);
+//    Chess cl13_3(1);
+    cl13_1 = cl13_2;
+    function_14_13(cl13_1);
+    Game::Other cl13_sub;
+//    cl13_1 = cl13_sub;
+    Checkers cl13_4, cl13_5(cl13_4);
+    cl13_4 = cl13_5;
     // Task 15.
     cout << "Static functions.\n";
     Class_14_15_2::function_1();

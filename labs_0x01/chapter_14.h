@@ -282,4 +282,41 @@ public:
     static void function_2();
 };
 
+class GameBoard {
+public:
+    GameBoard();
+    GameBoard(const GameBoard&);
+    GameBoard& operator=(const GameBoard&);
+    ~GameBoard();
+};
+
+class Game {
+public:
+    Game();
+    Game(const Game& g);
+    Game(int);
+    Game& operator=(const Game& g);
+    class Other {};
+    operator Other() const;
+    ~Game();
+private:
+    GameBoard gb;
+};
+
+class Chess : public Game {
+public:
+    Chess();
+    Chess(const Chess& c);
+    Chess& operator=(const Chess& c);
+};
+
+void function_14_13(Game::Other);
+
+class Checkers : public Game {
+public:
+    Checkers();
+    Checkers(const Checkers& c);
+    Checkers& operator=(const Checkers& c);
+};
+
 #endif

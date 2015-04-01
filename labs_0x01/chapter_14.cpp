@@ -282,3 +282,60 @@ void Class_14_15_1::function_2() {
 void Class_14_15_2::function_2() {
     cout << "Class_14_15_2, function 2." << endl;
 }
+
+GameBoard::GameBoard() { cout << "GameBoard constructor." << endl;}
+
+GameBoard::GameBoard(const GameBoard&) { cout << "GameBoard copy constructor." << endl; }
+
+GameBoard& GameBoard::operator=(const GameBoard&) {
+    cout << "GameBoard, operator=" << endl;
+    return *this;
+}
+
+GameBoard::~GameBoard() { cout << "GameBoard destructor." << endl; }
+
+Game::Game() { cout << "Game constructor." << endl; }
+
+Game::Game(const Game& g) { cout << "Game copy constructor." << endl; }
+
+Game::Game(int) { cout << "Game constructor(int)." << endl; }
+
+Game& Game::operator=(const Game& g) {
+    gb = g.gb;
+    cout << "Game operator=." << endl;
+    return *this;
+}
+
+class Other {};
+
+void function_14_13(Game::Other) {}
+
+Game::operator Other() const {
+    cout << "Game operator Other()." << endl;
+    return Other();
+}
+
+Game::~Game() { cout << "Game destructor." << endl; }
+
+Checkers::Checkers() { cout << "Checkers constructor." << endl; }
+
+Checkers::Checkers(const Checkers& c) { cout << "Checkers copy constructor." << endl; }
+
+Checkers& Checkers::operator=(const Checkers& c) {
+    Game::operator =(c);
+    cout << "Checkers operator=" << endl;
+    return *this;
+}
+
+Chess::Chess() { cout << "Chess constructor." << endl; }
+
+Chess::Chess(const Chess& c) {
+    cout << "Chess copy constructod." << endl;
+    Game::operator =(c);
+}
+
+Chess& Chess::operator=(const Chess& c) {
+    cout << "Chess operator=." << endl;
+    Game::operator =(c);
+    return *this;
+}
