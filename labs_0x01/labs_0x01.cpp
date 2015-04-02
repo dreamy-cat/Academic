@@ -1553,6 +1553,10 @@ void chapter_14() {
 //    cl13_1 = cl13_sub;
     Checkers cl13_4, cl13_5(cl13_4);
     cl13_4 = cl13_5;
+    // Task 14.
+    BuisnessTraveler cl14_1("one"), cl14_2("two");
+    cl14_1 = cl14_2;
+    function_14_14(cl14_1);
     // Task 15.
     cout << "Static functions.\n";
     Class_14_15_2::function_1();

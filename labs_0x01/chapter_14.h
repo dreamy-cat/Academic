@@ -319,4 +319,34 @@ public:
     Checkers& operator=(const Checkers& c);
 };
 
+class Traveler {
+public:
+    Traveler(std::string s);
+    Traveler(const Traveler& r);
+    Traveler& operator=(const Traveler& r);
+private:
+    std::string str;
+};
+
+class Pager {
+public:
+    Pager(std::string s);
+    Pager(const Pager& r);
+    Pager& operator=(const Pager& r);
+private:
+    std::string str;
+};
+
+class BuisnessTraveler : public Traveler {
+public:
+    BuisnessTraveler();
+    BuisnessTraveler(std::string s);
+    BuisnessTraveler(const BuisnessTraveler& r);
+    BuisnessTraveler& operator=(const BuisnessTraveler& r);
+private:
+    Pager one;
+};
+
+void function_14_14(BuisnessTraveler v);
+
 #endif

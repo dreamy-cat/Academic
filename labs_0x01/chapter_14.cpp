@@ -339,3 +339,51 @@ Chess& Chess::operator=(const Chess& c) {
     Game::operator =(c);
     return *this;
 }
+
+Traveler::Traveler(std::string s) : str(s) { cout << "Traveler costructor with s = " << s << endl; }
+
+Pager::Pager(std::string s) : str(s) { cout << "Pager constructor with s = " << s << endl; }
+
+Traveler::Traveler(const Traveler& r) {
+    str = r.str;
+    cout << "Traveler copy constructor with str=" << str << endl;
+}
+
+Traveler& Traveler::operator=(const Traveler& r) {
+    str = r.str;
+    cout << "Traveler operator= with str= " << str << endl;
+    return *this;
+}
+
+Pager::Pager(const Pager& r) {
+    str = r.str;
+    cout << "Pager copy constructor with str=." << str << endl;
+}
+
+Pager& Pager::operator=(const Pager& r) {
+    str = r.str;
+    cout << "Pager operator= with str=" << str << endl;
+    return *this;
+}
+
+BuisnessTraveler::BuisnessTraveler() : Traveler("buisness"), one("one pager") {
+    cout << "Buisness traveler with default constructor." << endl;
+}
+
+BuisnessTraveler::BuisnessTraveler(std::string s) : Traveler(s), one(s) {
+    cout << "Buisness traveler constructor with s=" << s << endl;
+}
+
+BuisnessTraveler::BuisnessTraveler(const BuisnessTraveler& r) : Traveler(r), one(r.one) {
+    cout << "BuisnessTraveler copy constructor." << endl;
+}
+
+BuisnessTraveler& BuisnessTraveler::operator=(const BuisnessTraveler& r) {
+    cout << "Buisness traveler operator=" << endl;
+    ::Traveler::operator =(r);
+    one.operator =(r.one);
+}
+
+void function_14_14(BuisnessTraveler v) {
+    cout << "Function_14_14 has called." << endl;
+}
