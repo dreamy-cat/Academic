@@ -1561,7 +1561,14 @@ void chapter_14() {
     cout << "Static functions.\n";
     Class_14_15_2::function_1();
     Class_14_15_2::function_2();
-
+    // Task 16.
+    FName cl16("labs_0x01/files/chapter-14.txt");
+    cl16.open(cl16.name().c_str());
+    cout << "Task 16, file name : " << cl16.name() << endl;
+    string str16;
+    getline(cl16, str16, '\0');
+    cout << "String from file: " << str16 << endl;
+    cl16.close();
 }
 
 void Labs_0x01() {

@@ -387,3 +387,15 @@ BuisnessTraveler& BuisnessTraveler::operator=(const BuisnessTraveler& r) {
 void function_14_14(BuisnessTraveler v) {
     cout << "Function_14_14 has called." << endl;
 }
+
+FName::FName(const string fname) : std::fstream(), fileName(fname) {
+    named = true;
+}
+
+std::string FName::name() const {
+    return fileName;
+}
+
+void FName::name(std::string newName) {
+
+}

@@ -2,6 +2,7 @@
 #define CHAPTER_14_H
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <cstring>
 
@@ -348,5 +349,15 @@ private:
 };
 
 void function_14_14(BuisnessTraveler v);
+
+class FName : public std::fstream {
+public:
+    FName(const std::string fname);
+    std::string name() const;
+    void name(std::string newName);
+private:
+    std::string fileName;
+    bool named;
+};
 
 #endif
