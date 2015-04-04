@@ -1569,6 +1569,12 @@ void chapter_14() {
     getline(cl16, str16, '\0');
     cout << "String from file: " << str16 << endl;
     cl16.close();
+    // Task 17
+    Class_14_17_1 cl17_1(1);
+    Class_14_17_2 cl17_2(2);
+    // 'Class_14_17' is an inaccessible base of 'Class_14_17_1'
+    // function_14_17(cl17_1);
+    // function_14_17(cl17_2);
 }
 
 void Labs_0x01() {

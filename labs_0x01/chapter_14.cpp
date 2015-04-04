@@ -399,3 +399,7 @@ std::string FName::name() const {
 void FName::name(std::string newName) {
 
 }
+
+void function_14_17(Class_14_17& c) {
+    cout << "Integer from base Class_14_17 = " << c.i << endl;
+}

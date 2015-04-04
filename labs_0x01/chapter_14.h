@@ -360,4 +360,22 @@ private:
     bool named;
 };
 
+class Class_14_17 {
+public:
+    Class_14_17(int ii) : i(ii) {}
+    int i;
+};
+
+class Class_14_17_1 : private Class_14_17 {
+public:
+    Class_14_17_1(int ii) : Class_14_17(ii) {}
+};
+
+class Class_14_17_2 : protected Class_14_17 {
+public:
+    Class_14_17_2(int ii) : Class_14_17(ii) {}
+};
+
+void function_14_17(Class_14_17& c);
+
 #endif
