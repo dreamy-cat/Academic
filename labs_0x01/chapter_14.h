@@ -378,4 +378,24 @@ public:
 
 void function_14_17(Class_14_17& c);
 
+class Base_18 {
+public:
+    Base_18(int ii = 0);
+    int value(int m) const;
+protected:
+    int read() const;
+    void set(int ii);
+private:
+    int i;
+};
+
+class Derived_18 : public Base_18 {
+public:
+    Derived_18(int jj);
+    void change(int x);
+    int readvalue() const;
+private:
+    int j;
+};
+
 #endif

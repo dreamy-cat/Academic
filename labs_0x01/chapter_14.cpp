@@ -403,3 +403,18 @@ void FName::name(std::string newName) {
 void function_14_17(Class_14_17& c) {
     cout << "Integer from base Class_14_17 = " << c.i << endl;
 }
+
+Base_18::Base_18(int ii) : i(ii) {}
+
+int Base_18::value(int m) const { return (i * m); }
+
+int Base_18::read() const { return i; }
+
+void Base_18::set(int ii) {}
+
+Derived_18::Derived_18(int jj) : j(jj) {}
+
+void Derived_18::change(int x) { set(x); }
+
+int Derived_18::readvalue() const { return read(); }
+

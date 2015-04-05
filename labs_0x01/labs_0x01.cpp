@@ -1575,6 +1575,9 @@ void chapter_14() {
     // 'Class_14_17' is an inaccessible base of 'Class_14_17_1'
     // function_14_17(cl17_1);
     // function_14_17(cl17_2);
+    // Task 18.
+    Derived_18 cl18(1);
+    cout << "Derived_18, readvalue = " << cl18.readvalue() << endl;
 }
 
 void Labs_0x01() {
