@@ -418,3 +418,6 @@ void Derived_18::change(int x) { set(x); }
 
 int Derived_18::readvalue() const { return read(); }
 
+void SpaceShip::fly() { cout << "SpaceShip::fly()." << endl; }
+
+void Shuttle::land() { cout << "Shuttle::land()." << endl; }

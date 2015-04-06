@@ -389,7 +389,7 @@ private:
     int i;
 };
 
-class Derived_18 : public Base_18 {
+class Derived_18 : protected Base_18 {
 public:
     Derived_18(int jj);
     void change(int x);
@@ -397,5 +397,17 @@ public:
 private:
     int j;
 };
+
+class SpaceShip {
+public:
+    void fly();
+};
+
+class Shuttle : public SpaceShip {
+public:
+    void land();
+};
+
+
 
 #endif

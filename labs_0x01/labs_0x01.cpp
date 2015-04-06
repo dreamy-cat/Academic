@@ -1575,9 +1575,15 @@ void chapter_14() {
     // 'Class_14_17' is an inaccessible base of 'Class_14_17_1'
     // function_14_17(cl17_1);
     // function_14_17(cl17_2);
-    // Task 18.
+    // Task 18-19.
     Derived_18 cl18(1);
     cout << "Derived_18, readvalue = " << cl18.readvalue() << endl;
+    // 'int Base_18::value(int) const' is inaccessible
+    // cl18.value(3);
+    // Task 20. 'class SpaceShip' has no member named 'land'
+    Shuttle cl20;
+    SpaceShip* ptrS = &cl20;
+    // ptrS->land();
 }
 
 void Labs_0x01() {
