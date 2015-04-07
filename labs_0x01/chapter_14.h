@@ -408,6 +408,66 @@ public:
     void land();
 };
 
+class Instrument_14 {
+public:
+    virtual void play(int) const;
+    void prepare();
+};
 
+class Wind_14 : public Instrument_14 {
+public:
+    void play(int) const;
+};
+
+void function_14_21(Instrument_14& r);
+
+class Parent_14 {
+public:
+    Parent_14();
+    Parent_14(int ii);
+    Parent_14(Parent_14& p);
+    friend std::ostream& operator<<(std::ostream& os, const Parent_14& v);
+private:
+    int i;
+};
+
+class Member_14 {
+public:
+    Member_14(int ii);
+    Member_14(const Member_14& p);
+    friend std::ostream& operator<<(std::ostream& os, const Member_14& v);
+private:
+    int i;
+};
+
+class Child_14 : public Parent_14 {
+public:
+    Child_14(int ii);
+    Child_14(const Child_14& c);
+    friend std::ostream& operator<<(std::ostream& os, const Child_14& v);
+private:
+    int i;
+    Member_14 m;
+};
+
+class Toy_14 : public Child_14 {
+public:
+    Toy_14(int ii);
+    Toy_14(const Toy_14& t);
+    Toy_14& operator=(const Toy_14& t);
+    friend std::ostream& operator<<(std::ostream& os, const Toy_14& v);
+private:
+    int i;
+    Member_14 m;
+};
+
+class StringStack_14 {
+public:
+    void push(std::string* str);
+    std::string* pop();
+    std::string* peek(int index);
+private:
+    std::vector<std::string*> storage;
+};
 
 #endif

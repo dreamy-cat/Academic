@@ -421,3 +421,68 @@ int Derived_18::readvalue() const { return read(); }
 void SpaceShip::fly() { cout << "SpaceShip::fly()." << endl; }
 
 void Shuttle::land() { cout << "Shuttle::land()." << endl; }
+
+void Instrument_14::play(int) const { cout << "Instrument_14, play." << endl; }
+
+void Instrument_14::prepare() { cout << "Instrument_14, prepare." << endl; }
+
+void function_14_21(Instrument_14& r) {
+    r.prepare();
+    r.play(1);
+}
+
+void Wind_14::play(int) const { cout << "Wind_14, play." << endl; }
+
+Parent_14::Parent_14() { cout << "Parent_14 default constructor." << endl; }
+
+Parent_14::Parent_14(int ii) : i(ii) { cout << "Parent_14 constructor i = " << i << "." << endl; }
+
+Parent_14::Parent_14(Parent_14& p) : i (p.i) { cout << "Parent_14 copy constructor i = " << i << "." << endl; }
+
+ostream& operator<<(ostream& os, const Parent_14& v) { return (os << "Parent_14::i = " << v.i << "." << endl); }
+
+Member_14::Member_14(int ii) : i(ii) { cout << "Member_14 constructor i = " << i << "." << endl; }
+
+Member_14::Member_14(const Member_14& p) : i(p.i) { cout << "Member_14 copy constructor. i = " << i << "." << endl; }
+
+ostream& operator<<(std::ostream& os, const Member_14& v) { return (os << "Member_14::i = " << v.i << "," << endl); }
+
+Child_14::Child_14(int ii) : i(ii), Parent_14(ii), m(ii) { cout << "Child_14 constructor i = " << i << "." << endl; }
+
+Child_14::Child_14(const Child_14& c) : m(c.m) {
+    i = c.i;
+    cout << "Child_14 copy constructor i = " << i << "." << endl;
+}
+
+std::ostream& operator<<(std::ostream& os, const Child_14& v) { return (os << "Child_14::i = " << v.i << "." << endl); }
+
+Toy_14::Toy_14(int ii) : i(ii), m(ii), Child_14(ii) { cout << "Toy_14 constructor i = " << i << "." << endl; }
+
+Toy_14::Toy_14(const Toy_14& t) : Child_14(t.i), m(t.m) {
+    i = t.i;
+    cout << "Toy_14 copy constructor i = " << i << "." << endl;
+}
+
+Toy_14& Toy_14::operator=(const Toy_14& t) {
+    i = t.i;
+    cout << "Toy_14 operator = , i = " << i << "." << endl;
+    return *this;
+}
+
+std::ostream& operator<<(std::ostream& os, const Toy_14& v) { cout << "Toy_14::i = " << v.i << "." << endl; }
+
+void StringStack_14::push(std::string* str) {
+    storage.push_back(str);
+}
+
+std::string* StringStack_14::pop() {
+    if (storage.empty()) return NULL;
+    string* r = storage[storage.size()-1];
+    storage.pop_back();
+    return r;
+}
+
+std::string* StringStack_14::peek(int index) {
+    if (index >= storage.size() || index < 0) return NULL;
+    return storage[index];
+}

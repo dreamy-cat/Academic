@@ -1584,6 +1584,23 @@ void chapter_14() {
     Shuttle cl20;
     SpaceShip* ptrS = &cl20;
     // ptrS->land();
+    // Task 21-22.
+    Wind_14 cl21_1;
+    function_14_21(cl21_1);
+    // Task 23-24.
+    Child_14 cl23_1(3);
+    cout << "Operator << test : " << cl23_1;
+    Child_14 cl23_2 = cl23_1;
+    Toy_14 cl23_3(1);
+    Toy_14 cl23_4 = cl23_3;
+    cl23_4 = cl23_3;
+    // Task 25.
+    StringStack_14 cl25;
+    string str25_1 = "string 1";
+    string str25_2 = "string 2";
+    cl25.push(&str25_1);
+    cl25.push(&str25_2);
+    cout << "StringStack contains : " << *cl25.peek(0) << " " << *cl25.pop() << endl;
 }
 
 void Labs_0x01() {
