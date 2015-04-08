@@ -486,3 +486,11 @@ std::string* StringStack_14::peek(int index) {
     if (index >= storage.size() || index < 0) return NULL;
     return storage[index];
 }
+
+Rock::Rock() { cout << "Rock constructor." << endl; }
+
+Rock::Rock(const Rock& r) { cout << "Rock copy constructor." << endl; }
+
+Rock& Rock::operator=(const Rock& r) { cout << "Rock operator=." << endl; }
+
+Rock::~Rock() { cout << "Rock destructor." << endl; }

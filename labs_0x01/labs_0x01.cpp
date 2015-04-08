@@ -1601,6 +1601,13 @@ void chapter_14() {
     cl25.push(&str25_1);
     cl25.push(&str25_2);
     cout << "StringStack contains : " << *cl25.peek(0) << " " << *cl25.pop() << endl;
+    // Task 26. Not possible for reference.
+    vector<Rock*> vec_26;
+    Rock cl26_1, cl26_2;
+    vec_26.reserve(2);
+    vec_26.push_back(&cl26_1);
+    vec_26.push_back(&cl26_2);
+
 }
 
 void Labs_0x01() {

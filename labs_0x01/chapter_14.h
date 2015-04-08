@@ -470,4 +470,37 @@ private:
     std::vector<std::string*> storage;
 };
 
+class Rock {
+public:
+    Rock();
+    Rock(const Rock& r);
+    Rock& operator=(const Rock& r);
+    ~Rock();
+};
+
+class Subject {
+public:
+    void f();
+    void g();
+    void h();
+};
+
+class Proxy : public Subject {
+public:
+    Proxy(Subject* ptr) : subjPtr(ptr) {}
+private:
+    Subject* subjPtr;
+};
+
+class Implementation_1 : public Subject {
+public:
+    void f1();
+    void f2();
+    void f3();
+};
+
+class Implementation_2 : public Subject {
+
+};
+
 #endif
