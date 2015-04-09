@@ -503,4 +503,45 @@ class Implementation_2 : public Subject {
 
 };
 
+class Widget_14 {
+public:
+    Widget_14();
+    ~Widget_14();
+    void* operator new(size_t sz);
+    void operator delete(void* p);
+    void* operator new[](size_t sz);
+    void operator delete[](void* p);
+private:
+    int i[5];
+};
+
+class Class_14_28 : public Widget_14 {
+public:
+    Class_14_28();
+    ~Class_14_28();
+    void* operator new(size_t sz);
+    void operator delete(void* p);
+    void* operator new[](size_t sz);
+    void operator delete[](void* p);
+};
+
+class Framis_14 {
+public:
+    Framis_14();
+    ~Framis_14();
+    void* operator new(size_t);
+    void operator delete(void*);
+private:
+    char c;
+    static unsigned char pool[];
+    static bool alloc_map[];
+    const static int maxSz = 4;
+};
+
+class Class_14_29 : public Framis_14 {
+public:
+    void* operator new (size_t sz);
+    void operator delete (void* p);
+};
+
 #endif

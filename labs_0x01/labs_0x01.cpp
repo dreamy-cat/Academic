@@ -1607,7 +1607,20 @@ void chapter_14() {
     vec_26.reserve(2);
     vec_26.push_back(&cl26_1);
     vec_26.push_back(&cl26_2);
-
+    // Task 27. Rethink...
+    Subject cl27_1;
+    Proxy cl27_2(&cl27_1);
+    cl27_2.f();
+    // Task 28. Not clear... Maybe fixed size in original example was wrong.
+    Widget_14* ptr28_1 = new Widget_14;
+    Widget_14* ptr28_2 = new Widget_14[2];
+    delete ptr28_1;
+    delete []ptr28_2;
+    Class_14_28* cl28_1 = new Class_14_28;
+    delete cl28_1;
+    // Task 29.
+    Class_14_29* cl29 = new Class_14_29;
+    delete cl29;
 }
 
 void Labs_0x01() {

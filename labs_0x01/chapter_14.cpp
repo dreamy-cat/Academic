@@ -494,3 +494,93 @@ Rock::Rock(const Rock& r) { cout << "Rock copy constructor." << endl; }
 Rock& Rock::operator=(const Rock& r) { cout << "Rock operator=." << endl; }
 
 Rock::~Rock() { cout << "Rock destructor." << endl; }
+
+void Subject::f() { cout << "Subject::f()." << endl; }
+
+Widget_14::Widget_14() { cout << "Widget_14 constructor." << endl; }
+
+Widget_14::~Widget_14() { cout << "Widget_14 destructor." << endl; }
+
+void* Widget_14::operator new(size_t sz) {
+    cout << "Widget_14 operator new, sz = " << sz << endl;
+    return ::new char[sz];
+}
+
+void Widget_14::operator delete(void* p) {
+    cout << "Widget_14 operator delete, p = " << (long)p << endl;
+    ::delete [](char*)p;
+}
+
+void *Widget_14::operator new[](size_t sz) {
+    cout << "Widget_14 operator new[], sz = " << sz << endl;
+    return ::new char[sz];
+}
+
+void Widget_14::operator delete[](void* p) {
+    cout << "Widget_14 operator delete[], p = " << (long)p << endl;
+    ::delete [](char*)p;
+}
+
+Class_14_28::Class_14_28() { cout << "Class_14_28 constructor." << endl; }
+
+Class_14_28::~Class_14_28() { cout << "Class_14_28 destructor." << endl; }
+
+void* Class_14_28::operator new(size_t sz) {
+    cout << "Class_14_28 operator new, sz = " << sz << endl;
+    return (::Widget_14::operator new(sizeof(Class_14_28)));
+}
+
+void Class_14_28::operator delete(void* p) {
+    cout << "Class_14_28 operator delete, p = " << (long)p << endl;
+    ::delete((Class_14_28*)p);
+}
+
+void* Class_14_28::operator new[](size_t sz) {
+    cout << "Class_14_28 operator new[], sz = " << sz << endl;
+    return (::Widget_14::operator new(sz));
+}
+
+void Class_14_28::operator delete[](void* p) {
+    cout << "Class_14_28 operator delete[], p = " << (long)p << endl;
+    ::delete[]((Class_14_28*)p);
+}
+
+unsigned char Framis_14::pool[Framis_14::maxSz * sizeof(Framis_14)];
+
+bool Framis_14::alloc_map[Framis_14::maxSz];
+
+Framis_14::Framis_14() {
+    cout << "Framis_14 constructor." << endl;
+}
+
+Framis_14::~Framis_14() {
+    cout << "Framis_14 destructor." << endl;
+}
+
+void* Framis_14::operator new(size_t) {
+    for (int i = 0; i < maxSz; i++)
+        if (!alloc_map[i]) {
+            cout << "Using block " << i << " from pool." << endl;
+            alloc_map[i] = true;
+            return pool + (i * sizeof(Framis_14));
+        }
+    cout << "Memory pool full." << endl;
+    return NULL;
+}
+
+void Framis_14::operator delete(void* p) {
+    if (!p) return;
+    unsigned long block = (unsigned long)p - (unsigned long)pool;
+    block /= sizeof(Framis_14);
+    alloc_map[block] = false;
+}
+
+void* Class_14_29::operator new (size_t sz) {
+    cout << "Class_14_29 operator new, sz = " << sz << endl;
+    return new char[sz];
+}
+
+void Class_14_29::operator delete (void* p) {
+    cout << "Class_14_29 operator delete. p = " << (unsigned long)p << endl;
+    ::delete (Class_14_29*)p;
+}
