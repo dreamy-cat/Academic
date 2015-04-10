@@ -19,6 +19,7 @@
 #include "chapter_12.h"
 #include "chapter_13.h"
 #include "chapter_14.h"
+#include "chapter_15.h"
 
 using namespace std;
 
@@ -1623,6 +1624,22 @@ void chapter_14() {
     delete cl29;
 }
 
+void chapter_15() {
+    cout << "Chapter's 15 tasks.\n";
+    // Task 1-3. With reference works fine.
+    Shape_1* ar1[] = { new Circle_1, new Square_1, new Triangle_1 };
+    for (int i = 0; i < 3; i++) ar1[i]->draw();
+    // cannot declare variable 'cl1' to be of abstract type 'Shape_1'
+    // Shape_1 cl1;
+    function_15_1(*ar1[0]);
+    // Task 4.
+    Class_15_B* ptr4 = new Class_15_C(4);
+    ptr4->f();
+    // Task 5.
+    Instrument_5* ptr5 = new Wind_5;
+    function_15_5(*ptr5);
+}
+
 void Labs_0x01() {
-    chapter_14();
+    chapter_15();
 }
