@@ -66,4 +66,40 @@ public:
 
 void function_15_5(Instrument_5& i);
 
+class Rodent {
+public:
+    virtual void run() = 0;
+    virtual void eat() = 0;
+    virtual ~Rodent() = 0;
+};
+
+class Mouse : public Rodent {
+public:
+    ~Mouse();
+    void run();
+    void eat();
+};
+
+class Gerbil : public Rodent {
+public:
+    ~Gerbil();
+    void run();
+    void eat();
+
+};
+
+class Hamster : public Rodent {
+public:
+    ~Hamster();
+    void run();
+    void eat();
+};
+
+class BlueHamster : public Hamster {
+public:
+    void run();
+    void eat();
+};
+
+
 #endif

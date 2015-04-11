@@ -1638,6 +1638,20 @@ void chapter_15() {
     // Task 5.
     Instrument_5* ptr5 = new Wind_5;
     function_15_5(*ptr5);
+    // Task 6-10.
+    Rodent* ar6[] = { new Mouse, new Gerbil, new Hamster };
+    vector<Rodent*> vec6;
+    vec6.push_back(new Mouse);
+    vec6.push_back(new Gerbil);
+    vec6.push_back(new Hamster);
+    for (int i = 0; i < vec6.size(); i++) {
+        ar6[i]->run();
+        vec6[i]->eat();
+        delete vec6[i];
+    }
+    Rodent* ptr6 = new BlueHamster;
+    ptr6->run();
+    ptr6->eat();
 }
 
 void Labs_0x01() {
