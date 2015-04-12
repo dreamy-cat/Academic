@@ -65,3 +65,37 @@ void Hamster::eat() { cout << "Hamster::eat()." << endl; }
 void BlueHamster::run() { cout << "BlueHamster::run()." << endl; }
 
 void BlueHamster::eat() { cout << "BlueHamster::eat()." << endl; }
+
+void Aircraft_A::takeoff() { cout << "Aircraft_A::takeoff()." << endl; }
+
+void Aircraft_A::toland() { cout << "Aircraft_A::toland()." << endl; }
+
+void Aircraft_B::takeoff() { cout << "Aircraft_B::takeoff()." << endl; }
+
+void Aircraft_B::toland() { cout << "Aircraft_B::toland()." << endl; }
+
+Tower::Tower(int units) {
+    cout << "Tower::Tower(" << units << ")" << endl;
+    for (int i = 0; i < units; i++) {
+        storage.push_back(new Aircraft_A);
+        storage.push_back(new Aircraft_B);
+    }
+}
+
+Tower::~Tower() {
+    cout << "Tower::~Tower()."  << endl;
+    while (!storage.empty()) {
+        delete storage[storage.size()-1];
+        storage.pop_back();
+    }
+}
+
+void Tower::open() {
+    cout << "Tower::open()." << endl;
+    for (int i = 0; i < storage.size(); i++) storage[i]->takeoff();
+}
+
+void Tower::close() {
+    cout << "Tower::close()." << endl;
+    for (int i = 0; i < storage.size(); i++) storage[i]->toland();
+}

@@ -1652,6 +1652,10 @@ void chapter_15() {
     Rodent* ptr6 = new BlueHamster;
     ptr6->run();
     ptr6->eat();
+    // Task 11.
+    Tower cl11(3);
+    cl11.open();
+    cl11.close();
 }
 
 void Labs_0x01() {

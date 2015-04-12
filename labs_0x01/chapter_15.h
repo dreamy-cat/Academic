@@ -2,6 +2,7 @@
 #define CHAPTER_15_H
 
 #include <iostream>
+#include <vector>
 
 class Shape_1 {
 public:
@@ -101,5 +102,32 @@ public:
     void eat();
 };
 
+class Aircraft {
+public:
+    virtual void takeoff() = 0;
+    virtual void toland() = 0;
+};
+
+class Aircraft_A : public Aircraft {
+public:
+    void takeoff();
+    void toland();
+};
+
+class Aircraft_B : public Aircraft {
+public:
+    void takeoff();
+    void toland();
+};
+
+class Tower {
+public:
+    Tower(int units);
+    void open();
+    void close();
+    ~Tower();
+private:
+    std::vector<Aircraft*> storage;
+};
 
 #endif
