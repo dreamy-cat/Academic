@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 
 class Shape_1 {
 public:
@@ -128,6 +129,71 @@ public:
     ~Tower();
 private:
     std::vector<Aircraft*> storage;
+};
+
+class Plant {
+public:
+    virtual void seat() = 0;
+    virtual void fertilize() = 0;
+};
+
+class Cactus : public Plant {
+public:
+    void seat();
+    void fertilize();
+};
+
+class Flower : public Plant {
+public:
+    void seat();
+    void fertilize();
+};
+
+class Pet {
+public:
+    Pet(const std::string& name);
+    virtual std::string name() const = 0;
+    virtual std::string speak() const = 0;
+private:
+    std::string pname;
+};
+
+class Dog : public Pet {
+public:
+    Dog(std::string name);
+    virtual std::string name() const;
+    std::string speak() const;
+};
+
+class Class_15_14 {
+public:
+    Class_15_14();
+    virtual void function_1();
+};
+
+class Class_15_14_1 : public Class_15_14 {
+public:
+    Class_15_14_1();
+    void function_1();
+    void function_2();
+};
+
+class Base_15 {
+public:
+    virtual ~Base_15();
+    virtual void function();
+};
+
+class Derived_15_1 : public Base_15 {
+public:
+    ~Derived_15_1();
+    void function();
+};
+
+class Derived_15_2 : public Derived_15_1 {
+public:
+    ~Derived_15_2();
+    void function();
 };
 
 #endif

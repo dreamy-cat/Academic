@@ -99,3 +99,60 @@ void Tower::close() {
     cout << "Tower::close()." << endl;
     for (int i = 0; i < storage.size(); i++) storage[i]->toland();
 }
+
+void Cactus::seat() { cout << "Cactus::seat()." << endl; }
+
+void Cactus::fertilize() { cout << "Cactus::fertilize()." << endl; }
+
+void Flower::seat() { cout << "Flower::seat()." << endl; }
+
+void Flower::fertilize() { cout << "Flower::fertilize()." << endl; }
+
+Pet::Pet(const string& name) : pname(name) {}
+
+string Pet::name() const { return pname; }
+
+Dog::Dog(string name) : Pet(name) {}
+
+string Dog::speak() const { return string("Dog::speak()."); }
+
+string Dog::name() const { return Pet::name(); }
+
+void Class_15_14::function_1() { cout << "Class_15_14::function_1()." << endl; }
+
+Class_15_14::Class_15_14() {
+    cout << "Class_15_14::Class_15_14()." << endl;
+    function_1();
+}
+
+Class_15_14_1::Class_15_14_1() { cout << "Class_15_14_1::Class_15_14_1()." << endl; }
+
+void Class_15_14_1::function_1() { cout << "Class_15_14_1::function_1()." << endl; }
+
+void Class_15_14_1::function_2() {
+    cout << "Class_15_14_1::function_2()." << endl;
+    function_1();
+}
+
+Base_15::~Base_15() {
+    cout << "Base_15::~Base_15()." << endl;
+    function();
+}
+
+void Base_15::function() { cout << "Base_15::function()." << endl; }
+
+
+Derived_15_1::~Derived_15_1() {
+    cout << "Derived_15_1::~Derived_15_1()." << endl;
+    function();
+}
+
+void Derived_15_1::function() { cout << "Derived_15_1::function()." << endl; }
+
+
+Derived_15_2::~Derived_15_2() {
+    cout << "Derived_15_2::~Derived_15_2()." << endl;
+    function();
+}
+
+void Derived_15_2::function() { cout << "Derived_15_2::function()." << endl; }

@@ -1656,6 +1656,24 @@ void chapter_15() {
     Tower cl11(3);
     cl11.open();
     cl11.close();
+    // Task 12.
+    vector<Plant*> greenhouse;
+    for (int i = 0; i < 2; i++) {
+        greenhouse.push_back(new Cactus);
+        greenhouse.push_back(new Flower);
+        greenhouse[i*2]->seat();
+        greenhouse[i*2+1]->fertilize();
+    }
+    // Task 13-14.
+    Pet* ptr13 = new Dog("Ralph");
+    cout << ptr13->speak() << endl;
+    cout << ptr13->name() << endl;
+    // Task 15.
+    Class_15_14_1* ptr15 = new Class_15_14_1;
+    ptr15->function_2();
+    // Task 16.
+    Base_15* ptr16 = new Derived_15_2;
+    delete ptr16;
 }
 
 void Labs_0x01() {
