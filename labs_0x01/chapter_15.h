@@ -196,4 +196,76 @@ public:
     void function();
 };
 
+class Base_18_1 {
+public:
+    int i;
+};
+
+class Derived_15_18 : public Base_18_1 {
+public:
+    int i2;
+};
+
+void function_15_18(Base_18_1 obj);
+
+class Class_15_20 {
+public:
+    virtual void function_1() = 0;
+    void function_2();
+};
+
+class Class_15_20_1 : public Class_15_20 {
+public:
+    void function_1();
+};
+
+class Base_15_21 {
+public:
+    Base_15_21();
+    virtual ~Base_15_21();
+    virtual void function() = 0;
+};
+
+class Member_15_21_1 {
+public:
+    Member_15_21_1();
+    ~Member_15_21_1();
+};
+
+class Member_15_21_2 {
+public:
+    Member_15_21_2();
+    ~Member_15_21_2();
+};
+
+class Derived_15_21_1 : public Base_15_21 {
+public:
+    Derived_15_21_1();
+    ~Derived_15_21_1();
+    void function();
+private:
+    Member_15_21_1 m1;
+};
+
+class Derived_15_21_2 : public Derived_15_21_1 {
+public:
+    Derived_15_21_2();
+    ~Derived_15_21_2();
+    void function();
+private:
+    Member_15_21_2 m2;
+};
+
+class Class_15_22 {
+public:
+    virtual void function(int i);
+    virtual void function(char c);
+    virtual void function(float f);
+};
+
+class Class_15_22_1 : public Class_15_22 {
+public:
+    // void function(char c);
+};
+
 #endif

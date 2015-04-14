@@ -156,3 +156,66 @@ Derived_15_2::~Derived_15_2() {
 }
 
 void Derived_15_2::function() { cout << "Derived_15_2::function()." << endl; }
+
+void function_15_18(Base_18_1 obj) { cout << "Sizeof(Base_18) = " << sizeof(obj) << endl; }
+
+
+// Task 19.
+/*
+
+387 0215 488B45F8 		movq	-8(%rbp), %rax
+388 0219 488B00   		movq	(%rax), %rax
+389 021c 488B00   		movq	(%rax), %rax
+390 021f 488B55F8 		movq	-8(%rbp), %rdx
+391 0223 BE050000 		movl	$5, %esi
+391      00
+392 0228 4889D7   		movq	%rdx, %rdi
+393 022b FFD0     		call	*%rax
+
+*/
+
+void Class_15_20_1::function_1() {
+    // Perfomance test.
+    int a = 0, b = 0;
+    int c = a + b;
+    c *= 1;
+}
+
+void Class_15_20::function_2() {
+    // Perfomance test.
+    int a = 0, b = 0;
+    int c = a + b;
+    c *= 1;
+}
+
+Base_15_21::Base_15_21() { cout << "Base_15_21::Base_15_21()." << endl; }
+
+Base_15_21::~Base_15_21() { cout << "Base_15_21::~Base_15_21()." << endl; }
+
+Member_15_21_1::Member_15_21_1() { cout << "Member_15_21_1::Member_15_21_1()." << endl; }
+
+Member_15_21_1::~Member_15_21_1() { cout << "Member_15_21_1::~Member_15_21_1()." << endl; }
+
+Member_15_21_2::Member_15_21_2() { cout << "Member_15_21_2::Member_15_21_2()." << endl; }
+
+Member_15_21_2::~Member_15_21_2() { cout << "Member_15_21_2::~Member_15_21_2()." << endl; }
+
+Derived_15_21_1::Derived_15_21_1() { cout << "Derived_15_21_1::Derived_15_21_1(int id)." << endl; }
+
+Derived_15_21_1::~Derived_15_21_1() { cout << "Derived_15_21_1::~Derived_15_21_1(int id)." << endl; }
+
+Derived_15_21_2::Derived_15_21_2() { cout << "Derived_15_21_2::Derived_15_21_2(int id)." << endl; }
+
+Derived_15_21_2::~Derived_15_21_2() { cout << "Derived_15_21_2::~Derived_15_21_2(int id)." << endl; }
+
+void Derived_15_21_1::function() { cout << "Derived_15_21_1::function()." << endl; }
+
+void Derived_15_21_2::function() { cout << "Derived_15_21_2::function()." << endl; }
+
+void Class_15_22::function(int i) { cout << "Class_15_22::function(int)." << endl; }
+
+void Class_15_22::function(char c) { cout << "Class_15_22::function(char)." << endl; }
+
+void Class_15_22::function(float f) { cout << "Class_15_22::function(float)." << endl; }
+
+// void Class_15_22_1::function(char) { cout << "Class_15_22_1::function(char)." << endl; }

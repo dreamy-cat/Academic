@@ -1671,9 +1671,51 @@ void chapter_15() {
     // Task 15.
     Class_15_14_1* ptr15 = new Class_15_14_1;
     ptr15->function_2();
-    // Task 16.
+    // Task 16-17.
     Base_15* ptr16 = new Derived_15_2;
     delete ptr16;
+    // Task 18.
+    Derived_15_18 cl16;
+    cout << "Sizeof Derived_18 = " << sizeof(cl16) << ". ";
+    function_15_18(cl16);
+    // Task 19. see in .cpp file.
+    // Task 20. With x100 multiplier, virtual calls - 43 seconds, usual - 35.
+    Class_15_20* ptr20 = new Class_15_20_1;
+    time_t time;
+    tm local;
+    time = std::time(NULL);
+    local = *std::localtime(&time);
+    int startTimer = local.tm_sec;
+    cout << "Starting second of call's virtual function_1(): " << startTimer;
+    for (int i = 0; i < 10000; i++) for (int j = 0; j < 10000; j++) ptr20->function_1();
+    time = std::time(NULL);
+    local = *std::localtime(&time);
+    int finishTimer = local.tm_sec;
+    cout << ", after calling virtual function_1() : " << finishTimer << endl;
+    cout << "Seconds after calling function_2(): ";
+    for (int i = 0; i < 10000; i++) for (int j = 0; j < 10000; j++) ptr20->function_2();
+    time = std::time(NULL);
+    local = *std::localtime(&time);
+    finishTimer = local.tm_sec;
+    cout << finishTimer << endl;
+    // Task 21.
+    Base_15_21* ptrs21[] = { new Derived_15_21_1, new Derived_15_21_2 };
+    for (int i = 0; i < 2; i++) {
+        ptrs21[i]->function();
+        delete ptrs21[i];
+    }
+    // Task 22. Yes, with Class::. If remove method, then calling only methods from the base class.
+    Class_15_22_1* ptr22 = new Class_15_22_1;
+    char c22 = 'a';
+    int i22 = 3;
+    float f22 = 1.0;
+    ptr22->function(c22);
+    ptr22->function(i22);
+    ptr22->function(f22);
+    Class_15_22* ptr22_1 = (Class_15_22*)ptr22;
+    ptr22_1->function(c22);
+    ptr22_1->function(f22);
+    ptr22_1->function(i22);
 }
 
 void Labs_0x01() {
