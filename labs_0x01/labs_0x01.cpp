@@ -1716,6 +1716,16 @@ void chapter_15() {
     ptr22_1->function(c22);
     ptr22_1->function(f22);
     ptr22_1->function(i22);
+    // Task 23. May be another path. Not clear.
+    Bird_15 bird;
+    Cat_15 cat;
+    Pet_15* ptr23[] = { &bird, &cat };
+    for (int i = 0; i < 2; i++) {
+        cout << ptr23[i]->type() << " eats "
+             << ptr23[i]->eats(true).foodType() << endl;
+    }
+    Cat_15::CatFood_15& ptr23_1 = cat.eats(true);
+    Bird_15::BirdFood_15& ptr23_2 = dynamic_cast<Bird_15::BirdFood_15&>(bird.eats(true));
 }
 
 void Labs_0x01() {

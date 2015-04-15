@@ -265,7 +265,45 @@ public:
 
 class Class_15_22_1 : public Class_15_22 {
 public:
-    // void function(char c);
+    void function(char c);
+};
+
+class PetFood_15 {
+public:
+    virtual std::string foodType() const = 0;
+};
+
+class Pet_15 {
+public:
+    virtual std::string type() const = 0;
+    virtual PetFood_15* eats() = 0;
+    virtual PetFood_15& eats(bool f) = 0;
+};
+
+class Bird_15 : public Pet_15 {
+public:
+    std::string type() const;
+    class BirdFood_15 : public PetFood_15 {
+    public:
+        std::string foodType() const;
+    };
+    PetFood_15* eats();
+    PetFood_15& eats(bool f);
+private:
+    BirdFood_15 bf;
+};
+
+class Cat_15 : public Pet_15 {
+public:
+    std::string type() const;
+    class CatFood_15 : public PetFood_15 {
+    public:
+        std::string foodType() const;
+    };
+    CatFood_15* eats();
+    CatFood_15& eats(bool f);
+private:
+    CatFood_15 cf;
 };
 
 #endif

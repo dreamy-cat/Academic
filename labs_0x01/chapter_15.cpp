@@ -218,4 +218,20 @@ void Class_15_22::function(char c) { cout << "Class_15_22::function(char)." << e
 
 void Class_15_22::function(float f) { cout << "Class_15_22::function(float)." << endl; }
 
-// void Class_15_22_1::function(char) { cout << "Class_15_22_1::function(char)." << endl; }
+void Class_15_22_1::function(char) { cout << "Class_15_22_1::function(char)." << endl; }
+
+std::string Bird_15::type() const { return "Bird"; }
+
+std::string Bird_15::BirdFood_15::foodType() const { return "Bird food"; }
+
+PetFood_15* Bird_15::eats() { return &bf; }
+
+PetFood_15& Bird_15::eats(bool f) { return bf; }
+
+std::string Cat_15::type() const { return "Cat"; }
+
+std::string Cat_15::CatFood_15::foodType() const { return "Cat food"; }
+
+Cat_15::CatFood_15* Cat_15::eats() { return &cf; }
+
+Cat_15::CatFood_15& Cat_15::eats(bool f) { return cf; }
