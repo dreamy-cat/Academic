@@ -306,4 +306,63 @@ private:
     CatFood_15 cf;
 };
 
+class Pet_15_24 {
+public:
+    virtual std::string speak() const;
+};
+
+class Dog_15_24 : public Pet_15_24 {
+public:
+    std::string speak() const;
+};
+
+class Base_15_25 {
+public:
+    virtual Base_15_25& clone();
+    virtual void print() const;
+};
+
+class Derived_15_25_1 : public Base_15_25 {
+public:
+    Derived_15_25_1 &clone();
+    void print() const;
+};
+
+class Derived_15_25_2 : public Base_15_25 {
+public:
+    Derived_15_25_2& clone();
+    void print() const;
+};
+
+class Object_15 {
+public:
+    virtual ~Object_15() = 0;
+};
+
+class Stack_15 {
+    struct Link {
+        Object_15* data;
+        Link* next;
+        Link(Object_15* dat, Link* nxt);
+    }* head;
+public:
+    Stack_15();
+    ~Stack_15();
+    void push(Object_15* dat);
+    Object_15* peek() const;
+    Object_15* pop();
+};
+
+class Class_15_26 {
+public:
+    Class_15_26(int ii) : i(ii) {}
+    int i;
+};
+
+class Class_15_26_1 : public Object_15, public Class_15_26 {
+public:
+    Class_15_26_1(int ii);
+    ~Class_15_26_1();
+};
+
 #endif

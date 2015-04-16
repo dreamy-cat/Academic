@@ -235,3 +235,64 @@ std::string Cat_15::CatFood_15::foodType() const { return "Cat food"; }
 Cat_15::CatFood_15* Cat_15::eats() { return &cf; }
 
 Cat_15::CatFood_15& Cat_15::eats(bool f) { return cf; }
+
+std::string Pet_15_24::speak() const { return "Pet_15_24::speak()."; }
+
+std::string Dog_15_24::speak() const { return "Dog_15_24::speak()."; }
+
+Base_15_25& Base_15_25::clone() {
+    cout << "Base_15_25::clone()" << endl;
+    Base_15_25* copy = new Base_15_25;
+    return *copy;
+}
+
+Derived_15_25_1& Derived_15_25_1::clone() {
+    cout << "Derived_15_25_1::clone()" << endl;
+    // Works fine.
+    // Base_15_25* copy = new Base_15_25;
+    Derived_15_25_1* copy = new Derived_15_25_1;
+    return *copy;
+}
+
+Derived_15_25_2& Derived_15_25_2::clone() {
+    cout << "Derived_15_25_2::clone()" << endl;
+    Derived_15_25_2* copy = new Derived_15_25_2;
+    return *copy;
+}
+
+void Base_15_25::print() const { cout << "Base_15_25::print()" << endl; }
+
+void Derived_15_25_1::print() const { cout << "Derived_15_25_1::print()." << endl; }
+
+void Derived_15_25_2::print() const { cout << "Derived_15_25_2::print()." << endl; }
+
+Object_15::~Object_15() { cout << "Object_15::~Object_15()" << endl; }
+
+Stack_15::Link::Link(Object_15* dat, Link* nxt) : data(dat), next(nxt) {}
+
+Stack_15::Stack_15() : head(0) {}
+
+Stack_15::~Stack_15() {
+    while (head) delete pop();
+}
+
+void Stack_15::push(Object_15* dat) {
+    head = new Link(dat, head);
+}
+
+Object_15* Stack_15::peek() const {
+    if (head) return head->data; else return 0;
+}
+
+Object_15* Stack_15::pop() {
+    if (head == 0) return 0;
+    Object_15* result = head->data;
+    Link* oldHead = head;
+    head = head->next;
+    delete oldHead;
+    return result;
+}
+
+Class_15_26_1::Class_15_26_1(int ii) : Class_15_26(ii) {}
+
+Class_15_26_1::~Class_15_26_1() {}

@@ -1726,6 +1726,29 @@ void chapter_15() {
     }
     Cat_15::CatFood_15& ptr23_1 = cat.eats(true);
     Bird_15::BirdFood_15& ptr23_2 = dynamic_cast<Bird_15::BirdFood_15&>(bird.eats(true));
+    // Task 24. Hard to find in assembly output.
+    Dog_15_24 cl24;
+    Pet_15_24* ptr24_1 = &cl24;
+    Pet_15_24& ptr24_2 = cl24;
+    Pet_15_24 cl24_1;
+    cout << "Pointer 1: " << ptr24_1->speak() << endl;
+    cout << "Pointer 2: " << ptr24_2.speak() << endl;
+    cout << "Object 3: " << cl24_1.speak() << endl;
+    // Task 25. Strange task, but works fine in both cases.
+    Base_15_25* ptrs25[] = { new Derived_15_25_1, new Derived_15_25_2 };
+    Base_15_25& ref25_1 = ptrs25[0]->clone();
+    Base_15_25& ref25_2 = ptrs25[1]->clone();
+    ref25_1.print();
+    ref25_2.print();
+    // Task 26.
+    Stack_15 st26;
+    for (int i = 0; i < 3; i++) st26.push(new Class_15_26_1(i));
+    for (int i = 0; i < 3; i++) {
+        Class_15_26_1* element = (Class_15_26_1*)st26.pop();
+        cout << "Pop Class_15_26_1 with index from base class = "
+             << element->i << endl;
+        delete element;
+    }
 }
 
 void Labs_0x01() {
