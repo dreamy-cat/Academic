@@ -296,3 +296,102 @@ Object_15* Stack_15::pop() {
 Class_15_26_1::Class_15_26_1(int ii) : Class_15_26(ii) {}
 
 Class_15_26_1::~Class_15_26_1() {}
+
+Math::~Math() {}
+
+Math& Matrix::operator*(Math& rv) { return rv.multiply(this); }
+
+Math& Matrix::multiply(Matrix*) {
+    cout << "Matrix * Matrix" << endl;
+    return *this;
+}
+
+Math& Matrix::multiply(Scalar*) {
+    cout << "Scalar * Matrix" << endl;
+    return *this;
+}
+
+Math& Matrix::multiply(Vector*) {
+    cout << "Vector * Matrix" << endl;
+    return *this;
+}
+
+Math& Matrix::multiply(Tensor*) {
+    cout << "Tensor * Matrix" << endl;
+    return *this;
+}
+
+Math& Scalar::operator*(Math& rv) { return rv.multiply(this); }
+
+Math& Scalar::multiply(Matrix*) {
+    cout << "Matrix * Scalar" << endl;
+    return *this;
+}
+
+Math& Scalar::multiply(Scalar*) {
+    cout << "Scalar * Scalar" << endl;
+    return *this;
+}
+
+Math& Scalar::multiply(Vector*) {
+    cout << "Vector * Scalar" << endl;
+    return *this;
+}
+
+Math& Scalar::multiply(Tensor*) {
+    cout << "Tensor * Scalar" << endl;
+    return *this;
+}
+
+Math& Vector::operator*(Math& rv) { return rv.multiply(this); }
+
+Math& Vector::multiply(Matrix*) {
+    cout << "Matrix * Vector" << endl;
+    return *this;
+}
+
+Math& Vector::multiply(Scalar*) {
+    cout << "Scalar * Vector" << endl;
+    return *this;
+}
+
+Math& Vector::multiply(Vector*) {
+    cout << "Vector * Vector" << endl;
+    return *this;
+}
+
+Math& Vector::multiply(Tensor*) {
+    cout << "Tensor * Vector" << endl;
+    return *this;
+}
+
+Math& Tensor::operator*(Math& rv) { return rv.multiply(this); }
+
+Math& Tensor::multiply(Matrix*) {
+    cout << "Matrix * Tensor" << endl;
+    return *this;
+}
+
+Math& Tensor::multiply(Scalar*) {
+    cout << "Scalar * Tensor" << endl;
+    return *this;
+}
+
+Math& Tensor::multiply(Vector*) {
+    cout << "Vector * Tensor" << endl;
+    return *this;
+}
+
+Math& Tensor::multiply(Tensor*) {
+    cout << "Tensor * Tensor" << endl;
+    return *this;
+}
+
+Class_15_28::Class_15_28() {
+    function();
+}
+void Class_15_28::function() { cout << "Class_15_28::function()." << endl; }
+
+Class_15_28_1::Class_15_28_1() {}
+
+void Class_15_28_1::function() { cout << "Class_15_28_1::function()." << endl; }

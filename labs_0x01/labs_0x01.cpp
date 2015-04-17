@@ -1749,6 +1749,16 @@ void chapter_15() {
              << element->i << endl;
         delete element;
     }
+    // Task 27.
+    Math* maths[] = { new Matrix, new Vector, new Scalar, new Tensor };
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++) {
+            Math& m1 = *maths[i];
+            Math& m2 = *maths[j];
+            m1 * m2;
+        }
+    // Task 28-29. Because of default constructor, find assembly code too hard.
+    Class_15_28_1 cl28;
 }
 
 void Labs_0x01() {

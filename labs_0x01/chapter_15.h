@@ -366,3 +366,66 @@ public:
 };
 
 #endif
+
+class Matrix;
+class Scalar;
+class Vector;
+class Tensor;
+
+class Math {
+public:
+    virtual Math& operator*(Math& rv) = 0;
+    virtual Math& multiply(Matrix*) = 0;
+    virtual Math& multiply(Scalar*) = 0;
+    virtual Math& multiply(Vector*) = 0;
+    virtual Math& multiply(Tensor*) = 0;
+    virtual ~Math();
+};
+
+class Matrix : public Math {
+public:
+    Math& operator*(Math& rv);
+    Math& multiply(Matrix*);
+    Math& multiply(Scalar*);
+    Math& multiply(Vector*);
+    Math& multiply(Tensor*);
+};
+
+class Scalar : public Math {
+public:
+    Math& operator*(Math& rv);
+    Math& multiply(Matrix*);
+    Math& multiply(Scalar*);
+    Math& multiply(Vector*);
+    Math& multiply(Tensor*);
+};
+
+class Vector : public Math {
+public:
+    Math& operator*(Math& rv);
+    Math& multiply(Matrix*);
+    Math& multiply(Scalar*);
+    Math& multiply(Vector*);
+    Math& multiply(Tensor*);
+};
+
+class Tensor : public Math {
+public:
+    Math& operator*(Math& rv);
+    Math& multiply(Matrix*);
+    Math& multiply(Scalar*);
+    Math& multiply(Vector*);
+    Math& multiply(Tensor*);
+};
+
+class Class_15_28 {
+public:
+    Class_15_28();
+    virtual void function();
+};
+
+class Class_15_28_1 : public Class_15_28 {
+public:
+    Class_15_28_1();
+    void function();
+};
