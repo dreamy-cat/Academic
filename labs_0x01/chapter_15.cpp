@@ -395,3 +395,12 @@ void Class_15_28::function() { cout << "Class_15_28::function()." << endl; }
 Class_15_28_1::Class_15_28_1() {}
 
 void Class_15_28_1::function() { cout << "Class_15_28_1::function()." << endl; }
+
+void Class_15_30::function() { cout << "Class_15_30::function()." << endl; }
+
+void Class_15_30_1::function() { cout << "Class_15_30_1::function()." << endl; }
+
+void function_15_30(Class_15_30 cl) {
+    cout << "function_15_30()" << endl;
+    cl.function();
+}

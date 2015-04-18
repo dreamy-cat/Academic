@@ -1759,6 +1759,9 @@ void chapter_15() {
         }
     // Task 28-29. Because of default constructor, find assembly code too hard.
     Class_15_28_1 cl28;
+    // Task 30.
+    Class_15_30_1 cl31;
+    function_15_30(cl31);
 }
 
 void Labs_0x01() {

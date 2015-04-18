@@ -429,3 +429,15 @@ public:
     Class_15_28_1();
     void function();
 };
+
+class Class_15_30 {
+public:
+    virtual void function();
+};
+
+class Class_15_30_1 : public Class_15_30 {
+public:
+    void function();
+};
+
+void function_15_30(Class_15_30 cl);
