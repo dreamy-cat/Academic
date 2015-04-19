@@ -1762,6 +1762,14 @@ void chapter_15() {
     // Task 30.
     Class_15_30_1 cl31;
     function_15_30(cl31);
+    // Task 31. See task 20 above.
+    // Task 32.
+    Class_15_32_3 cl32;
+    Class_15_32_1 cl32_1;
+    Class_15_32_2 cl32_2;
+    cout << "Sizeof empty Class_15_32_3 = " << sizeof(cl32) << endl;
+    cout << "Sizeof empty Class_15_32_1 = " << sizeof(cl32_1) << endl;
+    cout << "Sizeof empty Class_15_32_2 = " << sizeof(cl32_2) << endl;
 }
 
 void Labs_0x01() {

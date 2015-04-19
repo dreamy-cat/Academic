@@ -441,3 +441,19 @@ public:
 };
 
 void function_15_30(Class_15_30 cl);
+
+class Class_15_32_1 {
+public:
+    virtual void function_1() {}
+};
+
+class Class_15_32_2 {
+public:
+    virtual void function_2() {}
+};
+
+class Class_15_32_3 : public Class_15_32_1, public Class_15_32_2 {
+public:
+    void function_1() {}
+    void function_2() {}
+};
