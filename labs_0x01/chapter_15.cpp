@@ -404,3 +404,81 @@ void function_15_30(Class_15_30 cl) {
     cout << "function_15_30()" << endl;
     cl.function();
 }
+
+void Instrument_34::play(int note) const { cout << "Instrument_34::play()" << endl; }
+
+string Instrument_34::what() const { return "Instrument_34"; }
+
+void Instrument_34::adjust(int) {}
+
+void Wind_34::play(int note) const { cout << "Wind_34::play()" << endl; }
+
+string Wind_34::what() const { return "Wind_34"; }
+
+void Wind_34::adjust(int) {}
+
+void Percussion_34::play(int note) const { cout << "Percussion_34::play()" << endl; }
+
+string Percussion_34::what() const { return "Percussion_34"; }
+
+void Percussion_34::adjust(int) {}
+
+void Stringed_34::play(int note) const { cout << "Stringed_34::play()" << endl; }
+
+string Stringed_34::what() const { return "Stringed_34"; }
+
+void Stringed_34::adjust(int) {}
+
+void Brass_34::play(int note) const { cout << "Brass_34::play()" << endl; }
+
+string Brass_34::what() const { return "Brass_34"; }
+
+void Woodwind_34::play(int note) const { cout << "Woodwind_34::play()" << endl; }
+
+string Woodwind_34::what() const { return "Woodwind_34"; }
+
+int Shape_15::whatAmI() { return Shape; }
+
+int Circle_15::whatAmI() { return Circle; }
+
+int Square_15::whatAmI() { return Square; }
+
+int Dog_15_36::run(int i) const { cout << "Dog_15_36::run()" << endl; }
+
+int Dog_15_36::eat(int i) const { cout << "Dog_15_36::eat()" << endl; }
+
+int Dog_15_36::sleep(int i) const { cout << "Dog_15_36::sleep()" << endl; }
+
+Dog_15_36::FunctionObject_15::FunctionObject_15(Dog_15_36* wp, Pointer pmf) : ptr(wp), pmem(pmf) {
+    cout << "FunctionObject_15 constructor" << endl;
+}
+
+int Dog_15_36::FunctionObject_15::operator()(int i) const {
+    cout << "FunctionObject_15::operator()" << endl;
+    return (ptr->*pmem)(i);
+}
+
+Dog_15_36::FunctionObject_15 Dog_15_36::operator->*(Pointer pmf) {
+    cout << "FunctionObject_15::operator->*" << endl;
+    return FunctionObject_15(this, pmf);
+}
+
+int Dog_15_36_1::run(int i) const { cout << "Dog_15_36_1::run()" << endl;}
+
+int Dog_15_36_1::eat(int i) const { cout << "Dog_15_36_1::eat()" << endl; }
+
+int Dog_15_36_1::sleep(int i) const { cout << "Dog_15_36_1::sleep()" << endl; }
+
+Dog_15_36_1::FunctionObject_15::FunctionObject_15(Dog_15_36_1* wp, Pointer pmf) : ptr(wp), pmem(pmf) {
+    cout << "FunctionObject_15 constructor" << endl;
+}
+
+int Dog_15_36_1::FunctionObject_15::operator()(int i) const {
+    cout << "FunctionObject_15::operator()" << endl;
+    return (ptr->*pmem)(i);
+}
+
+Dog_15_36_1::FunctionObject_15 Dog_15_36_1::operator->*(Pointer pmf) {
+    cout << "FunctionObject_15::operator->*" << endl;
+    return FunctionObject_15(this, pmf);
+}

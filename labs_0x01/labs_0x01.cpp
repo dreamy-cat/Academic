@@ -1770,6 +1770,36 @@ void chapter_15() {
     cout << "Sizeof empty Class_15_32_3 = " << sizeof(cl32) << endl;
     cout << "Sizeof empty Class_15_32_1 = " << sizeof(cl32_1) << endl;
     cout << "Sizeof empty Class_15_32_2 = " << sizeof(cl32_2) << endl;
+    // Task 33.
+    Class_15_33 cl33;
+    unsigned char* ptr33 = (unsigned char*)&cl33;
+    cout << "Memory map for Class_15_33: ";
+    for (int i = 0; i < sizeof(cl33); i++)
+        cout << (int)*(ptr33+i) << " ";
+    cout << endl;
+    // Task 34. Works fine.
+    Instrument_34* ptrs34[] = { new Wind_34, new Percussion_34, new Stringed_34, new Brass_34, new Woodwind_34 };
+    dynamic_cast<Wind_34*>(ptrs34[0])->play(0);
+    dynamic_cast<Percussion_34*>(ptrs34[1])->play(0);
+    dynamic_cast<Stringed_34*>(ptrs34[2])->play(0);
+    dynamic_cast<Brass_34*>(ptrs34[3])->play(0);
+    dynamic_cast<Woodwind_34*>(ptrs34[4])->play(0);
+    // Task 35.
+    Circle_15 circle1;
+    Square_15 square1;
+    Shape_15* ptr35_1 = &square1;
+    Circle_15* cptr = 0;
+    Square_15* sptr = 0;
+    if (ptr35_1->whatAmI() == Shape_15::Circle) cptr = static_cast<Circle_15*>(ptr35_1);
+    if (ptr35_1->whatAmI() == Shape_15::Square) sptr = static_cast<Square_15*>(ptr35_1);
+    if (cptr != 0) cout << "Circle_15 found." << endl;
+    if (sptr != 0) cout << "Square_15 found." << endl;
+    // invalid static_cast from type 'Shape_15*' to type 'Other_15*'
+    // Other_15* optr = static_cast<Other_15*>(ptr35_1);
+    // Task 36. Works, but think later.
+    Dog_15_36* cl36 = new Dog_15_36_1;
+    Dog_15_36::Pointer ptrs36[] = { &Dog_15_36::run, &Dog_15_36::eat, &Dog_15_36::sleep };
+    for (int i = 0; i < 3; i++) cout << (cl36->*ptrs36[i])(i) << endl;
 }
 
 void Labs_0x01() {

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <typeinfo>
 
 class Shape_1 {
 public:
@@ -456,4 +457,111 @@ class Class_15_32_3 : public Class_15_32_1, public Class_15_32_2 {
 public:
     void function_1() {}
     void function_2() {}
+};
+
+class Class_15_33 {
+public:
+    virtual void function_1() {}
+    virtual void function_2() {}
+    virtual void function_3() {}
+    int i,j,k;
+};
+
+class Instrument_34 {
+public:
+    virtual void play(int note) const;
+    virtual std::string what() const;
+    virtual void adjust(int);
+};
+
+class Wind_34 : public Instrument_34 {
+public:
+     void play(int note) const;
+     std::string what() const;
+     void adjust(int);
+};
+
+class Percussion_34 : public Instrument_34 {
+public:
+     void play(int note) const;
+     std::string what() const;
+     void adjust(int);
+};
+
+
+class Stringed_34 : public Instrument_34 {
+public:
+     void play(int note) const;
+     std::string what() const;
+     void adjust(int);
+};
+
+class Brass_34 : public Wind_34 {
+public:
+     void play(int note) const;
+     std::string what() const;
+};
+
+class Woodwind_34 : public Wind_34 {
+public:
+     void play(int note) const;
+     std::string what() const;
+};
+
+class Shape_15 {
+public:
+    enum type { Shape, Circle, Square };
+    virtual int whatAmI();
+    virtual ~Shape_15() {}
+};
+
+class Circle_15 : public Shape_15 {
+public:
+    int whatAmI();
+};
+
+class Square_15 : public Shape_15 {
+public:
+    int whatAmI();
+};
+
+class Other_15 {
+};
+
+class Dog_15_36 {
+public:
+    virtual int run(int i) const;
+    virtual int eat(int i) const;
+    virtual int sleep(int i) const;
+
+    typedef int (Dog_15_36::*Pointer)(int) const;
+
+    class FunctionObject_15 {
+    public:
+        FunctionObject_15(Dog_15_36* wp, Pointer pmf);
+        int operator()(int i) const;
+    private:
+        Dog_15_36* ptr;
+        Pointer pmem;
+    };
+    FunctionObject_15 operator->*(Pointer pmf);
+};
+
+class Dog_15_36_1 : public Dog_15_36 {
+public:
+    int run(int i) const;
+    int eat(int i) const;
+    int sleep(int i) const;
+
+    typedef int (Dog_15_36_1::*Pointer)(int) const;
+
+    class FunctionObject_15 {
+    public:
+        FunctionObject_15(Dog_15_36_1 *wp, Pointer pmf);
+        int operator()(int i) const;
+    private:
+        Dog_15_36_1* ptr;
+        Pointer pmem;
+    };
+    FunctionObject_15 operator->*(Pointer pmf);
 };
