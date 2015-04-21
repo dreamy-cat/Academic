@@ -20,6 +20,7 @@
 #include "chapter_13.h"
 #include "chapter_14.h"
 #include "chapter_15.h"
+#include "chapter_16.h"
 
 using namespace std;
 
@@ -1802,6 +1803,11 @@ void chapter_15() {
     for (int i = 0; i < 3; i++) cout << (cl36->*ptrs36[i])(i) << endl;
 }
 
+void chapter_16() {
+    cout << "Chapter's 16 tasks." << endl;
+
+}
+
 void Labs_0x01() {
-    chapter_15();
+    chapter_16();
 }
