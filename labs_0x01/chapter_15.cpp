@@ -9,6 +9,22 @@ Shape_1::Shape_1() {
 // draw();
 }
 
+Shape_1::~Shape_1() {
+    cout << "Shape_1 destructor" << endl;
+}
+
+Circle_1::~Circle_1() {
+    cout << "Circle_1 destructor" << endl;
+}
+
+Square_1::~Square_1() {
+    cout << "Square_1 destructor" << endl;
+}
+
+Triangle_1::~Triangle_1() {
+    cout << "Triangle_1 destructor" << endl;
+}
+
 void Shape_1::draw() { cout << "Shape_1::draw()." << endl; }
 
 void Circle_1::draw() { cout << "Circle_1::draw()." << endl; }

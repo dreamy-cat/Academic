@@ -1805,7 +1805,25 @@ void chapter_15() {
 
 void chapter_16() {
     cout << "Chapter's 16 tasks." << endl;
-
+    // Task 1. See in .h file.
+    // Task 2.
+    TStack<Shape_1> tstack2;
+    tstack2.push(new Circle_1);
+    tstack2.push(new Triangle_1);
+    tstack2.push(new Square_1);
+    // Task 3-4. Merge tasks.
+    TPStash_1<int> t_pstash3;
+    for (int i = 0; i < 8; i++) t_pstash3.add(new int(i));
+    // Task 5.
+    cout << "Fibonacci int: ";
+    for (unsigned char i = 1; i < 10; i++) {
+        cout << fibonacci<int>(i) << " ";
+    }
+    cout << endl << "Fibonacci float : ";
+    for (unsigned char i = 1; i < 10; i++) {
+        cout << fibonacci<float>(i) << " ";
+    }
+    cout << endl;
 }
 
 void Labs_0x01() {

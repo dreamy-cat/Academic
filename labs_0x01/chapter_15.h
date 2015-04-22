@@ -10,21 +10,25 @@ class Shape_1 {
 public:
     Shape_1();
     virtual void draw();
+    virtual ~Shape_1();
 };
 
 class Circle_1 : public Shape_1 {
 public:
     void draw();
+    ~Circle_1();
 };
 
 class Square_1 : public Shape_1 {
 public:
     void draw();
+    ~Square_1();
 };
 
 class Triangle_1 : public Shape_1 {
 public:
     void draw();
+    ~Triangle_1();
 };
 
 void function_15_1 (Shape_1& shp);
