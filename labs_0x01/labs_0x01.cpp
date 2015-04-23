@@ -1824,6 +1824,18 @@ void chapter_16() {
         cout << fibonacci<float>(i) << " ";
     }
     cout << endl;
+    // Task 6.
+    TSet<int> tset_6;
+    for (int i = 0; i < 3; i++) tset_6.add(new int(i));
+    TSet<int>::iterator it(&tset_6);
+    for (int i = 0; i < 3; i++) {
+        cout << *it << " ";
+        it++;
+    }
+    // while (it++) cout << *it << " ";
+    cout << endl;
+    for (int i = 0; i < 3; i++) tset_6.remove(&i);
+
 }
 
 void Labs_0x01() {

@@ -3,6 +3,7 @@
 
 #include "memory.h"
 #include <iostream>
+#include <vector>
 
 class Object {};
 
@@ -175,5 +176,71 @@ template<typename T> T fibonacci(unsigned char n) {
     }
     return f3;
 }
+
+template<class T> class TSet {
+public:
+    TSet() { elements.clear(); }
+
+    ~TSet() {}
+
+    bool add(T* element) {
+        bool result = true;
+        for (typename std::vector<T>::iterator it = elements.begin(); it < elements.end(); it++)
+            if (*it == *element) result = false;
+        if (result) elements.push_back(*element);
+        return result;
+    }
+
+    bool remove(T* element) {
+        bool result = false;
+        for (typename std::vector<T>::iterator it = elements.begin(); it < elements.end(); it++)
+            if (*it == *element) {
+                result = true;
+                elements.erase(it);
+            }
+        return result;
+    }
+
+    class iterator;
+    friend class iterator;
+    class iterator {
+    public:
+        iterator(TSet<T>* set) : sp(0), base(&(set->elements)) {}
+
+        iterator(const iterator& v) : sp(v.sp) {}
+
+        iterator() : sp(0) {}
+
+        bool operator++() {
+            if (sp < (base->size()-1)) {
+                sp++;
+                std::cout << "R = " << sp << std::endl;
+                return false;
+            } else return true;
+        }
+
+        bool operator++(int) {
+            return operator++();
+        }
+
+        T* current() const {
+            return &base->operator[](sp);
+        }
+
+        T* operator->() const {
+            if (sp == 0) return 0; else return current();
+        }
+
+        T* operator*() const {
+            return current();
+        }
+    private:
+        int sp;
+        std::vector<T>* base;
+    };
+
+private:
+    std::vector<T> elements;
+};
 
 #endif
