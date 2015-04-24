@@ -4,6 +4,7 @@
 #include "memory.h"
 #include <iostream>
 #include <vector>
+#include <set>
 
 class Object {};
 
@@ -205,7 +206,9 @@ public:
     friend class iterator;
     class iterator {
     public:
-        iterator(TSet<T>* set) : sp(0), base(&(set->elements)) {}
+        iterator(TSet<T>& set) : sp(0), base(&(set.elements)) {
+            std::cout << "Addr = " << (long)base << std::endl;
+        }
 
         iterator(const iterator& v) : sp(v.sp) {}
 
@@ -214,7 +217,6 @@ public:
         bool operator++() {
             if (sp < (base->size()-1)) {
                 sp++;
-                std::cout << "R = " << sp << std::endl;
                 return false;
             } else return true;
         }
@@ -241,6 +243,61 @@ public:
 
 private:
     std::vector<T> elements;
+};
+
+class AutoCounter {
+public:
+    static AutoCounter* create() { return new AutoCounter(); }
+    ~AutoCounter() {
+        std::cout << "Destroying[" << className << ":" << id << "]" << std::endl;
+        verifier.remove(this);
+    }
+    friend std::ostream& operator<<(std::ostream& os, const AutoCounter& value) { return os << "AutoCounter[" << value.id << "]"; }
+    friend std::ostream& operator<<(std::ostream& os, const AutoCounter* value) { return os << "AutoCounter[" << value->id << "]"; }
+private:
+    static int count;
+    int id;
+    std::string className;
+    AutoCounter() : id(count++) {
+        verifier.add(this);
+        className = "AutoCounter";
+        std::cout << "AutoCounter constructor[" << className << ":" << id << "]" << std::endl;
+    }
+    AutoCounter(const AutoCounter&);
+    void operator=(const AutoCounter&);
+    class CleanupCheck {
+    public:
+        void add(AutoCounter* ap) { trace.insert(ap); }
+        void remove(AutoCounter* ap) { trace.erase(ap); }
+        ~CleanupCheck() { std::cout << "CleanupCheck destructor, elements in set: " << trace.size() << std::endl; }
+    private:
+        std::set<AutoCounter*> trace;
+    };
+    static CleanupCheck verifier;
+};
+
+template<class T> class OStack {
+private:
+    std::vector<T*> elements;
+    bool own;
+public:
+    OStack(bool owned = true) : own(owned) {}
+    ~OStack() {
+        if (!own) return;
+        std::cout << "Cleanup OStack." << std::endl;
+        while (!elements.empty()) delete pop();
+    }
+    void push (T* dat) { elements.push_back(dat); }
+    T* pop() {
+        if (elements.empty()) return 0;
+        T* result = elements[elements.size()-1];
+        elements.pop_back();
+        return result;
+    }
+    T* peek() const { if (!elements.empty()) elements[0]; else return 0; }
+    bool owns() const { return own; }
+    void owns(bool newOwns) { own = newOwns; }
+    operator bool() const { return elements.empty(); }
 };
 
 #endif

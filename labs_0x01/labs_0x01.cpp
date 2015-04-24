@@ -1825,17 +1825,32 @@ void chapter_16() {
     }
     cout << endl;
     // Task 6.
+    cout << "Numbers in set: ";
     TSet<int> tset_6;
-    for (int i = 0; i < 3; i++) tset_6.add(new int(i));
-    TSet<int>::iterator it(&tset_6);
+    set<int> tset_61;
     for (int i = 0; i < 3; i++) {
-        cout << *it << " ";
-        it++;
+        tset_6.add(new int(i+5));
+        tset_61.insert(int(i));
     }
-    // while (it++) cout << *it << " ";
+    TSet<int>::iterator it(tset_6);
+    set<int>::iterator it1 = tset_61.begin();
+    for (int i = 0; i < 3; i++) {
+        cout << **it << "(" << *it1 << ") ";
+        it++;
+        it1++;
+    }
     cout << endl;
     for (int i = 0; i < 3; i++) tset_6.remove(&i);
-
+    // Task 7.
+    vector<AutoCounter*> vec7;
+    for (int i = 0; i < 3; i++) vec7.push_back(AutoCounter::create());
+    for (int i = 0; i < 3; i++) delete vec7[i];
+    // Task 8.
+    OStack<int> ostack8(true);
+    cout << "Elements in OStack<int> : ";
+    for (int i = 0; i < 3; i++) ostack8.push(new int(i));
+    for (int i = 0; i < 2; i++) cout << *ostack8.pop() << " ";
+    cout << endl;
 }
 
 void Labs_0x01() {
