@@ -1851,6 +1851,21 @@ void chapter_16() {
     for (int i = 0; i < 3; i++) ostack8.push(new int(i));
     for (int i = 0; i < 2; i++) cout << *ostack8.pop() << " ";
     cout << endl;
+    // Task 9-11.
+    cout << "VStack values : ";
+    VStack<int> vstack_9;
+    for (int i = 0; i < 16; i++) vstack_9.push(i);
+    for (int i = 0; i < 16; i++) cout << vstack_9.pop() << " ";
+    cout << endl;
+    vector<int> stack9_1;
+    cout << "Stack 'vector' values : ";
+    for (int i = 0; i < 16; i++) stack9_1.push_back(i);
+    for (int i = 0; i < 16; i++) {
+        cout << stack9_1[stack9_1.size()-1] << " ";
+        stack9_1.pop_back();
+    }
+    cout << endl;
+
 }
 
 void Labs_0x01() {

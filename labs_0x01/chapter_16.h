@@ -300,4 +300,34 @@ public:
     operator bool() const { return elements.empty(); }
 };
 
+template<class T> class VStack {
+public:
+    VStack(int maxElements = 4) : maxSize(maxElements), sp(0) { stack.clear(); }
+    ~VStack() {
+        // delete []stack;
+        stack.clear();
+    }
+    void push(T& element) {
+        stack.push_back(element);
+/*
+        if (sp == maxSize) {
+            T* newStack = new T[maxSize*2];
+            for (int i = 0; i < maxSize; i++) newStack[i] = stack[i];
+            maxSize *= 2;
+            delete []stack;
+            stack = newStack;
+        }
+        stack[sp++] = element;
+        */
+    }
+    T pop() {
+        T element = stack[stack.size()-1];
+        stack.pop_back();
+        return element;
+    }
+private:
+    std::vector<T> stack;
+    int maxSize, sp;
+};
+
 #endif
