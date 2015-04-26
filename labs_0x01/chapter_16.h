@@ -330,4 +330,43 @@ private:
     int maxSize, sp;
 };
 
+template<class T> class TStack_2 {
+public:
+    TStack_2() { storage.clear(); }
+    ~TStack_2() { storage.clear(); }
+    void push(T* element) { storage.push_back(element); }
+    T* pop() {
+        T* r = storage[storage.size()-1];
+        storage.pop_back();
+        return r;
+    }
+    class iterator;
+    friend class iterator;
+    class iterator {
+    public:
+        iterator(TStack_2<T>& baseRef) : base(&baseRef.storage), sp(0) {}
+        iterator(const iterator& r) : base(r.base) {}
+        bool operator++() {
+            if (sp == base->size()) return true;
+            sp++;
+            return false;
+        }
+        bool operator++(int) { return operator++(); }
+        T* current() const {
+            if (sp < 0 || sp >= base->size()) return NULL;
+            return base[sp];
+        }
+        T* operator->() {
+            if (sp < 0 || sp >= base->size()) return NULL;
+            return current();
+        }
+        T* operator*() const { return current(); }
+    private:
+        std::vector<T*>* base;
+        int sp;
+    };
+private:
+    std::vector<T*> storage;
+};
+
 #endif

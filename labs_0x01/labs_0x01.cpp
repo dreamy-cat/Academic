@@ -1865,7 +1865,13 @@ void chapter_16() {
         stack9_1.pop_back();
     }
     cout << endl;
-
+    // Task 12.
+    TStack_2<int> stack_12;
+    TStack_2<int>::iterator it12(stack_12);
+    for (int i = 0; i < 3; i++) stack_12.push(new int(i));
+    cout << "Elements in STack_2 : ";
+    for (int i = 0; i < 3; i++) cout << *stack_12.pop() << " ";
+    cout << endl;
 }
 
 void Labs_0x01() {
