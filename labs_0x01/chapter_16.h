@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <set>
+#include <stack>
 
 class Object {};
 
@@ -368,5 +369,204 @@ public:
 private:
     std::vector<T*> storage;
 };
+
+template<class T> class TStack_3 {
+public:
+    TStack_3() { }
+    ~TStack_3() { while (!storage.empty()) storage.pop(); }
+    void push(T* element) { storage.push(element); }
+    T* pop() {
+        T* r = storage.top();
+        storage.pop();
+        return r;
+    }
+    class iterator;
+    friend class iterator;
+    class iterator {
+    public:
+        iterator(TStack_3<T>& baseRef) : base(&baseRef.storage), sp(0) {}
+        iterator(const iterator& r) : base(r.base) {}
+        bool operator++() {
+            if (sp == base->size()) return true;
+            sp++;
+            return false;
+        }
+        bool operator++(int) { return operator++(); }
+        T* current() const {
+            if (sp < 0 || sp >= base->size()) return NULL;
+            return base[sp];
+        }
+        T* operator->() {
+            if (sp < 0 || sp >= base->size()) return NULL;
+            return current();
+        }
+        T* operator*() const { return current(); }
+    private:
+        std::stack<T*>* base;
+        int sp;
+    };
+private:
+    std::stack<T*> storage;
+};
+
+template<class T, int increase = 2> class PStash_1 {
+public:
+    PStash_1() { storage.clear(); }
+    ~PStash_1() { for (int i = 0; i < storage.size(); i++) delete storage[i]; }
+    int add(T* element) { storage.push_back(element); }
+    T* operator[](int index) const { return storage[index]; }
+    T* remove(int index) {
+        typename std::vector<T*>::iterator it = storage.begin();
+        for (int i = 0; i < index; i++) it++;
+        T* r = *it;
+        storage.erase(it);
+        return r;
+    }
+    int count() const { return storage.size(); }
+    class iterator;
+    friend class iterator;
+    class iterator {
+    public:
+        iterator(PStash_1& stash) : pstash(stash), index(0) {}
+        iterator(PStash_1& stash, bool) : pstash(stash), index(stash.storage.size()) {}
+        iterator(const iterator& value) : pstash(value.pstash), index(value.index) {}
+        iterator& operator=(const iterator& value) {
+            pstash = value.pstash;
+            index = value.index;
+            return *this;
+        }
+        iterator& operator++() {
+            if (index > pstash.storage.size()) return *this;
+            index++;
+            return *this;
+        }
+        iterator& operator++(int) { return operator++(); }
+        iterator& operator--() {
+            if (index == 0) return *this;
+            index--;
+            return *this;
+        }
+        iterator& operator--(int) { return operator--(); }
+        iterator& operator+=(int amount) {
+            if (index+amount >= pstash.storage.size() || index+amount < 0) return *this;
+            index += amount;
+            return *this;
+        }
+        iterator& operator-=(int amount) {
+            if (index-amount >= pstash.storage.size() || index-amount < 0) return *this;
+            index -= amount;
+            return *this;
+        }
+        iterator operator+(int amount) const {
+            iterator result(*this);
+            result += amount;
+            return result;
+        }
+        T* current() const { return pstash.storage[index]; }
+        T* operator*() const { return current(); }
+        T* operator->() const { return current(); }
+        T* remove() { pstash.remove(index); }
+        bool operator==(const iterator& value) { return (index == value.index); }
+        bool operator!=(const iterator& value) { return (index != value.index); }
+    private:
+        int index;
+        PStash_1& pstash;
+    };
+    iterator begin() { return iterator(*this); }
+    iterator end() { return iterator(*this, true); }
+private:
+    std::vector<T*> storage;
+};
+
+class Int {
+public:
+    Int(int ii);
+    ~Int();
+    friend std::ostream& operator<<(std::ostream& os, const Int& value);
+    friend std::ostream& operator<<(std::ostream& os, const Int* value);
+private:
+    int i;
+};
+
+template<class T, int ssize = 5> class StackTemplate {
+public:
+    StackTemplate() : top(0) {}
+    void push(const T& value) {
+        if (top == ssize) {
+            std::cout << "Too many elements in stack." << std::endl;
+            return;
+        }
+        stack[top++] = value;
+    }
+    T pop() {
+        if (top == 0) return T();
+        return stack[--top];
+    }
+    class iterator;
+    friend class iterator;
+    class iterator {
+    public:
+        iterator(StackTemplate& st) : stackTempl(st), index(0) {}
+        iterator(StackTemplate& st, bool) : stackTempl(st), index(st.top) {}
+        T operator*() const { return stackTempl.stack[index]; }
+        T operator++() {
+            if (index >= stackTempl.top) return T();
+            return stackTempl.stack[++index];
+        }
+        T operator++(int) {
+            if (index >= stackTempl.top) return T();
+            return stackTempl.stack[index++];
+        }
+        iterator& operator+=(int amount) {
+            if (index + amount > stackTempl.top || index + amount < 0) return *this;
+            index += amount;
+            return *this;
+        }
+        bool operator==(const iterator& value) { return (index == value.index); }
+        bool operator!=(const iterator& value) { return (index != value.index); }
+        friend std::ostream& operator<<(std::ostream& os, const iterator& value) { return os << *value; }
+    private:
+        StackTemplate& stackTempl;
+        int index;
+    };
+    iterator begin() { return iterator(*this); }
+    iterator end() { return iterator(*this, true); }
+private:
+    T stack[ssize];
+    int top;
+};
+
+class Shape_16 {
+public:
+    virtual void draw() = 0;
+    virtual void erase() = 0;
+    virtual ~Shape_16() {}
+};
+
+class Circle_16 : public Shape_16 {
+public:
+    Circle_16() {}
+    ~Circle_16() { std::cout << "Circle_16 destructor." << std::endl; }
+    void draw() { std::cout << "Circle_16::draw()." << std::endl; }
+    void erase() { std::cout << "Circle_16::erase()." << std::endl; }
+};
+
+class Square_16 : public Shape_16 {
+public:
+    Square_16() {}
+    ~Square_16() { std::cout << "Square_16 destructor." << std::endl; }
+    void draw() { std::cout << "Square_16::draw()." << std::endl; }
+    void erase() { std::cout << "Square_16::erase()." << std::endl; }
+};
+
+class Line_16 : public Shape_16 {
+public:
+    Line_16() {}
+    ~Line_16() { std::cout << "Line_16 destructor." << std::endl; }
+    void draw() { std::cout << "Line_16::draw()." << std::endl; }
+    void erase() { std::cout << "Line_16::erase()." << std::endl; }
+};
+
+
 
 #endif

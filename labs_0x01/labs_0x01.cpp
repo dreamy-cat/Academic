@@ -1868,10 +1868,67 @@ void chapter_16() {
     // Task 12.
     TStack_2<int> stack_12;
     TStack_2<int>::iterator it12(stack_12);
-    for (int i = 0; i < 3; i++) stack_12.push(new int(i));
+    for (int i = 0; i < 5; i++) stack_12.push(new int(i));
     cout << "Elements in STack_2 : ";
-    for (int i = 0; i < 3; i++) cout << *stack_12.pop() << " ";
+    for (int i = 0; i < 5; i++) cout << *stack_12.pop() << " ";
     cout << endl;
+    // Task 13.
+    TStack_3<int> stack_13;
+    TStack_3<int>::iterator it13(stack_13);
+    for (int i = 0; i < 5; i++) stack_13.push(new int(i));
+    cout << "Elements in STack_3 : ";
+    for (int i = 0; i < 5; i++) cout << *stack_13.pop() << " ";
+    cout << endl;
+    // Task 14.
+    cout << "PStash_1 class test, PStash_1<Int> contains: \n";
+    PStash_1<Int> ints;
+    for (int i = 0; i < 5; i++) ints.add(new Int(i));
+    for (PStash_1<Int>::iterator it = ints.begin(); it != ints.end(); it++) cout << *it << " ";
+    cout << endl;
+    PStash_1<Int>::iterator it14_1 = ints.begin();
+    it14_1 += 1;
+    PStash_1<Int>::iterator it14_2 = it14_1 + 2;
+    while (it14_1 != it14_2) {
+        delete it14_1.remove();
+        it14_1++;
+    }
+    cout << "After remove PStash_1<Int> contains: ";
+    for (PStash_1<Int>::iterator it = ints.begin(); it != ints.end(); it++) cout << *it << " ";
+    cout << endl;
+    // Task 15.
+    StackTemplate<int> stack15;
+    for (int i = 0; i < 5; i++) stack15.push(i);
+    cout << "StackTemplate class, elements: ";
+    StackTemplate<int>::iterator it15 = stack15.begin();
+    while (it15 != stack15.end()) cout << it15++ << " ";
+    cout << endl;
+    StackTemplate<int>::iterator it15_1 = stack15.begin(), it15_2 = stack15.begin();
+    it15_1 += 1;
+    it15_2 += 3;
+    cout << "StackTemplate iterator_1 : " << it15_1 << endl;
+    cout << "StackTemplate iterator_2 : " << it15_2 << endl;
+    cout << "StackTemplate after iterator_1 : ";
+    while (it15_1 != stack15.end()) cout << it15_1++ << " ";
+    cout << endl;
+    // Task 16.
+    StackTemplate<Shape_16*> stack16;
+    stack16.push(new Circle_16);
+    stack16.push(new Square_16);
+    stack16.push(new Line_16);
+    cout << "Virtual methods from StackTemplate:\n";
+    for (StackTemplate<Shape_16*>::iterator it16 = stack16.begin(); it16 != stack16.end(); it16++) {
+        (*it16)->draw();
+        (*it16)->erase();
+    }
+    PStash_1<Shape_16> stash16;
+    stash16.add(new Circle_16);
+    stash16.add(new Square_16);
+    stash16.add(new Line_16);
+    cout << "Virtual methods from PStash_1<Shape_16>, size: " << stash16.count() << endl;
+    for (PStash_1<Shape_16>::iterator it16 = stash16.begin(); it16 != stash16.end(); it16++) {
+        (*it16)->draw();
+        (*it16)->erase();
+    }
 }
 
 void Labs_0x01() {
