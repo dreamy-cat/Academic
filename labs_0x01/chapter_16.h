@@ -567,6 +567,130 @@ public:
     void erase() { std::cout << "Line_16::erase()." << std::endl; }
 };
 
+template<class T> class Template_17 {
+public:
+    Template_17(T ii) : t(ii) {}
+    ~Template_17() {}
+    friend std::ostream& operator<<(std::ostream& os, const Template_17<T>& value) {
+        return os << "Template_17: " << value.t << std::endl;
+    }
+    friend std::ostream& operator<<(std::ostream& os, const Template_17<T>* value) {
+        return os << "Template_17: " << value->t << std::endl;
+    }
+private:
+    T t;
+};
 
+template<class T, int aSize = 4> class TemplArray_16 {
+public:
+    TemplArray_16() { memset((void*)array, 0, aSize * sizeof(T)); }
+    T& operator[](int x) {
+        if (x < 0 || x >= aSize) return T();
+        return array[x];
+    }
+    friend std::ostream& operator<<(std::ostream& os, const TemplArray_16& value) {
+        os << "TemplArray_16: ";
+        for (int i = 0; i < aSize; i++) os << value.array[i] << " ";
+        return os;
+    }
+    friend std::istream& operator>>(std::istream& is, TemplArray_16& value) {
+        std::cout << "Enter values TemplArray_16: ";
+        for (int i = 0; i < aSize; i++) is >> value.array[i];
+        return is;
+    }
+private:
+    T array[aSize];
+};
+
+template<class T> class ObjContainer_16 {
+public:
+    void add(T* obj) { container.push_back(obj); }
+    void f() const { std::cout << "ObjContainer_16::f()." << std::endl; }
+    void g() const { std::cout << "ObjContainer_16::g()." << std::endl; }
+    class SmartPointer;
+    friend class SmartPointer;
+    class SmartPointer {
+    public:
+        SmartPointer(ObjContainer_16& objC) : ocRef(objC), index(0) {}
+        bool operator++() {
+            if (index >= ocRef.container.size()) return false;
+            index++;
+            return true;
+        }
+        bool operator++(int) { return operator++(); }
+        bool operator--() {
+            if (index <= 0) return false;
+            index--;
+            return true;
+        }
+        bool operator--(int) { return operator--(); }
+        T* operator->() const { return ocRef.container[index]; }
+    private:
+        int index;
+        ObjContainer_16& ocRef;
+    };
+private:
+    static int i, j;
+    std::vector<T*> container;
+};
+
+class Object_16_20 {
+public:
+    virtual ~Object_16_20() {}
+};
+
+template<class T> class OStack_16_1 : public Object_16_20, public T {
+private:
+    struct Link {
+        T* data;
+        Link* next;
+        Link(T* dat, Link* nxt) : data(dat), next(nxt) {}
+    }* head;
+public:
+    OStack_16_1() : head(0) {}
+    ~OStack_16_1() { while(head) delete pop(); }
+    void push(T* element) {
+        head = new Link(element, head);
+    }
+    T* peek() const {
+        if (head) return head->data; else return NULL;
+    }
+    T* pop() {
+        if (head == 0) return NULL;
+        T* result = head->data;
+        Link* oldHead = head;
+        head = head->next;
+        delete oldHead;
+        return result;
+    }
+};
+
+template<class T> class OStack_16_2 : public Object_16_20, public T {
+private:
+    std::vector<T*> storage;
+public:
+    OStack_16_2() { storage.clear(); }
+    ~OStack_16_2() { while (!storage.empty()) delete pop(); }
+    void push(T* element) {
+        storage.push_back(element);
+    }
+    T* peek() const {
+        if (!storage.empty()) return storage[storage.size()-1]; else return NULL;
+    }
+    T* pop() {
+        if (storage.empty()) return NULL;
+        T* result = storage[storage.size()-1];
+        storage.pop_back();
+        return result;
+    }
+};
+
+class StringVector : public std::vector<void*> {
+public:
+    StringVector() { this->clear(); }
+    void push_back(const std::string& element) {}
+private:
+
+}
 
 #endif

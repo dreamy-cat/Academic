@@ -1929,6 +1929,41 @@ void chapter_16() {
         (*it16)->draw();
         (*it16)->erase();
     }
+    // Task 17.
+    Template_17<char> cl17('A');
+    cout << cl17;
+    // Task 18.
+    TemplArray_16<char, 3> cl18;
+    cin >> cl18;
+    cout << cl18 << endl;
+    // Task 19.
+    ObjContainer_16<char> cl16_1;
+    ObjContainer_16<int> cl16_2;
+    for (int i = 0; i < 3; i++) cl16_1.add(new char('a'+i));
+    ObjContainer_16<char>::SmartPointer it16_1(cl16_1);
+    cout << "ObjContainer_16<char> elements: ";
+    for (int i = 0; i < 3; i++) {
+        cout << *it16_1.operator->() << " ";
+        it16_1++;
+    }
+    cout << endl;
+    ObjContainer_16<int>::SmartPointer it16_2(cl16_2);
+    for (int i = 0; i < 3; i++) cl16_2.add(new int(i));
+    cout << "ObjContainer_16<int> elements: ";
+    for (int i = 0; i < 3; i++) {
+        cout << *it16_2.operator->() << " ";
+        it16_2++;
+    }
+    cout << endl;
+    // Task 20-21.
+    OStack_16_1<Circle_16> stack16_1;
+    stack16_1.push(new Circle_16);
+    cout << "OStack_16_1<Circle_16> : ";
+    stack16_1.pop()->draw();
+    OStack_16_2<Circle_16> stack16_2;
+    stack16_2.push(new Circle_16);
+    cout << "OStack_16_2<Circle_16> : ";
+    stack16_2.pop()->draw();
 }
 
 void Labs_0x01() {
