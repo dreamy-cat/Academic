@@ -1879,7 +1879,7 @@ void chapter_16() {
     cout << "Elements in STack_3 : ";
     for (int i = 0; i < 5; i++) cout << *stack_13.pop() << " ";
     cout << endl;
-    // Task 14.
+    // Task 14, 23
     cout << "PStash_1 class test, PStash_1<Int> contains: \n";
     PStash_1<Int> ints;
     for (int i = 0; i < 5; i++) ints.add(new Int(i));
@@ -1887,7 +1887,8 @@ void chapter_16() {
     cout << endl;
     PStash_1<Int>::iterator it14_1 = ints.begin();
     it14_1 += 1;
-    PStash_1<Int>::iterator it14_2 = it14_1 + 2;
+    PStash_1<Int>::iterator it14_2 = it14_1 + 3;
+    it14_2 = it14_2 - 1;
     while (it14_1 != it14_2) {
         delete it14_1.remove();
         it14_1++;
@@ -1964,6 +1965,25 @@ void chapter_16() {
     stack16_2.push(new Circle_16);
     cout << "OStack_16_2<Circle_16> : ";
     stack16_2.pop()->draw();
+    // Task 22.
+    TemplVector<char> cl22;
+    cl22.push_back(new char('a'));
+    cout << "TemplVector<char> : " << *cl22[0] << endl;
+    // Task 24.
+    Line_16 cl24;
+    function_16_24<Line_16>(&cl24);
+    // Task 25.
+    Stack_16<int> stack25;
+    int* ar25[5];
+    for (int i = 0; i < 5; i++) {
+        ar25[i] = new int(i);
+        stack25.push(ar25[i], i < 3 ? true : false);
+    }
+    cout << "Stack_16<int> elements: ";
+    Stack_16<int>::iterator it25;
+    for (it25 = stack25.begin(); it25 != stack25.end(); it25++) cout << *stack25.pop() << " ";
+    cout << endl;
+    //
 }
 
 void Labs_0x01() {

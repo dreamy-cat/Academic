@@ -462,6 +462,11 @@ public:
             result += amount;
             return result;
         }
+        iterator operator-(int amount) const {
+            iterator result(*this);
+            result -= amount;
+            return result;
+        }
         T* current() const { return pstash.storage[index]; }
         T* operator*() const { return current(); }
         T* operator->() const { return current(); }
@@ -566,6 +571,12 @@ public:
     void draw() { std::cout << "Line_16::draw()." << std::endl; }
     void erase() { std::cout << "Line_16::erase()." << std::endl; }
 };
+
+template<class T> void function_16_24(T* object) {
+    std::cout << "Template function_16_24." << std::endl;
+    object->erase();
+}
+
 
 template<class T> class Template_17 {
 public:
@@ -687,10 +698,107 @@ public:
 
 class StringVector : public std::vector<void*> {
 public:
-    StringVector() { this->clear(); }
-    void push_back(const std::string& element) {}
-private:
+    StringVector() { std::vector<void*>::clear(); }
+    void push_back(const std::string* element) { std::vector<void*>::push_back((void*)element); }
+    std::string* operator[](int index) {
+        if (index < 0 || index >= std::vector<void*>::size()) return NULL;
+        return (std::string*)std::vector<void*>::operator [](index);
+    }
+};
 
-}
+template<class T> class TemplVector : public std::vector<void*> {
+public:
+    TemplVector() { std::vector<void*>::clear(); }
+    void push_back(const T* element) { std::vector<void*>::push_back((void*)element); }
+    T* operator[](int index) {
+        if (index < 0 || index >= std::vector<void*>::size()) return NULL;
+        return (T*)std::vector<void*>::operator [](index);
+    }
+};
+
+template<class T> class Stack_16 {
+private:
+    struct Link {
+        T* data;
+        Link* next;
+        bool isOwn;
+        Link(T* dat, Link* nxt, bool isOwned) : data(dat), next(nxt), isOwn(isOwned) {}
+    }* head;
+public:
+    Stack_16() : head(0) {}
+    ~Stack_16() {
+        while (head)
+            if (head->isOwn) delete pop();
+    }
+    void push(T* dat, bool isOwned) { head = new Link(dat, head, isOwned); }
+    T* peek() const { if (head) return head->data; else return 0; }
+    T* pop() {
+        if (head == 0) return NULL;
+        T* result = head->data;
+        Link* oldHead = head;
+        head = head->next;
+        if (oldHead->isOwn) {
+            delete oldHead;
+            std::cout << " [object destroid] ";
+        }
+        return result;
+    }
+    class iterator;
+    friend class iterator;
+    class iterator {
+    public:
+        iterator(const Stack_16& st) : stackPtr(st.head) {}
+        iterator(const iterator& it) : stackPtr(it.stackPtr) {}
+        iterator() : stackPtr(0) {}
+        bool operator++() {
+            if (stackPtr->next) stackPtr = stackPtr->next; else stackPtr = 0;
+            return bool(stackPtr);
+        }
+        bool operator++(int) { return operator++(); }
+        T* current() const {
+            if (!stackPtr) return NULL;
+            return stackPtr->data;
+        }
+        T* operator->() const {
+            if (!stackPtr) return NULL;
+            return current();
+        }
+        T* operator*() const { return current(); }
+        operator bool() const { return bool(stackPtr); }
+        bool operator==(const iterator&) const { return (stackPtr == 0); }
+        bool operator!=(const iterator&) const { return (stackPtr != 0); }
+    private:
+        Stack_16::Link* stackPtr;
+    };
+    iterator begin() const { return iterator(*this); }
+    iterator end() const { return iterator(); }
+};
+
+class Cat {
+public:
+    int run(int i) const {
+        std::cout << "run\n";
+        return i;
+    }
+    int eat(int i) const {
+        std::cout << "eat\n";
+        return i;
+    }
+    int sleep(int i) const {
+        std::cout << "sleep\n";
+        return i;
+    }
+    typedef int (Cat::*PointerMember)(int) const;
+    class FunctionObject {
+    public:
+        FunctionObject(Cat* cPtr, PointerMember pm) : ptr(cPtr), pmem(pm) {
+            std::cout << "Function object constructor.\n";
+        }
+
+    private:
+        Cat* ptr;
+        PointerMember pmem;
+    };
+};
 
 #endif
