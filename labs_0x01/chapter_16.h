@@ -774,31 +774,64 @@ public:
     iterator end() const { return iterator(); }
 };
 
-class Cat {
+template<typename T> class Cat {
 public:
-    int run(int i) const {
+    T run() const {
         std::cout << "run\n";
-        return i;
+        return T();
     }
-    int eat(int i) const {
+    T eat(T i) const {
         std::cout << "eat\n";
         return i;
     }
-    int sleep(int i) const {
+    T sleep(T i, T j) const {
         std::cout << "sleep\n";
         return i;
     }
-    typedef int (Cat::*PointerMember)(int) const;
+    typedef T (Cat<T>::*PointerMember_1)() const;
+    typedef T (Cat<T>::*PointerMember_2)(T) const;
+    typedef T (Cat<T>::*PointerMember_3)(T, T) const;
     class FunctionObject {
     public:
-        FunctionObject(Cat* cPtr, PointerMember pm) : ptr(cPtr), pmem(pm) {
-            std::cout << "Function object constructor.\n";
+        FunctionObject (Cat* cPtr, PointerMember_1 pm) : ptr(cPtr), pmem_1(pm) {
+            std::cout << "Function object constructor with PointerMember_1.\n";
         }
-
+        FunctionObject (Cat* cPtr, PointerMember_2 pm) : ptr(cPtr), pmem_2(pm) {
+            std::cout << "Function object constructor with PointerMember_2.\n";
+        }
+        FunctionObject (Cat* cPtr, PointerMember_3 pm) : ptr(cPtr), pmem_3(pm) {
+            std::cout << "Function object constructor with PointerMember_3.\n";
+        }
+        T operator()() const {
+            std::cout << "FunctionObject::operator()\n";
+            return (ptr->*pmem_1)();
+        }
+        T operator()(T i) const {
+            std::cout << "FunctionObject::operator()\n";
+            return (ptr->*pmem_2)(i);
+        }
+        T operator()(T i, T j) const {
+            std::cout << "FunctionObject::operator()\n";
+            return (ptr->*pmem_3)(i, j);
+        }
     private:
         Cat* ptr;
-        PointerMember pmem;
+        PointerMember_1 pmem_1;
+        PointerMember_2 pmem_2;
+        PointerMember_3 pmem_3;
     };
+    Cat<T>::FunctionObject operator->*(PointerMember_1 pm) {
+        std::cout << "Cat::operator->*.\n";
+        return FunctionObject(this, pm);
+    }
+    Cat<T>::FunctionObject operator->*(PointerMember_2 pm) {
+        std::cout << "Cat::operator->*.\n";
+        return FunctionObject(this, pm);
+    }
+    Cat<T>::FunctionObject operator->*(PointerMember_3 pm) {
+        std::cout << "Cat::operator->*.\n";
+        return FunctionObject(this, pm);
+    }
 };
 
 #endif

@@ -1983,7 +1983,14 @@ void chapter_16() {
     Stack_16<int>::iterator it25;
     for (it25 = stack25.begin(); it25 != stack25.end(); it25++) cout << *stack25.pop() << " ";
     cout << endl;
-    //
+    // Task 26.
+    Cat<char> cat26;
+    Cat<char>::PointerMember_1 ptrMember1 = &Cat<char>::run;
+    Cat<char>::PointerMember_2 ptrMember2 = &Cat<char>::eat;
+    Cat<char>::PointerMember_3 ptrMember3 = &Cat<char>::sleep;
+    cout << (cat26->*ptrMember1)() << endl;
+    cout << (cat26->*ptrMember2)('a') << endl;
+    cout << (cat26->*ptrMember3)('a', 'b') << endl;
 }
 
 void Labs_0x01() {
