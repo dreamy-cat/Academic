@@ -1,5 +1,40 @@
 #include "labs_0x00.h"
 #include <stdio.h>
+#include <stdlib.h>
+
+float toCelsius(float fahr) {
+    return (5.0/9.0) * (fahr-32);
+}
+
+int getLine(node* line, FILE* stream) {
+    char c;
+    int lineSize = 0;
+    while ((c = getc(stream)) != EOF && c != '\n') {
+        lineSize++;
+        line->c = c;
+        line->next = (node*)malloc(sizeof(node));
+        line = line->next;
+        line->next = 0;
+    }
+    return lineSize;
+}
+
+void copyLine(node* dest, node* source) {
+    while (source->next != 0) {
+        dest->c = source->c;
+        dest->next = (node*)malloc(sizeof(node));
+        dest = dest->next;
+        source = source->next;
+    }
+    dest->next = 0;
+}
+
+void printNode(node* line) {
+    while (line->next != 0) {
+        printf("%c", line->c);
+        line = line->next;
+    }
+}
 
 void chapter_1() {
     printf("Hello World!\n");
@@ -53,7 +88,10 @@ void chapter_1() {
         pc = c;
     }
     fseek(text, 0, 0);
-    int isWord = 0, words = 0;
+    int isWord = 0, words = 0, wordLength = 0;
+    int wordsSizes[16], symbolsFreq[128];
+    for (int i = 0; i < 16; i++) wordsSizes[i] = 0;
+    for (int i = 0; i < 128; i++) symbolsFreq[i] = 0;
     printf("List of 3 first words: \n");
     while ((c = getc(text)) != EOF) {
         if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
@@ -61,13 +99,53 @@ void chapter_1() {
                 isWord = 1;
                 words++;
             }
+            wordLength++;
             if (words <= 3) printf("%c", c);
         } else {
-            if (isWord) isWord = 0;
+            if (isWord) {
+                if (wordLength < 16) wordsSizes[wordLength]++;
+                wordLength = 0;
+                isWord = 0;
+            }
             if (words <= 3) printf("\n");
         }
+        symbolsFreq[c]++;
     }
     printf("\nWords in file: %d\n", words);
+    printf("Histogram of word sizes(max 16 symbols):\n");
+    for (int i = 0; i < 16; i++) {
+        printf("%2d:", i);
+        for (int j = 0; j < wordsSizes[i]; j++) printf(".");
+        printf("\n");
+    }
+    printf("Histogram of symbols(without 0 values):\n");
+    for (int i = 0; i < 128; i++)
+        if (symbolsFreq[i] > 0) {
+            printf("%2d:", i);
+            for (int j = 0; j < symbolsFreq[i]; j++) printf(".");
+            printf("\n");
+        }
+    upper = 300, lower = 0, step = 20;
+    fahr = lower;
+    printf ("Fahrenheit Celsius(with function):\n");
+    while (fahr <= upper) {
+        printf ("%8.0f %8.1f\n", fahr, toCelsius(fahr));
+        fahr += step;
+    }
+    fseek(text, 0, 0);
+    node rootLine, maxLine;
+    rootLine.next = 0;
+    maxLine.next = 0;
+    int sizeOfLine = 0, maxSizeLine = 0;
+    while ((sizeOfLine = getLine(&rootLine, text))) {
+        if (sizeOfLine > maxSizeLine) {
+            maxSizeLine = sizeOfLine;
+            copyLine(&maxLine, &rootLine);
+        }
+    }
+    printf("Maximum line: ");
+    printNode(&maxLine);
+    printf("\n");
     fclose(text);
 }
 
