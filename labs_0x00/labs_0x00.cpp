@@ -6,33 +6,29 @@ float toCelsius(float fahr) {
     return (5.0/9.0) * (fahr-32);
 }
 
-int getLine(node* line, FILE* stream) {
+int getLine(char line[], FILE* stream, int limit) {
     char c;
-    int lineSize = 0;
-    while ((c = getc(stream)) != EOF && c != '\n') {
-        lineSize++;
-        line->c = c;
-        line->next = (node*)malloc(sizeof(node));
-        line = line->next;
-        line->next = 0;
+    int i;
+    for (i = 0; i < limit-1 && (c = getc(stream)) != EOF && c != '\n'; ++i)
+        line[i] = c;
+    if (c == '\n') {
+        line[i] = c;
+        ++i;
     }
-    return lineSize;
+    line[i] = '\0';
+    return i;
 }
 
-void copyLine(node* dest, node* source) {
-    while (source->next != 0) {
-        dest->c = source->c;
-        dest->next = (node*)malloc(sizeof(node));
-        dest = dest->next;
-        source = source->next;
-    }
-    dest->next = 0;
+void copyLine(char dest[], char source[]) {
+    int i = 0;
+    while ((dest[i] = source[i]) != '\0') ++i;
 }
 
-void printNode(node* line) {
-    while (line->next != 0) {
-        printf("%c", line->c);
-        line = line->next;
+void reverse(char source[], int length) {
+    for (int i = 0; i < length/2; i++) {
+        char c = source[i];
+        source[i] = source[length-1-i];
+        source[length-1-i] = c;
     }
 }
 
@@ -133,19 +129,76 @@ void chapter_1() {
         fahr += step;
     }
     fseek(text, 0, 0);
-    node rootLine, maxLine;
-    rootLine.next = 0;
-    maxLine.next = 0;
+    // Task 16-17. Strange.
+#define MAXLENGTH 256
+    char line[MAXLENGTH], maxLine[MAXLENGTH];
     int sizeOfLine = 0, maxSizeLine = 0;
-    while ((sizeOfLine = getLine(&rootLine, text))) {
+
+    while (sizeOfLine = getLine(line, text, MAXLENGTH)) {
         if (sizeOfLine > maxSizeLine) {
+            copyLine(maxLine, line);
             maxSizeLine = sizeOfLine;
-            copyLine(&maxLine, &rootLine);
         }
     }
     printf("Maximum line: ");
-    printNode(&maxLine);
+    if (maxSizeLine > 0) printf("%s", maxLine); else printf("Not exist.");
+    fseek (text, 0,0);
+    // Task 18-19.
+    printf("Packed text with reverse lines(no empty lines):");
+    while (sizeOfLine = getLine(line, text, MAXLENGTH)) {
+        for (int i = 0; i < sizeOfLine-1; i++) {
+            if (line[i] == '\t') line[i] = ' ';
+            while (line[i] == ' ' && line[i+1] == ' ') {
+                int j = i;
+                while (line[j] != '\0') {
+                    line[j] = line[j+1];
+                    j++;
+                }
+                sizeOfLine--;
+            }
+        }
+        if (line[0] == '\n' && sizeOfLine == 1) line[0] = '\0';
+        reverse(line, sizeOfLine);
+        printf("%s", line);
+    }
     printf("\n");
+    // Task 20.
+    printf("Replace tabs with spaces from text:\n");
+    fseek(text, 0, 0);
+    int tabSpaces = 8;
+    while ((sizeOfLine = getLine(line, text, MAXLENGTH)) > 0) {
+        for (int i = 0; i < sizeOfLine; i++)
+            if (line[i] == '\t') {
+                for (int j = 0; j < sizeOfLine-(i+1); j++) {
+                    line[sizeOfLine-1-j+tabSpaces-1] = line[sizeOfLine-1-j];
+                }
+                for (int j = 0; j < tabSpaces; j++) line[i+j] = ' ';
+                sizeOfLine += tabSpaces-1;
+                line[sizeOfLine] = '\0';
+            }
+        printf("%s", line);
+    }
+    // Task 21.
+    printf("Replace spaces with tabs from text:\n");
+    fseek(text, 0,0);
+    while ((sizeOfLine = getLine(line, text, MAXLENGTH)) > 0) {
+        int spaceCounter = 0;
+        for (int i = 0; i < sizeOfLine; i++) {
+            if (line[i] == ' ') {
+                spaceCounter++;
+                if (spaceCounter == tabSpaces) {
+                   for (int j = 0; i+j < sizeOfLine; j++)
+                       line[i-(tabSpaces-1-1)+j] = line[i+1+j];
+                   i -= tabSpaces-1;
+                   line[i] = '\t';
+                   sizeOfLine -= tabSpaces-1;
+                   line[sizeOfLine] = '\0';
+                   spaceCounter = 0;
+                }
+            } else spaceCounter = 0;
+        }
+        printf("%s", line);
+    }
     fclose(text);
 }
 
