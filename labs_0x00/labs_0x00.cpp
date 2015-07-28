@@ -2,12 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-float toCelsius(float fahr) {
-    return (5.0/9.0) * (fahr-32);
-}
+/*
+ * Task 22. Test comment.
+ *
+ */
 
 int getLine(char line[], FILE* stream, int limit) {
-    char c;
+    char c;     // Task 1-22. Test comment.
     int i;
     for (i = 0; i < limit-1 && (c = getc(stream)) != EOF && c != '\n'; ++i)
         line[i] = c;
@@ -30,6 +31,10 @@ void reverse(char source[], int length) {
         source[i] = source[length-1-i];
         source[length-1-i] = c;
     }
+}
+
+float toCelsius(float fahr) {
+    return (5.0/9.0) * (fahr-32);
 }
 
 void chapter_1() {
@@ -199,7 +204,49 @@ void chapter_1() {
         }
         printf("%s", line);
     }
-    fclose(text);
+   fclose(text);
+   // Task 22.
+   fopen("labs_0x00/labs_0x00.cpp", "r");
+   printf("Main source file labs_0x00.cpp, without comments. First 30 lines.\n");
+   int inComment = 0, inString = 0;
+   for (int k = 0; k < 30; k++) {
+       sizeOfLine = getLine(line, text, MAXLENGTH);
+       for (int i = 0; i < sizeOfLine-1; i++) {
+           if (line[i] == '"') inString = inString ^ 1;
+           // printf("Source string: %s", line);
+           if (!inString) {
+               if (line[i] == '/' && line[i+1] == '/') {
+                   sizeOfLine = i+1;
+                   line[i] = '\n';
+                   line[i+1] = '\0';
+               }
+               // printf("!");
+               if (line[i] == '/' && line[i+1] == '*') {
+                   inComment = 1;
+                   line[i] = '\n';
+                   line[i+1] = '\0';
+                   sizeOfLine = i+1;
+                   //printf("size: %d", sizeOfLine);
+               }
+               if (line[i] == '*' && line[i+1] == '/') {
+                   inComment = 0;
+                   for (int j = 0; j < sizeOfLine-i+3; j++)
+                       line[j] = line[i+j];
+                   sizeOfLine -= (i+3);
+                   line[sizeOfLine] = '\0';
+                   // printf("size: %d", sizeOfLine);
+               }
+               if (inComment && i < sizeOfLine) {
+                   for (int j = 0; j < sizeOfLine-1; j++)
+                       line[i+j] = line[i+1+j];
+                   line[--sizeOfLine] = '\0';
+                   --i;
+               }
+           }
+       }
+       printf("%s", line);
+   }
+   fclose(text);
 }
 
 void labs_0x00() {
