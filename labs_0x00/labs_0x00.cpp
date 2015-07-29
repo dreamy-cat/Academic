@@ -2,13 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
- * Task 22. Test comment.
- *
- */
-
 int getLine(char line[], FILE* stream, int limit) {
-    char c;     // Task 1-22. Test comment.
+    char c;
     int i;
     for (i = 0; i < limit-1 && (c = getc(stream)) != EOF && c != '\n'; ++i)
         line[i] = c;
@@ -21,7 +16,10 @@ int getLine(char line[], FILE* stream, int limit) {
 }
 
 void copyLine(char dest[], char source[]) {
-    int i = 0;
+    /* Copy // line function. */
+    int i = -1; /* Complex comment for task 1-23.
+                 *
+                 */ i++;
     while ((dest[i] = source[i]) != '\0') ++i;
 }
 
@@ -204,45 +202,68 @@ void chapter_1() {
         }
         printf("%s", line);
     }
-   fclose(text);
    // Task 22.
+   printf("Text align to 40 symbols:\n");
+   int textWidth = 40;
+   fseek(text, 0, 0);
+   char printLine[256];
+   while ((sizeOfLine = getLine(line, text, MAXLENGTH)) > 0) {
+       while (sizeOfLine) {
+           int isWord = 0, lastWord = -1;
+           for (int j = 0; j < textWidth && j < sizeOfLine; j++) {
+               if ((line[j] >= 'a' && line[j] <= 'z') || (line[j] >= 'A' && line[j] <= 'Z')) {
+                   isWord = 1;
+               } else {
+                   if (isWord) lastWord = j;
+                   isWord = 0;
+               }
+           }
+           copyLine(printLine, line);
+           if (lastWord == -1) lastWord = textWidth;
+           if (sizeOfLine < textWidth) {
+               lastWord = sizeOfLine;
+               printLine[lastWord] = '\0';
+           } else {
+               printLine[lastWord] = '\n';
+               printLine[lastWord+1] = '\0';
+           }
+           printf("%s", printLine);
+           for (int j = 0; j < sizeOfLine-lastWord; j++)
+               line[j] = line[lastWord+j];
+           sizeOfLine -= lastWord;
+       }
+   }
+   fclose(text);
+   // Task 23.
    fopen("labs_0x00/labs_0x00.cpp", "r");
    printf("Main source file labs_0x00.cpp, without comments. First 30 lines.\n");
-   int inComment = 0, inString = 0;
+   int inComment = -1, inString = 0;
    for (int k = 0; k < 30; k++) {
        sizeOfLine = getLine(line, text, MAXLENGTH);
        for (int i = 0; i < sizeOfLine-1; i++) {
            if (line[i] == '"') inString = inString ^ 1;
-           // printf("Source string: %s", line);
            if (!inString) {
-               if (line[i] == '/' && line[i+1] == '/') {
+               if (line[i] == '/' && line[i+1] == '/' && inComment == -1) {
                    sizeOfLine = i+1;
                    line[i] = '\n';
                    line[i+1] = '\0';
                }
-               // printf("!");
-               if (line[i] == '/' && line[i+1] == '*') {
-                   inComment = 1;
-                   line[i] = '\n';
-                   line[i+1] = '\0';
-                   sizeOfLine = i+1;
-                   //printf("size: %d", sizeOfLine);
+               if (line[i] == '/' && line[i+1] == '*' && inComment == -1) {
+                   inComment = i;
                }
-               if (line[i] == '*' && line[i+1] == '/') {
-                   inComment = 0;
-                   for (int j = 0; j < sizeOfLine-i+3; j++)
-                       line[j] = line[i+j];
-                   sizeOfLine -= (i+3);
-                   line[sizeOfLine] = '\0';
-                   // printf("size: %d", sizeOfLine);
-               }
-               if (inComment && i < sizeOfLine) {
-                   for (int j = 0; j < sizeOfLine-1; j++)
-                       line[i+j] = line[i+1+j];
-                   line[--sizeOfLine] = '\0';
-                   --i;
+               if (line[i] == '*' && line[i+1] == '/' && inComment != -1) {
+                   for (int j = 0; j < sizeOfLine-i-2; j++)
+                       line[inComment+j] = line[i+2+j];
+                   inComment = -1;
+                   sizeOfLine -= (i+2-inComment);
+                   line[sizeOfLine+1] = '\0';
                }
            }
+       }
+       if (inComment != -1) {
+           line[inComment] = '\n';
+           line[inComment+1] = '\0';
+           inComment = 0;
        }
        printf("%s", line);
    }
