@@ -3,5 +3,6 @@
 
 void labs_0x00();
 void chapter_1();
+void chapter_2();
 
 #endif

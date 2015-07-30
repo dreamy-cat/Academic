@@ -1,6 +1,8 @@
 #include "labs_0x00.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
+#include <float.h>
 
 int getLine(char line[], FILE* stream, int limit) {
     char c;
@@ -234,14 +236,14 @@ void chapter_1() {
        }
    }
    fclose(text);
-   // Task 23.
+   // Task 23-24.
    fopen("labs_0x00/labs_0x00.cpp", "r");
-   printf("Main source file labs_0x00.cpp, without comments. First 30 lines.\n");
-   int inComment = -1, inString = 0;
-   for (int k = 0; k < 30; k++) {
-       sizeOfLine = getLine(line, text, MAXLENGTH);
+   printf("Main source file labs_0x00.cpp, without comments. First 30 lines and braces counters.\n");
+   int inComment = -1, inString = 0, viewLines = 0;
+   int openBraces = 0, closeBraces = 0;
+   while ((sizeOfLine = getLine(line, text, MAXLENGTH))) {
        for (int i = 0; i < sizeOfLine-1; i++) {
-           if (line[i] == '"') inString = inString ^ 1;
+           if (line[i] == '"' || line[i] == '\'') inString = inString ^ 1;
            if (!inString) {
                if (line[i] == '/' && line[i+1] == '/' && inComment == -1) {
                    sizeOfLine = i+1;
@@ -264,12 +266,37 @@ void chapter_1() {
            line[inComment] = '\n';
            line[inComment+1] = '\0';
            inComment = 0;
+       } else
+           for (int i = 0; line[i] != '\0'; i++) {
+               if (line[i] == '{') openBraces++;
+               if (line[i] == '}') closeBraces++;
+           }
+       if (viewLines < 30) {
+           printf("%s", line);
+           viewLines++;
        }
-       printf("%s", line);
    }
+   printf("Open braces in source file = %d, close braces = %d.\n", openBraces, closeBraces);
    fclose(text);
 }
 
+void chapter_2() {
+    printf("Chapter's 2 tasks.\n");
+    // Task 1.
+    printf ("Table of types(limits.h).\n");
+    printf("Type:\t\tBits:\tMIN:\t\t\tMAX:\n");
+    printf("Char\t\t%d\t%d\t\t\t%d\n", (int)sizeof(char)*8, SCHAR_MIN, SCHAR_MAX);
+    printf("Unsigned char\t%d\t%d\t\t\t%d\n", (int)sizeof(char)*8, 0, UCHAR_MAX);
+    printf("Short\t\t%d\t%d\t\t\t%d\n", (int)sizeof(short)*8, SHRT_MIN, SHRT_MAX);
+    printf("Unsigned short\t%d\t%d\t\t\t%d\n", (int)sizeof(short)*8, 0, USHRT_MAX);
+    printf("Int\t\t%d\t%d\t\t%d\n", (int)sizeof(int)*8, INT_MIN, INT_MAX);
+    printf("Unsigned int\t%d\t%d\t\t\t%u\n", (int)sizeof(int)*8, 0, UINT_MAX);
+    printf("Long\t\t%d\t%ld\t%lu\n", (int)sizeof(long)*8, LONG_MIN, LONG_MAX);
+    printf("Unsigned long\t%d\t%d\t\t\t%lu\n", (int)sizeof(long)*8, 0, ULONG_MAX);
+    printf("Float\t\t%d\t%.1f\t\t\t%.1f\n", (int)sizeof(float)*8, FLT_MIN, FLT_MAX);
+
+}
+
 void labs_0x00() {
-    chapter_1();
+    chapter_2();
 }
