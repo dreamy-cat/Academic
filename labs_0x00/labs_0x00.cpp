@@ -280,6 +280,47 @@ void chapter_1() {
    fclose(text);
 }
 
+int htol(const char hex[]) {
+    int n = 0;
+    if (hex[0] != '0' && hex[1] != 'x')
+        return n;
+    for (int i = 2; hex[i] != '\0'; i++) {
+        if (hex[i] >= '0' && hex[i] <= '9')
+            n = n * 16 + (hex[i] - '0');
+        if (hex[i] >= 'A' && hex[i] <= 'F')
+            n = n * 16 + (hex[i] - 'A' + 10);
+    }
+    return n;
+}
+
+void squeeze(char source[], char toFind[]) {
+    int i, j, k;
+    for (i = 0, j = 0; source[i] != '\0'; i++) {
+        k = 0;
+        while (toFind[k] != '\0' && source[i] != toFind[k])
+            k++;
+        if (toFind[k] == '\0')
+            source[j++] = source[i];
+    }
+    source[j] = '\0';
+}
+
+int any(char source[], char toFind[]) {
+    for (int i = 0; source[i] != '\0'; i++) {
+        for (int j = 0; toFind[j] != '\0'; j++)
+            if (source[i] == toFind[j]) return i;
+    }
+    return -1;
+}
+
+unsigned char setBits(unsigned char x, unsigned char p, unsigned char n, unsigned char y) {
+    if (n > p+1 || n > 8 || p > 7) return 0;
+    y = y & (0xFF >> sizeof(char)*8-n);
+    x = x & ((0xFF << p+1) | (0xFF >> sizeof(char)*8-(p+1-n)));
+    x = x | (y << (p+1-n));
+    return x;
+}
+
 void chapter_2() {
     printf("Chapter's 2 tasks.\n");
     // Task 1.
@@ -294,7 +335,27 @@ void chapter_2() {
     printf("Long\t\t%d\t%ld\t%lu\n", (int)sizeof(long)*8, LONG_MIN, LONG_MAX);
     printf("Unsigned long\t%d\t%d\t\t\t%lu\n", (int)sizeof(long)*8, 0, ULONG_MAX);
     printf("Float\t\t%d\t%.1f\t\t\t%.1f\n", (int)sizeof(float)*8, FLT_MIN, FLT_MAX);
-
+    // Task 2.
+    char c;
+    const int limit = 1;
+    for (int i = 0; i < limit; i++) {
+        if ((c = getchar()) != EOF) {
+            if (c != '\n') printf("Symbol: %c", c);
+        }
+    }
+    printf("\n");
+    // Task 3.
+    const char hex[] = "0x1F";
+    printf("Function hex 0x1F to integer:%d\n", htol(hex));
+    const int maxString = 256;
+    // Task 4-5.
+    char string_1[maxString] = "String_1", string_2[maxString] = "tn";
+    printf("Source string = %s. Symbols to cut = %s.\n", string_1, string_2);
+    printf("First position in source string, where found any of symbol of string %s = %d.\n", string_2, any(string_1, string_2));
+    squeeze(string_1, string_2);
+    printf("String after squeeze = %s.\n", string_1);
+    // Tasks 6.
+    setBits(0x0F, 2, 2, 0x01);
 }
 
 void labs_0x00() {
