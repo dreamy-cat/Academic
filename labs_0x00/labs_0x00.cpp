@@ -321,6 +321,30 @@ unsigned char setBits(unsigned char x, unsigned char p, unsigned char n, unsigne
     return x;
 }
 
+unsigned char invertBits(unsigned char x, unsigned char p, unsigned char n) {
+    if (n > p+1 || n > 8 || p > 7) return 0;
+    unsigned char mask = 0xFF << p+1 | 0xFF >> sizeof(char)*8-(p+1-n);
+    x = x & mask | (~x & ~mask);
+    return x;
+}
+
+unsigned char rollRightBits(unsigned char x, unsigned char n) {
+    for (int i = 0; i < n; i++)
+        if (x & 0x01) x = (x >> 1) | 0x80; else x = x >> 1;
+    return x;
+}
+
+int bitCount(unsigned char x) {
+    int b;
+    for (b = 0; x > 0; b++) x &= (x-1);
+    return b;
+}
+
+void lower(char text[]) {
+    for (int i = 0; text[i] != '\0'; i++)
+        (text[i] >= 'A' && text[i] <= 'Z') ? text[i] += 32 : text[i] = text[i];
+}
+
 void chapter_2() {
     printf("Chapter's 2 tasks.\n");
     // Task 1.
@@ -354,10 +378,97 @@ void chapter_2() {
     printf("First position in source string, where found any of symbol of string %s = %d.\n", string_2, any(string_1, string_2));
     squeeze(string_1, string_2);
     printf("String after squeeze = %s.\n", string_1);
-    // Tasks 6.
-    setBits(0x0F, 2, 2, 0x01);
+    // Tasks 6-8.
+    printf("Set 2 last bits from 0x03 byte to position 2 of 0x0F byte(hex): %x\n", setBits(0x0F, 2, 2, 0x03));
+    printf("Invert 2 bits from 0x0F from position 2(hex): %x\n", invertBits(0x0F, 2, 2));
+    printf("Roll cyclic 0x07 to the right, 3 bits(hex): %x\n", rollRightBits(0x07, 3));
+    // Task 9.
+    printf("Bits in 0x0F: %d\n", bitCount(0x0F));
+    // Task 10.
+    char string_10[] = "StRiNg_10";
+    printf("Source string: %s\n", string_10);
+    lower(string_10);
+    printf("String after calling function lower: %s\n", string_10);
+}
+
+int binSearch(int x, int v[], int n) {
+    int low = 0, high = n-1, mid = (low+high)/2;
+    while (low <= high && v[mid] != x) {
+        if (x < v[mid]) high = mid -1; else low = mid + 1;
+        mid = (low + high) / 2;
+    }
+    if (low <= high) return mid; else return -1;
+}
+
+void escape(char s[], char t[]) {
+    int j = 0;
+    for (int i = 0; t[i] != '\0'; i++)
+        switch (t[i]) {
+        case '\t':
+            s[j++] = '\\';
+            s[j++] = 't';
+            break;
+        case '\n':
+            s[j++] = '\\';
+            s[j++] = 'n';
+            break;
+        default:
+            s[j++] = t[i];
+            break;
+        }
+    s[j] = '\0';
+}
+
+void toText(char s[], char t[]) {
+    int j = 0;
+    for (int i = 0; t[i] != '\0'; i++)
+        switch (t[i]) {
+        case '\\':
+            switch (t[i+1]) {
+            case 't':
+                s[j++] = '\t';
+                i++;
+                break;
+            case 'n':
+                s[j++] = '\n';
+                i++;
+                break;
+            default:
+                s[j++] = t[i];
+            }
+            break;
+        default:
+            s[j++] = t[i];
+        }
+    s[j] = '\0';
+}
+
+void chapter_3() {
+    printf("Chapter's 3 tasks.\n");
+    // Task 1. May be not right...
+    const int arraySize = 5;
+    int array_1[arraySize];
+    printf("Array of int: ");
+    for (int i = 0; i < arraySize; i++) {
+        array_1[i] = i;
+        printf("%d ", array_1[i]);
+    }
+    printf("\nFind position of element = 1: %d\n", binSearch(1, array_1, arraySize));
+    // Task 2.
+    FILE* textFile = fopen("labs_0x00/files/chapter-3.txt", "r");
+    const int maxLineSize = 128;
+    char text[maxLineSize], line_1[maxLineSize], line_2[maxLineSize];
+    int lineSize;
+    printf("File 'chapter-3.txt' with special symbols, as is: \n");
+    while ((lineSize = getLine(text, textFile, maxLineSize))) {
+        escape(line_1, text);
+        printf("%s\n", line_1);
+        toText(line_2, line_1);
+        printf("Original text: %s", line_2);
+    }
+    fclose(textFile);
 }
 
 void labs_0x00() {
-    chapter_2();
+    chapter_3();
 }
