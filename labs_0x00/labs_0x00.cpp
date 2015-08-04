@@ -443,6 +443,22 @@ void toText(char s[], char t[]) {
     s[j] = '\0';
 }
 
+void expand(char s1[], char s2[]) {
+    int j = 0, k = 0, sequence = 0;
+    const char intervals[6] = { 'a', 'z', 'A', 'Z', '0', '9' };
+    for (int i = 0; s1[i] != '\0'; i++) {
+        for (k = 0; !(s1[i] >= intervals[k*2] && s1[i] <= intervals[k*2+1]) && k < 3; k++);
+        if (k != 3 && s1[i+1] != '\0' && s1[i+2] != '\0') {
+            int startSeq = i;
+            while  (s1[i+1] == '-' && s1[i+2] >= intervals[k*2] && s1[i+2] <= intervals[k*2+1]) {
+                i += 2;
+            }
+            for (char c = s1[startSeq]; c <= s1[i]; c++) s2[j++] = c;
+        } else s2[j++] = s1[i];
+    }
+    s2[j++] = '\0';
+}
+
 void chapter_3() {
     printf("Chapter's 3 tasks.\n");
     // Task 1. May be not right...
@@ -467,6 +483,10 @@ void chapter_3() {
         printf("Original text: %s", line_2);
     }
     fclose(textFile);
+    // Task 3.
+    char line_31[maxLineSize] = "a-e0-5 -a-c-e-- ok.c-a", line_32[maxLineSize];
+    expand(line_31, line_32);
+    printf("Expand line %s to %s\n", line_31, line_32);
 }
 
 void labs_0x00() {
