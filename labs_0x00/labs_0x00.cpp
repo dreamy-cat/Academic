@@ -444,7 +444,7 @@ void toText(char s[], char t[]) {
 }
 
 void expand(char s1[], char s2[]) {
-    int j = 0, k = 0, sequence = 0;
+    int j = 0, k = 0;
     const char intervals[6] = { 'a', 'z', 'A', 'Z', '0', '9' };
     for (int i = 0; s1[i] != '\0'; i++) {
         for (k = 0; !(s1[i] >= intervals[k*2] && s1[i] <= intervals[k*2+1]) && k < 3; k++);
@@ -457,6 +457,56 @@ void expand(char s1[], char s2[]) {
         } else s2[j++] = s1[i];
     }
     s2[j++] = '\0';
+}
+
+void itoa(unsigned char n, int sign, char s[]) {
+    int i = 0;
+    while (n) {
+        s[i++] = n % 10 + '0';
+        n = n / 10;
+    }
+    if (i == 0) s[i++] = '0';
+    if (sign < 0) s[i++] = '-';
+    for (int j = 0; j < i / 2; j++) {
+        char c = s[j];
+        s[j] = s[i-1-j];
+        s[i-1-j] = c;
+    }
+    s[i] = '\0';
+}
+
+void itob(unsigned char n, char s[], unsigned char b) {
+    if (b > 16) return;
+    const char characters[] = "0123456789ABCDEF";
+    int i = 0;
+    while (n) {
+        s[i++] = characters[n % b];
+        n = n / b;
+    }
+    if (i == 0) s[i++] = '0';
+    for (int j = 0; j < i / 2; j++) {
+        char c = s[j];
+        s[j] = s[i-1-j];
+        s[i-1-j] = c;
+    }
+    s[i] = '\0';
+}
+
+void itoa (unsigned char n, char s[], unsigned char field) {
+    int i = 0;
+    while (n) {
+        s[i++] = n % 10 + '0';
+        n = n / 10;
+    }
+    if (i == 0) s[i++] = '0';
+    for (int j = i; j < field; j++)
+        s[i++] = ' ';
+    for (int j = 0; j < i / 2; j++) {
+        char c = s[j];
+        s[j] = s[i-1-j];
+        s[i-1-j] = c;
+    }
+    s[i] = '\0';
 }
 
 void chapter_3() {
@@ -484,9 +534,23 @@ void chapter_3() {
     }
     fclose(textFile);
     // Task 3.
-    char line_31[maxLineSize] = "a-e0-5 -a-c-e-- ok.c-a", line_32[maxLineSize];
+    char line_31[maxLineSize] = "a-e0-3 -a-c-e-- ok.c-a", line_32[maxLineSize];
     expand(line_31, line_32);
     printf("Expand line %s to %s\n", line_31, line_32);
+    // Task 4.
+    char line_4[maxLineSize];
+    itoa(128, -1, line_4);
+    printf("Iteger -128 to string = %s\n", line_4);
+    // Task 5.
+    char line_5_1[maxLineSize], line_5_2[maxLineSize], line_5_3[maxLineSize];
+    itob(15, line_5_1, 10);
+    itob(15, line_5_2, 2);
+    itob(15, line_5_3, 16);
+    printf("Integer 15 in binary, decimal and hex : %s %s %s\n", line_5_1, line_5_2, line_5_3);
+    // Task 6.
+    char line6_1[maxLineSize];
+    itoa(15, line6_1, 4);
+    printf("Integer 15 and field = 4:%s\n", line6_1);
 }
 
 void labs_0x00() {
