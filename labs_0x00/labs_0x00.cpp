@@ -553,6 +553,37 @@ void chapter_3() {
     printf("Integer 15 and field = 4:%s\n", line6_1);
 }
 
+int strIndex(char s[], char t[]) {
+    int i, j, p = -1;
+    for (i = 0; s[i] != '\0'; i++) {
+        for (j = 0;  t[j] != '\0' && s[i+j] != '\0' && s[i+j] == t[j]; j++);
+        if (t[j] == '\0') p = i;
+    }
+    return p;
+}
+
+double aToF(char s[]) {
+    double val, power;
+    int i, sign;
+    for (i = 0; !(s[i] >= '0' && s[i] <= '9') || s[i] != '-' || s[i] != '+'; i++);
+    if (s[i] == '-') sign = -1; else sign = +1;
+    for (val = 0.0; s[i] >= '0' && s[i] <= '9'; i++)
+        val = 10.0 * val + (s[i] - '0');
+    if (s[i] == '.') i++;
+    for (power = 1.0; s[i] >= '0' && s[i] <= '9'; i++) {
+        val = 10.0 * val + (s[i] - '0');
+        power *= 10;
+    }
+    return sign * val / power;
+}
+
+void chapter_4() {
+    printf("Chapter's 4 tasks.\n");
+    // Task 1.
+    char string1_1[] = "string_1 testing", string1_2[] = "ing";
+    printf("Right position of substring %s, in %s string: %d.\n", string1_1, string1_2, strIndex(string1_1, string1_2));
+}
+
 void labs_0x00() {
-    chapter_3();
+    chapter_4();
 }
