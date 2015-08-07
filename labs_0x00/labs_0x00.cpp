@@ -565,7 +565,7 @@ int strIndex(char s[], char t[]) {
 double aToF(char s[]) {
     double val, power;
     int i, sign;
-    for (i = 0; !(s[i] >= '0' && s[i] <= '9') || s[i] != '-' || s[i] != '+'; i++);
+    for (i = 0; !(s[i] >= '0' && s[i] <= '9') && s[i] != '-' && s[i] != '+'; i++);
     if (s[i] == '-') sign = -1; else sign = +1;
     for (val = 0.0; s[i] >= '0' && s[i] <= '9'; i++)
         val = 10.0 * val + (s[i] - '0');
@@ -573,6 +573,18 @@ double aToF(char s[]) {
     for (power = 1.0; s[i] >= '0' && s[i] <= '9'; i++) {
         val = 10.0 * val + (s[i] - '0');
         power *= 10;
+    }
+    if ((s[i] == 'E' || s[i] == 'e') && (s[i+1] == '-' || s[i+1] == '+')) {
+        double exp = 0.0, multiplier;
+        if (s[i+1] == '+') multiplier = 10.0; else multiplier = 0.1;
+        i += 2;
+        while (s[i] >= '0' && s[i] <= '9')
+            exp = exp * 10 + (s[i++] - '0');
+
+        while (exp > 0) {
+            power /= multiplier;
+            exp -= 1.0;
+        }
     }
     return sign * val / power;
 }
@@ -582,6 +594,9 @@ void chapter_4() {
     // Task 1.
     char string1_1[] = "string_1 testing", string1_2[] = "ing";
     printf("Right position of substring %s, in %s string: %d.\n", string1_1, string1_2, strIndex(string1_1, string1_2));
+    // Task 2.
+    char string2[] = "2.5E+2";
+    printf ("E notation of number %s = %.2f\n", string2, aToF(string2));
 }
 
 void labs_0x00() {
