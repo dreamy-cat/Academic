@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <float.h>
+#include <math.h>
 
 int getLine(char line[], FILE* stream, int limit) {
     char c;
@@ -567,6 +568,7 @@ double aToF(char s[]) {
     int i, sign;
     for (i = 0; !(s[i] >= '0' && s[i] <= '9') && s[i] != '-' && s[i] != '+'; i++);
     if (s[i] == '-') sign = -1; else sign = +1;
+    if (s[i] == '-' || s[i] == '+') i++;
     for (val = 0.0; s[i] >= '0' && s[i] <= '9'; i++)
         val = 10.0 * val + (s[i] - '0');
     if (s[i] == '.') i++;
@@ -589,14 +591,131 @@ double aToF(char s[]) {
     return sign * val / power;
 }
 
+// Chapter's 4 variables.
+
+const int stackSize = 16;
+int sp = 0;
+double stack4[stackSize];
+
+void push(double value) {
+    if (sp < stackSize) stack4[sp++] = value; else printf("Push error, stack is full.\n");
+}
+
+double pop() {
+    if (sp > 0) return stack4[--sp]; else { printf("Pop error, stack empty.\n"); return -1; }
+}
+
+void printTop() {
+    if (sp > 0) printf("Top element in stack: %.2f\n", stack4[sp-1]); else
+        printf("Stack is empty.\n");
+}
+
+void copyTop() {
+    if (sp > 0) {
+        stack4[sp] = stack4[sp-1];
+        sp++;
+        printf("Top element %.2f in stack has copied to new top.\n", stack4[sp-2]);
+    } else printf("Stack is empty.\n");
+}
+
+void exchangeTop() {
+    if (sp > 1) {
+        double element = stack4[sp-1];
+        stack4[sp-1] = stack4[sp-2];
+        stack4[sp-2] = element;
+        printf("Exchange top two elements %.2f and %.2f in stack.\n", stack4[sp-2], stack4[sp-1]);
+    } else printf("Stack has less than two elements.\n");
+}
+
+void clearStack() {
+    if (sp > 0) sp = 0; else printf("Nothing to clear. Stack is empty.\n");
+}
+
 void chapter_4() {
     printf("Chapter's 4 tasks.\n");
     // Task 1.
     char string1_1[] = "string_1 testing", string1_2[] = "ing";
     printf("Right position of substring %s, in %s string: %d.\n", string1_1, string1_2, strIndex(string1_1, string1_2));
     // Task 2.
-    char string2[] = "2.5E+2";
+    char string2[] = "-2.5E+2";
     printf ("E notation of number %s = %.2f\n", string2, aToF(string2));
+    // Task 3-5. Errors correction works only with symbols.
+    const int maxLength = 256;
+    const char string3_1[] = "3 D + 4 2 X / * P 0 S + 2 4 O + 0 E +", symTable[] = "0123456789+-*/%PDCXSOE";
+    char operandStr[maxLength];
+    int operandSize = 0;
+    double operand, extraOperand;
+    for (int i = 0; string3_1[i] != '\0'; i++) {
+        int k;
+        for (k = 0; symTable[k] != '\0' && string3_1[i] != symTable[k]; k++);
+        if (symTable[k] != '\0') operandStr[operandSize++] = string3_1[i];
+        if ((string3_1[i+1] == ' ' || string3_1[i+1] == '\0') && operandSize > 0) {
+            if (operandStr[operandSize-1] >= '0' && operandStr[operandSize-1] <= '9') {
+                operandStr[operandSize] = '\0';
+                // printf("oper %s = %f\n", operandStr, aToF(operandStr));
+                push(aToF(operandStr));
+            } else {
+                switch (operandStr[0]) {
+                case '+':
+                    push(pop() + pop());
+                    break;
+                case '-':
+                    operand = pop();
+                    push(pop() - operand);
+                    break;
+                case '*':
+                    push(pop() * pop());
+                    break;
+                case '/':
+                    operand = pop();
+                    if (operand != 0) push(pop() / operand); else {
+                        printf("Division by zero.\n");
+                        push(0.0);
+                    }
+                    break;
+                case '%':
+                    operand = pop();
+                    if (operand != 0) push((long)pop() % (long)operand); else {
+                        printf("Division by zero.\n");
+                        push(0.0);
+                    }
+                    break;
+                case 'P':
+                    printTop();
+                    break;
+                case 'D':
+                    copyTop();
+                    break;
+                case 'C':
+                    clearStack();
+                    break;
+                case 'X':
+                    exchangeTop();
+                    break;
+                case 'S':
+                    operand = pop();
+                    printf("Sin %.2f = %.2f\n", operand, sin(operand));
+                    push(sin(operand));
+                    break;
+                case 'E':
+                    operand = pop();
+                    printf("Exponential function of %.2f = %.2f\n", operand, exp(operand));
+                    push(exp(operand));
+                    break;
+                case 'O':
+                    operand = pop();
+                    extraOperand = pop();
+                    printf("Power value %2.f to %.2f = %.2f\n", extraOperand, operand, pow(operand, extraOperand));
+                    push (pow(extraOperand, operand));
+                    break;
+                default:
+                    printf("Somethig goes wrong with operator...\n");
+                }
+            }
+            operandSize = 0;
+        }
+    }
+    printf("Result of expression %s = %.2f\n", string3_1, pop());
 }
 
 void labs_0x00() {
