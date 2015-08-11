@@ -631,6 +631,13 @@ void clearStack() {
     if (sp > 0) sp = 0; else printf("Nothing to clear. Stack is empty.\n");
 }
 
+int saveLine(char line[], FILE* stream) {
+    int i, written = 1;
+    for (i = 0; line[i] != '\0' && written != EOF; i++)
+        written = putc(line[i], stream);
+    return i;
+}
+
 void chapter_4() {
     printf("Chapter's 4 tasks.\n");
     // Task 1.
@@ -639,12 +646,12 @@ void chapter_4() {
     // Task 2.
     char string2[] = "-2.5E+2";
     printf ("E notation of number %s = %.2f\n", string2, aToF(string2));
-    // Task 3-5. Errors correction works only with symbols.
+    // Task 3-6. Errors correction works only with symbols. Task 6 - only read/write 1 variable.
     const int maxLength = 256;
-    const char string3_1[] = "3 D + 4 2 X / * P 0 S + 2 4 O + 0 E +", symTable[] = "0123456789+-*/%PDCXSOE";
+    const char string3_1[] = "3 D + 4 2 X / * P 0 S + 2 4 O + 0 E + 1 W R +", symTable[] = "0123456789+-*/%PDCXSOERW";
     char operandStr[maxLength];
     int operandSize = 0;
-    double operand, extraOperand;
+    double operand, extraOperand, variable = 0.0;
     for (int i = 0; string3_1[i] != '\0'; i++) {
         int k;
         for (k = 0; symTable[k] != '\0' && string3_1[i] != symTable[k]; k++);
@@ -708,6 +715,14 @@ void chapter_4() {
                     printf("Power value %2.f to %.2f = %.2f\n", extraOperand, operand, pow(operand, extraOperand));
                     push (pow(extraOperand, operand));
                     break;
+                case 'W':
+                    variable = pop();
+                    printf("Write top value %.2f from stack to variable.\n", variable);
+                    break;
+                case 'R':
+                    push(variable);
+                    printf("Read variable %.2f and push to stack.\n", variable);
+                    break;
                 default:
                     printf("Somethig goes wrong with operator...\n");
                 }
@@ -716,6 +731,15 @@ void chapter_4() {
         }
     }
     printf("Result of expression %s = %.2f\n", string3_1, pop());
+    // Tasks 7-10.
+    FILE* source = fopen("labs_0x00/files/chapter-1.txt", "r");
+    FILE* dest = fopen ("labs_0x00/files/chapter-4.txt", "wx");
+    char line[maxLength];
+    int len;
+    while ((len = getLine(line, source, maxLength)) > 0)
+        saveLine(line, dest);
+    fclose(dest);
+    fclose(source);
 }
 
 void labs_0x00() {
