@@ -596,6 +596,8 @@ double aToF(char s[]) {
 const int stackSize = 16;
 int sp = 0;
 double stack4[stackSize];
+static int bufSize = 8;
+static char buf4[bufSize];
 
 void push(double value) {
     if (sp < stackSize) stack4[sp++] = value; else printf("Push error, stack is full.\n");
@@ -636,6 +638,14 @@ int saveLine(char line[], FILE* stream) {
     for (i = 0; line[i] != '\0' && written != EOF; i++)
         written = putc(line[i], stream);
     return i;
+}
+
+int getch(void) {
+
+}
+
+void ungetch(int c) {
+
 }
 
 void chapter_4() {
@@ -740,6 +750,7 @@ void chapter_4() {
         saveLine(line, dest);
     fclose(dest);
     fclose(source);
+    // Task 11. Think about it tomorrow...
 }
 
 void labs_0x00() {
