@@ -596,7 +596,7 @@ double aToF(char s[]) {
 const int stackSize = 16;
 int sp = 0;
 double stack4[stackSize];
-static int bufSize = 8;
+static const int bufSize = 8;
 static char buf4[bufSize];
 
 void push(double value) {
@@ -640,12 +640,21 @@ int saveLine(char line[], FILE* stream) {
     return i;
 }
 
-int getch(void) {
-
+int itoaRec (unsigned char n, char s[]) {
+    if (n / 10) itoaRec((unsigned char)(n / 10), s);
+    int i = 0;
+    while (s[i] != '\0') i++;
+    s[i++] = n % 10 + '0';
+    s[i] = '\0';
+    return i;
 }
 
-void ungetch(int c) {
-
+void reverseRec(char source[], int first, int last) {
+    if (first+1 < last-1)
+        reverseRec(source, first+1, last-1);
+    char c = source[first];
+    source[first] = source[last];
+    source[last] = c;
 }
 
 void chapter_4() {
@@ -741,16 +750,30 @@ void chapter_4() {
         }
     }
     printf("Result of expression %s = %.2f\n", string3_1, pop());
-    // Tasks 7-10.
+    // Tasks 7-11. Task 11 - nothing to do, because of input method.
     FILE* source = fopen("labs_0x00/files/chapter-1.txt", "r");
-    FILE* dest = fopen ("labs_0x00/files/chapter-4.txt", "wx");
+    FILE* dest = fopen ("labs_0x00/files/chapter-4.txt", "w");
     char line[maxLength];
     int len;
     while ((len = getLine(line, source, maxLength)) > 0)
         saveLine(line, dest);
     fclose(dest);
     fclose(source);
-    // Task 11. Think about it tomorrow...
+    // Task 12-13.
+    char line12[maxLength] = "";
+    int lenStr = itoaRec(128, line12);
+    printf("Integer 128 to string : %s, length = %d\n", line12, lenStr);
+    reverseRec(line12, 0, lenStr-1);
+    printf("Reverse previous string, using function with recursion: %s\n", line12);
+    // Task 14.
+#define swap(T,X,Y) \
+    T temp; \
+    temp = X; \
+    X = Y; \
+    Y = temp;
+    char line14[] = "AB";
+    swap(char,line14[0],line14[1]);
+    printf("Swap characters in string 'AB': %s\n", line14);
 }
 
 void labs_0x00() {
