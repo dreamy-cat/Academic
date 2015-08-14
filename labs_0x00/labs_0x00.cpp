@@ -776,6 +776,70 @@ void chapter_4() {
     printf("Swap characters in string 'AB': %s\n", line14);
 }
 
+int getInt(const char s[]) {
+    int n = 0, i = 0, sign;
+    while (!(s[i] >= '0' && s[i] <= '9') && s[i] != '-' && s[i] != '+' && s[i] != '\0')
+        i++;
+    if (s[i] == '-') sign = -1; else sign = 1;
+    if (s[i] == '-' || s[i] == '+') i++;
+    for (; s[i] != '\0'; i++)
+        if (s[i] >= '0' && s[i] <= '9')
+            n = n * 10 + s[i] - '0';
+    return sign * n;
+}
+
+float getFloat(const char s[]) {
+    float f = 0;
+    int sign = 0, i = 0, power = 1;
+    while (!(s[i] >= '0' && s[i] <= '9') && s[i] != '-' && s[i] != '+')
+        i++;
+    if (s[i] == '-') sign = -1; else sign = 1;
+    if (s[i] == '-' || s[i] == '+') i++;
+    for (; s[i] != '\0' && s[i] != '.'; i++)
+        if (s[i] >= '0' && s[i] <= '9')
+            f = f * 10 + s[i] - '0';
+    if (s[i++] == '.')
+        for (; s[i] != '\0'; i++)
+            if (s[i] >= '0' && s[i] <= '9') {
+                f = f * 10 + s[i] - '0';
+                power *= 10;
+            }
+    return sign * f / power;
+}
+
+char* strCat(char s[], char t[]) {
+    int i, j;
+    for (i = 0; s[i] != '\0'; i++);
+    for (j = 0; t[j] != '\0'; i++, j++) s[i] = t[j];
+    s[i] = '\0';
+    return s;
+}
+
+int strEnd(char s[], char t[]) {
+    int i, j;
+    for (i = 0; s[i] != '\0'; i++);
+    for (j = 0; t[j] != '\0'; j++);
+    while (s[i--] == t[j--] && i > 0 && j > 0);
+    if (j == 0) return 1; else return 0;
+}
+
+void chapter_5() {
+    printf("Chapter's 5 tasks.\n");
+    // Task 1-2.
+    const char string1[] = "-64";
+    const char string2[] = "-24.32";
+    printf("Function getInt(%s) = %d\n", string1, getInt(string1));
+    printf("Function getFloat(%s) = %.2f\n", string2, getFloat(string2));
+    // Task 3.
+    char string3[] = "String_1", string4[] = "String_2";
+    printf("Strings concat %s + %s = ", string3, string4);
+    strCat(string3, string4);
+    printf("%s\n", string3);
+    // Task 4.
+    char string5[] = "String_5", string6[] = "ing_5";
+    printf("Is %s, substring of %s : %d\n", string6, string5, strEnd(string5, string6));
+}
+
 void labs_0x00() {
-    chapter_4();
+    chapter_5();
 }
