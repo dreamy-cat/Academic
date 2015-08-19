@@ -1,0 +1,4 @@
+first line 3 tabs			ok
+second line 2 tabs		ok, next line is empty
+
+fourth line ok

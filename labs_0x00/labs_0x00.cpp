@@ -807,21 +807,85 @@ float getFloat(const char s[]) {
     return sign * f / power;
 }
 
-char* strCat(char s[], char t[]) {
-    int i, j;
-    for (i = 0; s[i] != '\0'; i++);
-    for (j = 0; t[j] != '\0'; i++, j++) s[i] = t[j];
-    s[i] = '\0';
-    return s;
+void strCat(char s[], char t[]) {
+    while (*s != '\0')
+        s++;
+    while (*s++ = *t++);
 }
 
 int strEnd(char s[], char t[]) {
-    int i, j;
-    for (i = 0; s[i] != '\0'; i++);
-    for (j = 0; t[j] != '\0'; j++);
-    while (s[i--] == t[j--] && i > 0 && j > 0);
-    if (j == 0) return 1; else return 0;
+    char *sp = s, *tp = t;
+    while (*sp != '\0')
+        sp++;
+    while (*tp != '\0')
+        tp++;
+    while (*sp-- == *tp-- && sp != s && tp != t);
+    if (tp == t) return 1; else return 0;
 }
+
+char* strnCpy(char s1[], char s2[], int n) {
+    int m = n;
+    while ((*s1++ = *s2++) && --n) ;
+    return s1 - (m - n);
+}
+
+char* strnCat(char s1[], char s2[], int n) {
+    char *s3 = s1;
+    while (*s1 != '\0')
+        s1++;
+    while ((*s1++ = *s2++) && --n);
+    return s3;
+}
+
+int strnCmp(char s1[], char s2[], int n) {
+    while (*s1 == *s2 && --n && *s1 != '\0' && *s2 != '\0') {
+        s1++;
+        s2++;
+    }
+    if (*s1 == *s2) return 0;
+    if (*s1 > *s2) return 1; else return -1;
+}
+
+int getLinePtr(char line[], FILE* stream, int limit) {
+    char c, *lineStart = line;
+    while ((line - lineStart) < limit && (c = getc(stream)) != EOF && c != '\n')
+        *line++ = c;
+    if (c == '\n')
+        *line++ = c;
+    *line = '\0';
+    return line - lineStart;
+}
+
+int itoaPtr (unsigned char n, char s[]) {
+    if (n / 10) itoaPtr((unsigned char)(n / 10), s);
+    int i = 0;
+    while (*s != '\0')
+        s++;
+    *s++ = n % 10 + '0';
+    *s = '\0';
+    return i;
+}
+
+int atoiPtr(const char s[]) {
+    int n = 0, i = 0, sign;
+    while (!(*s >= '0' && *s <= '9') && *s != '-' && *s != '+' && *s != '\0')
+        s++;
+    if (*s == '-') sign = -1; else sign = 1;
+    if (*s == '-' || *s == '+') s++;
+    for (; *s != '\0'; s++)
+        if (*s >= '0' && *s <= '9')
+            n = n * 10 + *s - '0';
+    return sign * n;
+}
+
+void reversePtr(char* first, char* last) {
+    if (first+1 < last-1)
+        reversePtr(first+1, last-1);
+    char c = *first;
+    *first = *last;
+    *last = c;
+}
+
 
 void chapter_5() {
     printf("Chapter's 5 tasks.\n");
@@ -838,6 +902,35 @@ void chapter_5() {
     // Task 4.
     char string5[] = "String_5", string6[] = "ing_5";
     printf("Is %s, substring of %s : %d\n", string6, string5, strEnd(string5, string6));
+    // Task 5.
+    char string7[] = "destination", string8[] = "source", string9[] = "sourz";
+    printf("Copy 4 symbols of string '%s' to '%s' = ", string8, string7);
+    strnCpy(string7, string8, 4);
+    printf("%s\n", string7);
+    printf("Concat 3 symbols of string '%s' with '%s' = ", string7, string8);
+    strnCat(string7, string8, 3);
+    printf("%s\n", string7);
+    printf("Compare first 3 symbols of '%s' with '%s' = %d\n", string8, string7, strnCmp(string7, string8, 3));
+    printf("Compare first 5 symbols of '%s' with '%s' = %d\n", string8, string7, strnCmp(string7, string8, 5));
+    printf("Compare first 5 symbols of '%s' with '%s' = %d\n", string9, string7, strnCmp(string7, string9, 5));
+    // Task 6.
+    FILE *text = fopen("labs_0x00/files/chapter-5.txt", "r");
+    const int maxLength = 256;
+    char string10[maxLength];
+    printf("File chapter-5.txt, using getLinePtr function : \n");
+    while (getLinePtr(string10, text, maxLength))
+        printf("%s", string10);
+    fclose(text);
+    itoaPtr(128, string10);
+    printf("Integer %d to string, using function itoaPtr = %s\n", 128, string10);
+    printf("String '%s' to integer, using function atoiPtr = %d\n", string10, atoiPtr(string10));
+    printf("Reverse string '%s' using function reversePtr = ", string10);
+    char *first = string10;
+    char *last = first;
+    while (*last)
+        last++;
+    reversePtr(first, last-1);
+    printf("%s\n", string10);
 }
 
 void labs_0x00() {
