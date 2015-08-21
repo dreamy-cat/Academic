@@ -886,6 +886,89 @@ void reversePtr(char* first, char* last) {
     *last = c;
 }
 
+int strIndexPtr(char s[], char t[]) {
+    int i, j, p = -1;
+    for ( char *sp = s;  *sp != '\0'; sp++) {
+        char *tp;
+        for ( tp = t;  *tp != '\0' && *(sp+(tp-t)) != '\0' && *(sp+(tp-t)) == *tp; tp++);
+        if (*tp == '\0') p = sp - s;
+    }
+    return p;
+}
+
+// Task 5-7.
+
+static const int maxLines = 256;
+static int lines = 0;
+static const char* strings[maxLines];
+
+void readLines(const char *s[], int n) {
+    if ((lines + n)>= maxLines) return;
+    for (int i = 0; i < n; i++)
+        strings[lines++] = s[i];
+}
+
+void writeLines(int n) {
+    if (n > lines) return;
+    for ( int i = 0; i < n; i++)
+        printf("%2d: %s\n", i, strings[i]);
+}
+
+int strCmp_5(const char s1[], const char s2[], int n) {
+    while (*s1 == *s2 && --n && *s1 != '\0' && *s2 != '\0') {
+        s1++;
+        s2++;
+    }
+    if (*s1 == *s2) return 0;
+    if (*s1 > *s2) return 1; else return -1;
+}
+
+void swap_5(const char *v[], int i, int j) {
+    const char *temp = v[i];
+    v[i] = v[j];
+    v[j] = temp;
+}
+
+void qsort_5(const char *v[], int left, int right) {
+    int i, last;
+    const int maxLength = 256;
+    if (left >= right) return;
+    swap_5(v, left, (left + right)/2);
+    last = left;
+    for (i = left + 1; i <= right; i++)
+        if (strCmp_5(v[i], v[left], maxLength) < 0)
+            swap_5(v, ++last, i);
+    swap_5(v, left, last);
+    qsort_5(v, left, last-1);
+    qsort_5(v, last+1, right);
+}
+
+// Task 5-8.
+
+static char dayTab[2][13] = {
+    {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
+    {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
+};
+
+int dayOfYear(int year, int month, int day) {
+    if (!(year > 0 && year < 3000) || !(month > 0 && month <= 12) || !(day > 0 && day <= 31))
+        return -1;
+    int leap = (year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0);
+    for (int i = 1; i < month; i++)
+        day += dayTab[leap][i];
+    return day;
+}
+
+void monthDay(int year, int yearday, int *pmonth, int *pday) {
+    int leap = (year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0);
+    if (!(year > 0 &&  year < 3000) || !(yearday > 0 && yearday <= 365+leap))
+        return;
+    int i;
+    for (i = 1; yearday > dayTab[leap][i]; i++)
+        yearday -= dayTab[leap][i];
+    *pmonth = i;
+    *pday = yearday;
+}
 
 void chapter_5() {
     printf("Chapter's 5 tasks.\n");
@@ -931,6 +1014,21 @@ void chapter_5() {
         last++;
     reversePtr(first, last-1);
     printf("%s\n", string10);
+    char string11[] = "rz";
+    printf("Index of substring '%s' in '%s' = %d\n", string11, string9, strIndexPtr(string9, string11));
+    // Task 7.
+    const char *strings_7[] = { "A_string", "C_string", "B_string" };
+    readLines(strings_7, 3);
+    printf("Lines in array before unsort : \n");
+    writeLines(3);
+    qsort_5(strings, 0, 2);
+    printf("And after sort : \n");
+    writeLines(3);
+    // Task 8.
+    printf("Day of the '01 aug 2015' = %d\n", dayOfYear(2015, 8, 1));
+    int mon = 0, day = 0;
+    monthDay(2015, 213, &mon, &day);
+    printf("Day and month of '01 aug 2015' = %d %d\n", day, mon);
 }
 
 void labs_0x00() {
