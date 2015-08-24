@@ -563,7 +563,7 @@ int strIndex(char s[], char t[]) {
     return p;
 }
 
-double aToF(char s[]) {
+double aToF(const char s[]) {
     double val, power;
     int i, sign;
     for (i = 0; !(s[i] >= '0' && s[i] <= '9') && s[i] != '-' && s[i] != '+'; i++);
@@ -743,7 +743,7 @@ void chapter_4() {
                     printf("Read variable %.2f and push to stack.\n", variable);
                     break;
                 default:
-                    printf("Somethig goes wrong with operator...\n");
+                    printf("Something goes wrong with operator...\n");
                 }
             }
             operandSize = 0;
@@ -950,6 +950,8 @@ static char dayTab[2][13] = {
     {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
 };
 
+static char *tabPtr = dayTab[0];
+
 int dayOfYear(int year, int month, int day) {
     if (!(year > 0 && year < 3000) || !(month > 0 && month <= 12) || !(day > 0 && day <= 31))
         return -1;
@@ -968,6 +970,126 @@ void monthDay(int year, int yearday, int *pmonth, int *pday) {
         yearday -= dayTab[leap][i];
     *pmonth = i;
     *pday = yearday;
+}
+
+int dayOfYear_2(int year, int month, int day) {
+    if (!(year > 0 && year < 3000) || !(month > 0 && month <= 12) || !(day > 0 && day <= 31))
+        return -1;
+    char *ptr = tabPtr;
+    if ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0))
+        ptr += sizeof(dayTab[0]);
+    while (month--)
+        day += *ptr++;
+    return day;
+}
+
+void monthDay_2(int year, int yearday, int *pmonth, int *pday) {
+    int offset = 1;
+    if ((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0))
+        offset += sizeof(dayTab[0]);
+    if (!(year > 0 &&  year < 3000) || !(yearday > 0 && yearday <= 365 + (offset != 0)))
+        return;
+    int i;
+    for ( i = 1; yearday > *(tabPtr + offset); i++, offset += sizeof(char))
+        yearday -= *(tabPtr + offset);
+    *pmonth = i;
+    *pday = yearday;
+}
+
+// Task 10.
+
+double expr(int arg_c, const char *arg_v[]) {
+    const char symTable[] = "0123456789+-*/";
+    const int maxLength = 256;
+    double operand;
+    while (--arg_c && *++arg_v != 0) {
+        int i, j;
+        bool isCorrectArg = true;
+        for (i = 0; (*arg_v)[i] != '\0' && isCorrectArg; i++) {
+            for (j = 0; (*arg_v)[i] != symTable[j] && symTable[j] != '\0'; j++);
+            if (symTable[j] == '\0')
+                isCorrectArg = false;
+        }
+        if (isCorrectArg && i > 0) {
+            if ((*arg_v)[i-1] >= '0' && (*arg_v)[i-1] <= '9')
+                push(aToF(*arg_v));
+            else
+                switch ((*arg_v)[0]) {
+                case '+':
+                    push(pop() + pop());
+                    break;
+                case '-':
+                    operand = pop();
+                    push(pop() - operand);
+                    break;
+                case '*':
+                    push(pop() * pop());
+                    break;
+                case '/':
+                    operand = pop();
+                    if (operand != 0) push(pop() / operand); else {
+                        printf("Division by zero.\n");
+                        push(0.0);
+                    }
+                    break;
+                default:
+                    printf("Something goes wrong with operator...\n");
+                }
+        }
+    }
+    return pop();
+}
+
+void enterDeleteTabs(int arg_c, const char *arg_v[]) {
+    // "+N - insert tab, -N - delete tab, if exist.
+    const char *defaultTabs[] = { "cmd", "-0", "+8", "+12" };
+    if (arg_c < 2) {
+        arg_v = defaultTabs;
+        arg_c = 4;
+    }
+    FILE *text = fopen("labs_0x00/files/chapter-5.txt", "r");
+    const int maxLength = 256;
+    char string[maxLength];
+    int stringSize;
+    while ((stringSize = getLine(string, text, maxLength)) > 0) {
+        for (int i = 1; i < arg_c; i++) {
+            int column = atoiPtr(arg_v[i]);
+            // printf("c = %d\n", column);
+            if (*(arg_v[i]) == '+') {
+                for (int j = stringSize; j > column; j--)
+                    string[j] = string[j-1];
+                string[column] = '\t';
+                string[stringSize + 1] = '\0';
+            } else {
+                column *= -1;
+                if (string[column] == '\t')
+                    for (int j = column; j < stringSize; j++)
+                        string[j] = string[j+1];
+            }
+        }
+        printf("%s", string);
+    }
+    fclose(text);
+}
+
+void tail(int arg_c, const char *arg_v[]) {
+    const char *defaultN[] = { "cmd", "1" };
+    if (arg_c < 2) {
+        arg_v = defaultN;
+        arg_c = 2;
+    }
+    int lines = 0;
+    const int maxLength = 256;
+    char string[maxLength];
+    FILE *text = fopen("labs_0x00/files/chapter-5.txt", "r");
+    while (getLine(string, text, maxLength))
+        lines++;
+    fseek(text, 0, 0);
+    int linesToDisplay = atoiPtr(*++arg_v);
+    while (getLine(string, text, maxLength))
+        if (lines-- <= linesToDisplay)
+            printf("%s", string);
+    fclose(text);
 }
 
 void chapter_5() {
@@ -1029,6 +1151,21 @@ void chapter_5() {
     int mon = 0, day = 0;
     monthDay(2015, 213, &mon, &day);
     printf("Day and month of '01 aug 2015' = %d %d\n", day, mon);
+    // Task 9.
+    printf("Day of the '01 aug 2015' using alternative function = %d\n", dayOfYear_2(2015, 8, 1));
+    monthDay_2(2015, 213, &mon, &day);
+    printf("Day and month of '01 aug 2015' using alternative function = %d %d\n", day, mon);
+    // Task 10.
+    const char *args[] = { "expr", "21", "3", "4", "+", "/" };
+    // printf("args = %d\n", sizeof(args)/sizeof(char*));
+    printf("Expression '2*(3+4)' = %.2f\n", expr(sizeof(args)/sizeof(char*), args));
+    // Task 11-12. Hard to find in chapter 1. Enter tabs in position and delete them.
+    printf("File chapter-5.txt(original see above) with tabs deleted at 0 column and add tabs at 8, 12 columns: \n");
+    enterDeleteTabs(1, args);
+    // Task 13.
+    printf("\nPrint 3 last lines from chapter-5.txt file : \n");
+    const char *args_2[] = { "cmd", "3" };
+    tail(2, args_2);
 }
 
 void labs_0x00() {
