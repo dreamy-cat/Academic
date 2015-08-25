@@ -1092,6 +1092,30 @@ void tail(int arg_c, const char *arg_v[]) {
     fclose(text);
 }
 
+// Task 5-14-17.
+
+void swapPtr(char *v[], int i, int j) {
+    char *temp = v[i];
+    v[i] = v[j];
+    v[j] = temp;
+}
+
+int numCmp_5(const char *s1, const char *s2) {
+    double v1 = aToF(s1), v2 = aToF(s2);
+    return -1;
+}
+
+void qsortPtr(char *v[], int left, int right, int (*comp)(char *, char*)) {
+    int i, last;
+    last = left;
+    for (i = left + 1; i <= right; i++)
+        if ((*comp)(v[i], v[left]) < 0)
+            swapPtr(v, ++last, i);
+    swapPtr(v, left, last);
+    qsortPtr(v, left, last-1, comp);
+    qsortPtr(v, last+1, right, comp);
+}
+
 void chapter_5() {
     printf("Chapter's 5 tasks.\n");
     // Task 1-2.
@@ -1166,6 +1190,10 @@ void chapter_5() {
     printf("\nPrint 3 last lines from chapter-5.txt file : \n");
     const char *args_2[] = { "cmd", "3" };
     tail(2, args_2);
+    // Task 14-17.
+    int argc_3 = 4;
+    const char *arg_v[4] = { "qsort", "-n", "A", "B" };
+    // qsortPtr((char**)arg_v, 1, 2, (int (*)(char*, char*))(numCmp_5));
 }
 
 void labs_0x00() {
