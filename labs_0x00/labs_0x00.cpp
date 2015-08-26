@@ -914,7 +914,7 @@ void writeLines(int n) {
         printf("%2d: %s\n", i, strings[i]);
 }
 
-int strCmp_5(const char s1[], const char s2[], int n) {
+int strCmp_5(const char s1[], const char s2[], int caseInsen, int n) {
     while (*s1 == *s2 && --n && *s1 != '\0' && *s2 != '\0') {
         s1++;
         s2++;
@@ -936,7 +936,7 @@ void qsort_5(const char *v[], int left, int right) {
     swap_5(v, left, (left + right)/2);
     last = left;
     for (i = left + 1; i <= right; i++)
-        if (strCmp_5(v[i], v[left], maxLength) < 0)
+        if (strCmp_5(v[i], v[left], 0, maxLength) < 0)
             swap_5(v, ++last, i);
     swap_5(v, left, last);
     qsort_5(v, left, last-1);
@@ -1094,26 +1094,34 @@ void tail(int arg_c, const char *arg_v[]) {
 
 // Task 5-14-17.
 
-void swapPtr(char *v[], int i, int j) {
-    char *temp = v[i];
+void swapPtr(void *v[], int i, int j) {
+    void *temp = v[i];
     v[i] = v[j];
     v[j] = temp;
 }
 
-int numCmp_5(const char *s1, const char *s2) {
+int numCmp_5(char *s1, char *s2) {
     double v1 = aToF(s1), v2 = aToF(s2);
-    return -1;
+    if (v1 < v2)
+        return -1;
+    else if (v1 > v2)
+        return 1;
+    else
+        return 0;
 }
 
-void qsortPtr(char *v[], int left, int right, int (*comp)(char *, char*)) {
+void qsortPtr(void *v[], int left, int right, int order, int caseIn, int (*comp)(void *, void*, int)) {
     int i, last;
+    if (left >= right)
+        return;
     last = left;
+    swapPtr(v, left, (left + right)/2);
     for (i = left + 1; i <= right; i++)
-        if ((*comp)(v[i], v[left]) < 0)
+        if (((*comp)(v[i], v[left], caseIn) < 0 && order == 1 ) || ((*comp)(v[i], v[left], caseIn) > 0 && order == -1))
             swapPtr(v, ++last, i);
     swapPtr(v, left, last);
-    qsortPtr(v, left, last-1, comp);
-    qsortPtr(v, last+1, right, comp);
+    qsortPtr(v, left, last-1, order, caseIn, comp);
+    qsortPtr(v, last+1, right, order, caseIn, comp);
 }
 
 void chapter_5() {
@@ -1192,8 +1200,22 @@ void chapter_5() {
     tail(2, args_2);
     // Task 14-17.
     int argc_3 = 4;
-    const char *arg_v[4] = { "qsort", "-n", "A", "B" };
-    // qsortPtr((char**)arg_v, 1, 2, (int (*)(char*, char*))(numCmp_5));
+    const char *arg_v[] = { "qsort", "-r", "1", "3", "2", "a", "c", "b" };
+    int order = 1, caseInsensitive = 0;
+    int (*funcPtr)(void*, void*, int) = (int (*)(void*, void*, int))(strCmp_5);
+    for (int i = 0; i < sizeof(arg_v)/sizeof(char*)-1; i++) {
+        if (strCmp_5(arg_v[i], "-r", caseInsensitive, 2) == 0)
+            order = -1;
+        if (strCmp_5(arg_v[i], "-n", caseInsensitive, 2) == 0)
+            funcPtr = (int (*)(void*, void*, int))(numCmp_5);
+        if (strCmp_5(arg_v[i], "-f", caseInsensitive, 2) == 0)
+            caseInsensitive = 1;
+    }
+    qsortPtr((void**)arg_v, 5, 7, order, caseInsensitive, funcPtr);
+    printf("Result of qsortPtr, strings with keys '-n' '-r' : ");
+    for (int i = 0; i < sizeof(arg_v)/sizeof(char*); i++)
+        printf("%s ", *(arg_v+i));
+    printf("\n");
 }
 
 void labs_0x00() {
