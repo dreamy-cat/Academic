@@ -1136,34 +1136,56 @@ void qsortPtr(void *v[], int left, int right, int order, int caseSens, int dir, 
 
 // Tasks 5-18-20.
 
-void dirDcl(const char source[], char destination[], int sp);
+void dirDcl(const char source[], char destination[], int *sp);
 
-void dcl(const char source[], char destination[], int sp) {
+void dcl(const char source[], char destination[], int *sp) {
     int ns;
-    for (ns = 0; source[sp] == '*' && source[sp] != '\0'; sp++)
+    for (ns = 0; source[*sp] == '*' && source[*sp] != '\0'; sp++)
         ns++;
-    printf("R\n");
     dirDcl(source, destination, sp);
     while (ns--)
         strCat(destination, " pointer to");
 }
 
-void dirDcl(const char source[], char destination[], int sp) {
-    for ( ; source[sp] != '\0'; sp++) {
-        if (source[sp] == '(') {
-            printf("!\n");
-            dcl(source, destination, sp);
-            if (source[sp] != ')')
-                printf("Error: missing ')'.\n");
-        } else {
-            // Parameter...
-            int j = 0;
-            char name[256];
-            while (source[sp] != '[' || source[sp] != '(')
-                name[j++] = source[sp++];
-            printf("Name = %s\n", name);
+void dirDcl(const char source[], char destination[], int *sp) {
+
+    int type;
+    const int maxLength = 256;
+
+    if (source[*sp] == '(') {
+        printf("'(' found.\n");
+        dcl(source, destination, sp);
+        if (source[*sp] != ')')
+            printf("Error: missing ')'.\n");
+    } else {
+        // Name - only letters, case insensitive.
+        char name[maxLength];
+        int j;
+        for ( j = 0; toUpper(source[*sp]) >= 'A' && toUpper(source[*sp]) <= 'Z'; (*sp)++)
+            name[j++] = source[*sp];
+        name[j] = '\0';
+        if (j == 0) {
+            printf("Error: expecting name or (dcl).\n");
+            return;
         }
     }
+    for ( ; source[*sp] == '(' && source[*sp+1] == ')' ||
+          source[*sp] == '[' && source[*sp+1] == ']'; ) ;
+}
+
+void declarationToText(const char source[], char destination[]) {
+    // Type
+    const int maxLength = 256;
+    char type[maxLength];
+    int i, j = 0;
+    for (i = 0; source[i] != ' ' && source[i] != '\0'; i++)
+        type[j++] = source[i];
+    type[j] = '\0';
+    if (source[i] != ' ')
+        return;
+    printf("Type = %s\n", type);
+    int sourcePosition = 0;
+    dcl(source, destination, &sourcePosition);
 }
 
 void chapter_5() {
@@ -1269,7 +1291,7 @@ void chapter_5() {
     // Tasks 18-20.
     const char declaration[] = "int *daytab[13];";
     char declarationText[maxLength];
-    // dcl(declaration, declarationText, 0);
+//  declarationToText(declaration, declarationText);
 }
 
 void labs_0x00() {
