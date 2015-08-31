@@ -829,7 +829,7 @@ char* strnCpy(char s1[], char s2[], int n) {
     return s1 - (m - n);
 }
 
-char* strnCat(char s1[], char s2[], int n) {
+char* strnCat(char s1[], const char s2[], int n) {
     char *s3 = s1;
     while (*s1 != '\0')
         s1++;
@@ -837,7 +837,7 @@ char* strnCat(char s1[], char s2[], int n) {
     return s3;
 }
 
-int strnCmp(char s1[], char s2[], int n) {
+int strnCmp(char s1[], const char s2[], int n) {
     while (*s1 == *s2 && --n && *s1 != '\0' && *s2 != '\0') {
         s1++;
         s2++;
@@ -1136,30 +1136,30 @@ void qsortPtr(void *v[], int left, int right, int order, int caseSens, int dir, 
 
 // Tasks 5-18-20.
 
-void dirDcl(const char source[], char destination[], int *sp);
+void dirDcl(const char source[], char name[], char destination[], int *sp);
 
-void dcl(const char source[], char destination[], int *sp) {
+void dcl(const char source[], char name[], char destination[], int *sp) {
     int ns;
-    for (ns = 0; source[*sp] == '*' && source[*sp] != '\0'; sp++)
+    for (ns = 0; source[*sp] == '*' && source[*sp] != '\0'; (*sp)++)
         ns++;
-    dirDcl(source, destination, sp);
+    dirDcl(source, name, destination, sp);
     while (ns--)
         strCat(destination, " pointer to");
 }
 
-void dirDcl(const char source[], char destination[], int *sp) {
-
+void dirDcl(const char source[], char name[], char destination[], int *sp) {
     int type;
     const int maxLength = 256;
-
     if (source[*sp] == '(') {
-        printf("'(' found.\n");
-        dcl(source, destination, sp);
-        if (source[*sp] != ')')
+        (*sp)++;
+        dcl(source, name, destination, sp);
+        if (source[*sp] != ')') {
             printf("Error: missing ')'.\n");
+            return;
+        }
+        (*sp)++;
     } else {
         // Name - only letters, case insensitive.
-        char name[maxLength];
         int j;
         for ( j = 0; toUpper(source[*sp]) >= 'A' && toUpper(source[*sp]) <= 'Z'; (*sp)++)
             name[j++] = source[*sp];
@@ -1169,23 +1169,40 @@ void dirDcl(const char source[], char destination[], int *sp) {
             return;
         }
     }
-    for ( ; source[*sp] == '(' && source[*sp+1] == ')' ||
-          source[*sp] == '[' && source[*sp+1] == ']'; ) ;
+    if (source[*sp] == '(') {
+        strCat(destination, " function");
+        while (source[*sp] != ')')
+            strnCat(destination, source+(*sp)++, 1);
+        strCat(destination, ") returning");
+        (*sp)++;
+    }
+    if (source[*sp] == '[') {
+        strCat(destination, " array");
+        while (source[*sp] != ']')
+            strnCat(destination, source+(*sp)++, 1);
+        strCat(destination, "] of");
+        (*sp)++;
+    }
 }
 
-void declarationToText(const char source[], char destination[]) {
-    // Type
+void declarationToText(const char source[]) {
     const int maxLength = 256;
-    char type[maxLength];
+    char type[maxLength] = "", name[maxLength] = "", output[maxLength] = "";
     int i, j = 0;
     for (i = 0; source[i] != ' ' && source[i] != '\0'; i++)
         type[j++] = source[i];
     type[j] = '\0';
+    if (strnCmp(type, "const", 5) == 0) {
+        type[j++] = ' ';
+        for ( i++ ; source[i] != ' ' && source[i] != '\0'; i++)
+            type[j++] = source[i];
+    }
     if (source[i] != ' ')
         return;
-    printf("Type = %s\n", type);
-    int sourcePosition = 0;
-    dcl(source, destination, &sourcePosition);
+    while (source[i] == ' ')
+        i++;
+    dcl(source, name, output, &i);
+    printf("Declaration '%s' : %s - %s %s\n", source, name, output, type);
 }
 
 void chapter_5() {
@@ -1288,10 +1305,11 @@ void chapter_5() {
     for (int i = 4; i < 7; i++)
         printf("%s ", *(arg_v+i));
     printf("\n");
-    // Tasks 18-20.
-    const char declaration[] = "int *daytab[13];";
-    char declarationText[maxLength];
-//  declarationToText(declaration, declarationText);
+    // Tasks 18-20. Except undeclaration function, becuase of input method.
+    const char *decls[] = { "const char **argv;", "const int (*daytab)[13];", "int *daytab[13];", "void *comp(int, int);",
+                            "void (*comp)(char);", "char (*(*x())[3])();", "char (*(*x[3])())[5];" };
+    for (int i = 0; i < sizeof(decls)/sizeof(char*); i++)
+        declarationToText(decls[i]);
 }
 
 void labs_0x00() {
