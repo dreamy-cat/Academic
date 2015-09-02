@@ -837,7 +837,7 @@ char* strnCat(char s1[], const char s2[], int n) {
     return s3;
 }
 
-int strnCmp(char s1[], const char s2[], int n) {
+int strnCmp(const char s1[], const char s2[], int n) {
     while (*s1 == *s2 && --n && *s1 != '\0' && *s2 != '\0') {
         s1++;
         s2++;
@@ -1312,6 +1312,130 @@ void chapter_5() {
         declarationToText(decls[i]);
 }
 
+// Chapter 6.
+
+struct Key {
+    const char *word;
+    int count;
+};
+
+struct Def {
+    const char *word;
+    int length;
+};
+
+static const int maxWordLen = 16;
+static const int maxDefs = 16;
+
+Key keys[] = { "for", 0, "if", 0, "while", 0 };
+Def defTab[] = { "#define", 7, "#ifdef", 6, "#ifndef", 7, "#endif", 6 };
+char defs[maxDefs][maxWordLen];
+static int defsCount = 0;
+
+int binSearch(char *word, Key tab[], int n) {
+    int cond, low, high, mid;
+    low = 0;
+    high = n - 1;
+    while (low <= high) {
+        mid = (low + high)/2;
+        if ((cond = strnCmp(word, tab[mid].word, maxWordLen)) < 0)
+            high = mid - 1;
+        else if (cond > 0)
+            low = mid + 1;
+        else
+            return mid;
+    }
+    return -1;
+}
+
+int getWord(const char *text, char *word, int index) {
+    if (text[index] == '\0')
+        return -1;
+    bool isWord = true;
+    int i, j, next;
+    for (j = 0, i = index;  isWord && text[i] != '\0'; ) {
+        if (text[i+1] != '\0') {
+            if (text[i] == '/' && text[i+1] == '*') {
+                while (!(text[i] == '*' && text[i+1] == '/') && text[i+1] != '\0')
+                    i++;
+            }
+            if (text[i] == '/' && text[i+1] == '/') {
+                while (text[i] != '\n' && text[i] != '\0')
+                    i++;
+            }
+        }
+        if (text[i] == '"') {
+            while (text[++i] != '"');
+            i++;
+        }
+        if (strnCmp(text+i, defTab[0].word, defTab[0].length) == 0) {
+            i += defTab[0].length + 1;
+            next = getWord(text, defs[defsCount++], i);
+            if (next == i)
+                printf("Error in #define.\n");
+            i = next;
+        }
+        int defType = 0;
+        if (strnCmp(text+i, defTab[1].word, defTab[1].length) == 0)
+            defType = 1;
+        if (strnCmp(text+i, defTab[2].word, defTab[2].length) == 0)
+            defType = 2;
+        if (defType) {
+            char parameter[maxWordLen] = "";
+            i += defTab[defType].length + 1;
+            int next = getWord(text, parameter, i);
+            if (next == i)
+                printf("Error in #ifdef or #ifndef expression.\n");
+            i = next;
+            bool isExist = false;
+            for (int k = 0; k < defsCount && !isExist; k++)
+                if (strnCmp(defs[k], parameter, maxWordLen) == 0)
+                    isExist = true;
+            if (defType == 1 && !isExist || defType == 2 && isExist)
+                while (text[i] != '\0' && strnCmp(text + i, defTab[3].word, defTab[3].length) != 0)
+                    i++;
+        }
+        if (strnCmp(text+i, defTab[3].word, defTab[3].length) == 0)
+            i += defTab[3].length;
+        if (toUpper(text[i]) >= 'A' && toUpper(text[i]) <= 'Z' ||
+                i > index && text[i] >= '0' && text[i] <= '9' ||
+                text[i] == '_') {
+            word[j++] = text[i++];
+        } else
+            isWord = false;
+    }
+    word[j] = '\0';
+    return i;
+}
+
+void chapter_6() {
+    printf("Chapter's 6 tasks.\n");
+    // Task 1. For #define works only #ifdef and #ifndef. Defines must be upper their using.
+    const int maxLength = 1024;
+    char string_1[maxLength], string_2[maxLength];
+    FILE *file_1 = fopen("labs_0x00/files/chapter-6.txt", "r");
+    (string_1, 1024);
+    int lengthLine = 0, stringSize = 0;
+    while ((lengthLine = getLine(string_1+stringSize, file_1, maxLength)) != 0)
+        stringSize += lengthLine;
+    int i = 0, next;
+    printf("All words[index] in file 'chapter-6.txt' : \n");
+    while ((next = getWord(string_1, string_2, i)) != -1 ) {
+        if (string_2[0] != '\0') {
+            printf("%s[%d] ", string_2, i);
+            int pos;
+            if ((pos = binSearch(string_2, keys, sizeof(keys)/sizeof(Key))) >= 0)
+                keys[pos].count++;
+        }
+        if (next == i) next++;
+        i = next;
+    }
+    printf("\nWords and counters: \n");
+    for (int i = 0; i < sizeof(keys)/sizeof(Key); i++)
+        printf("%s : %d\n", keys[i].word, keys[i].count);
+    fclose(file_1);
+}
+
 void labs_0x00() {
-    chapter_5();
+    chapter_6();
 }

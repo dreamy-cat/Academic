@@ -1,0 +1,30 @@
+#define DEF_1
+#define DEF_2
+
+#ifdef DEF_1
+
+for (int i = 0; i < 5; i++) j = i; // One line comment
+
+#endif
+
+if (i > 0) i++;
+
+/*
+	Multiline comment,
+	and empty line after.
+	if and while - keywords 
+*/
+
+#ifdef DEF_2
+
+while (a > 0) 
+	i++;
+
+#ifdef DEF_3
+	
+for ( ; ; );
+
+#endif
+#endif
+
+printf("String with for and /* comment word while */ if");
