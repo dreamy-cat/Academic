@@ -1324,7 +1324,7 @@ struct Def {
     int length;
 };
 
-static const int maxWordLen = 16;
+static const int maxWordLen = 32;
 static const int maxDefs = 16;
 
 Key keys[] = { "for", 0, "if", 0, "while", 0 };
@@ -1408,6 +1408,73 @@ int getWord(const char *text, char *word, int index) {
     return i;
 }
 
+// Task 6.2-6-4.
+
+int strLen(char s[]) {
+    int i = 0;
+    while (s[i] != '\0')
+        i++;
+    return i;
+}
+
+struct tNode {
+    char *word;
+    int count;
+    int *nLines;
+    tNode *left;
+    tNode *right;
+};
+
+tNode *addNode(tNode *ptr, char *word, int maxLen, int nLine) {
+    int cmp;
+    if (ptr == NULL) {
+        ptr = (tNode*)malloc(sizeof(tNode));
+        ptr->word = (char*)malloc(strLen(word));
+        ptr->nLines = (int*)malloc(sizeof(int));
+        *ptr->nLines = nLine;
+        strnCpy(ptr->word, word, maxWordLen);
+        ptr->count = 1;
+        ptr->left = ptr->right = 0;
+
+    } else if ((cmp = strnCmp(word, ptr->word, maxLen)) == 0) {
+        int *lines = (int*)malloc(sizeof(int)*(ptr->count+1));
+        for (int i = 0; i < ptr->count; i++)
+            lines[i] = ptr->nLines[i];
+        lines[ptr->count] = nLine;
+        free(ptr->nLines);
+        ptr->nLines = lines;
+        ptr->count++;
+    }
+    else if (cmp < 0)
+        ptr->left = addNode(ptr->left, word, maxLen, nLine);
+    else if (cmp > 0)
+        ptr->right = addNode(ptr->right, word, maxLen, nLine);
+    return ptr;
+}
+
+void printTree(tNode *ptr, bool printLines) {
+    if (ptr != NULL) {
+        printTree(ptr->left, printLines);
+        printf("%4d %s", ptr->count, ptr->word);
+        if (printLines) {
+            printf(" [ ");
+            for (int i = 0; i < ptr->count; i++)
+                printf("%d ", ptr->nLines[i]);
+            printf ("]\n");
+        } else
+            printf("\n");
+        printTree(ptr->right, printLines);
+    }
+}
+
+bool isType(char *word) {
+    const char *types[] = { "char", "int", "float", "double" };
+    for (int i = 0; i < sizeof(types)/sizeof(char*); i++)
+        if (strnCmp(word, types[i], maxWordLen) == 0)
+            return true;
+    return false;
+}
+
 void chapter_6() {
     printf("Chapter's 6 tasks.\n");
     // Task 1. For #define works only #ifdef and #ifndef. Defines must be upper their using.
@@ -1434,6 +1501,64 @@ void chapter_6() {
     for (int i = 0; i < sizeof(keys)/sizeof(Key); i++)
         printf("%s : %d\n", keys[i].word, keys[i].count);
     fclose(file_1);
+    // Tasks 2. Only standard types.
+    FILE *sourceFile = fopen("labs_0x00/labs_0x00.cpp", "r");
+    char source[maxLength * 128];
+    int sourceLength = 0;
+    while ((source[sourceLength++] = getc(sourceFile)) != EOF);
+    source[sourceLength] = '\0';
+    tNode* root = NULL;
+    tNode* references = NULL;
+    int wordLen = 5, nLine = 1, refLen = 10;
+    char word[maxWordLen];
+    for (int i = 0; i < sourceLength; i++) {
+        if (source[i] == '/' && source[i+1] == '/') {
+            while (i < sourceLength && source[i] != '\n')
+                i++;
+        }
+        if (source[i] == '/' && source[i+1] == '*')
+            while (i < sourceLength && (source[i] != '*' || source[i+1] != '/')) {
+                if (source[i] == '\n')
+                    nLine++;
+                i++;
+            }
+        if (source[i] == '"' && !(i > 0 && source[i-1] == '\'')) {
+            i++;
+            while (source[i++] != '"');
+        }
+        if (toUpper(source[i]) >= 'A' && toUpper(source[i]) <= 'Z') {
+            int j;
+            for (j = 0; toUpper(source[i]) >= 'A' && toUpper(source[i]) <= 'Z' ||
+                 source[i] >= '0' && source[i] <= '9' || source[i] == '_'; j++, i++) {
+                word[j] = source[i];
+            }
+            word[j] = '\0';
+            if (j >= refLen) {
+                references = addNode(references, word, j, nLine);
+            }
+            if (isType(word) && source[i] == ' ') {
+                i++;                            // Only with one space after variable declaration.
+                int j;
+                for (j = 0; toUpper(source[i]) >= 'A' && toUpper(source[i]) <= 'Z' || (j == 0 && source[i] == '*') ||
+                     (j > 0 && (source[i] >= '0' && source[i] <= '9' || source[i] == '_')); j++, i++) {
+                    word[j] = source[i];
+                }
+                word[j] = '\0';
+                if (j > 0 && source[i] != '(') {
+                    root = addNode(root, word, wordLen, nLine);
+                }
+            }
+        }
+        if (source[i] == '\n')
+            nLine++;
+    }
+    printf("Full binary tree from 'root' compare up to 'length' = %d. Groups of variables and their counters:\n", wordLen);
+    printTree(root, false);
+    printf("Lines found = %d, and source string length = %d\n", nLine, sourceLength);
+    printf("Words references with length more than %d, and in ascending: \n", refLen);
+    printTree(references, true);
+    printf("References's counters, in ascending: \n");
+    fclose(sourceFile);
 }
 
 void labs_0x00() {
