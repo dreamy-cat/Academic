@@ -1467,6 +1467,53 @@ void printTree(tNode *ptr, bool printLines) {
     }
 }
 
+void swapTNode(tNode *v[], int i, int j) {
+    tNode *temp = v[i];
+    v[i] = v[j];
+    v[j] = temp;
+}
+
+void sortNodes(tNode *v[], int left, int right) {
+    int i, last;
+    if (left >= right)
+        return;
+    swapTNode(v, left, (left+right)/2);
+    last = left;
+    for (i = left+1; i <= right; i++)
+        if (v[left]->count < v[i]->count)
+            swapTNode(v, ++last, i);
+    swapTNode(v, left, last);
+    sortNodes(v, left, last-1);
+    sortNodes(v, last+1, right);
+}
+
+void printTreeDescending(tNode *ptr) {
+    static int maxCounter = 0;
+    int nextCounter = 0;
+    if (ptr == NULL)
+        return;
+    tNode *nodes[1024];
+    int sp = 0, bp = 0;
+    nodes[sp++] = ptr;
+    while (bp < sp) {
+        if (ptr->count > maxCounter)
+            maxCounter = ptr->count;
+        if (ptr->left != NULL)
+            nodes[sp++] = ptr->left;
+        if (ptr->right != NULL)
+            nodes[sp++] = ptr->right;
+        ptr = nodes[++bp];
+    }
+    if (maxCounter == 0) {
+        printf("Error, no counters founded.\n");
+        return;
+    }
+    sortNodes(nodes, 0, sp-1);
+    printf("Word's counters in descending order: \n");
+    for (int i = 0; i < sp; i++)
+        printf("%4d %s\n", nodes[i]->count, nodes[i]->word);
+}
+
 bool isType(char *word) {
     const char *types[] = { "char", "int", "float", "double" };
     for (int i = 0; i < sizeof(types)/sizeof(char*); i++)
@@ -1509,7 +1556,7 @@ void chapter_6() {
     source[sourceLength] = '\0';
     tNode* root = NULL;
     tNode* references = NULL;
-    int wordLen = 5, nLine = 1, refLen = 10;
+    int wordLen = 5, nLine = 1, refLen = 12;
     char word[maxWordLen];
     for (int i = 0; i < sourceLength; i++) {
         if (source[i] == '/' && source[i+1] == '/') {
@@ -1555,9 +1602,9 @@ void chapter_6() {
     printf("Full binary tree from 'root' compare up to 'length' = %d. Groups of variables and their counters:\n", wordLen);
     printTree(root, false);
     printf("Lines found = %d, and source string length = %d\n", nLine, sourceLength);
-    printf("Words references with length more than %d, and in ascending: \n", refLen);
+    printf("Words references with length more than %d: \n", refLen);
     printTree(references, true);
-    printf("References's counters, in ascending: \n");
+    printTreeDescending(references);
     fclose(sourceFile);
 }
 
