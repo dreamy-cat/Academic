@@ -1522,6 +1522,68 @@ bool isType(char *word) {
     return false;
 }
 
+// Tasks 6.5-6.6
+
+struct nList {
+    nList *next;
+    char *name;
+    char *defn;
+};
+
+static const unsigned int hashSize = 256;
+
+nList *hashTab[hashSize];
+
+unsigned char hash(char *s) {
+    unsigned int hashVal;
+    for (hashVal = 0; *s != '\0'; s++)
+        hashVal = *s + 31 * hashVal;
+    return hashVal % hashSize;
+}
+
+nList *lookup(char *s) {
+    nList *np;
+    for (np = hashTab[hash(s)]; np != NULL; np = np->next)
+        if (strnCmp(s, np->name, maxWordLen) == 0)
+            return np;
+    return NULL;
+}
+
+nList *install(char *name, char *definition) {
+    nList *np;
+    unsigned char hashVal;
+    if ((np = lookup(name)) == NULL) {
+        np = (nList*)malloc(sizeof(*np));
+        if (np == NULL)
+            return NULL;
+        np->name = (char*)malloc(sizeof(char)*strLen(name));
+        strnCpy(np->name, name, strLen(name));
+        hashVal = hash(name);
+        np->next = hashTab[hashVal];
+        hashTab[hashVal] = np;
+    } else {
+        free((void*)np->defn);
+    }
+    np->defn = (char*)malloc(sizeof(char)*strLen(definition));
+    if (np->defn == NULL)
+        return NULL;
+    strnCpy(np->defn, definition, strLen(definition));
+    return np;
+}
+
+nList *undef(char *s) {
+    nList *np = lookup(s);
+    if (np == NULL)
+        return NULL;
+    free((void*)np->defn);
+    hashTab[hash(np->name)] = NULL;
+    free((void*)np->name);
+    np->next = NULL;
+    nList *r = np;
+    free((void*)np);
+    return r;
+}
+
 void chapter_6() {
     printf("Chapter's 6 tasks.\n");
     // Task 1. For #define works only #ifdef and #ifndef. Defines must be upper their using.
@@ -1605,6 +1667,20 @@ void chapter_6() {
     printf("Words references with length more than %d: \n", refLen);
     printTree(references, true);
     printTreeDescending(references);
+    // Task 5.
+    const char *strings_5[] = { "name_1", "def_1", "name_2", "def_2" };
+    install((char*)strings_5[0], (char*)strings_5[1]);
+    install((char*)strings_5[2], (char*)strings_5[3]);
+    printf("Adding to hash table 'name_1', 'name_2' and definitions 'def_1', 'def_2'.\n");
+    printf("Result of lookup function for 'name_1', 'name_2': %s %s\n", lookup((char*)strings_5[0])->defn, lookup((char*)strings_5[2])->defn);
+    undef((char*)strings_5[2]);
+    printf("Undefine 'name_2' from hash table, lookup again: ");
+    nList *r;
+    if ((r = lookup((char*)strings_5[0])) != NULL)
+        printf("%s ", r->defn);
+    if ((r = lookup((char*)strings_5[2])) != NULL)
+        printf("%s ", r->defn);
+    printf("\n");
     fclose(sourceFile);
 }
 
