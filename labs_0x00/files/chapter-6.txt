@@ -1,11 +1,13 @@
-#define DEF_1
-#define DEF_2
+#define DEF_1 ;
+#define DEF_2 printf("string\n");
 
 #ifdef DEF_1
 
 for (int i = 0; i < 5; i++) j = i; // One line comment
 
 #endif
+
+DEF_2
 
 if (i > 0) i++;
 

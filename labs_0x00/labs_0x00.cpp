@@ -1584,13 +1584,60 @@ nList *undef(char *s) {
     return r;
 }
 
+// Task 6-6.
+
+struct Define {
+    Define *next;
+    char *name;
+    char *parameter;
+};
+
+Define *addDefine(Define *node, char *name, char *parameter) {
+    if (node == NULL) {
+        node = (Define*)malloc(sizeof(Define));
+        node->name = (char*)malloc(sizeof(char)*strLen(name));
+        strnCpy(node->name, name, strLen(name));
+        node->parameter = (char*)malloc(sizeof(char)*strLen(parameter));
+        strnCpy(node->parameter, parameter, strLen(parameter));
+        node->next = NULL;
+    } else {
+        node->next = addDefine(node->next, name, parameter);
+    }
+    return node;
+}
+
+Define *isExistDef(Define *node, char *name) {
+    while (node != NULL) {
+            if (strnCmp(node->name, name, strLen(name)) == 0) {
+                return node;
+            }
+        node = node->next;
+    }
+    return NULL;
+}
+
+int countDef(Define *node) {
+    int counter = 0;
+    while (node != NULL)
+        counter++;
+    return counter;
+}
+
+int getNextWord(char *source, char *word, int n) {
+    int counter;
+    for (counter = 0; n > 0 && source[counter] != ' ' && source[counter] != '\n' && source[counter] != '\0'; counter++, n--)
+        word[counter] = source[counter];
+    word[counter] = '\0';
+    return counter;
+}
+
 void chapter_6() {
     printf("Chapter's 6 tasks.\n");
     // Task 1. For #define works only #ifdef and #ifndef. Defines must be upper their using.
     const int maxLength = 1024;
     char string_1[maxLength], string_2[maxLength];
     FILE *file_1 = fopen("labs_0x00/files/chapter-6.txt", "r");
-    (string_1, 1024);
+    // (string_1, 1024);
     int lengthLine = 0, stringSize = 0;
     while ((lengthLine = getLine(string_1+stringSize, file_1, maxLength)) != 0)
         stringSize += lengthLine;
@@ -1682,6 +1729,66 @@ void chapter_6() {
         printf("%s ", r->defn);
     printf("\n");
     fclose(sourceFile);
+    // Task 6.
+
+    sourceFile = fopen("labs_0x00/files/chapter-6.txt", "r");
+    sourceLength = 0;
+    while ((source[sourceLength++] = getc(sourceFile)) != EOF);
+    source[sourceLength] = '\0';
+    fclose(sourceFile);
+
+    Define *listDefs = NULL;
+    for (int i = 0; i < 512; i++) {
+        if (source[i] == '/' && source[i+1] == '/') {
+            while (i < sourceLength && source[i] != '\n')
+                i++;
+        }
+        if (source[i] == '/' && source[i+1] == '*')
+            while (i < sourceLength && (source[i] != '*' || source[i+1] != '/')) {
+                if (source[i] == '\n')
+                    nLine++;
+                i++;
+            }
+        if (source[i] == '"' && !(i > 0 && source[i-1] == '\'')) {
+            i++;
+            while (source[i++] != '"');
+        }
+        int j;
+        char name[maxWordLen], parameter[maxWordLen], word[maxWordLen];
+        for (j = 0; j < 3 && strnCmp(&source[i], defTab[j].word, defTab[j].length) != 0; j++);
+        if (j < 3) {
+            i += defTab[j].length + 1;      // One space after.
+            if (getNextWord(&source[i], name, maxWordLen) == 0) {
+                printf("Error, no name after #define or #ifdef or #ifndef.\n");
+                return;
+            }
+            // printf("Name = %s %d\n", name, strLen(name));
+            i += strLen(name) + 1;  // One more space.
+            if (j == 0) {
+                if (getNextWord(&source[i], parameter, maxWordLen) == 0) {
+                    printf("Error, no parameter after name.\n");
+                    return;
+                }
+                i += strLen(parameter);
+                // printf("Par = %s\n", parameter);
+            }
+        }
+        if (j == 1 && !isExistDef(listDefs, name) ||
+                j == 2 && isExistDef(listDefs, name)) {
+            printf("Skipping #ifdef or #ifndef '%s'.\n", name);
+            while (source[i] != '\0' && strnCmp(&source[i], defTab[3].word, defTab[3].length) != 0)
+                i++;
+        }
+        if (j == 0) {
+            printf("Adding word and parameter '%s', '%s'.\n", name, parameter);
+            listDefs = addDefine(listDefs, name, parameter);
+        }
+        if (getNextWord(&source[i], word, maxWordLen) > 0) {
+            Define *p = isExistDef(listDefs, word);
+            if (p != NULL)
+                printf("Define '%s' has founded. Parameter '%s'.\n", p->name, p->parameter);
+        }
+    }
 }
 
 void labs_0x00() {
