@@ -1,9 +1,11 @@
-#include "labs_0x00.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
 #include <float.h>
 #include <math.h>
+#include <stdarg.h>
+
+#include "labs_0x00.h"
 
 int getLine(char line[], FILE* stream, int limit) {
     char c;
@@ -1762,7 +1764,6 @@ void chapter_6() {
                 printf("Error, no name after #define or #ifdef or #ifndef.\n");
                 return;
             }
-            // printf("Name = %s %d\n", name, strLen(name));
             i += strLen(name) + 1;  // One more space.
             if (j == 0) {
                 if (getNextWord(&source[i], parameter, maxWordLen) == 0) {
@@ -1770,7 +1771,6 @@ void chapter_6() {
                     return;
                 }
                 i += strLen(parameter);
-                // printf("Par = %s\n", parameter);
             }
         }
         if (j == 1 && !isExistDef(listDefs, name) ||
@@ -1791,6 +1791,146 @@ void chapter_6() {
     }
 }
 
+// Chapter's 7 functions and data...
+
+char *toLowerCase(char *s) {
+    for (int i = 0; s[i] != '\0'; i++)
+        if (s[i] >= 'A' && s[i] <= 'Z')
+            s[i] = s[i] + 32;
+    return s;
+}
+
+char *toUpperCase(char *s) {
+    for (int i = 0; s[i] != '\0'; i++)
+        if (s[i] >= 'a' && s[i] <= 'z')
+            s[i] = s[i] - 32;
+    return s;
+}
+
+void minPrintf(char *fmt, ...) {
+    va_list ap;
+    char *p, *sval;
+    int ival;
+    double dval;
+    char ch;
+    va_start(ap, fmt);
+    for (p = fmt; *p; p++) {
+        if (*p != '%') {
+            putchar(*p);
+            continue;
+        }
+        switch (*++p) {
+        case 'd':
+            ival = va_arg(ap, int);
+            printf("%d", ival);
+            break;
+        case 'f':
+            dval = va_arg(ap, double);
+            printf("%f", dval);
+            break;
+        case 's':
+            for (sval = va_arg(ap, char*); *sval; sval++)
+                putchar(*sval);
+            break;
+        case 'c':
+            ch = va_arg(ap, int);
+            printf("%c", ch);
+            break;
+        default:
+            putchar(*sval);
+            break;
+        }
+    }
+    va_end(ap);
+}
+
+void minScanf(char *fmt, ...) {
+    va_list ap;
+    char *p, *sval;
+    int *ival;
+    double *dval;
+    char *ch;
+    va_start(ap, fmt);
+    for (p = fmt; *p; p++) {
+        if (*p != '%') {
+            putchar(*p);
+            continue;
+        }
+        switch (*++p) {
+        case 'd':
+            ival = va_arg(ap, int*);
+            scanf("%d", ival);
+            break;
+        case 'f':
+            dval = va_arg(ap, double*);
+            scanf("%lf", dval);
+            break;
+        case 's':
+            sval = va_arg(ap, char*);
+            scanf("%s", sval);
+            break;
+        case 'c':
+            ch = va_arg(ap, char*);
+            // Strange...
+            scanf(" %c", ch);
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+void chapter_7() {
+    printf("Chapter's 7 tasks.\n");
+    // Task 1.
+    const char *argv[] = { "conversion", "CONVERSION" };
+    char strings_1[][maxWordLen] = { "STRING_1", "string_2" };
+    for (int i = 0; i < sizeof(argv)/sizeof(char*); i++) {
+        if (argv[i][0] >= 'a' && argv[i][0] <= 'z') {
+            printf("String '%s' to lower case = ", strings_1[i]);
+            toLowerCase(strings_1[i]);
+            printf("%s\n", strings_1[i]);
+        }
+        if (argv[i][0] >= 'A' && argv[i][0] <= 'Z') {
+            printf("String '%s' to upper case = ", strings_1[i]);
+            toUpperCase(strings_1[i]);
+            printf("%s\n", strings_1[i]);
+        }
+    }
+    // Task 2.
+    const char string_1[] = "Task's 2 string with 3 tabulatations. \t \t \t.\n"
+                            "Next line of string.\n";
+    const int maxLineLength = 12;
+    printf("Print source string '%s' with length = %d:", string_1, maxLineLength);
+    for (int i = 0, j = 0; string_1[i] != '\0'; i++) {
+        if (j >= maxLineLength || (string_1[i] < ' ' && j >= maxLineLength-4)) {
+            printf("\n");
+            j = 0;
+        }
+        if (string_1[i] < ' ') {
+            printf("0x%x ", string_1[i]);
+            j += 4;
+        }
+        else {
+            printf("%c", string_1[i]);
+            j++;
+        }
+    }
+    printf("\n");
+    // Task 3.
+    char string_2[] = "String for minPrintf(): integer = %d, float = %f, string = %s, char = %c.\n";
+    printf("Calling minPrintf with parameter '%s':", string_2);
+    minPrintf(string_2, 1, 3.0, "Hello World!", 'A');
+    // Task 4.
+    int int_1;
+    char ch_1;
+    double doub_1;
+    char string_3[] = "Calling function minScanf():\nintger = %d, float = %f, char = %c, string[16] = %s.\n";
+    char string_4[maxWordLen];
+    minScanf(string_3, &int_1, &doub_1, &ch_1, string_4);
+    printf("Result of minScanf(): integer = %d, float = %f, string = %s, char = %c.\n", int_1, doub_1, string_4, ch_1);
+}
+
 void labs_0x00() {
-    chapter_6();
+    chapter_7();
 }
