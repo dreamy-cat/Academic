@@ -1929,6 +1929,54 @@ void chapter_7() {
     char string_4[maxWordLen];
     minScanf(string_3, &int_1, &doub_1, &ch_1, string_4);
     printf("Result of minScanf(): integer = %d, float = %f, string = %s, char = %c.\n", int_1, doub_1, string_4, ch_1);
+    // Task 5. Something with stream...
+    char string_5[MAXLENGTH] = "", operandStr[MAXLENGTH] = "";
+    char symTable[] = "0123456789+-*/";
+    int operandSize = 0;
+    double operand;
+    printf("Enter operands to calculate, as it was task in chapter 4. Type 'ok' to calculate.\n");
+    while (strnCmp(operandStr, "ok", MAXLENGTH) != 0) {
+        scanf("%s", operandStr);
+        if (strnCmp(operandStr, "ok", MAXLENGTH) != 0) {
+            strnCat(string_5, operandStr, MAXLENGTH);
+            strnCat(string_5, " ", MAXLENGTH);
+        }
+        // printf("operand = %s\n", operandStr);
+    }
+    printf("s = %s\n", string_5);
+    for (int i = 0; string_5[i] != '\0'; i++) {
+        int k;
+        for (k = 0; symTable[k] != '\0' && string_5[i] != symTable[k]; k++);
+        if (symTable[k] != '\0') operandStr[operandSize++] = string_5[i];
+        if ((string_5[i+1] == ' ' || string_5[i+1] == '\0') && operandSize > 0) {
+            if (operandStr[operandSize-1] >= '0' && operandStr[operandSize-1] <= '9') {
+                operandStr[operandSize] = '\0';
+                push(aToF(operandStr));
+            } else {
+                switch (operandStr[0]) {
+                case '+':
+                    push(pop() + pop());
+                    break;
+                case '-':
+                    operand = pop();
+                    push(pop() - operand);
+                    break;
+                case '*':
+                    push(pop() * pop());
+                    break;
+                case '/':
+                    operand = pop();
+                    if (operand != 0) push(pop() / operand); else {
+                        printf("Division by zero.\n");
+                        push(0.0);
+                    }
+                    break;
+                }
+            }
+            operandSize = 0;
+        }
+    }
+    printf("Result of expression %s = %.2f\n", string_5, pop());
 }
 
 void labs_0x00() {
