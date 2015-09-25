@@ -1931,7 +1931,7 @@ void chapter_7() {
     printf("Result of minScanf(): integer = %d, float = %f, string = %s, char = %c.\n", int_1, doub_1, string_4, ch_1);
     // Task 5. Something with stream...
     char string_5[MAXLENGTH] = "", operandStr[MAXLENGTH] = "";
-    char symTable[] = "0123456789+-*/";
+    char symTable[] = "0123456789+-/*";
     int operandSize = 0;
     double operand;
     printf("Enter operands to calculate, as it was task in chapter 4. Type 'ok' to calculate.\n");
@@ -1977,6 +1977,33 @@ void chapter_7() {
         }
     }
     printf("Result of expression %s = %.2f\n", string_5, pop());
+    // Task 6.
+    FILE* file_1 = fopen("labs_0x00/files/chapter-7-1.txt", "r");
+    FILE* file_2 = fopen("labs_0x00/files/chapter-7-2.txt", "r");
+    char line_1[MAXLENGTH], line_2[MAXLENGTH];
+    while (fgets(line_1, MAXLENGTH, file_1) != NULL && fgets(line_2, MAXLENGTH, file_2) != NULL)
+        if (strnCmp(line_1, line_2, MAXLENGTH) != 0) {
+            printf("Different lines in files:\n%s%s", line_1, line_2);
+            break;
+        }
+    fclose(file_1);
+    fclose(file_2);
+    // Task 7-8.
+    const char *fileNames[] = { "labs_0x00/files/chapter-7-1.txt", "labs_0x00/files/chapter-7-2.txt" };
+    int filesCount = sizeof(fileNames)/sizeof(char);
+    FILE* txtFile;
+    char txtLine[MAXLENGTH], toFind[MAXLENGTH] = "ine";
+    printf("All lines in files, contain %s substring.\n", toFind);
+    for (int i = 0; i < filesCount; i++) {
+        printf("All lines in file '%s':\n", fileNames[i]);
+        txtFile = fopen(fileNames[i], "r");
+            while (fgets(txtLine, MAXLENGTH, txtFile) != NULL) {
+                if (strIndex(txtLine, toFind) != -1)
+                    printf("Substring founded: ");
+                printf("%s",txtLine);
+            }
+        fclose(txtFile);
+    }
 }
 
 void labs_0x00() {
