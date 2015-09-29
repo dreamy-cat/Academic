@@ -4,6 +4,11 @@
 #include <float.h>
 #include <math.h>
 #include <stdarg.h>
+#include <sys/file.h>
+#include <sys/syscall.h>
+#include <sys/io.h>
+#include <sys/fcntl.h>
+#include <sys/unistd.h>
 
 #include "labs_0x00.h"
 
@@ -1880,6 +1885,10 @@ void minScanf(char *fmt, ...) {
     }
 }
 
+int isUpper(char c) {
+    return ((c >= 'A' && c <= 'Z') ? 1 : 0);
+}
+
 void chapter_7() {
     printf("Chapter's 7 tasks.\n");
     // Task 1.
@@ -1990,7 +1999,7 @@ void chapter_7() {
     fclose(file_2);
     // Task 7-8.
     const char *fileNames[] = { "labs_0x00/files/chapter-7-1.txt", "labs_0x00/files/chapter-7-2.txt" };
-    int filesCount = sizeof(fileNames)/sizeof(char);
+    int filesCount = sizeof(fileNames)/sizeof(char*);
     FILE* txtFile;
     char txtLine[MAXLENGTH], toFind[MAXLENGTH] = "ine";
     printf("All lines in files, contain %s substring.\n", toFind);
@@ -2004,8 +2013,145 @@ void chapter_7() {
             }
         fclose(txtFile);
     }
+    printf("Is 'c' and 'A' upper = %d %d\n", isUpper('c'), isUpper('A'));
+}
+
+// Chapter 8.
+
+#define OPEN_MAX 8
+
+typedef struct _iobuf {
+    int cnt;
+    char *ptr;
+    char *base;
+    int flag;
+    int fd;
+} MY_FILE;
+
+#define PERMS 0777
+
+enum _flags {
+    _READ   = 01,
+    _WRITE  = 02,
+    _UNBUF  = 03,
+    _EOF    = 010,
+    _ERR    = 020
+};
+
+/*
+struct {
+    unsigned int _READ : 1;
+    unsigned int _WRITE : 1;
+} _flags;
+*/
+
+#define feof(p)     (((p)->flag & _EOF) != 0)
+#define ferror(p)   (((p)->flag & _ERR) != 0)
+#define fileno(p)   (((p)->fd))
+
+MY_FILE _iob[OPEN_MAX] = {
+    { 0, (char*) 0, (char*) 0, _READ, 0 },
+    { 0, (char*) 0, (char*) 0, _WRITE, 1 },
+    { 0, (char*) 0, (char*) 0, _WRITE | _UNBUF, 2 }
+};
+
+#define stdIn   (&_iob[0])
+#define stdOut  (&_iob[1])
+#define stdErr  (&_iob[2])
+
+int _fillBuf(MY_FILE *fp);
+
+unsigned char getChar(MY_FILE *file) {
+    unsigned char w = ' ';
+    if (--(file)->cnt < 0) {
+        return _fillBuf(file);
+    }
+    return (unsigned char)*(file)->ptr++;
+}
+
+/*
+
+int putChar(MY_FILE *file, unsigned char c) {
+    if (--(file)->cnt >= 0)
+        *(file)->ptr++ = c;
+    else
+        _flushBuf(file, c);
+}
+
+*/
+
+MY_FILE* fOpen(const char *name, char *mode) {
+    int fd;
+    MY_FILE* fp;
+    if (*mode != 'r' && *mode != 'w' && *mode != 'a')
+        return NULL;
+    for (fp = _iob; fp < _iob + OPEN_MAX; fp++)
+        if (fp->flag & (_READ | _WRITE) == 0)
+            break;
+    if (fp > _iob + OPEN_MAX)
+        return NULL;
+    if (*mode == 'w')
+        fd = creat(name, PERMS);
+    else if (*mode == 'a') {
+        if ( (fd = open(name, O_WRONLY, 0)) == -1)
+            fd = creat(name, PERMS);
+        lseek(fd, 0L, 2);
+    } else
+        fd = open(name, O_RDONLY);
+    if (fd == -1)
+        return NULL;
+    fp->fd = fd;
+    fp->cnt = 0;
+    fp->base = NULL;
+    fp->flag = (*mode == 'r') ? _READ : _WRITE;
+    return fp;
+}
+
+int _fillBuf(MY_FILE *fp) {
+    int bufsize;
+    if ( (fp->flag & (_READ | _EOF | _EOF | _ERR)) != _READ)
+        return EOF;
+    bufsize = (fp->flag & _UNBUF) ? 1 : BUFSIZ;
+    if (fp->base == NULL)
+        if ( (fp->base = (char*)malloc(bufsize)) == NULL)
+            return EOF;
+    fp->ptr = fp->base;
+    fp->cnt = read(fp->fd, fp->ptr, bufsize);
+    if (--fp->cnt < 0) {
+        if (fp->cnt == -1)
+            fp->flag |= _EOF;
+        else
+            fp->flag |= _ERR;
+        fp->cnt = 0;
+        return EOF;
+    }
+    return (unsigned char) *fp->ptr++;
+}
+
+void chapter_8() {
+    printf("Chapter's 8 tasks.\n");
+    // Task 1.
+    char buf[BUFSIZ];
+    const char *fileNames[] = { "labs_0x00/files/chapter-8-1.txt", "labs_0x00/files/chapter-8-2.txt" };
+    int filesCounter = sizeof(fileNames)/sizeof(char*);
+    int actualBytes;
+    int desc_1 = open(fileNames[0], O_RDONLY, 0777);
+    printf("Cat file '%s', descriptor = %d:\n\n", fileNames[0], desc_1);
+    while ((actualBytes = read(desc_1, buf,1)) > 0)
+        write(1, buf, 1);
+    close(desc_1);
+    // Task 2.
+    char mode = 'r';
+    MY_FILE *desc_2 = fOpen("labs_0x00/files/chapter-8-1.txt", &mode);
+    printf("\nRead file 'chapter-8-1.txt with functions fOpen() & getChar():\n");
+    unsigned char c_2;
+    while (!feof(desc_2)) {
+        c_2 = getChar(desc_2);
+        printf("%c", c_2);
+    }
+
 }
 
 void labs_0x00() {
-    chapter_7();
+    chapter_8();
 }
