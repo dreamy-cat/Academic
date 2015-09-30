@@ -2020,73 +2020,61 @@ void chapter_7() {
 
 #define OPEN_MAX 8
 
+struct FileFlags {
+    unsigned int _READ : 1;
+    unsigned int _WRITE : 1;
+    unsigned int _UNBUF : 1;
+    unsigned int _EOF : 1;
+    unsigned int _ERR : 1;
+};
+
 typedef struct _iobuf {
     int cnt;
     char *ptr;
     char *base;
-    int flag;
+    FileFlags flag;
     int fd;
-} MY_FILE;
+} FILE_8;
 
 #define PERMS 0777
 
-enum _flags {
-    _READ   = 01,
-    _WRITE  = 02,
-    _UNBUF  = 03,
-    _EOF    = 010,
-    _ERR    = 020
-};
-
-/*
-struct {
-    unsigned int _READ : 1;
-    unsigned int _WRITE : 1;
-} _flags;
-*/
-
-#define feof(p)     (((p)->flag & _EOF) != 0)
-#define ferror(p)   (((p)->flag & _ERR) != 0)
+#define feof(p)     (((p)->flag._EOF)  != 0)
+#define ferror(p)   (((p)->flag._ERR) != 0)
 #define fileno(p)   (((p)->fd))
 
-MY_FILE _iob[OPEN_MAX] = {
-    { 0, (char*) 0, (char*) 0, _READ, 0 },
-    { 0, (char*) 0, (char*) 0, _WRITE, 1 },
-    { 0, (char*) 0, (char*) 0, _WRITE | _UNBUF, 2 }
+static FileFlags clearFlag = { 0, 0, 0, 0, 0 };
+
+FILE_8 _iob[OPEN_MAX] = {
+    { 0, (char*) 0, (char*) 0, { 1, 0, 0, 0, 0 }, 0 },
+    { 0, (char*) 0, (char*) 0, { 0, 1, 0, 0, 0 }, 1 },
+    { 0, (char*) 0, (char*) 0, { 0, 1, 1, 0, 0 }, 2 }
 };
 
-#define stdIn   (&_iob[0])
-#define stdOut  (&_iob[1])
-#define stdErr  (&_iob[2])
+int fillBuf(FILE_8 *fp);
+int flushBuf(FILE_8 *fp);
 
-int _fillBuf(MY_FILE *fp);
-
-unsigned char getChar(MY_FILE *file) {
+unsigned char getChar(FILE_8 *file) {
     unsigned char w = ' ';
     if (--(file)->cnt < 0) {
-        return _fillBuf(file);
+        return fillBuf(file);
     }
     return (unsigned char)*(file)->ptr++;
 }
 
-/*
-
-int putChar(MY_FILE *file, unsigned char c) {
-    if (--(file)->cnt >= 0)
+int putChar(FILE_8 *file, unsigned char c) {
+    if (++(file)->cnt >= (sizeof(file->base)))
         *(file)->ptr++ = c;
     else
-        _flushBuf(file, c);
+        flushBuf(file);
 }
 
-*/
-
-MY_FILE* fOpen(const char *name, char *mode) {
+FILE_8* fOpen(const char *name, char *mode) {
     int fd;
-    MY_FILE* fp;
+    FILE_8* fp;
     if (*mode != 'r' && *mode != 'w' && *mode != 'a')
         return NULL;
     for (fp = _iob; fp < _iob + OPEN_MAX; fp++)
-        if (fp->flag & (_READ | _WRITE) == 0)
+        if (fp->flag._READ || fp->flag._WRITE == 0)
             break;
     if (fp > _iob + OPEN_MAX)
         return NULL;
@@ -2103,15 +2091,31 @@ MY_FILE* fOpen(const char *name, char *mode) {
     fp->fd = fd;
     fp->cnt = 0;
     fp->base = NULL;
-    fp->flag = (*mode == 'r') ? _READ : _WRITE;
+    fp->flag = clearFlag;
+    if (*mode == 'r')
+        fp->flag._READ = 1;
+    else
+        fp->flag._WRITE = 1;
     return fp;
 }
 
-int _fillBuf(MY_FILE *fp) {
-    int bufsize;
-    if ( (fp->flag & (_READ | _EOF | _EOF | _ERR)) != _READ)
+int fClose(FILE_8 *file) {
+    if (file->base == NULL)
         return EOF;
-    bufsize = (fp->flag & _UNBUF) ? 1 : BUFSIZ;
+    free( (void*)file->base );
+    close(file->fd);
+    file->fd = 0;
+    file->flag = clearFlag;
+    file->ptr = NULL;
+    file->base = NULL;
+    return 0;
+}
+
+int fillBuf(FILE_8 *fp) {
+    int bufsize;
+    if (fp->flag._READ == 0 || fp->flag._EOF == 1 || fp->flag._ERR == 1)
+        return EOF;
+    bufsize = (fp->flag._UNBUF == 1) ? 1 : BUFSIZ;
     if (fp->base == NULL)
         if ( (fp->base = (char*)malloc(bufsize)) == NULL)
             return EOF;
@@ -2119,13 +2123,29 @@ int _fillBuf(MY_FILE *fp) {
     fp->cnt = read(fp->fd, fp->ptr, bufsize);
     if (--fp->cnt < 0) {
         if (fp->cnt == -1)
-            fp->flag |= _EOF;
+            fp->flag._EOF = 1;
         else
-            fp->flag |= _ERR;
+            fp->flag._ERR = 1;
         fp->cnt = 0;
         return EOF;
     }
     return (unsigned char) *fp->ptr++;
+}
+
+int flushBuf(FILE_8 *fp) {
+    int actualWrite;
+    if (fp->flag._WRITE == 0 || fp->flag._EOF == 1 || fp->flag._ERR == 1)
+        return EOF;
+    if (fp->base == NULL)
+        return EOF;
+    fp->ptr = fp->base;
+    actualWrite = fp->cnt;
+    fp->cnt -= write(fp->fd, fp->ptr, fp->cnt);
+    if (fp->cnt > 0) {
+        fp->flag._ERR = 1;
+        return EOF;
+    }
+    return (actualWrite-fp->cnt);
 }
 
 void chapter_8() {
@@ -2142,13 +2162,14 @@ void chapter_8() {
     close(desc_1);
     // Task 2.
     char mode = 'r';
-    MY_FILE *desc_2 = fOpen("labs_0x00/files/chapter-8-1.txt", &mode);
+    FILE_8 *desc_2 = fOpen("labs_0x00/files/chapter-8-1.txt", &mode);
     printf("\nRead file 'chapter-8-1.txt with functions fOpen() & getChar():\n");
     unsigned char c_2;
     while (!feof(desc_2)) {
         c_2 = getChar(desc_2);
         printf("%c", c_2);
     }
+    fClose(desc_2);
 
 }
 
