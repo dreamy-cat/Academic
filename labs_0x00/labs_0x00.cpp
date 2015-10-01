@@ -9,6 +9,8 @@
 #include <sys/io.h>
 #include <sys/fcntl.h>
 #include <sys/unistd.h>
+#include <sys/stat.h>
+#include <dirent.h>
 
 #include "labs_0x00.h"
 
@@ -2043,6 +2045,7 @@ typedef struct _iobuf {
 #define fileno(p)   (((p)->fd))
 
 static FileFlags clearFlag = { 0, 0, 0, 0, 0 };
+static int openedStreams = 3;
 
 FILE_8 _iob[OPEN_MAX] = {
     { 0, (char*) 0, (char*) 0, { 1, 0, 0, 0, 0 }, 0 },
@@ -2056,26 +2059,38 @@ int flushBuf(FILE_8 *fp);
 unsigned char getChar(FILE_8 *file) {
     unsigned char w = ' ';
     if (--(file)->cnt < 0) {
+        // printf("W.\n");
         return fillBuf(file);
     }
     return (unsigned char)*(file)->ptr++;
 }
 
 int putChar(FILE_8 *file, unsigned char c) {
-    if (++(file)->cnt >= (sizeof(file->base)))
-        *(file)->ptr++ = c;
-    else
+    if (file->base == NULL)
         flushBuf(file);
+    int bufSize = (file->flag._UNBUF) ? 1 : BUFSIZ;
+    if (++(file)->cnt <= bufSize)
+        *(file)->ptr++ = c;
+    else {
+        printf("Actual write = %d\n", flushBuf(file));
+    }
 }
 
 FILE_8* fOpen(const char *name, char *mode) {
     int fd;
-    FILE_8* fp;
     if (*mode != 'r' && *mode != 'w' && *mode != 'a')
         return NULL;
+    if (openedStreams == OPEN_MAX) {
+        printf("Reach limit of opened files.\n");
+        return NULL;
+    }
+    FILE_8* fp = &_iob[openedStreams++];
+/*
     for (fp = _iob; fp < _iob + OPEN_MAX; fp++)
-        if (fp->flag._READ || fp->flag._WRITE == 0)
+        if (fp->flag._READ == 0 && fp->flag._WRITE == 0)
             break;
+            */
+    // printf("Create with _iob = %ld\n", (long)fp);
     if (fp > _iob + OPEN_MAX)
         return NULL;
     if (*mode == 'w')
@@ -2099,15 +2114,46 @@ FILE_8* fOpen(const char *name, char *mode) {
     return fp;
 }
 
+int fSeek(FILE_8 *file, long offset, int origin) {
+    if (file == NULL) {
+        printf("No file.\n");
+        return EOF;
+    }
+    int seekMode;
+    switch (origin) {
+    case 0:
+        seekMode = SEEK_SET;
+        break;
+    case 1:
+        seekMode = SEEK_CUR;
+        break;
+    case 2:
+        seekMode = SEEK_END;
+        break;
+    default:
+        seekMode = SEEK_SET;
+    }
+    if (lseek(file->fd, offset, seekMode) == -1) {
+        printf("Error seek in file.\n");
+        return EOF;
+    }
+    file->flag._EOF = 0;
+    return 0;
+}
+
 int fClose(FILE_8 *file) {
     if (file->base == NULL)
         return EOF;
+    if (file->flag._WRITE == 1 && file->cnt > 0) {
+        printf ("\nActual bytes written = %d\n", flushBuf(file));
+    }
     free( (void*)file->base );
     close(file->fd);
     file->fd = 0;
     file->flag = clearFlag;
     file->ptr = NULL;
     file->base = NULL;
+    openedStreams--;
     return 0;
 }
 
@@ -2136,12 +2182,17 @@ int flushBuf(FILE_8 *fp) {
     int actualWrite;
     if (fp->flag._WRITE == 0 || fp->flag._EOF == 1 || fp->flag._ERR == 1)
         return EOF;
-    if (fp->base == NULL)
-        return EOF;
-    fp->ptr = fp->base;
+    int bufsize = (fp->flag._UNBUF == 1) ? 1 : BUFSIZ;
+    if (fp->base == NULL) {
+        if ( (fp->base = (char*)malloc(bufsize)) == NULL)
+            return EOF;
+        fp->ptr = fp->base;
+    }
     actualWrite = fp->cnt;
-    fp->cnt -= write(fp->fd, fp->ptr, fp->cnt);
+    fp->cnt -= write(fp->fd, fp->base, fp->cnt);
+    fp->ptr = fp->base + fp->cnt;
     if (fp->cnt > 0) {
+        printf("Error writing to stream.\n");
         fp->flag._ERR = 1;
         return EOF;
     }
@@ -2160,17 +2211,29 @@ void chapter_8() {
     while ((actualBytes = read(desc_1, buf,1)) > 0)
         write(1, buf, 1);
     close(desc_1);
-    // Task 2.
-    char mode = 'r';
-    FILE_8 *desc_2 = fOpen("labs_0x00/files/chapter-8-1.txt", &mode);
-    printf("\nRead file 'chapter-8-1.txt with functions fOpen() & getChar():\n");
+    // Task 2-4. Task 4, may be not correct...
+    char modeR = 'r', modeW = 'w';
+    FILE_8 *desc_2 = fOpen("labs_0x00/files/chapter-8-1.txt", &modeR);
+    FILE_8 *desc_3 = fOpen("labs_0x00/files/chapter-8-2.txt", &modeW);
+    printf("\nRead file 'chapter-8-1.txt and write it to 'chapter-8-2.txt':\n");
     unsigned char c_2;
     while (!feof(desc_2)) {
         c_2 = getChar(desc_2);
         printf("%c", c_2);
+        putChar(desc_3, c_2);
     }
+    fClose(desc_3);
+    printf("Reading file 'chapter-8-1.txt from offset 10:\n");
+    fSeek(desc_2, 10, 0);
+    while (!feof(desc_2)) {
+        c_2 = getChar(desc_2);
+        printf("%c", c_2);
+    }
+    printf("\n");
     fClose(desc_2);
-
+    // Task 5.
+    opendir();
+    stat();
 }
 
 void labs_0x00() {
