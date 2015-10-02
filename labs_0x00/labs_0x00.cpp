@@ -10,6 +10,9 @@
 #include <sys/fcntl.h>
 #include <sys/unistd.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/dir.h>
+#include <syscall.h>
 #include <dirent.h>
 
 #include "labs_0x00.h"
@@ -2199,6 +2202,42 @@ int flushBuf(FILE_8 *fp) {
     return (actualWrite-fp->cnt);
 }
 
+#define MAX_PATH 256
+
+void filesInfo(char *directory);
+
+void dirWalk(char *dir, void (*fcn)(char*)) {
+    char name[MAX_PATH];
+    dirent *dp;
+    DIR *dfd;
+    if ((dfd = opendir(dir)) == NULL) {
+        printf("Error, can't open %s\n", dir);
+        return;
+    }
+    while ((dp = readdir(dfd)) != NULL) {
+        if (strnCmp(dp->d_name, ".", MAX_PATH) == 0 || strnCmp(dp->d_name, "..", MAX_PATH) == 0)
+            continue;
+        if (strLen(dir) + strLen(dp->d_name) > sizeof(name))
+            printf("Skipping dir %s, name too long.\n", dir);
+        else {
+            sprintf(name, "%s/%s", dir, dp->d_name);
+            (*fcn)(name);
+        }
+    }
+    closedir(dfd);
+}
+
+void filesInfo(char *directory) {
+    struct stat stBuf;
+    if (stat(directory, &stBuf) == -1) {
+        printf("Error, cat't access %s\n", directory);
+        return;
+    }
+    if ((stBuf.st_mode & S_IFMT) == S_IFDIR)
+        dirWalk(directory, filesInfo);
+    printf("%8ld %4ld %s\n", stBuf.st_size, stBuf.st_blocks, directory);
+}
+
 void chapter_8() {
     printf("Chapter's 8 tasks.\n");
     // Task 1.
@@ -2231,9 +2270,9 @@ void chapter_8() {
     }
     printf("\n");
     fClose(desc_2);
-    // Task 5.
-    opendir();
-    stat();
+    // Task 5. Need more...
+    printf("Files sizes and blocks counters in directory ./labs_0x00:\n");
+    filesInfo((char*)"labs_0x00");
 }
 
 void labs_0x00() {
