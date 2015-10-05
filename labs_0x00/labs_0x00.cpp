@@ -2238,6 +2238,68 @@ void filesInfo(char *directory) {
     printf("%8ld %4ld %s\n", stBuf.st_size, stBuf.st_blocks, directory);
 }
 
+// Tasks 8.6-8.8
+
+struct Heap {
+    static const int heapLimit = 64;
+    static int heapSize, totalBlocks, dataOffset;
+    static unsigned char maxBlock;
+    static char heap[heapLimit];
+    struct Block {
+        Block *next;
+        unsigned char size;
+        bool isFree;
+        char ptr;
+    };
+
+    void init();
+    char *allocateMemory(unsigned char size);
+    int freeMemory(char *ptr);
+};
+
+char Heap::heap[Heap::heapLimit];
+int Heap::heapSize, Heap::totalBlocks, Heap::dataOffset;
+unsigned char Heap::maxBlock;
+
+void Heap::init() {
+    Block *start = (Block*)heap;
+    dataOffset = (long)&start->ptr-(long)start;
+    printf("Heap initialization. Size of Block structure %ld, total size of heap %d bytes. "
+           "Data offset in Block is %d.\n", sizeof(Block), heapLimit, dataOffset);
+    start->next = NULL;
+    start->size = heapLimit-dataOffset;
+    start->isFree = true;
+    printf("Memory map: ");
+    for (int i = 0; i < dataOffset; i++) {
+        // heap[i] = *((char*)(&start)+i);
+        printf("%d ", *((char*)(start)+i));
+    }
+    printf("\n");
+    heapSize = 0;
+    totalBlocks = 1;
+    maxBlock = heapLimit-dataOffset;
+}
+
+char *Heap::allocateMemory(unsigned char size) {
+    if (heapSize + (size + dataOffset) >= heapLimit || (size + dataOffset) >= maxBlock) {
+        printf("No free memory in heap. Heap size %d, needs to allocate %d\n", heapSize, (size+dataOffset));
+        return NULL;
+    }
+    Block *ptr = (Block*)heap, next;
+    printf("Memory map: ");
+    for (int i = 0; i < dataOffset; i++) {
+        // *(((char*)&ptr)+i) = heap[i];
+        printf("%d ", *(((char*)ptr)+i));
+    }
+    printf("\n");
+/*
+    next = ptr->next;
+    while (next != NULL && (ptr->size + next)
+           || ptr->size == 0)
+        ptr = ptr->next;
+*/
+}
+
 void chapter_8() {
     printf("Chapter's 8 tasks.\n");
     // Task 1.
@@ -2273,6 +2335,10 @@ void chapter_8() {
     // Task 5. Need more...
     printf("Files sizes and blocks counters in directory ./labs_0x00:\n");
     filesInfo((char*)"labs_0x00");
+    // Task 6-8.
+    Heap heap;
+    heap.init();
+    heap.allocateMemory(3);
 }
 
 void labs_0x00() {
