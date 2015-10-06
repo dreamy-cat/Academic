@@ -2246,15 +2246,14 @@ struct Heap {
     static unsigned char maxBlock;
     static char heap[heapLimit];
     struct Block {
-        Block *next;
+        unsigned char next;
         unsigned char size;
-        bool isFree;
         char ptr;
     };
-
     void init();
     char *allocateMemory(unsigned char size);
     int freeMemory(char *ptr);
+    void state();
 };
 
 char Heap::heap[Heap::heapLimit];
@@ -2266,9 +2265,6 @@ void Heap::init() {
     dataOffset = (long)&start->ptr-(long)start;
     printf("Heap initialization. Size of Block structure %ld, total size of heap %d bytes. "
            "Data offset in Block is %d.\n", sizeof(Block), heapLimit, dataOffset);
-    start->next = NULL;
-    start->size = heapLimit-dataOffset;
-    start->isFree = true;
     printf("Memory map: ");
     for (int i = 0; i < dataOffset; i++) {
         // heap[i] = *((char*)(&start)+i);
@@ -2276,28 +2272,71 @@ void Heap::init() {
     }
     printf("\n");
     heapSize = 0;
-    totalBlocks = 1;
+    totalBlocks = 0;
     maxBlock = heapLimit-dataOffset;
 }
 
 char *Heap::allocateMemory(unsigned char size) {
     if (heapSize + (size + dataOffset) >= heapLimit || (size + dataOffset) >= maxBlock) {
-        printf("No free memory in heap. Heap size %d, needs to allocate %d\n", heapSize, (size+dataOffset));
+        printf("No free memory in heap. Heap size %d, needs to allocate %d.\n", heapSize, (size+dataOffset));
         return NULL;
     }
-    Block *ptr = (Block*)heap, next;
-    printf("Memory map: ");
-    for (int i = 0; i < dataOffset; i++) {
-        // *(((char*)&ptr)+i) = heap[i];
-        printf("%d ", *(((char*)ptr)+i));
+    Block *current = (Block*)heap;
+    Block *next = NULL;
+    if (totalBlocks > 0) {
+        next = (Block*)&current->next;
+        printf("current->next = %d\n", current->next);
+        while ((next != NULL && (((char*)next - (char*)current + dataOffset + current->size) < (size + dataOffset)))) {
+            current = next;
+            next = (Block*)&current->next;
+        }
     }
-    printf("\n");
-/*
-    next = ptr->next;
-    while (next != NULL && (ptr->size + next)
-           || ptr->size == 0)
-        ptr = ptr->next;
-*/
+    if (next == NULL && ((char*)current+dataOffset+current->size-(char*)current+(size+dataOffset)) >= heapLimit) {
+        printf("Free block not found.\n");
+        return NULL;
+    }
+    Block *alloc;
+    if (totalBlocks == 0) alloc = (Block*)heap; else
+        alloc = (Block*)((char*)current+dataOffset+current->size);
+    totalBlocks++;
+    alloc->size = size;
+    if (next == NULL) {
+        printf("Next null.\n");
+        alloc->next = 0;
+    } else {
+        current->next = (char*)alloc-(char*)heap;
+        alloc->next = next->next;
+        printf("Cur next and next of new: %d %d\n", current->next, alloc->next);
+    }
+    // current = (Block*)heap;
+    // next =
+    this->state();
+    /*
+    maxBlock = current->size;
+    while (current->next != 0) {
+        if (current->size > maxBlock)
+            maxBlock = current->size;
+        current = (Block*)(heap + current->next);
+    }
+    printf("MaxBlock = %d\n", maxBlock);
+    */
+    return &alloc->ptr;
+}
+
+int Heap::freeMemory(char *ptr) {
+
+}
+
+void Heap::state() {
+    printf("Heap state. Size of Block structure %ld, total size of heap %d bytes. "
+           "Data offset in Block is %d. Max block size %d.\n", sizeof(Block), heapLimit, dataOffset, maxBlock);
+    if (totalBlocks > 0) {
+        printf("Blocks in heap %d, [offset, size, content]:\n", totalBlocks);
+        Block *it = (Block*)heap;
+        for (int i = 0; i < totalBlocks; i++)
+            printf("%4ld: %3d %s\n", ((char*)it-(char*)heap), it->size, &it->ptr);
+    } else
+        printf("The heap doesn't contain any blocks.\n");
 }
 
 void chapter_8() {
@@ -2336,9 +2375,16 @@ void chapter_8() {
     printf("Files sizes and blocks counters in directory ./labs_0x00:\n");
     filesInfo((char*)"labs_0x00");
     // Task 6-8.
+    printf("\n");
+    const char *strings[] = { "one", "two" };
+    char *ptrs[] = { NULL, NULL };
     Heap heap;
     heap.init();
-    heap.allocateMemory(3);
+    for (int i = 0; i < sizeof(ptrs)/sizeof(char*); i++) {
+        ptrs[i] = heap.allocateMemory(strLen((char*)strings[i])+1);
+        strnCpy(ptrs[i], (char*)strings[i], strLen((char*)strings[i]));
+    }
+    heap.state();
 }
 
 void labs_0x00() {
