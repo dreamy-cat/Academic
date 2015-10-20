@@ -1,0 +1,7 @@
+Text file, chapter 7.
+
+Line 3.
+Diff line for task 6.
+Line 4.
+Line 5.
+

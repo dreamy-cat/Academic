@@ -2241,7 +2241,7 @@ void filesInfo(char *directory) {
 // Tasks 8.6-8.8
 
 struct Heap {
-    static const int heapLimit = 64;
+    static const int heapLimit = 34;
     static int heapSize, totalBlocks, dataOffset;
     static unsigned char maxBlock;
     static char heap[heapLimit];
@@ -2253,6 +2253,7 @@ struct Heap {
     void init();
     char *allocateMemory(unsigned char size);
     int freeMemory(char *ptr);
+    void updateInfo();
     void state();
 };
 
@@ -2265,89 +2266,128 @@ void Heap::init() {
     dataOffset = (long)&start->ptr-(long)start;
     printf("Heap initialization. Size of Block structure %ld, total size of heap %d bytes. "
            "Data offset in Block is %d.\n", sizeof(Block), heapLimit, dataOffset);
-    printf("Memory map: ");
-    for (int i = 0; i < dataOffset; i++) {
-        // heap[i] = *((char*)(&start)+i);
-        printf("%d ", *((char*)(start)+i));
-    }
-    printf("\n");
-    heapSize = 0;
-    totalBlocks = 0;
+    start->next = 0;
+    start->size = 0;
+    heapSize = dataOffset;
+    totalBlocks = 1;
     maxBlock = heapLimit-dataOffset;
+    updateInfo();
 }
 
 char *Heap::allocateMemory(unsigned char size) {
-    if (heapSize + (size + dataOffset) >= heapLimit || (size + dataOffset) >= maxBlock) {
-        printf("No free memory in heap. Heap size %d, needs to allocate %d.\n", heapSize, (size+dataOffset));
+    if (size + dataOffset > maxBlock) {
+        printf("No free memory in heap. Max block is %d, but needs to allocate %d.\n", maxBlock, size+dataOffset);
         return NULL;
     }
-    Block *current = (Block*)heap;
-    Block *next = NULL;
-    Block *alloc;
-    if (totalBlocks > 0) {
+    if (size == 0) {
+        printf("Trying to allocate block with zero bytes. Nothing to return.\n");
+        return NULL;
+    }
+    Block *current = (Block*)heap, *next = NULL, *alloc;
+    next = (Block*)((char*)heap+current->next);
+    while (current->next != 0 &&
+           ((char*)next - ((char*)current + dataOffset * (current->size > 0) + current->size) < size + dataOffset)) {
+        current = next;
         next = (Block*)((char*)heap+current->next);
-        printf("current->next = %d\n", current->next);
-        printf("NEXT and heap = %ld %ld\n", (long)next, long(heap));
-        while ((current->next != 0 && (((char*)next - ((char*)current + dataOffset + current->size)) < (size + dataOffset)))) {
-            current = next;
-            next = (Block*)((char*)heap+current->next);
-            printf("Iteration. cur->next = %ld\n", (long)current->next);
-        }
-        alloc = (Block*)((char*)current+dataOffset+current->size);
-        printf("current->size = %d\n", current->size);
-        printf("alloc - heap = %ld\n", (long)alloc-(long)heap);
-    } else {
-        printf("No blocks, allocate from the start of heap.\n");
-        alloc = (Block*)heap;
     }
-    if (current->next == 0 && ((char*)alloc-(char*)heap+size+dataOffset) >= heapLimit) {
-        printf("Free block not found.\n");
+    if (current->next == 0 && ((char*)current-(char*)heap+current->size+dataOffset+size+dataOffset > heapLimit)) {
+        printf("Error, free block not found.\n");
         return NULL;
     }
-    totalBlocks++;
+    if (current->size > 0) {
+        alloc = (Block*)((char*)current+dataOffset+current->size);
+        totalBlocks++;
+    } else
+        alloc = current;
     alloc->size = size;
-    heapSize -= size+dataOffset;
     if (current->next == 0) {
-        printf("Next null, allocate free space from the tail.\n");
+        printf("Next null, allocate space from the tail.\n");
         alloc->next = 0;
+
     } else {
         alloc->next = (char*)next-(char*)heap;
-        printf("Cur next and next of new: %d %d\n", current->next, alloc->next);
+        printf("Allocate free block in the middle, allocate offset and next offset: %ld %d\n",
+               (char*)alloc-heap, alloc->next);
     }
-    current->next = (char*)alloc-(char*)heap;
-    current = (Block*)heap;
+    if (alloc != current)
+        current->next = (char*)alloc-(char*)heap;
+    updateInfo();
+    return &alloc->ptr;
+}
+
+void Heap::updateInfo() {
+    Block *current = (Block*)heap, *next;
+    if (current->size > 0)
+        heapSize = current->size + dataOffset;
+    else
+        heapSize = 0;
     maxBlock = 0;
     while (current->next != 0) {
         next = (Block*)((char*)heap+current->next);
         if ((char*)next-((char*)current+current->size+dataOffset) > maxBlock) {
-            maxBlock = (char*)next-((char*)current+current->size+dataOffset);
-            printf("New block founded in empty: %d\n", maxBlock);
+            maxBlock = (char*)next-((char*)current+current->size);
+            if (current->size > 0)
+                maxBlock -= dataOffset;
         }
+        if (current->size > 0)
+            heapSize += current->size+dataOffset;
         current = next;
     }
     if (current->next == 0 && (heapLimit-((char*)current-(char*)heap+current->size+dataOffset)) > maxBlock) {
         maxBlock = heapLimit-((char*)current-(char*)heap+current->size+dataOffset);
-        printf("Max free block founded in the tail: %d\n", maxBlock);
+        // printf("Max free block founded in the tail: %d\n", maxBlock);
     }
-    return &alloc->ptr;
 }
 
 int Heap::freeMemory(char *ptr) {
-
+    Block *it = (Block*)heap, *prev = NULL, *next = NULL;
+    if (totalBlocks == 1 && it->size == 0) {
+        printf("No blocks in heap. Nothing to remove.\n");
+        return -1;
+    }
+    for (int i = 0; i < totalBlocks; i++) {
+        if (it->next != 0)
+            next = (Block*)((char*)heap + it->next);
+        if (&it->ptr == ptr) {
+            printf("Block to free founded. Size = %d. Offset = %ld.\n", it->size, ((char*)it-(char*)heap));
+            if (prev != NULL && it->next != 0)
+                prev->next = (char*)next-(char*)heap;
+            if (prev != NULL && it->next == 0)
+                prev->next = 0;
+            if (prev == NULL && it->next != 0)
+                it->size = 0;
+            else
+                totalBlocks--;
+            updateInfo();
+            return it->size;
+        }
+        prev = it;
+        it = next;
+    }
+    return -1;
 }
 
 void Heap::state() {
-    printf("Heap state. Size of Block structure %ld, total size of heap %d bytes. "
-           "Data offset in Block is %d. Max block size %d.\n", sizeof(Block), heapLimit, dataOffset, maxBlock);
+    printf("\nHeap state. Total size of heap %d bytes. Max free block size %d.\n", heapSize, maxBlock);
     if (totalBlocks > 0) {
-        printf("Blocks in heap %d, [offset, size, content]:\n", totalBlocks);
+        printf("Blocks in heap %d, [offset, size(+block info), content]:\n", totalBlocks);
         Block *it = (Block*)heap;
         for (int i = 0; i < totalBlocks; i++) {
-            printf("%4ld: %3d %s\n", ((char*)it-(char*)heap), it->size, &it->ptr);
+            printf("%4ld: %3d ", ((char*)it-(char*)heap), it->size+dataOffset);
+            if (it->size > 0)
+                printf("%s\n", &it->ptr);
+            else
+                printf("Free block.\n");
+            if (it->next == 0) {
+                int tailSize = heapLimit-((char*)it-(char*)heap+it->size+dataOffset);
+                if (it->next == 0 && tailSize > 0)
+                    printf("%4ld: %3d Free block.\n", (char*)it-(char*)heap+it->size+dataOffset, tailSize);
+            }
             it = (Block*)((char*)heap + it->next);
         }
     } else
         printf("The heap doesn't contain any blocks.\n");
+    printf("\n");
 }
 
 void chapter_8() {
@@ -2387,16 +2427,78 @@ void chapter_8() {
     filesInfo((char*)"labs_0x00");
     // Task 6-8.
     printf("\n");
-    const char *strings[] = { "one", "two", "three" };
-    char *ptrs[] = { NULL, NULL, NULL };
+    const char *strings[] = { "one", "two", "three", "four", "five" };
+    char *ptrs[] = { NULL, NULL, NULL, NULL, NULL };
     Heap heap;
     heap.init();
-    for (int i = 0; i < sizeof(ptrs)/sizeof(char*); i++) {
+    heap.state();
+    printf("Test 1. Add five words, to full heap.\n\n");
+    for (int i = 0; i < 5; i++) {
         ptrs[i] = heap.allocateMemory(strLen((char*)strings[i])+1);
-        strnCpy(ptrs[i], (char*)strings[i], strLen((char*)strings[i]));
-        heap.state();
+        if (ptrs[i] != NULL)
+            strnCpy(ptrs[i], (char*)strings[i], strLen((char*)strings[i])+1);
     }
-    // heap.state();
+    heap.state();
+    printf("Test 2. Free all five blocks from heap.\n\n");
+    for (int i = 0; i < 5; i++)
+        heap.freeMemory(ptrs[i]);
+    heap.state();
+    printf("Test 3. Add five words to heap, remove 2 words in a tail, and add them again.\n\n");
+    for (int i = 0; i < 5; i++) {
+        ptrs[i] = heap.allocateMemory(strLen((char*)strings[i])+1);
+        if (ptrs[i] != NULL)
+            strnCpy(ptrs[i], (char*)strings[i], strLen((char*)strings[i])+1);
+    }
+    heap.state();
+    for (int i = 3; i < 5; i++)
+        heap.freeMemory(ptrs[i]);
+    heap.state();
+    for (int i = 3; i < 5; i++) {
+        ptrs[i] = heap.allocateMemory(strLen((char*)strings[i])+1);
+        if (ptrs[i] != NULL)
+            strnCpy(ptrs[i], (char*)strings[i], strLen((char*)strings[i])+1);
+    }
+    heap.state();
+    printf("Test 4. Remove first 2 words and add them again.\n\n");
+    for (int i = 0; i < 2; i++)
+        heap.freeMemory(ptrs[i]);
+    heap.state();
+    for (int i = 0; i < 2; i++) {
+        ptrs[i] = heap.allocateMemory(strLen((char*)strings[i])+1);
+        if (ptrs[i] != NULL)
+            strnCpy(ptrs[i], (char*)strings[i], strLen((char*)strings[i])+1);
+    }
+    heap.state();
+    printf("Test 5. Remove words from 'two' to 'four', and add again.\n\n");
+    for (int i = 1; i < 4; i++)
+        heap.freeMemory(ptrs[i]);
+    heap.state();
+    for (int i = 1; i < 4; i++) {
+        ptrs[i] = heap.allocateMemory(strLen((char*)strings[i])+1);
+        if (ptrs[i] != NULL)
+            strnCpy(ptrs[i], (char*)strings[i], strLen((char*)strings[i])+1);
+    }
+    heap.state();
+    printf("Test 6. Remove words 'one', 'three' and 'five' and add again.\n\n");
+    for (int i = 0; i < 5; i += 2)
+        heap.freeMemory(ptrs[i]);
+    heap.state();
+    for (int i = 0; i < 5; i += 2) {
+        ptrs[i] = heap.allocateMemory(strLen((char*)strings[i])+1);
+        if (ptrs[i] != NULL)
+            strnCpy(ptrs[i], (char*)strings[i], strLen((char*)strings[i])+1);
+    }
+    heap.state();
+    printf("Test 7. Remove words as in previous, but add in reverse order.\n\n");
+    for (int i = 0; i < 5; i += 2)
+        heap.freeMemory(ptrs[i]);
+    heap.state();
+    for (int i = 4; i >= 0; i -= 2) {
+        ptrs[i] = heap.allocateMemory(strLen((char*)strings[i])+1);
+        if (ptrs[i] != NULL)
+            strnCpy(ptrs[i], (char*)strings[i], strLen((char*)strings[i])+1);
+    }
+    heap.state();
 }
 
 void labs_0x00() {
