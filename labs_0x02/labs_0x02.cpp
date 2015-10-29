@@ -44,19 +44,49 @@ void chapter_01() {
     } catch(invalid_argument m) {
         cout << "Exception from PStash_1: " << m.what() << endl;
     }
-    // Task 5. 'terminate', think about it later...
+    // Task 5.
     Class_1_5* ptrs_1[] = { NULL, NULL, NULL, NULL, NULL };
     int i, j = 0;
     for (i = 0; i < 3; i++) ptrs_1[i] = new Class_1_5;
-    for ( ; i < 5; i++) {
+    for ( ; i < 5; ) {
         try {
             ptrs_1[i] = new Class_1_5;
-        } catch (bad_alloc) {
-            cout << "Exception from Class_1_5::operator new: " << " trying to free some space." << endl;
+            i++;
+        } catch (bad_alloc e) {
+            cout << "Exception from Class_1_5::operator new: " << e.what() << ", trying to free some space." << endl;
             delete (ptrs_1[j++]);
         }
     }
-
+    // Task 6-8. Terminate called after throwing an instance of 'int'.
+    Class_1_6* class_2 = new Class_1_6, class_3;
+    try {
+        class_3.function_1();       // Auto object.
+        class_2->function_1();      // Heap object.
+        // delete class_2;
+    } catch (int n) {
+        cout << "Exception from Class_1_6:: " << n << endl;
+    }
+    // Task 11. First, because of terminate.
+    try {
+        Garage class_3;
+    } catch (int i) {
+        cout << "Exception in Garage constructor, int = " << i << endl;
+    }
+    // Task 9-10. May be not as planning.
+    set_unexpected(unexpectedHandler);
+    for (int i = 0; i < 5; i++) {
+        try {
+            function_01_9(i);
+        } catch (char c) {
+            cout << "Catch exception with char = " << c << endl;
+        } catch (int i) {
+            cout << "Catch exception with int = " << i << endl;
+        } catch (bool b) {
+            cout << "Catch exception with bool = " << b << endl;
+        } catch (Class_1_9 cl) {
+            cout << "Catch exception with Class_1_9, what(): " << cl.what() << endl;
+        }
+    }
 }
 
 void labs_0x02() {

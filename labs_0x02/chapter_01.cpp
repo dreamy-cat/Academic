@@ -67,13 +67,64 @@ int Class_1_5::counter = 0;
 Class_1_5::Class_1_5() {}
 
 void* Class_1_5::operator new(size_t) {
-    cout << "Class_1_5::operator new().\n";
-    if (counter+1 == limit) throw bad_alloc();
+    cout << "Class_1_5::operator new.\n";
+    if (counter+1 > limit) throw bad_alloc();
     counter++;
     return ::new Class_1_5;
 }
 
 void Class_1_5::operator delete(void *p) {
-    cout << "Class_1_5::operator delete().\n";
+    cout << "Class_1_5::operator delete.\n";
+    counter--;
     ::delete((Class_1_5*)p);
+}
+
+Class_1_6::Class_1_6() { cout << "Class_1_6 constructor.\n"; }
+
+Class_1_6::~Class_1_6() {
+    cout << "Class_1_6 destructor.\n";
+    // throw 2;
+}
+
+void Class_1_6::function_1() {
+    cout << "Class_1_6::function_1. Throwing exception.\n";
+    throw 2;
+}
+
+void function_01_9(int index) throw(char, int, bool, Class_1_9) {
+    switch (index) {
+    case 0:
+        throw 'a';
+        break;
+    case 1:
+        throw 1;
+        break;
+    case 2:
+        throw true;
+        break;
+    case 3:
+        throw Class_1_9();
+        break;
+    default:
+        throw double(5.0);
+    }
+}
+
+void unexpectedHandler() {
+    cout << "Handler unexpected exception.\n";
+    exit(0);
+}
+
+Garage::Garage() {
+    try {
+        car_1 = new Car;
+    } catch(char c) {
+        cout << "Garage catch exception parameter = " << c << endl;
+        throw 1;
+    }
+}
+
+Garage::Car::Motor::Motor() {
+    cout << "Class Motor constructor.\n";
+    throw 'a';
 }

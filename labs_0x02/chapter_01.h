@@ -6,6 +6,7 @@
 #include <signal.h>
 #include <stdexcept>
 #include <cstring>
+#include <cstdlib>
 
 int function_01_1();
 void function_01_2();
@@ -43,6 +44,33 @@ public:
     static const int limit = 3;
     void* operator new (size_t);
     void operator delete(void* p);
+};
+
+class Class_1_6 {
+public:
+    Class_1_6();
+    ~Class_1_6();
+    void function_1();
+};
+
+class Class_1_9 : public std::exception {};
+
+void function_01_9(int index) throw(char, int, bool, Class_1_9);
+
+void unexpectedHandler();
+
+class Garage {
+public:
+    Garage();
+    class Car {
+    public:
+        class Motor {
+        public:
+            Motor();
+        };
+        Motor motor_1;
+    };
+    Car* car_1;
 };
 
 #endif
