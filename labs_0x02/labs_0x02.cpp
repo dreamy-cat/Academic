@@ -5,9 +5,10 @@
 #include "labs_0x02.h"
 #include "chapter_01.h"
 
+using namespace Labs_0x02;
 using namespace std;
 
-void chapter_01() {
+void Labs_0x02::chapter_01() {
     cout << "Chapter's 1. Tasks.\n";
     // Task 1.
     cout << "Function 01 returns " << function_01_1() << ".\n";
@@ -89,8 +90,12 @@ void chapter_01() {
     }
 }
 
-void labs_0x02() {
+void Labs_0x02::chapter_02() {
+    cout << "Chapter's 2 tasks.\n";
+    // Task 1.
+}
 
-    chapter_01();
+void labs_0x02() {
+    chapter_02();
 }
 
