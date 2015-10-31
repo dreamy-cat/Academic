@@ -8,8 +8,6 @@
 #include <stdexcept>
 #include <vector>
 
-// #define test_(cond)
-
 namespace TestKit {
 
 class Test {
@@ -34,6 +32,12 @@ private:
     Test& operator=(const Test&);
 };
 
+class VectorTest : public Test {
+public:
+    VectorTest();
+    void run();
+};
+
 class KitError : public std::logic_error {
 public:
     KitError(const std::string& s = "");
@@ -41,14 +45,14 @@ public:
 
 class Kit {
 public:
-    Kit(const std::string& name, std::ostream* os = &std::cout);
+    Kit(const std::string& name, std::ostream* osPtr = &std::cout);
     std::string getName() const;
     long getNumPassed() const;
     long getNumFailed() const;
     const std::ostream* getStream() const;
     void setStream(std::ostream* osPtr);
     void addTest(Test* t) throw (KitError);
-    void addKit(const Kit&);
+    void addKit(const Kit&k);
     void run();
     long report() const;
     void free();

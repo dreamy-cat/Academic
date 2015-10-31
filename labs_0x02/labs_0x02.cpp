@@ -1,9 +1,11 @@
 #include <iostream>
 #include <errno.h>
 #include <signal.h>
+#include <vector>
 
 #include "labs_0x02.h"
 #include "chapter_01.h"
+#include "chapter_02.h"
 
 using namespace Labs_0x02;
 using namespace std;
@@ -93,6 +95,11 @@ void Labs_0x02::chapter_01() {
 void Labs_0x02::chapter_02() {
     cout << "Chapter's 2 tasks.\n";
     // Task 1.
+    vector<int> vector_1;
+    for (int i = 0; i < 3; i++) vector_1.push_back(i);
+    TestKit::Kit kit("KIT 1");
+    // kit.addTest(new);
+
 }
 
 void labs_0x02() {
