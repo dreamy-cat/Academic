@@ -36,6 +36,8 @@ class VectorTest : public Test {
 public:
     VectorTest();
     void run();
+private:
+    std::vector<int> v;
 };
 
 class KitError : public std::logic_error {
@@ -65,6 +67,31 @@ private:
     Kit& operator=(const Kit&);
 };
 
+class Rational {
+public:
+    Rational (int numerator, int denumerator);
+    friend const Rational operator+(const Rational& left, const Rational& right);
+    friend const Rational operator-(const Rational& left, const Rational& right);
+    friend const Rational operator*(const Rational& left, const Rational& right);
+    friend const Rational operator/(const Rational& left, const Rational& right);
+    friend std::ostream& operator<<(std::ostream& os, const Rational& value);
+    Rational& operator+=(const Rational& value);
+    Rational& operator-=(const Rational& value);
+    Rational& operator*=(const Rational& value);
+    Rational& operator/=(const Rational& value);
+    friend bool operator<(const Rational& left, const Rational& right);
+    friend bool operator>(const Rational& left, const Rational& right);
+    friend bool operator<=(const Rational& left, const Rational& right);
+    friend bool operator>=(const Rational& left, const Rational& right);
+    friend bool operator==(const Rational& left, const Rational& right);
+    friend bool operator!=(const Rational& left, const Rational& right);
+private:
+    int numerator, denumerator;
+    int lcm(int x, int y);
+};
+
 }   // namespace TestKit
+
+
 
 #endif

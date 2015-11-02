@@ -97,9 +97,15 @@ void Labs_0x02::chapter_02() {
     // Task 1.
     vector<int> vector_1;
     for (int i = 0; i < 3; i++) vector_1.push_back(i);
-    TestKit::Kit kit("KIT 1");
-    // kit.addTest(new);
-
+    TestKit::Kit kit("Vector");
+    kit.addTest(new TestKit::VectorTest);
+    try {
+        kit.run();
+    } catch (out_of_range) {
+        cout << "Exception, vector out of range." << endl;
+    }
+    kit.report();
+    // Task 2.
 }
 
 void labs_0x02() {

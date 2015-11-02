@@ -7,8 +7,6 @@ Test::Test(ostream* osPtr) : os(osPtr), nPass(0), nFail(0) {}
 
 Test::~Test() {}
 
-void Test::run() {}
-
 long Test::getNumPassed() const { return nPass; }
 
 long Test::getNumFailed() const { return nFail; }
@@ -20,7 +18,7 @@ void Test::setStream(ostream* osPtr) { os = osPtr; }
 void Test::succeed_() { ++nPass; }
 
 long Test::report() const {
-    if (os) *os << " Test : " << typeid(*this).name() << ", passed: " << nPass << ", failed: " << nFail << endl;
+    if (os) *os << "Test: " << typeid(*this).name() << ", passed: " << nPass << ", failed: " << nFail << endl;
     return nFail;
 }
 
@@ -36,12 +34,18 @@ void Test::doFail(const string& label, const char *fName, long line) {
                 << " (line " << line << ")" << endl;
 }
 
-VectorTest::VectorTest() {
-
-}
+VectorTest::VectorTest() {}
 
 void VectorTest::run() {
-
+    v.push_back(1);
+    doTest(!v.empty() && (*v.begin() == 1), "push_back()", "chapter_02.cpp", __LINE__);
+    doTest(v.front() == 1, "front()", "chapter_02.cpp", __LINE__);
+    doTest(v.back() == 1, "back()", "chapter_02.cpp", __LINE__);
+    v.pop_back();
+    doTest(v.empty(), "pop_back()", "chapter_02.cpp", __LINE__);
+    v.push_back(1);
+    doTest(v.at(0) == 1, "at(0)", "chapter_02.cpp", __LINE__);
+    int element = v.at(1);      // Throw exception
 }
 
 KitError::KitError(const std::string& s) : logic_error(s) {}
@@ -97,15 +101,13 @@ void Kit::run() {
 long Kit::report() const {
     if (os) {
         long totalFail = 0;
-        *os << "Kit '" << name << "' ";
+        *os << "Kit '" << name << "':";
         size_t i;
-        for (i = 0; i < name.size(); ++i) *os << "-";
         *os << endl;
         for (i = 0; i < tests.size(); ++i) {
             assert(tests[i]);
             totalFail += tests[i]->report();
         }
-        *os << "---";
         return totalFail;
     } else return getNumFailed();
 }
@@ -123,3 +125,36 @@ void Kit::reset() {
         tests[i]->reset();
     }
 }
+
+Rational::Rational (int numerator, int denumerator) {
+    this->numerator = numerator;
+    this->denumerator = denumerator;
+}
+
+const Rational operator+(const Rational& left, const Rational& right) {}
+
+const Rational operator-(const Rational& left, const Rational& right) {}
+
+const Rational operator*(const Rational& left, const Rational& right) {}
+
+const Rational operator/(const Rational& left, const Rational& right) {}
+
+std::ostream& operator<<(std::ostream& os, const Rational& value) {}
+
+bool operator<(const Rational& left, const Rational& right) {}
+
+bool operator>(const Rational& left, const Rational& right) {}
+
+bool operator<=(const Rational& left, const Rational& right) {}
+
+bool operator>=(const Rational& left, const Rational& right) {}
+
+bool operator==(const Rational& left, const Rational& right) {}
+
+bool operator!=(const Rational& left, const Rational& right) {}
+
+int Rational::lcm(int x, int y) {
+    vector<int, int> xDecomp, yDecomp;
+}
+
+
