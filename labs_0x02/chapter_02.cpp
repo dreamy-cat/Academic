@@ -154,7 +154,44 @@ bool operator==(const Rational& left, const Rational& right) {}
 bool operator!=(const Rational& left, const Rational& right) {}
 
 int Rational::lcm(int x, int y) {
-    vector<int, int> xDecomp, yDecomp;
+    if (x <= 0 || y <= 0) return -1;
+    if (x == 1) return y;
+    if (y == 1) return x;
+    vector<int> xDecomp, yDecomp, multipliers;
+    int maxMultiplier, multiplier, multiplierIndex = 0;
+    if (x > y) maxMultiplier = x; else maxMultiplier = y;
+    for (int i = 2; i <= maxMultiplier; i++)
+        multipliers.push_back(i);
+    while (multiplierIndex < multipliers.size()) {
+        multiplier = multipliers[multiplierIndex];
+        for (int i = 1; multiplierIndex+multiplier * i < multipliers.size(); i++)
+            multipliers[multiplierIndex+multiplier*i] = 0;
+        while (multiplierIndex < multipliers.size() && multiplier >= multipliers[multiplierIndex])
+            multiplierIndex++;
+    }
+    for (vector<int>::iterator it = multipliers.begin(); it != multipliers.end(); it++)
+        if (*it == 0) multipliers.erase(it--);
+    xDecomp.resize(multipliers.size(), 0);
+    yDecomp.resize(multipliers.size(), 0);
+    int i, j;
+    while (x > 1) {
+        for (i = 0; x % multipliers[i] != 0; i++);
+        xDecomp[i]++;
+        x = x / multipliers[i];
+    }
+    while (y > 1) {
+        for (j = 0; y % multipliers[j] != 0; j++);
+        yDecomp[j]++;
+        y = y / multipliers[j];
+    }
+    int lcm = 1, power, factor;
+    for (i = 0; i < multipliers.size(); i++) {
+        if (xDecomp[i] >= yDecomp[i]) power = xDecomp[i]; else power = yDecomp[i];
+        factor = 1;
+        for (j = 0; j < power; j++) factor *= multipliers[i];
+        lcm *= factor;
+    }
+    return lcm;
 }
 
 

@@ -106,6 +106,8 @@ void Labs_0x02::chapter_02() {
     }
     kit.report();
     // Task 2.
+    Rational cl_2(1, 2);
+    cout << "lcm(32, 24) = " << cl_2.lcm(32, 24) << endl;
 }
 
 void labs_0x02() {

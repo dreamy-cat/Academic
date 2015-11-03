@@ -67,6 +67,8 @@ private:
     Kit& operator=(const Kit&);
 };
 
+}   // namespace TestKit
+
 class Rational {
 public:
     Rational (int numerator, int denumerator);
@@ -85,13 +87,10 @@ public:
     friend bool operator>=(const Rational& left, const Rational& right);
     friend bool operator==(const Rational& left, const Rational& right);
     friend bool operator!=(const Rational& left, const Rational& right);
+    int lcm(int x, int y);
 private:
     int numerator, denumerator;
-    int lcm(int x, int y);
+
 };
-
-}   // namespace TestKit
-
-
 
 #endif
