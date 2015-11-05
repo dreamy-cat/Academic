@@ -72,6 +72,7 @@ private:
 class Rational {
 public:
     Rational (int numerator, int denumerator);
+    ~Rational();
     friend const Rational operator+(const Rational& left, const Rational& right);
     friend const Rational operator-(const Rational& left, const Rational& right);
     friend const Rational operator*(const Rational& left, const Rational& right);
@@ -87,10 +88,14 @@ public:
     friend bool operator>=(const Rational& left, const Rational& right);
     friend bool operator==(const Rational& left, const Rational& right);
     friend bool operator!=(const Rational& left, const Rational& right);
-    int lcm(int x, int y);
-private:
+    int lcm_gcd(int x, int y, int type);
+    Rational(const Rational& r);
     int numerator, denumerator;
 
+private:
+
 };
+
+Rational f_1(Rational r);
 
 #endif

@@ -127,11 +127,42 @@ void Kit::reset() {
 }
 
 Rational::Rational (int numerator, int denumerator) {
+    cout << "Rational constructor." << endl;
     this->numerator = numerator;
     this->denumerator = denumerator;
 }
 
-const Rational operator+(const Rational& left, const Rational& right) {}
+Rational::~Rational() {
+    cout << "Rational destructor." << endl;
+}
+
+Rational::Rational(const Rational& r) {
+    cout << "Copy constructor." << endl;
+    numerator = r.numerator;
+    denumerator = r.denumerator;
+}
+
+Rational f_1(Rational r) {
+    Rational t(1, 2);
+    t.numerator = 3;
+    t.denumerator = 4;
+    return t;
+}
+
+Rational const operator+(const Rational& left, const Rational& right) {
+    Rational result(1, 1);
+    int lcm = result.lcm_gcd(left.denumerator, right.denumerator, 0);
+    cout << "lcm = " << lcm;
+    int leftNum = left.numerator * (lcm / left.denumerator);
+    int rightNum = right.numerator * (lcm / right.denumerator);
+    result.numerator = leftNum + rightNum;
+    result.denumerator = lcm;
+    int gcd = result.lcm_gcd(result.numerator, result.denumerator, 1);
+    cout << " gcd = " << gcd << endl;
+    result.numerator /= gcd;
+    result.denumerator /= gcd;
+    return result;
+}
 
 const Rational operator-(const Rational& left, const Rational& right) {}
 
@@ -139,7 +170,9 @@ const Rational operator*(const Rational& left, const Rational& right) {}
 
 const Rational operator/(const Rational& left, const Rational& right) {}
 
-std::ostream& operator<<(std::ostream& os, const Rational& value) {}
+std::ostream& operator<<(std::ostream& os, const Rational& value) {
+    os << value.numerator << "/" << value.denumerator;
+}
 
 bool operator<(const Rational& left, const Rational& right) {}
 
@@ -153,10 +186,13 @@ bool operator==(const Rational& left, const Rational& right) {}
 
 bool operator!=(const Rational& left, const Rational& right) {}
 
-int Rational::lcm(int x, int y) {
+int Rational::lcm_gcd(int x, int y, int type) {
     if (x <= 0 || y <= 0) return -1;
-    if (x == 1) return y;
-    if (y == 1) return x;
+    if (type == 0) {
+        if (x == 1) return y;
+        if (y == 1) return x;
+    } else
+        if (x == 1 || y == 1) return 1;
     vector<int> xDecomp, yDecomp, multipliers;
     int maxMultiplier, multiplier, multiplierIndex = 0;
     if (x > y) maxMultiplier = x; else maxMultiplier = y;
@@ -184,14 +220,15 @@ int Rational::lcm(int x, int y) {
         yDecomp[j]++;
         y = y / multipliers[j];
     }
-    int lcm = 1, power, factor;
+    int result = 1, power, factor;
     for (i = 0; i < multipliers.size(); i++) {
-        if (xDecomp[i] >= yDecomp[i]) power = xDecomp[i]; else power = yDecomp[i];
+        if (type == 0)
+            if (xDecomp[i] >= yDecomp[i]) power = xDecomp[i]; else power = yDecomp[i];
+        else
+            if (xDecomp[i] <= yDecomp[i]) power = xDecomp[i]; else power = yDecomp[i];
         factor = 1;
         for (j = 0; j < power; j++) factor *= multipliers[i];
-        lcm *= factor;
+        result *= factor;
     }
-    return lcm;
+    return result;
 }
-
-
