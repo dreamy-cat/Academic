@@ -48,6 +48,35 @@ void VectorTest::run() {
     int element = v.at(1);      // Throw exception
 }
 
+RationalTest::RationalTest() : result(0,1), leftValue(1,2), rightValue(1,4) {}
+
+void RationalTest::run() {
+    result = leftValue + rightValue;
+    doTest((result == Rational(3,4)), "operator+()", "chapter_02.cpp", __LINE__);
+    result = leftValue - rightValue;
+    doTest((result == Rational(1,4)), "operator-()", "chapter_02.cpp", __LINE__);
+    result = leftValue * rightValue;
+    doTest((result == Rational(1,8)), "operator*()", "chapter_02.cpp", __LINE__);
+    result = leftValue / rightValue;
+    doTest((result == Rational(2,1)), "operator/()", "chapter_02.cpp", __LINE__);
+    result = Rational(1, 3);
+    doTest((result < Rational(2,3)), "operator<()", "chapter_02.cpp", __LINE__);
+    doTest((Rational(2,3) > result), "operator>()", "chapter_02.cpp", __LINE__);
+    doTest((result <= Rational(1,3)), "operator<=()", "chapter_02.cpp", __LINE__);
+    doTest((result >= Rational(1,3)), "operator>=()", "chapter_02.cpp", __LINE__);
+    doTest((result != Rational(2,3)), "operator!=()", "chapter_02.cpp", __LINE__);
+    doTest((result == Rational(1,3)), "operator==()", "chapter_02.cpp", __LINE__);
+    result = Rational(0, 5);
+    result += rightValue;
+    doTest((result == Rational(1,4)), "operator+=()", "chapter_02.cpp", __LINE__);
+    result *= rightValue;
+    doTest((result == Rational(1,16)), "operator*=()", "chapter_02.cpp", __LINE__);
+    result /= rightValue;
+    doTest((result == Rational(1,4)), "operator/=()", "chapter_02.cpp", __LINE__);
+    result -= rightValue;
+    doTest((result == Rational(0,1)), "operator-=()", "chapter_02.cpp", __LINE__);
+}
+
 KitError::KitError(const std::string& s) : logic_error(s) {}
 
 Kit::Kit(const string& name, ostream* osPtr) : name(name), os(osPtr) {}
@@ -127,72 +156,133 @@ void Kit::reset() {
 }
 
 Rational::Rational (int numerator, int denumerator) {
-    cout << "Rational constructor." << endl;
+    if (denumerator == 0) throw invalid_argument("Division by zero.");
     this->numerator = numerator;
-    this->denumerator = denumerator;
+    if (numerator == 0) this->denumerator = 1; else
+        this->denumerator = denumerator;
+    if (denumerator < 0) {
+        this->numerator *= -1;
+        this->denumerator *= -1;
+    }
 }
 
-Rational::~Rational() {
-    cout << "Rational destructor." << endl;
+const Rational& Rational::operator=(const Rational& right) {
+    numerator = right.numerator;
+    denumerator = right.denumerator;
+    return *this;
 }
+
+Rational::~Rational() {}
 
 Rational::Rational(const Rational& r) {
-    cout << "Copy constructor." << endl;
     numerator = r.numerator;
     denumerator = r.denumerator;
 }
 
-Rational f_1(Rational r) {
-    Rational t(1, 2);
-    t.numerator = 3;
-    t.denumerator = 4;
-    return t;
-}
-
 Rational const operator+(const Rational& left, const Rational& right) {
-    Rational result(1, 1);
-    int lcm = result.lcm_gcd(left.denumerator, right.denumerator, 0);
-    cout << "lcm = " << lcm;
+    int rNum = 1, rDen = 1;
+    int lcm = Rational::lcm_gcd(left.denumerator, right.denumerator, 0);
     int leftNum = left.numerator * (lcm / left.denumerator);
     int rightNum = right.numerator * (lcm / right.denumerator);
-    result.numerator = leftNum + rightNum;
-    result.denumerator = lcm;
-    int gcd = result.lcm_gcd(result.numerator, result.denumerator, 1);
-    cout << " gcd = " << gcd << endl;
-    result.numerator /= gcd;
-    result.denumerator /= gcd;
-    return result;
+    rNum = leftNum + rightNum;
+    rDen = lcm;
+    int gcd = Rational::lcm_gcd(rNum, rDen, 1);
+    rNum /= gcd;
+    rDen /= gcd;
+    return Rational(rNum, rDen);
 }
 
-const Rational operator-(const Rational& left, const Rational& right) {}
+const Rational operator-(const Rational& left, const Rational& right) {
+    Rational tmp = right;
+    tmp.numerator *= -1;
+    return (left + tmp);
+}
 
-const Rational operator*(const Rational& left, const Rational& right) {}
+const Rational operator*(const Rational& left, const Rational& right) {
+    int rNum = left.numerator * right.numerator, rDen = left.denumerator * right.denumerator;
+    int gcd = Rational::lcm_gcd(rNum, rDen, 1);
+    rNum /= gcd;
+    rDen /= gcd;
+    return Rational(rNum, rDen);
+}
 
-const Rational operator/(const Rational& left, const Rational& right) {}
+const Rational operator/(const Rational& left, const Rational& right) {
+    Rational temp(right.denumerator, right.numerator);
+    return (left * temp);
+}
+
+Rational& operator+=(Rational& left, const Rational& right) {
+    left = left + right;
+    return left;
+}
+
+Rational& operator-=(Rational& left, const Rational& right) {
+    left = left - right;
+    return left;
+}
+
+Rational& operator*=(Rational& left, const Rational& right) {
+    left = left * right;
+    return left;
+}
+
+Rational& operator/=(Rational& left, const Rational& right) {
+    left = left / right;
+    return left;
+}
 
 std::ostream& operator<<(std::ostream& os, const Rational& value) {
     os << value.numerator << "/" << value.denumerator;
 }
 
-bool operator<(const Rational& left, const Rational& right) {}
+bool operator<(const Rational& left, const Rational& right) {
+    int lcm = Rational::lcm_gcd(left.denumerator, right.denumerator, 0);
+    int leftNum = left.numerator * (lcm / left.denumerator);
+    int rightNum = right.numerator * (lcm / right.denumerator);
+    return bool(leftNum < rightNum);
+}
 
-bool operator>(const Rational& left, const Rational& right) {}
+bool operator>(const Rational& left, const Rational& right) {
+    int lcm = Rational::lcm_gcd(left.denumerator, right.denumerator, 0);
+    int leftNum = left.numerator * (lcm / left.denumerator);
+    int rightNum = right.numerator * (lcm / right.denumerator);
+    return bool(leftNum > rightNum);
+}
 
-bool operator<=(const Rational& left, const Rational& right) {}
+bool operator<=(const Rational& left, const Rational& right) {
+    int lcm = Rational::lcm_gcd(left.denumerator, right.denumerator, 0);
+    int leftNum = left.numerator * (lcm / left.denumerator);
+    int rightNum = right.numerator * (lcm / right.denumerator);
+    return bool(leftNum <= rightNum);
+}
 
-bool operator>=(const Rational& left, const Rational& right) {}
+bool operator>=(const Rational& left, const Rational& right) {
+    int lcm = Rational::lcm_gcd(left.denumerator, right.denumerator, 0);
+    int leftNum = left.numerator * (lcm / left.denumerator);
+    int rightNum = right.numerator * (lcm / right.denumerator);
+    return bool(leftNum >= rightNum);
+}
 
-bool operator==(const Rational& left, const Rational& right) {}
+bool operator==(const Rational& left, const Rational& right) {
+    int lcm = Rational::lcm_gcd(left.denumerator, right.denumerator, 0);
+    int leftNum = left.numerator * (lcm / left.denumerator);
+    int rightNum = right.numerator * (lcm / right.denumerator);
+    return bool(leftNum == rightNum);
+}
 
-bool operator!=(const Rational& left, const Rational& right) {}
+bool operator!=(const Rational& left, const Rational& right) {
+    int lcm = Rational::lcm_gcd(left.denumerator, right.denumerator, 0);
+    int leftNum = left.numerator * (lcm / left.denumerator);
+    int rightNum = right.numerator * (lcm / right.denumerator);
+    return bool(leftNum != rightNum);
+}
 
 int Rational::lcm_gcd(int x, int y, int type) {
-    if (x <= 0 || y <= 0) return -1;
     if (type == 0) {
-        if (x == 1) return y;
-        if (y == 1) return x;
+        if (x == 1 || x == -1) return y;
+        if (y == 1 || y == -1) return x;
     } else
-        if (x == 1 || y == 1) return 1;
+        if (x == 1 || y == 1 || x == -1 || y == -1) return 1;
     vector<int> xDecomp, yDecomp, multipliers;
     int maxMultiplier, multiplier, multiplierIndex = 0;
     if (x > y) maxMultiplier = x; else maxMultiplier = y;

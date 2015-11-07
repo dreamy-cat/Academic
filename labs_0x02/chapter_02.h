@@ -8,6 +8,32 @@
 #include <stdexcept>
 #include <vector>
 
+class Rational {
+public:
+    Rational (int numerator = 1, int denumerator = 1);
+    Rational(const Rational& r);
+    const Rational& operator=(const Rational& right);
+    ~Rational();
+    friend const Rational operator+(const Rational& left, const Rational& right);
+    friend const Rational operator-(const Rational& left, const Rational& right);
+    friend const Rational operator*(const Rational& left, const Rational& right);
+    friend const Rational operator/(const Rational& left, const Rational& right);
+    friend std::ostream& operator<<(std::ostream& os, const Rational& value);
+    friend Rational& operator+=(Rational& left, const Rational& right);
+    friend Rational& operator-=(Rational& left, const Rational& right);
+    friend Rational& operator*=(Rational& left, const Rational& right);
+    friend Rational& operator/=(Rational& left, const Rational& right);
+    friend bool operator<(const Rational& left, const Rational& right);
+    friend bool operator>(const Rational& left, const Rational& right);
+    friend bool operator<=(const Rational& left, const Rational& right);
+    friend bool operator>=(const Rational& left, const Rational& right);
+    friend bool operator==(const Rational& left, const Rational& right);
+    friend bool operator!=(const Rational& left, const Rational& right);
+    static int lcm_gcd(int x, int y, int type);
+private:
+    int numerator, denumerator;
+};
+
 namespace TestKit {
 
 class Test {
@@ -40,6 +66,14 @@ private:
     std::vector<int> v;
 };
 
+class RationalTest : public Test {
+public:
+    RationalTest();
+    void run();
+private:
+    Rational result, leftValue, rightValue;
+};
+
 class KitError : public std::logic_error {
 public:
     KitError(const std::string& s = "");
@@ -68,34 +102,5 @@ private:
 };
 
 }   // namespace TestKit
-
-class Rational {
-public:
-    Rational (int numerator, int denumerator);
-    ~Rational();
-    friend const Rational operator+(const Rational& left, const Rational& right);
-    friend const Rational operator-(const Rational& left, const Rational& right);
-    friend const Rational operator*(const Rational& left, const Rational& right);
-    friend const Rational operator/(const Rational& left, const Rational& right);
-    friend std::ostream& operator<<(std::ostream& os, const Rational& value);
-    Rational& operator+=(const Rational& value);
-    Rational& operator-=(const Rational& value);
-    Rational& operator*=(const Rational& value);
-    Rational& operator/=(const Rational& value);
-    friend bool operator<(const Rational& left, const Rational& right);
-    friend bool operator>(const Rational& left, const Rational& right);
-    friend bool operator<=(const Rational& left, const Rational& right);
-    friend bool operator>=(const Rational& left, const Rational& right);
-    friend bool operator==(const Rational& left, const Rational& right);
-    friend bool operator!=(const Rational& left, const Rational& right);
-    int lcm_gcd(int x, int y, int type);
-    Rational(const Rational& r);
-    int numerator, denumerator;
-
-private:
-
-};
-
-Rational f_1(Rational r);
 
 #endif

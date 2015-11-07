@@ -105,12 +105,15 @@ void Labs_0x02::chapter_02() {
         cout << "Exception, vector out of range." << endl;
     }
     kit.report();
-    // Task 2.
-    Rational r_1(1, 2), r_2(1, 3), r_3(1, 1);
-    // cout << "lcm(32, 24) = " << cl_2.lcm_gcd(12, 7, 1) << endl;
-    // r_3 = r_1 + r_2;
-    r_3 = f_1(r_3);
-    cout << r_3 << endl;
+    // Task 2-4.
+    TestKit::Kit kit_2("Rational");
+    try {
+        kit_2.addTest(new TestKit::RationalTest);
+        kit_2.run();
+        kit_2.report();
+    } catch (invalid_argument s) {
+        cout << "Exception: " << s.what() << endl;
+    }
 }
 
 void labs_0x02() {
