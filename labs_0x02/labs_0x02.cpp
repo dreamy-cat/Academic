@@ -114,6 +114,16 @@ void Labs_0x02::chapter_02() {
     } catch (invalid_argument s) {
         cout << "Exception: " << s.what() << endl;
     }
+    // Task 5.
+    TestKit::Kit kit_3("BinSearch");
+    try {
+        kit_3.addTest(new TestKit::TestSearch);
+        kit_3.run();
+        kit_3.report();
+    } catch (out_of_range m) {
+        cout << "Exception: " << m.what() << endl;
+    }
+
 }
 
 void labs_0x02() {

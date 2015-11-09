@@ -7,6 +7,7 @@
 #include <typeinfo>
 #include <stdexcept>
 #include <vector>
+#include <cstdlib>
 
 class Rational {
 public:
@@ -72,6 +73,18 @@ public:
     void run();
 private:
     Rational result, leftValue, rightValue;
+};
+
+class TestSearch : public Test {
+public:
+    TestSearch();
+    int binSearch(int x);
+    void run();
+private:
+    static const int size = 8;
+    int v[size];
+    int max, current;
+    void setData();
 };
 
 class KitError : public std::logic_error {

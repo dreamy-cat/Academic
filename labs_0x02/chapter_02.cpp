@@ -322,3 +322,33 @@ int Rational::lcm_gcd(int x, int y, int type) {
     }
     return result;
 }
+
+TestSearch::TestSearch() : max(0), current(0) { srand(0); }
+
+int TestSearch::binSearch(int x) {
+    int low = 0, high = size, mid = (low + high)/2;
+    while (low <= high && v[mid] != x) {
+        if (x < v[mid]) high = mid - 1; else low = mid + 1;
+        mid = (low + high)/2;
+    }
+    if (low <= high) return mid; else return -1;
+}
+
+void TestSearch::setData() {
+    if (max) throw out_of_range("Max value non zero.");
+    for (int i = 0; i < size; i++) {
+        v[i] = max;
+        if (rand() % 2 == 0) max += 1; else max += 2;
+    }
+}
+
+void TestSearch::run() {
+    setData();
+    cout << "Vector: ";
+    int founded = 0, notFounded = 0;
+    for (int i = 0; i < size; i++) {
+        cout << v[i] << " ";
+        if (binSearch(i) != -1) founded++; else notFounded++;
+    }
+    cout << "\nFounded: " << founded << ", not founded: " << notFounded << endl;
+}
