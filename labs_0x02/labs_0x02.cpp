@@ -6,6 +6,7 @@
 #include "labs_0x02.h"
 #include "chapter_01.h"
 #include "chapter_02.h"
+#include "chapter_03.h"
 
 using namespace Labs_0x02;
 using namespace std;
@@ -123,9 +124,22 @@ void Labs_0x02::chapter_02() {
     } catch (out_of_range m) {
         cout << "Exception: " << m.what() << endl;
     }
+}
 
+void Labs_0x02::chapter_03() {
+    cout << "Chapter's 3 tasks.\n";
+    // Tasks 1-4.
+    string string_1 = "string_1", string_2;
+    cout << "Reverse string '" << string_1;
+    string_2 = reverseString(string_1);
+    cout << "' = " << string_2 << endl;
+    string string_3 = "w o,W ";
+    cout << "Is string '" << string_3 << "' = '" << reverseString(string_3) << "': ";
+    cout << isEqual(string_3, reverseString(string_3)) << endl;
+    cout << "Is string '" << string_1 << "' = '" << reverseString(string_1) << "': ";
+    cout << isEqual(string_1, reverseString(string_1)) << endl;
 }
 
 void labs_0x02() {
-    chapter_02();
+    chapter_03();
 }

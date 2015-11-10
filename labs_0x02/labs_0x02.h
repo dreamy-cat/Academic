@@ -7,6 +7,7 @@ namespace Labs_0x02 {
 
 void chapter_01();
 void chapter_02();
+void chapter_03();
 
 }
 
