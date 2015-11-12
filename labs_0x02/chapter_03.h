@@ -5,6 +5,10 @@
 
 std::string reverseString(std::string& s);
 
+char toLower(const char c);
+
+std::string toLower(const std::string& s);
+
 bool isEqual(const std::string& s_1, const std::string& s_2);
 
 #endif

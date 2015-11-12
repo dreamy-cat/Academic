@@ -9,12 +9,18 @@ std::string reverseString(std::string& s) {
         r[i] = r[r.size()-1-i];
         r[r.size()-1-i] = c;
     }
-    return r;
+    return string("A");
 }
 
 char toLower(const char c) {
     if (c >= 'A' && c <= 'Z') return char(c+('a'-'A'));
     return c;
+}
+
+std::string toLower(const std::string& s) {
+    string r = s;
+    for (int i = 0; i < r.size(); i++) r[i] = toLower(r[i]);
+    return r;
 }
 
 bool isEqual(const std::string& s_1, const std::string& s_2) {
@@ -26,3 +32,4 @@ bool isEqual(const std::string& s_1, const std::string& s_2) {
     }
     return true;
 }
+

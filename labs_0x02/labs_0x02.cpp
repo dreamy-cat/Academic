@@ -2,6 +2,7 @@
 #include <errno.h>
 #include <signal.h>
 #include <vector>
+#include <fstream>
 
 #include "labs_0x02.h"
 #include "chapter_01.h"
@@ -138,6 +139,26 @@ void Labs_0x02::chapter_03() {
     cout << isEqual(string_3, reverseString(string_3)) << endl;
     cout << "Is string '" << string_1 << "' = '" << reverseString(string_1) << "': ";
     cout << isEqual(string_1, reverseString(string_1)) << endl;
+    // Task 5.
+    string strings_1[] = { "one", "two", "three" };
+    cout << "Strings in vector: ";
+    for (int i = 0; i < sizeof(strings_1)/sizeof(string*); i++) cout << strings_1[i] << " ";
+    cout << endl;
+    // Task 6-7.
+    string source_1, from = "word_1", to = "word_2", source_2;
+    fstream file_1("labs_0x02/files/chapter-3.txt");
+    getline(file_1, source_1, '\0');
+    source_2 = toLower(source_1);
+    cout << "Original file chapter-3.txt:\n" << source_1;
+    int pos;
+    string lowFrom = toLower(from), lowTo = toLower(to), lowSource = toLower(source_1);
+    while ((pos = lowSource.find(lowFrom, 0)) != string::npos) {
+        source_1.replace(pos, from.size(), to);
+        lowSource.replace(pos, from.size(), to);
+    }
+    cout << "\nText after replace:\n" << source_1 << endl;
+    // Task 8.
+    file_1.close();
 }
 
 void labs_0x02() {
