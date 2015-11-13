@@ -2,14 +2,14 @@
 
 using namespace std;
 
-std::string reverseString(std::string& s) {
+std::string reverseString(const std::string& s) {
     string r = s;
     for (int i = 0, j = 0; i < r.size()/2; i++) {
         char c = r[i];
         r[i] = r[r.size()-1-i];
         r[r.size()-1-i] = c;
     }
-    return string("A");
+    return r;
 }
 
 char toLower(const char c) {
@@ -33,3 +33,8 @@ bool isEqual(const std::string& s_1, const std::string& s_2) {
     return true;
 }
 
+bool isDelim(const char c, const std::string delimS) {
+    for (int i = 0; i < delimS.size(); i++)
+        if (c == delimS[i]) return true;
+    return false;
+}
