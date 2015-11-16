@@ -1,0 +1,11 @@
+Chapter's 3 text file.
+<comment> Some words... </comment>
+word_1 WoRd_1 WORD_1
+contain_1 contain_2
+line_3_1, word_3.	word4
+<comment> Some words... </comment>
+contain_2
+numbers 25.5 7.25
+word5 ##@wow. saas
+sys
+Chapter's 3 text file.

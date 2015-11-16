@@ -248,6 +248,50 @@ void Labs_0x02::chapter_03() {
                 source_2[i] -= 'a'-'A';
         }
     cout << "Result text without special symbols:\n" << source_2 << endl;
+    // Task 15.
+    source_2.clear();
+    file_1.seekg(0);
+    getline(file_1, source_2, '\0');
+    string numbers("0123456789");
+    fp = lp = 0;
+    cout << "All doubles in file: ";
+    while ((fp = source_2.find_first_of(numbers, fp)) != string::npos) {
+        int lp = fp;
+        while (source_2[lp] >= '0' && source_2[lp] <= '9' || source_2[lp] == '.') lp++;
+        string num(source_2, fp, (lp-fp));
+        cout << atof(num.data()) << " ";
+        fp = lp + 1;
+    }
+    cout << endl;
+    // Task 16.
+    int pairsToChange = 3;
+    cout << "Words with changed symbols in pairs: ";
+    for (int i = 0; i < words.size(); i++) {
+        string word = words[i];
+        for (int j = 0; j < pairsToChange && j*2+1 < word.size(); j++) {
+            char c = word[j*2];
+            word[j*2] = word[j*2+1];
+            word[j*2+1] = c;
+        }
+        cout << word << " ";
+    }
+    cout << endl;
+    // Task 17.
+    lp = fp = 0;
+    int totalSenten = 0;
+    while ((lp = source_2.find('.', fp)) != string::npos) {
+        string sentence(source_2, fp, lp-fp);
+        totalSenten++;
+        fp = lp + 1;
+    }
+    cout << "Total file size: " << source_2.size() << ", sentences: " << totalSenten
+         << ", medium sentence size: " << source_2.size()/totalSenten << endl;
+    // Task 18.
+    try {
+        words.at(words.size()+1);
+    } catch (out_of_range e) {
+        cout << "Exception: " << e.what() << endl;
+    }
     file_2.close();
     file_1.close();
 }
