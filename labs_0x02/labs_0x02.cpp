@@ -296,6 +296,36 @@ void Labs_0x02::chapter_03() {
     file_1.close();
 }
 
+void Labs_0x02::chapter_04() {
+    cout << "Chapter's 4 tasks.\n";
+    // Task 1. Using std::cout instead of file.
+    fstream file_1("labs_0x02/files/chapter-4-1.txt");
+    string sourceFile, string_1;
+    getline(file_1, sourceFile, '\0');
+    string_1 = sourceFile;
+    cout << "File chapter-4-1.txt:\n" << sourceFile << endl;
+    for (int i = 0; i < string_1.size(); i++) string_1[i] = toupper(string_1[i]);
+    cout << "Result text to upper case:\n" << string_1 << endl;
+    file_1.close();
+    // Task 2.
+    string strings_1[] = { "alpha", "beta", "gamma" };
+    cout << "Lines with words ";
+    for (int i = 0; i < 3; i++) cout << "'" << strings_1[i] << "' ";
+    cout << endl;
+    file_1.close();
+    file_1.open("labs_0x02/files/chapter-4-1.txt", ios::in);
+    int line = 0;
+    while (getline(file_1,string_1, '\n')) {
+        bool isFounded = false;
+        for (int i = 0; i < 3 && !isFounded; i++)
+            if (string_1.find(strings_1[i], 0)) isFounded = true;
+        if (isFounded) cout << line << ":" << string_1 << endl;
+        line++;
+    }
+    cout << endl;
+    file_1.close();
+}
+
 void labs_0x02() {
-    chapter_03();
+    chapter_04();
 }
