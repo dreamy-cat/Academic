@@ -3,11 +3,14 @@
 #include <signal.h>
 #include <vector>
 #include <fstream>
+#include <iomanip>
+#include <exception>
 
 #include "labs_0x02.h"
 #include "chapter_01.h"
 #include "chapter_02.h"
 #include "chapter_03.h"
+#include "chapter_04.h"
 
 using namespace Labs_0x02;
 using namespace std;
@@ -323,6 +326,52 @@ void Labs_0x02::chapter_04() {
         line++;
     }
     cout << endl;
+    // Task 3. See file chapter-4-2.txt
+    fstream file_2("labs_0x02/files/chapter-4-2.txt", ios::out | ios::in);
+    string string_2("String to insert.\n"), string_3;
+    getline(file_2, string_3, '\0');
+    if (string_3.find(string_2) == string::npos) string_3.insert(0, string_2);
+    file_2.seekg(0);
+    file_2 << string_3;
+    file_2.close();
+    // Task 4. See 'man'...
+    // Task 5.
+    cout << "FieldWidth class test: ";
+    cout << FieldWidth("Long string.", 5) << FieldWidth("Short.", 5) << endl;
+    // Task 6.
+    fstream file_3("labs_0x02/files/chapter-4-2.txt", ios::in);
+    string string_4;
+    try {
+        file_3.exceptions(ios::eofbit | ios::badbit | ios::failbit);
+        cout << "Stream exception's flags(eofbit, badbit, failbit): " << file_3.exceptions() << endl;
+        while (getline(file_3, string_4, '\n'));
+    } catch (...) {
+        cout << "Exception from stream, catched." << endl;
+    }
+    file_3.close();
+    // Task 7.
+    /*
+    int i;
+    string string_5("1");
+    // i << string_5;
+    istringstream iString(string_5);
+    cout << iString;
+
+    time_t time;
+    tm local;
+    local = *std::localtime(&time);
+    cout << "Starting second : " << local.tm_sec;
+    for (int i = 0; i < 1000; i++)
+        for(int j = 0; j < 100000; j++) function_9_4_1();
+    local = *std::localtime(&time);
+    cout << " after calling standart function : " << local.tm_sec;
+    for (int i = 0; i < 1000; i++)
+        for(int j = 0; j < 100000; j++) function_9_4_2();
+    local = *std::localtime(&time);
+    cout << ", after calling inline function : " << local.tm_sec << endl;
+*/
+
+
     file_1.close();
 }
 
