@@ -5,6 +5,8 @@
 #include <fstream>
 #include <iomanip>
 #include <exception>
+#include <sstream>
+#include <ctime>
 
 #include "labs_0x02.h"
 #include "chapter_01.h"
@@ -349,28 +351,48 @@ void Labs_0x02::chapter_04() {
         cout << "Exception from stream, catched." << endl;
     }
     file_3.close();
-    // Task 7.
-    /*
-    int i;
+    // Task 7. Result 3 seconds for atoi(), 8 seconds for operator >>, multiplier x10.
+    int int_7;
     string string_5("1");
-    // i << string_5;
     istringstream iString(string_5);
-    cout << iString;
-
     time_t time;
+    time = std::time(NULL);
     tm local;
-    local = *std::localtime(&time);
-    cout << "Starting second : " << local.tm_sec;
+    local = *localtime(&time);
+    cout << "Starting second with atoi() function: " << local.tm_sec << endl;
     for (int i = 0; i < 1000; i++)
-        for(int j = 0; j < 100000; j++) function_9_4_1();
-    local = *std::localtime(&time);
-    cout << " after calling standart function : " << local.tm_sec;
+        for (int j = 0; j < 100000; j++)
+            atoi(string_5.data());
+    time = std::time(NULL);
+    local = *localtime(&time);
+    cout << "After atoi() function: " << local.tm_sec << endl;
     for (int i = 0; i < 1000; i++)
-        for(int j = 0; j < 100000; j++) function_9_4_2();
-    local = *std::localtime(&time);
-    cout << ", after calling inline function : " << local.tm_sec << endl;
-*/
-
+        for (int j = 0; j < 100000; j++)
+            iString >> int_7;
+    time = std::time(NULL);
+    local = *localtime(&time);
+    cout << "After calling inline function: " << local.tm_sec << endl;
+    // Task 8-10.
+    DataBase_1 db_1("labs_0x02/files/db_1.txt");
+    string backup;
+    DataBase_1::Cat cat_1, cat_2;
+    for (int i = 0; i < 3; i++) {
+        cat_1.id = i;
+        string name = "Cat_N";
+        name[4] = '0'+i;
+        cout << name << endl;
+        strcpy(cat_1.name, name.data());
+        db_1.add(cat_1);
+    }
+    cout << "Cats in DB_1: ";
+    for (int i = 0; i < 3; i++) {
+        cat_2 = db_1.retrieve(i);
+        cout << cat_2 << " ";
+        backup.append(toString(cat_2.id)+":"+string(cat_2.name)+"\n");
+    }
+    cout << "Backup stirngs for DataBase_1:\n" << backup;
+    cout << "Backup restore:\n";
+    db_1.fromString(backup);
 
     file_1.close();
 }

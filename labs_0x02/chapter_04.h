@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
 
 std::ostream& newMan(std::ostream& os);
 
@@ -14,5 +15,25 @@ private:
     int maxWidth;
     std::string msg;
 };
+
+class DataBase_1 {
+public:
+    DataBase_1(std::string dbName);
+    ~DataBase_1();
+    size_t query(size_t n);
+    struct Cat {
+        int id;
+        char name[8];
+    };
+    Cat retrieve(size_t n);
+    void add(const Cat& value);
+    int fromString(const std::string backup);
+    friend std::ostream& operator<<(std::ostream& os, const Cat& value);
+private:
+    std::string fileName;
+    std::fstream file;
+};
+
+std::string toString(int i, int base = 10);
 
 #endif
