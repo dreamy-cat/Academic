@@ -7,6 +7,7 @@
 #include <exception>
 #include <sstream>
 #include <ctime>
+#include <math.h>
 
 #include "labs_0x02.h"
 #include "chapter_01.h"
@@ -393,7 +394,78 @@ void Labs_0x02::chapter_04() {
     cout << "Backup stirngs for DataBase_1:\n" << backup;
     cout << "Backup restore:\n";
     db_1.fromString(backup);
-
+    // Task 11. For one object. size of(size_t) = 8, size of string = 20;
+    size_t num_11 = -1;
+    cout << "Size_t = -1(" << num_11 << "), writing to file chapter-4-3.txt as text and to file chapter-4-4.txt as binary.\n";
+    fstream file_4, file_5;
+    file_4.open("labs_0x02/files/chapter-4-3.txt", ios::out | ios::trunc);
+    file_5.open("labs_0x02/files/chapter-4-4.txt", ios::out | ios::trunc);
+    for (int i = 0; i < 1; i++) {
+        file_4 << num_11;
+        file_5.write((char*)&num_11, sizeof(size_t));
+    }
+    file_4.close();
+    file_5.close();
+    // Task 12. It seems 53.
+    cout << "SQRT(2.0) = " << setprecision(53) << sqrt(2.0) << " - (53 after point)." << endl;
+    // Task 13.
+    fstream file_6("labs_0x02/files/chapter-4-5.txt");
+    string doubleStr;
+    vector<double> array_1;
+    cout << "All values from file 'chapter-4-5.txt: ";
+    while (getline(file_6, doubleStr, '\n')) {
+        array_1.push_back(atof(doubleStr.data()));
+        cout << doubleStr << " ";
+    }
+    cout << "\nValues from vector: ";
+    for (int i = 0; i < array_1.size(); i++) cout << setprecision(5) << array_1[i] << " ";
+    cout << "\nSum, medium, min, max: ";
+    double sum = 0, min, max;
+    if (!array_1.empty()) {
+        min = array_1[0];
+        max = array_1[0];
+    }
+    for (int i = 0; i < array_1.size(); i++) {
+        sum += array_1[i];
+        if (array_1[i] < min) min = array_1[i];
+        if (array_1[i] > max) max = array_1[i];
+    }
+    cout << sum << ", " << setprecision(2) << sum/(double)array_1.size() << ", " << min << ", " << max << endl;
+    file_6.close();
+    // Task 14. Pointers to stream, (get,put): (10,20), (10, 5).
+    // Task 15.
+    string parLine;
+    fstream file_7("labs_0x02/files/chapter-4-6.txt");
+    const int fields = 6;
+    string fieldsName[] = { "Last name:", "First name:", "ID:", "Phone:", "Sales:", "Percent:" };
+    const int fieldsW[] = { 12, 12, 6, 13, 12, 12 };
+    while ( getline(file_7, parLine, '\n') ) {
+        if (parLine.find(',',0) != string::npos) {
+            int parBegin = 0, parEnd;
+            string params[fields];
+            for (int i = 0; i < fields; i++) {
+                parEnd = parLine.find(',', parBegin);
+                if (parEnd == string::npos) parEnd = parLine.size();
+                params[i] = string(parLine, parBegin, parEnd-parBegin);
+                parBegin = parEnd+1;
+            }
+            cout << setw(12) << left << params[2] << setw(12) << left << params[3];
+            cout << setw(6) << left << fromHexString(params[0]);
+            while (params[1].size() < 10) params[1].insert(0, "X");
+            params[1].insert(3, "-");
+            params[1].insert(7, "-");
+            cout << setw(13) << left << params[1];
+            cout << setprecision(2) << setw(12) << left << fixed << atof(params[4].data());
+            cout << setprecision(2) << setw(12) << left << scientific << atof(params[5].data());
+            cout << endl;
+        } else {
+            cout << endl << parLine << endl;
+            for (int i = 0; i < fields; i++)
+                cout << setw(fieldsW[i]) << left << fieldsName[i];
+            cout << "\n--------\n";
+        }
+    }
+    file_7.close();
     file_1.close();
 }
 

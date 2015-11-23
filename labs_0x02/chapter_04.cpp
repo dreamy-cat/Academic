@@ -67,3 +67,16 @@ string toString(int i, int base) {
     if (sign == -1) result.insert(result.begin(), '-');
     return result;
 }
+
+int fromHexString(const std::string source) {
+    int value = 0, pos = 0;
+    const char hexTab[] = "0123456789ABCDEF";
+    for (int i = source.size()-1; i >= 0; --i) {
+        char c = toupper(source[i]);
+        int index = 0;
+        while (index < 16 && c != hexTab[index]) index++;
+        if (index != 16) value += index << pos;
+        pos += 4;
+    }
+    return value;
+}

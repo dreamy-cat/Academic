@@ -36,4 +36,6 @@ private:
 
 std::string toString(int i, int base = 10);
 
+int fromHexString(const std::string source);
+
 #endif
