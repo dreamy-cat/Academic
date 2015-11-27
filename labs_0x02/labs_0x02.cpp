@@ -14,6 +14,7 @@
 #include "chapter_02.h"
 #include "chapter_03.h"
 #include "chapter_04.h"
+#include "chapter_05.h"
 
 using namespace Labs_0x02;
 using namespace std;
@@ -469,6 +470,19 @@ void Labs_0x02::chapter_04() {
     file_1.close();
 }
 
+void Labs_0x02::chapter_05() {
+    cout << "Chapter's 5 tasks.\n";
+    // Task 1.
+    const char c_1 = 'a';
+    function_5_1<const char>(c_1);
+    function_5_1<int>(2);
+    function_5_1(3);
+    // Task 2.
+    Stack_5<int> st_5;
+    st_5.push(1);
+    cout << "Value from Stack_5: " << st_5.pop() << endl;
+}
+
 void labs_0x02() {
-    chapter_04();
+    chapter_05();
 }
