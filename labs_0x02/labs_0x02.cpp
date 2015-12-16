@@ -505,7 +505,19 @@ void Labs_0x02::chapter_05() {
     // no matching for call to 'p_ag(int, double, double)'
     // p_ag(1, 2.0, 3.0);
     cout << "Result of function 'p_ag': " << p_ag<double>(1, 2.0, 3.0) << endl;
-
+    // Task 8. See in .h file.
+    // Task 9.
+    Class_5_5<int, char> cl_4;
+    Class_5_5<char, int> cl_5;
+    Class_5_5<char, char> cl_6;
+    cl_4.function_1();
+    cl_5.function_1();
+    cl_6.function_1();
+    // Task 10. Strange, works but seems not usable in practice.
+    Class_5_6<char> cl_7;
+    Class_5_6<int> cl_8;
+    cl_7.functionCalls();
+    cl_8.functionCalls();
 }
 
 void labs_0x02() {
