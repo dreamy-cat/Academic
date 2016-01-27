@@ -8,6 +8,8 @@
 #include <sstream>
 #include <ctime>
 #include <math.h>
+#include <algorithm>
+#include <iterator>
 
 #include "labs_0x02.h"
 #include "chapter_01.h"
@@ -15,6 +17,7 @@
 #include "chapter_03.h"
 #include "chapter_04.h"
 #include "chapter_05.h"
+#include "chapter_06.h"
 
 using namespace Labs_0x02;
 using namespace std;
@@ -520,6 +523,53 @@ void Labs_0x02::chapter_05() {
     cl_8.functionCalls();
 }
 
+void Labs_0x02::chapter_06() {
+    cout << "Chapter's 6 tasks.\n";
+    // Task 1.
+    list<clock_t> list_1;
+    cout << "Generated list of clock_t: ";
+    generate_n(back_inserter(list_1), 5, function_6_1);
+    copy(list_1.begin(), list_1.end(), ostream_iterator<int>(cout, " "));
+    list_1.unique();
+    cout << "\nList of clock_t, after unique(): ";
+    copy(list_1.begin(), list_1.end(), ostream_iterator<int>(cout, " "));
+    // Task 2
+    string string_1 = "string_1";
+    cout << "\nTransform 'string_1' to upper case: ";
+    transform(string_1.begin(), string_1.end(), string_1.begin(), to_Upper);
+    cout << string_1 << endl;
+    // Task 3.
+    vector<int> vector_1;
+    vector_1.push_back(1);
+    vector_1.push_back(2);
+    Class_6_1 cl_1(0);
+    for_each(vector_1.begin(), vector_1.end(), cl_1);
+    cout << "Vector<int>, function object with static sum, 1 + 2 = " << cl_1.sum << endl;
+    // Task 4-5.
+    string string_2 = "abc";
+    cout << "Permutations of 'abc' string: ";
+    while (next_permutation(string_2.begin(), string_2.end())) cout << string_2 << " ";
+    string string_3 = "Short sentance permutations.";
+    vector<string> sentance;
+    int word = 0, space = 0;
+    while ((space = string_3.find_first_of(" .,!?\0", word)) != string::npos && word < string_3.size()) {
+        sentance.push_back(string(string_3, word, space-word));
+        word = ++space;
+    }
+    sort(sentance.begin(), sentance.end());
+    cout << "\nPermutations with sentance:\n";
+    while (next_permutation(sentance.begin(), sentance.end())) {
+        copy(sentance.begin(), sentance.end(), ostream_iterator<string>(cout, " "));
+        cout << endl;
+    }
+    // Task 6.
+    cout << "Function adapter, a little old, but works:\n";
+    vector<Class_6_2*> vector_2;
+    vector_2.push_back(new Class_6_2);
+    vector_2.push_back(new Class_6_2_1);
+    for_each(vector_2.begin(), vector_2.end(), mem_fun(&Class_6_2::function_1));
+}
+
 void labs_0x02() {
-    chapter_05();
+    chapter_06();
 }

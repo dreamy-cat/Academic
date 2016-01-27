@@ -10,6 +10,7 @@ void chapter_02();
 void chapter_03();
 void chapter_04();
 void chapter_05();
+void chapter_06();
 
 }
 
