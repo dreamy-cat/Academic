@@ -46,3 +46,17 @@ const int Generator_3::len = strlen(source);
 char Generator_3::operator()() {
     return source[std::rand()% len];
 }
+
+bool BRand::operator ()() { return rand() % 2 == 0; }
+
+int multipliers(int n, std::vector<int>& m) {
+    m.clear();
+    for (int i = 0; i <= n; i++) m.push_back(i);
+    for (int i = 2; i <= n; ) {
+        for (int j = 2; j*i <= n; j++) m[j*i] = 0;
+        while (++i <= n && !m[i]);
+    }
+    vector<int>::iterator end = remove(m.begin(), m.end(), 0);
+    m.erase(end, m.end());
+    return m.size();
+}

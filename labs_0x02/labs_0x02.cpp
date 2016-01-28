@@ -10,6 +10,7 @@
 #include <math.h>
 #include <algorithm>
 #include <iterator>
+#include <functional>
 
 #include "labs_0x02.h"
 #include "chapter_01.h"
@@ -568,6 +569,18 @@ void Labs_0x02::chapter_06() {
     vector_2.push_back(new Class_6_2);
     vector_2.push_back(new Class_6_2_1);
     for_each(vector_2.begin(), vector_2.end(), mem_fun(&Class_6_2::function_1));
+    // Tasks 7-8.
+    function_6_2<float>();
+    // Task 9, partly was in chapter 2.cpp
+    vector<int> vector_3;
+    int result = multipliers(100, vector_3);
+    cout << "Multipliers of '100', size = " << result << ": ";
+    copy(vector_3.begin(), vector_3.end(), ostream_iterator<int>(cout, " "));
+    // Tasks 10-11.
+    fstream file_1, file_2;
+    file_1.open("labs_0x02/files/chapter-6-1.txt", ios::in);
+    file_1.close();
+    cout << endl;
 }
 
 void labs_0x02() {
