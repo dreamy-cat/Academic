@@ -13,7 +13,9 @@
 
 clock_t function_6_1();
 
-int multipliers(int n, std::vector<int>& m);
+void multipliers(int n, std::vector<int>& m);
+
+void textToWords(std::string text, std::vector<std::string>& words);
 
 char to_Upper(char c);
 

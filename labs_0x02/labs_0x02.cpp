@@ -552,11 +552,7 @@ void Labs_0x02::chapter_06() {
     while (next_permutation(string_2.begin(), string_2.end())) cout << string_2 << " ";
     string string_3 = "Short sentance permutations.";
     vector<string> sentance;
-    int word = 0, space = 0;
-    while ((space = string_3.find_first_of(" .,!?\0", word)) != string::npos && word < string_3.size()) {
-        sentance.push_back(string(string_3, word, space-word));
-        word = ++space;
-    }
+    textToWords(string_3, sentance);
     sort(sentance.begin(), sentance.end());
     cout << "\nPermutations with sentance:\n";
     while (next_permutation(sentance.begin(), sentance.end())) {
@@ -573,13 +569,22 @@ void Labs_0x02::chapter_06() {
     function_6_2<float>();
     // Task 9, partly was in chapter 2.cpp
     vector<int> vector_3;
-    int result = multipliers(100, vector_3);
-    cout << "Multipliers of '100', size = " << result << ": ";
+    multipliers(100, vector_3);
+    cout << "Multipliers of '100', size = " << vector_3.size() << ": ";
     copy(vector_3.begin(), vector_3.end(), ostream_iterator<int>(cout, " "));
     // Tasks 10-11.
-    fstream file_1, file_2;
-    file_1.open("labs_0x02/files/chapter-6-1.txt", ios::in);
-    file_1.close();
+    vector<ifstream*> files;
+    files.push_back(new ifstream);
+    files.push_back(new ifstream);
+    vector<string> texts(2), words(2);
+    files[0]->open("labs_0x02/files/chapter-6-1.txt");
+    files[1]->open("labs_0x02/files/chapter-6-2.txt");
+    for (int i = 0; i < files.size(); i++) {
+        *files[i] >> texts[i];
+        cout << "\nFile 'chapter-6-1.txt':\n" << texts[i];
+        textToWords(texts[i], words);
+        files[i]->close();
+    }
     cout << endl;
 }
 

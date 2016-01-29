@@ -49,7 +49,7 @@ char Generator_3::operator()() {
 
 bool BRand::operator ()() { return rand() % 2 == 0; }
 
-int multipliers(int n, std::vector<int>& m) {
+void multipliers(int n, std::vector<int>& m) {
     m.clear();
     for (int i = 0; i <= n; i++) m.push_back(i);
     for (int i = 2; i <= n; ) {
@@ -58,5 +58,12 @@ int multipliers(int n, std::vector<int>& m) {
     }
     vector<int>::iterator end = remove(m.begin(), m.end(), 0);
     m.erase(end, m.end());
-    return m.size();
+}
+
+void textToWords(std::string text, std::vector<string>& words) {
+    int word = 0, space = 0;
+    while ((space = text.find_first_of(" .,!?\0", word)) != string::npos && word < text.size()) {
+        words.push_back(string(text, word, space-word));
+        word = ++space;
+    }
 }
