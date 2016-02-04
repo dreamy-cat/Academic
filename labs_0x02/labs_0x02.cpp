@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <iterator>
 #include <functional>
+#include <numeric>
 
 #include "labs_0x02.h"
 #include "chapter_01.h"
@@ -576,16 +577,63 @@ void Labs_0x02::chapter_06() {
     vector<ifstream*> files;
     files.push_back(new ifstream);
     files.push_back(new ifstream);
-    vector<string> texts(2), words(2);
+    vector<string> words[3];
+    string word;
     files[0]->open("labs_0x02/files/chapter-6-1.txt");
     files[1]->open("labs_0x02/files/chapter-6-2.txt");
     for (int i = 0; i < files.size(); i++) {
-        *files[i] >> texts[i];
-        cout << "\nFile 'chapter-6-1.txt':\n" << texts[i];
-        textToWords(texts[i], words);
+        cout << "\nFile 'chapter-6-" << char(i+'1') << ".txt', words: ";
+        int j = 0;
+        while ( (*files[i] >> word) ) {
+            cout << word << " ";
+            words[i].push_back(word);
+        }
         files[i]->close();
     }
     cout << endl;
+    for (int i = 0; i < words[0].size(); i++)
+        for_each(words[0][i].begin(), words[0][i].end(), to_Lower);
+    sort(words[0].begin(), words[0].end());
+    cout << "Delete duplicats and sort, result words[0]: ";
+    vector<string>::iterator end = unique(words[0].begin(), words[0].end());
+    copy(words[0].begin(), end, ostream_iterator<string>(cout, " "));
+    words[0].resize(end - words[0].begin());
+    sort(words[1].begin(), words[1].end());
+    if (words[0].size() > words[1].size()) words[2].resize(words[0].size()); else words[2].resize(words[1].size());
+    set_intersection(words[0].begin(), words[0].end(), words[1].begin(), words[1].end(), words[2].begin());
+    cout << "\nResult of set_intersection of words[0] and words[1]: ";
+    copy(words[2].begin(), words[2].end(), ostream_iterator<string>(cout, " "));
+    for (int i = 0; i < 2; i++) {
+        cout << "\nWords[" << i << "]: ";
+        copy(words[i].begin(), words[i].end(), ostream_iterator<string>(cout, " "));
+    }
+    cout << "\nResult of set_symmetric difference of words[0] and words[1]: ";
+    end = set_symmetric_difference(words[0].begin(), words[0].end(), words[1].begin(), words[1].end(), words[2].begin());
+    words[2].resize(end - words[2].begin());
+    copy(words[2].begin(), words[2].end(), ostream_iterator<string>(cout, " "));
+    // Task 12.
+    int fMax = 5;
+    vector<int> factorials(fMax), sums(fMax);
+    generate_n(factorials.begin(), fMax, factorial);
+    cout << "\nFactorials, n = " << fMax << ": ";
+    copy(factorials.begin(), factorials.end(), ostream_iterator<int>(cout, " "));
+    partial_sum(factorials.begin(), factorials.end(), sums.begin());
+    cout << "\nResult of partial_sum function: ";
+    copy(sums.begin(), sums.end(), ostream_iterator<int>(cout, " "));
+    // Task 13.
+    vector<Class_6_13_1> cl_13, cl_15;
+    srand(0);
+    generate_n(back_inserter(cl_13), 5, genValues);
+    cout << "\nClass_6_13_1 vector:\n";
+    copy(cl_13.begin(), cl_13.end(), ostream_iterator<Class_6_13_1>(cout, ""));
+    Class_6_13_2 cl_14 = for_each(cl_13.begin(), cl_13.end(), Class_6_13_2());
+    cout << cl_14;
+    int min = 150;
+    // Fro copy_if() operator, need std=c++11...
+    for (int i = 0; i < cl_13.size(); i++)
+        if (cl_13[i].getValue() < min) cl_15.push_back(cl_13[i]);
+    cout << "Without operator copy_if, vector of Class_6_13_1(less than " << min << "):\n";
+    copy(cl_15.begin(), cl_15.end(), ostream_iterator<Class_6_13_1>(cout, ""));
 }
 
 void labs_0x02() {

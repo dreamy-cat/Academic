@@ -19,6 +19,10 @@ void textToWords(std::string text, std::vector<std::string>& words);
 
 char to_Upper(char c);
 
+char to_Lower(char c);
+
+int factorial();
+
 class Class_6_1 {
 public:
     Class_6_1(int init);
@@ -59,6 +63,31 @@ private:
     static const int len;
 public:
     char operator()();
+};
+
+class Class_6_13_1 {
+private:
+    char item;
+    int quantity, value;
+public:
+    Class_6_13_1(char i, int q, int v);
+    char getItem() const;
+    int getQuantity() const;
+    void setQuantity(int q);
+    int getValue() const;
+    void setValue(int v);
+    friend std::ostream& operator<<(std::ostream& os, const Class_6_13_1& value);
+};
+
+Class_6_13_1 genValues();
+
+class Class_6_13_2 {
+private:
+    int quantity, value;
+public:
+    Class_6_13_2();
+    void operator()(const Class_6_13_1& cl);
+    friend std::ostream& operator<<(std::ostream& os, const Class_6_13_2 value);
 };
 
 template<typename Iter>
