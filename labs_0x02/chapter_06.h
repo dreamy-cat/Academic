@@ -10,6 +10,7 @@
 #include <set>
 #include <iterator>
 #include <algorithm>
+#include <functional>
 
 clock_t function_6_1();
 
@@ -111,6 +112,19 @@ template<typename Contain_1, typename Contain_2, typename BinaryFunc>
 void testBinary(Contain_1& source_1, Contain_2& source_2, Contain_2& destination, BinaryFunc f) {
     transform(source_1.begin(), source_1.end(), source_2.begin(), destination.begin(), f);
 }
+
+template<typename F1, typename F2>
+class UnaryComp : public std::unary_function<typename F2::argument_type, typename F1::result_type> {
+private:
+    F1 f1;
+    F2 f2;
+public:
+    UnaryComp(F1 fFirst, F2 fSecond) : f1(fFirst), f2(fSecond) {}
+    typename F1::result_type operator()(typename F2::argument_type a) { return f1(f2(a)); }
+};
+
+template<typename F1, typename F2>
+UnaryComp<F1,F2> compose (F1 fFirst, F2 fSecond) { return UnaryComp<F1,F2>(fFirst, fSecond); }
 
 template<typename T>
 void function_6_2() {

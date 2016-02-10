@@ -12,6 +12,7 @@
 #include <iterator>
 #include <functional>
 #include <numeric>
+#include <cmath>
 
 #include "labs_0x02.h"
 #include "chapter_01.h"
@@ -20,6 +21,8 @@
 #include "chapter_04.h"
 #include "chapter_05.h"
 #include "chapter_06.h"
+
+#include "stdlib.h"
 
 using namespace Labs_0x02;
 using namespace std;
@@ -629,11 +632,34 @@ void Labs_0x02::chapter_06() {
     Class_6_13_2 cl_14 = for_each(cl_13.begin(), cl_13.end(), Class_6_13_2());
     cout << cl_14;
     int min = 150;
-    // Fro copy_if() operator, need std=c++11...
+    // For copy_if() operator, need std=c++11...
     for (int i = 0; i < cl_13.size(); i++)
         if (cl_13[i].getValue() < min) cl_15.push_back(cl_13[i]);
     cout << "Without operator copy_if, vector of Class_6_13_1(less than " << min << "):\n";
     copy(cl_15.begin(), cl_15.end(), ostream_iterator<Class_6_13_1>(cout, ""));
+    // Task 14.
+    const int vecSize = 10;
+    vector<int> vector_4(vecSize), vector_5(vecSize), vector_6(vecSize);
+    Generator_2 gen_2(100);
+    generate_n(vector_4.begin(), vecSize, gen_2);
+    cout << "Source vector_4: ";
+    copy(vector_4.begin(), vector_4.end(), ostream_iterator<int>(cout, " "));
+    transform(vector_4.begin(), vector_4.end(), vector_5.begin(), bind2nd(modulus<int>(), 3));
+    cout << "\nDestination vector_5(modulus 3): ";
+    copy(vector_5.begin(), vector_5.end(), ostream_iterator<int>(cout, " "));
+    transform(vector_5.begin(), vector_5.end(), vector_6.begin(), bind2nd(divides<int>(), 2));
+    cout << "\nDestination vector divided by 2: ";
+    copy(vector_6.begin(), vector_6.end(), ostream_iterator<int>(cout, " "));
+    // Task 15. Strange, only one function needed....
+    vector<double> vector_7(vecSize);
+    Generator_2 gen_3(314);
+    generate_n(vector_7.begin(), vecSize, gen_3);
+    transform(vector_7.begin(), vector_7.end(), vector_7.begin(), bind2nd(divides<double>(), 100));
+    cout << "\nVector_7, radians: ";
+    copy(vector_7.begin(), vector_7.end(), ostream_iterator<double>(cout, " "));
+    vector<string> vector_8(vecSize);
+    transform(vector_8.begin(), vector_8.end(), vector_7.begin(), compose(ptr_fun(atof), mem_fun_ref(&string::c_str)) );
+    cout << endl;
 }
 
 void labs_0x02() {
