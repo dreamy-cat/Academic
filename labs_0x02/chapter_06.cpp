@@ -20,6 +20,16 @@ int factorial() {
     return (value *= (factor++));
 }
 
+double function_6_15(double x) {
+    return 1.0;
+}
+
+double r = 1.0;
+
+double* function_6_15_1() {
+    return &r;
+}
+
 int Class_6_1::sum;
 
 Class_6_1::Class_6_1(int init) { sum = 0; }
@@ -29,6 +39,17 @@ int Class_6_1::operator()(int n) { sum += n; return sum; }
 void Class_6_2::function_1() { cout << "Class_6_2::function_1().\n"; }
 
 void Class_6_2_1::function_1() { cout << "Class_6_2_1::function_1().\n"; }
+
+Class_6_15::Class_6_15() {}
+
+double Class_6_15::getRadian() {
+    /*
+    const double* r = new double;
+    *r =
+    * */
+
+    return r = double(rand() % 314) / double(100);
+}
 
 Generator_1::Generator_1(int start, int skip) : i(start), sk(skip) {}
 
@@ -111,4 +132,13 @@ void Class_6_13_2::operator()(const Class_6_13_1& cl) {
 
 std::ostream& operator<<(std::ostream& os, const Class_6_13_2 value) {
     return os << "Total [quantity, value]: [" << value.quantity << "," << value.value << "]" << endl;
+}
+
+std::ostream& operator<<(std::ostream& os, const Matrix<int>& value) {
+    for (int i = 0; i < value.data.size(); i++) {
+        for (int j = 0; j < value.data[i].size(); j++)
+            cout << value.data[i][j] << " ";
+        cout << endl;
+    }
+    return os;
 }

@@ -650,16 +650,63 @@ void Labs_0x02::chapter_06() {
     transform(vector_5.begin(), vector_5.end(), vector_6.begin(), bind2nd(divides<int>(), 2));
     cout << "\nDestination vector divided by 2: ";
     copy(vector_6.begin(), vector_6.end(), ostream_iterator<int>(cout, " "));
-    // Task 15. Strange, only one function needed....
+    // Task 15.
     vector<double> vector_7(vecSize);
-    Generator_2 gen_3(314);
-    generate_n(vector_7.begin(), vecSize, gen_3);
-    transform(vector_7.begin(), vector_7.end(), vector_7.begin(), bind2nd(divides<double>(), 100));
-    cout << "\nVector_7, radians: ";
+    cout << "\nVector_7, sin(radians): ";
+    vector<Class_6_15> vector_8;
+    for (int i = 0; i < 10; i++) vector_8.push_back(Class_6_15());
+    transform(vector_8.begin(), vector_8.end(), vector_7.begin(), compose(pointer_to_unary_function<double,double>(sin), mem_fun_ref(&Class_6_15::getRadian)));
     copy(vector_7.begin(), vector_7.end(), ostream_iterator<double>(cout, " "));
-    vector<string> vector_8(vecSize);
-    transform(vector_8.begin(), vector_8.end(), vector_7.begin(), compose(ptr_fun(atof), mem_fun_ref(&string::c_str)) );
+    // Task 16. Very fast...
+    cout << "\nPerfomnace of 'equal' for pair of vectors..." << endl;
+    srand(time(0));
+    vector<int> vector_9, vector_10;
+    generate_n(back_inserter(vector_9), 1048576, rand );
+    srand(time(0));
+    generate_n(back_inserter(vector_10), 1048576, rand );
+    equal(vector_9.begin(), vector_9.end(), vector_10.begin(), equal_to<int>());
+    cout << "Operation complete." << endl;
+    // Task 17.
+    vector<int> vector_11;
+    for (int i = 0; i < 5; i++) vector_11.push_back(5);
+    cout << "Original values from vector_11: ";
+    copy(vector_11.begin(), vector_11.end(), ostream_iterator<int>(cout, " "));
+    transform_if(vector_11.begin(), vector_11.end(), vector_11.begin(), bind2nd(equal_to<int>(),5), 0);
+    cout << "\nValues of vector_11 after transform_if algorithm: " ;
+    copy(vector_11.begin(), vector_11.end(), ostream_iterator<int>(cout, " "));
     cout << endl;
+    // Task 18.
+    vector<int> vector_12, vector_13, vector_14;
+    for (int i = 0; i < 5; i++) {
+        vector_12.push_back(i);
+        vector_13.push_back(i);
+        vector_14.push_back(0);
+    }
+    cout << "Vector_12: ";
+    copy(vector_12.begin(), vector_12.end(), ostream_iterator<int>(cout, " "));
+    cout << "\nVector_13: ";
+    copy(vector_13.begin(), vector_13.end(), ostream_iterator<int>(cout, " "));
+    for_each_alt(vector_12.begin(), vector_12.end(), vector_13.begin(), vector_14.begin(), std::plus<int>());
+    cout << "\nResult vector_14: ";
+    copy(vector_14.begin(), vector_14.end(), ostream_iterator<int>(cout, " "));
+    cout << endl;
+    // Task 19.
+    Matrix<int> matrix_1(3, 3), matrix_2(3, 3, 3), matrix_3(3, 3, 0);
+    Matrix<int> matrix_4(3, 4, 0), matrix_5(4, 5, 1), matrix_6(3, 5, 0), matrix_7(3, 1, 0);
+    vector<int> vector_15;
+    for (int i = 0; i < 4; i++) vector_15.push_back(i);
+    cout << "Source matrix_1:\n" << matrix_1;
+    cout << "Source matrix_2:\n" << matrix_2;
+    matrix_3 = matrix_1 + matrix_2;
+    cout << "Result of matrix_1 + matrix_2:\n" << matrix_3;
+    cout << "Source matrix_4:\n" << matrix_4;
+    cout << "Source matrix_5:\n" << matrix_5;
+    matrix_6 = matrix_4 * matrix_5;
+    cout << "Result of matrix_4 * matrix_5:\n" << matrix_6;
+    cout << "Source vector_15: ";
+    copy(vector_15.begin(), vector_15.end(), ostream_iterator<int>(cout, " "));
+    matrix_7 = matrix_4 * vector_15;
+    cout << "\nResult of matrix_4 * vector_15:\n" << matrix_7;
 }
 
 void labs_0x02() {

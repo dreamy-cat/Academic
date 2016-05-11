@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 
 #Needs for some tasks from chapter 11, 12, 15.
 #set(CMAKE_CXX_FLAGS "-Wa,-alh")
+set(CMAKE_CXX_FLAGS "-Wall")
 
 #C++11
 #set(CMAKE_CXX_FLAGS "-std=c++11")

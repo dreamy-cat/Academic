@@ -24,6 +24,10 @@ char to_Lower(char c);
 
 int factorial();
 
+double function_6_15(double x);
+
+double *function_6_15_1();
+
 class Class_6_1 {
 public:
     Class_6_1(int init);
@@ -40,6 +44,13 @@ class Class_6_2_1 : public Class_6_2 {
 public:
     void function_1();
 };
+
+class Class_6_15 {
+public:
+    Class_6_15();
+    double getRadian();
+};
+
 
 class Generator_1 {
 private:
@@ -125,6 +136,99 @@ public:
 
 template<typename F1, typename F2>
 UnaryComp<F1,F2> compose (F1 fFirst, F2 fSecond) { return UnaryComp<F1,F2>(fFirst, fSecond); }
+
+template<typename _InputIterator, typename _OutputIterator, typename _UnaryOperation, typename __ValueToReplace>
+_OutputIterator transform_if(_InputIterator __first, _InputIterator __last, _OutputIterator __result, _UnaryOperation __unary_op, __ValueToReplace __value)
+{
+    // concept requirements
+    __glibcxx_function_requires(_InputIteratorConcept<_InputIterator>)
+            __glibcxx_function_requires(_OutputIteratorConcept<_OutputIterator,
+                                        // "the type returned by a _UnaryOperation"
+                                        __typeof__(__unary_op(*__first))>)
+            __glibcxx_requires_valid_range(__first, __last);
+
+    for (; __first != __last; ++__first, ++__result)
+        if (__unary_op(*__first))
+            *__result = __value;
+        else
+            *__result = __unary_op(*__first);
+    return __result;
+}
+
+template<typename _InputIterator, typename _OutputIterator, typename _BinaryOperation>
+_OutputIterator for_each_alt(_InputIterator __first_1, _InputIterator __last_1, _InputIterator __first_2, _OutputIterator __result, _BinaryOperation __f)
+{
+    // concept requirements
+    __glibcxx_function_requires(_InputIteratorConcept<_InputIterator>)
+            __glibcxx_requires_valid_range(__first, __last);
+    for (; __first_1 != __last_1; ++__first_1, ++__first_2, ++__result)
+        *__result = __f(*__first_1, *__first_2);
+    return __result;
+}
+
+template<class T>
+class Matrix {
+public:
+    explicit Matrix(const int rows, const int columns, int gen = 0) {
+        data.resize(rows);
+        for (int i = 0; i < data.size(); i++) {
+            data[i].resize(columns);
+            std::fill_n(data[i].begin(), columns, gen++);
+        }
+
+    }
+
+    Matrix& operator=(const Matrix& rValue) {
+        if (data.empty() || rValue.data.empty() || rValue.data.size() != data.size() || rValue.data[0].size() != data[0].size())
+            return *this;
+        for (int i = 0; i < data.size(); i++)
+            for (int j = 0; j < data[i].size(); j++)
+                data[i][j] = rValue.data[i][j];
+        return *this;
+    }
+
+    const Matrix operator+(const Matrix& rValue) {
+        if (data.empty() || rValue.data.empty() || rValue.data.size() != data.size() || rValue.data[0].size() != data[0].size())
+            return *this;
+        Matrix result(data.size(), data[0].size());
+        for (int i = 0; i < data.size(); i++)
+            for (int j = 0; j < rValue.data.size(); j++)
+                result.data[i][j] = data[i][j] + rValue.data[i][j];
+        return result;
+    }
+
+    const Matrix operator*(const Matrix& rValue) {
+        if (data.empty() || rValue.data.empty() || rValue.data.size() != data[0].size()) {
+            std::cout << "Matrix sizes mismatch.\n";
+            return *this;
+        }
+        Matrix result(data.size(), rValue.data[0].size());
+        for (int i = 0; i < data.size(); i++)
+            for (int j = 0; j < rValue.data[0].size(); j++) {
+                T element = 0;
+                for (int k = 0; k < data[0].size(); k++)
+                    element += data[i][k] * rValue.data[k][j];
+                result.data[i][j] = element;
+            }
+        return result;
+    }
+
+    const Matrix operator*(const std::vector<T>& rValue) {
+        if (data.empty() || rValue.empty() || rValue.size() != data[0].size())
+            return *this;
+        Matrix rOperand(data[0].size(), 1), result(data.size(), 1);
+        for (int i = 0; i < data.size(); i++)
+            rOperand.data[i][0] = rValue[i];
+        result = (*this) * (rOperand);
+        return result;
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, const Matrix<T>& value);
+private:
+    std::vector<std::vector<T> > data;
+};
+
+
 
 template<typename T>
 void function_6_2() {
