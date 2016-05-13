@@ -2,6 +2,7 @@
 #include <errno.h>
 #include <signal.h>
 #include <vector>
+#include <map>
 #include <fstream>
 #include <iomanip>
 #include <exception>
@@ -707,6 +708,79 @@ void Labs_0x02::chapter_06() {
     copy(vector_15.begin(), vector_15.end(), ostream_iterator<int>(cout, " "));
     matrix_7 = matrix_4 * vector_15;
     cout << "\nResult of matrix_4 * vector_15:\n" << matrix_7;
+    // Task 20. After crypt, using one space. Lex_cmp not useful in that case.
+    fstream fileMap;
+    fileMap.open("labs_0x02/files/chapter-6-3.txt", ios::in | ios::out);
+    cout << "Source file 'chapter-6-3.txt':\n";
+    string string_4;
+    getline(fileMap, string_4, '\0');
+    cout << string_4;
+    map<string, string> map_1;
+    vector<string> vector_16, vector_17;
+    int pos = 1, next = 1;
+    while ( (next = string_4.find('"', pos)) != string::npos) {
+        string key(string_4, pos, next-pos);
+        cout << "key = " << key;
+        pos = next + 2;
+        next = string_4.find('\n', pos);
+        string value(string_4, pos, next-pos);
+        cout << ", value = " << value << endl;
+        pos = next + 2;
+        map_1[key] = value;
+        if (vector_16.size() < 2) vector_16.push_back(value); else vector_17.push_back(value);
+    }
+    vector< vector<string> > lexVector;
+    lexVector.push_back(vector_16);
+    lexVector.push_back(vector_17);
+    sort(lexVector.begin(), lexVector.end(), function_6_20);
+    cout << "Sorted vector_16: ";
+    copy(vector_16.begin(), vector_16.end(), ostream_iterator<string>(cout, " "));
+    cout << "\nSorted vector_17: ";
+    copy(vector_17.begin(), vector_17.end(), ostream_iterator<string>(cout, " "));
+    for (map<string, string>::iterator it = map_1.begin(); it != map_1.end(); it++) {
+        int pos = 0;
+        while ( (pos = string_4.find(it->second)) != string::npos) {
+            string_4.replace(pos, it->second.size(), it->first);
+            pos++;
+        }
+    }
+    cout << "\nResult of the first replacement:\n" << string_4;
+    for (map<string, string>::iterator it = map_1.begin(); it != map_1.end(); it++) {
+        int pos = 0;
+        while ( (pos = string_4.find(it->first, pos)) != string::npos) {
+            if (pos > 0 && string_4[pos-1] != '"')
+                string_4.replace(pos, it->second.size()-1, it->second);
+            else
+                pos++;
+        }
+    }
+    cout << "Result of the second replacement:\n" << string_4;
+    fileMap.close();
+    // Tasks 21-22.
+    vector<string> vector_18, vector_19;
+    vector< vector<string> > vector_20;
+    vector_18.push_back("Mike");
+    vector_18.push_back("John");
+    vector_18.push_back("Ralph");
+    vector_19.push_back("Sharon");
+    vector_19.push_back("Jane");
+    vector_19.push_back("Kate");
+    sort(vector_18.begin(), vector_18.end());
+    sort(vector_19.begin(), vector_19.end());
+    cout << "All possible combinations:\n";
+    for (int i = 0; i < vector_18.size(); i++) {
+        vector<string> setNames;
+        for (int j = 0; j < vector_18.size(); j++) {
+            setNames.push_back(vector_18[j] + " " + vector_19[j]);
+            cout << i << ": " << vector_18[j] + " " + vector_19[j] << endl;
+        }
+        vector_20.push_back(setNames);
+        rotate(vector_19.begin(), vector_19.begin() + 1, vector_19.end());
+    }
+    cout << "All combinatiosn with John and Jane:\n";
+    for (int i = 0; i < vector_20.size(); i++)
+        if ( find(vector_20[i].begin(), vector_20[i].end(), "John Jane") != vector_20[i].end() )
+            for (int j = 0; j < vector_20[i].size(); j++) cout << i << ": " << vector_20[i][j] << endl;
 }
 
 void labs_0x02() {

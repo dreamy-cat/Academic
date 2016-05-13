@@ -28,6 +28,8 @@ double function_6_15(double x);
 
 double *function_6_15_1();
 
+bool function_6_20(const std::vector<std::string>& v1, const std::vector<std::string>& v2);
+
 class Class_6_1 {
 public:
     Class_6_1(int init);

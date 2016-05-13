@@ -30,6 +30,10 @@ double* function_6_15_1() {
     return &r;
 }
 
+bool function_6_20(const std::vector<string>& v1, const std::vector<string>& v2) {
+    return lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end());
+}
+
 int Class_6_1::sum;
 
 Class_6_1::Class_6_1(int init) { sum = 0; }
