@@ -30,6 +30,10 @@ double *function_6_15_1();
 
 bool function_6_20(const std::vector<std::string>& v1, const std::vector<std::string>& v2);
 
+int function_6_23_1();
+
+bool function_6_23_2(int value);
+
 class Class_6_1 {
 public:
     Class_6_1(int init);
@@ -53,6 +57,13 @@ public:
     double getRadian();
 };
 
+class Class_6_25 {
+public:
+    Class_6_25();
+    int age, year;
+    static bool isFirstPart(const Class_6_25& value);
+    static bool isLess(const Class_6_25& left, const Class_6_25& right);
+};
 
 class Generator_1 {
 private:

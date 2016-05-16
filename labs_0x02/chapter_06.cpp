@@ -34,6 +34,16 @@ bool function_6_20(const std::vector<string>& v1, const std::vector<string>& v2)
     return lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end());
 }
 
+int function_6_23_1() {
+    if (rand() % 10 == 0)
+        return rand() % 100;
+    return rand() % 10 + 10;
+}
+
+bool function_6_23_2(int value) {
+    if (value > 20 || value < 10) return true; else return false;
+}
+
 int Class_6_1::sum;
 
 Class_6_1::Class_6_1(int init) { sum = 0; }
@@ -53,6 +63,19 @@ double Class_6_15::getRadian() {
     * */
 
     return r = double(rand() % 314) / double(100);
+}
+
+Class_6_25::Class_6_25() {
+    age = rand() % 10 + 20;
+    year = rand() % 5 + 1995;
+}
+
+bool Class_6_25::isFirstPart(const Class_6_25 &value) {
+    if (value.year == 1997) return true; else return false;
+}
+
+bool Class_6_25::isLess(const Class_6_25& left, const Class_6_25& right) {
+    if (left.age < right.age) return true; else return false;
 }
 
 Generator_1::Generator_1(int start, int skip) : i(start), sk(skip) {}

@@ -781,6 +781,47 @@ void Labs_0x02::chapter_06() {
     for (int i = 0; i < vector_20.size(); i++)
         if ( find(vector_20[i].begin(), vector_20[i].end(), "John Jane") != vector_20[i].end() )
             for (int j = 0; j < vector_20[i].size(); j++) cout << i << ": " << vector_20[i][j] << endl;
+    // Task 23.
+    vector<int> vector_21(20);
+    generate_n(vector_21.begin(), 20, function_6_23_1);
+    cout << "Source vector_21: ";
+    copy(vector_21.begin(), vector_21.end(), ostream_iterator<int>(cout, " "));
+    remove_if(vector_21.begin(), vector_21.end(), function_6_23_2);
+    cout << "\nSource vector_21, after removing elements which less than 10 and more than 20: ";
+    copy(vector_21.begin(), vector_21.end(), ostream_iterator<int>(cout, " "));
+    int sum = 0;
+    for (int i = 0; i < vector_21.size(); i++)
+        sum += vector_21[i];
+    cout << "\nMedian of vector_21: " << sum / vector_21.size() << endl;
+    // Task 24. Too fast...
+    vector<int> vector_22;
+    for (int i = 0; i < 0x10; i++) vector_22.push_back(i);
+    sort(vector_22.begin(), vector_22.end());
+    cout << "Source vector_22: ";
+    copy(vector_22.begin(), vector_22.end(), ostream_iterator<int>(cout, " "));
+    cout << "\nSearching with 'find'..." << endl;
+    vector<int>::iterator founded = find(vector_22.begin(), vector_22.end(), 5);
+    cout << "Verification: " << *founded << endl;
+    cout << "Searching with 'binary_search'..." << endl;
+    bool isFounded = binary_search(vector_22.begin(), vector_22.end(), 5);
+    cout << "Verification: " << isFounded << endl;
+    // Task 25.
+    vector<Class_6_25> vector_23;
+    cout << "Full list of vector_23<Class_6_25>:\n";
+    for (int i = 0; i < 10; i++) {
+        vector_23.push_back(Class_6_25());
+        cout << vector_23[vector_23.size()-1].age << " " << vector_23[vector_23.size()-1].year << endl;
+    }
+    vector<Class_6_25>::iterator lastPartElem = partition(vector_23.begin(), vector_23.end(), Class_6_25::isFirstPart);
+    cout << "After partition vector_23<Class_6_25>:\n";
+    for (int i = 0; i < 10; i++)
+        cout << vector_23[i].age << " " << vector_23[i].year << endl;
+    cout << "After sort vector_23<Class_6_25>:\n";
+    sort(vector_23.begin(), lastPartElem, Class_6_25::isLess);
+    sort(lastPartElem, vector_23.end(), Class_6_25::isLess);
+    for (int i = 0; i < 10; i++)
+        cout << vector_23[i].age << " " << vector_23[i].year << endl;
+
 }
 
 void labs_0x02() {
