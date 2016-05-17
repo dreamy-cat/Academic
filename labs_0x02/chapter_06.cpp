@@ -14,6 +14,14 @@ char to_Lower(char c) {
     return c;
 }
 
+string to_string(int i) {
+    string r;
+    do {
+        r.insert(0, 1, char(i % 10 + '0'));
+    } while ( (i = i / 10) );
+    return r;
+}
+
 int factorial() {
     static int factor = 1;
     static int value = 1;
@@ -76,6 +84,48 @@ bool Class_6_25::isFirstPart(const Class_6_25 &value) {
 
 bool Class_6_25::isLess(const Class_6_25& left, const Class_6_25& right) {
     if (left.age < right.age) return true; else return false;
+}
+
+int Town::counter = 0;
+
+vector<string> Town::weatherNames;
+
+Town::Town() {
+    if (weatherNames.empty()) {
+        weatherNames.push_back("rainy");
+        weatherNames.push_back("snowy");
+        weatherNames.push_back("cloudy");
+        weatherNames.push_back("clear");
+    }
+    name = "Town_" + to_string(counter++);
+    population = rand() % 900 + 100;
+    height = rand() % 90 + 10;
+    wt = Town::weather(rand() % 4);
+}
+
+ostream& operator<<(std::ostream& os, const Town& value) {
+    return os << value.name << "\t" << value.population << "\t" << value.height << "\t" << value.weatherNames[value.wt] << endl;
+}
+
+Town& Town::populationGrowth(Town& value) {
+    value.population *= 1.1;
+    return value;
+}
+
+bool Town::isLess(const Town& left, const Town& right) {
+    if (left.population < right.population) return true; else return false;
+}
+
+bool Town::isEqual(const Town& value) {
+    if (value.height < 25 || value.height > 75) return true; return false;
+}
+
+bool Town::isNear(const Town& prev, const Town& elem) {
+    if (abs(prev.height - elem.height) <= 25) return true; else return false;
+}
+
+bool Town::operator<(const Town& value) const {
+    if (value.population < population) return true; else return false;
 }
 
 Generator_1::Generator_1(int start, int skip) : i(start), sk(skip) {}

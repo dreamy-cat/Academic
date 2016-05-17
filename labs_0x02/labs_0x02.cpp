@@ -821,7 +821,43 @@ void Labs_0x02::chapter_06() {
     sort(lastPartElem, vector_23.end(), Class_6_25::isLess);
     for (int i = 0; i < 10; i++)
         cout << vector_23[i].age << " " << vector_23[i].year << endl;
-
+    // Task 26-30.
+    vector<Town> vector_24, vector_25, vector_26;
+    cout << "Full vector_24<Town>:\n";
+    fstream file_1;
+    file_1.open("labs_0x02/files/chapter-6-4.txt", ios::out | ios::in | ios::trunc);
+    for (int i = 0; i < 10; i++) {
+        vector_24.push_back(Town());
+        cout << vector_24[i];
+        file_1 << vector_24[i];
+    }
+    transform(vector_24.begin(), vector_24.end(), vector_24.begin(), Town::populationGrowth);
+    cout << "After first transform vector_24<Town>:\n";
+    file_1 << "After first transform vector_24<Town>:\n";
+    copy (vector_24.begin(), vector_24.end(), ostream_iterator<Town>(cout));
+    copy (vector_24.begin(), vector_24.end(), ostream_iterator<Town>(file_1));
+    vector<Town>::iterator minTown = min_element(vector_24.begin(), vector_24.end(), Town::isLess);
+    vector<Town>::iterator maxTown = max_element(vector_24.begin(), vector_24.end(), Town::isLess);
+    cout << "Minimum town: " << *minTown;
+    cout << "Maximum town: " << *maxTown;
+    vector_25.resize(vector_24.size());
+    vector<Town>::iterator endIt = remove_copy_if(vector_24.begin(), vector_24.end(), vector_25.begin(), Town::isEqual);
+    vector_25.resize(endIt-vector_25.begin());
+    cout << "All towns with height in [25,75]:\n";
+    copy(vector_25.begin(), vector_25.end(), ostream_iterator<Town>(cout));
+    cout << "Delete towns within height of 25:\n";
+    vector_25 = vector_24;
+    endIt = unique(vector_25.begin(), vector_25.end(), Town::isNear);
+    vector_25.resize(endIt - vector_25.begin());
+    copy (vector_25.begin(), vector_25.end(), ostream_iterator<Town>(cout));
+    cout << "Sorting of previous vector_25, default:\n";
+    vector_26 = vector_25;
+    sort(vector_26.begin(), vector_26.end());
+    copy (vector_26.begin(), vector_26.end(), ostream_iterator<Town>(cout));
+    cout << "Sorting of previous vector_25, with Town::isLess():\n";
+    sort(vector_26.begin(), vector_26.end(), Town::isLess);
+    copy (vector_26.begin(), vector_26.end(), ostream_iterator<Town>(cout));
+    file_1.close();
 }
 
 void labs_0x02() {

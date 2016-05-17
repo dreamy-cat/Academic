@@ -22,6 +22,8 @@ char to_Upper(char c);
 
 char to_Lower(char c);
 
+std::string to_string(int i);
+
 int factorial();
 
 double function_6_15(double x);
@@ -63,6 +65,27 @@ public:
     int age, year;
     static bool isFirstPart(const Class_6_25& value);
     static bool isLess(const Class_6_25& left, const Class_6_25& right);
+};
+
+
+
+class Town {
+public:
+    enum weather { rainy, snowy, cloudy, clear };
+    Town();
+    friend std::ostream& operator<<(std::ostream& os, const Town& value);
+    static Town& populationGrowth(Town& value);
+    static bool isLess(const Town& left, const Town& right);
+    static bool isEqual(const Town& value);
+    static bool isNear(const Town& prev, const Town& elem);
+    bool operator<(const Town& value) const;
+private:
+    static int counter;
+    std::string name;
+    static std::vector<std::string> weatherNames;
+    int population;
+    int height;
+    weather wt;
 };
 
 class Generator_1 {
