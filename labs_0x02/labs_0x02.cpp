@@ -3,6 +3,7 @@
 #include <signal.h>
 #include <vector>
 #include <map>
+#include <queue>
 #include <fstream>
 #include <iomanip>
 #include <exception>
@@ -858,6 +859,34 @@ void Labs_0x02::chapter_06() {
     sort(vector_26.begin(), vector_26.end(), Town::isLess);
     copy (vector_26.begin(), vector_26.end(), ostream_iterator<Town>(cout));
     file_1.close();
+    // Task 31.
+    vector<int> vector_27;
+    cout << "Source vector_27<int>: ";
+    for (int i = 0; i < 10; i++) {
+        vector_27.push_back(rand() % 10);
+        cout << vector_27[vector_27.size()-1] << " ";
+    }
+    vector<int>::iterator tail = vector_27.end(), maxE;
+    while (tail != vector_27.begin()) {
+        maxE = max_element(vector_27.begin(), tail);
+        swap_ranges(maxE, maxE + 1, --tail);
+    }
+    cout << "\nAfter simple sorting: ";
+    copy(vector_27.begin(), vector_27.end(), ostream_iterator<int>(cout, " "));
+    // Task 32.
+    file_1.open("labs_0x02/files/chapter-6-5.txt", ios::in | ios::out);
+    string text;
+    cout << "File 'chapter-6-5.txt:\n";
+    getline(file_1, text, '\0');
+    file_1.close();
+    cout << text << "After replace text:\n";
+    pos = 0;
+    string newS = "755";
+    while ( (pos = text.find("333", pos)) != string::npos) {
+        text.replace(pos, newS.size(), newS);
+        pos++;
+    }
+    cout << text;
 }
 
 void labs_0x02() {
