@@ -219,3 +219,12 @@ std::ostream& operator<<(std::ostream& os, const Matrix<int>& value) {
     }
     return os;
 }
+
+Employee::Employee() {
+    hours = rand() % 10;
+    hourlyPay = rand() % 5 + 1;
+}
+
+int Employee::salary() {
+    return (hours * hourlyPay);
+}

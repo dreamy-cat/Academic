@@ -88,6 +88,14 @@ private:
     weather wt;
 };
 
+class Employee {
+public:
+    Employee();
+    int salary();
+private:
+    int hours, hourlyPay;
+};
+
 class Generator_1 {
 private:
     int i, sk;

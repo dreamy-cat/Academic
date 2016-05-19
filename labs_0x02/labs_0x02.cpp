@@ -873,20 +873,69 @@ void Labs_0x02::chapter_06() {
     }
     cout << "\nAfter simple sorting: ";
     copy(vector_27.begin(), vector_27.end(), ostream_iterator<int>(cout, " "));
-    // Task 32.
+    // Task 32-33.
     file_1.open("labs_0x02/files/chapter-6-5.txt", ios::in | ios::out);
     string text;
-    cout << "File 'chapter-6-5.txt:\n";
+    vector<string> names, phones;
+    map<string, string> map_2;
     getline(file_1, text, '\0');
+    cout << "\nFile 'chapter-6-5.txt:\n" << text;
     file_1.close();
-    cout << text << "After replace text:\n";
+    cout << "Create lists of names and numbers vector<string>:\n";
     pos = 0;
+    while ( (next = text.find('\t', pos)) != string::npos) {
+        int endL = text.find('\n', pos);
+        names.push_back( string(text, pos, next-pos) );
+        phones.push_back( string(text, next, endL-next) );
+        pos = text.find('\n', pos) + 1;
+    }
+    for ( int i = 0; i < names.size(); i++)
+        cout << names[i] << phones[i] << endl;
+    cout << "After replace text:\n";
+    pos = 0, next = 0;
     string newS = "755";
     while ( (pos = text.find("333", pos)) != string::npos) {
         text.replace(pos, newS.size(), newS);
         pos++;
     }
     cout << text;
+    cout << "First string with name 'John', using lower_bound: " << *lower_bound(names.begin(), names.end(), "John") << endl;
+    cout << "First string with name 'Jane', using upper_bound: " << *upper_bound(names.begin(), names.end(), "Jane") << endl;
+    pair< vector<string>::iterator, vector<string>::iterator> range;
+    cout << "First string with name 'John', using equal_range: ";
+    range = equal_range(names.begin(), names.end(), "John");
+    cout << distance(names.begin(), range.first) + 1 << " up to " << distance(names.begin(), range.second) + 1 << endl;
+    // Task 34.
+    fstream file_2;
+    file_2.open("labs_0x02/files/chapter-6-6.txt", ios::in | ios::out);
+    text.clear();
+    getline(file_2, text, '\0');
+    file_2.seekg(0, ios::end);
+    cout << "Source of file 'chater-6-6.txt':\n" << text;
+    pos = 0, next = 0;
+    while ( (next = text.find('\n', pos)) != string::npos ) {
+        if (next - pos <= 2) {
+            string w(text, pos, next-pos);
+            file_2 << w << endl;
+        }
+        pos = next + 1;
+    }
+    file_2.close();
+    // Task 35.
+    vector<Employee*> vector_28;
+    for (int i = 0; i < 5; i++) vector_28.push_back(new Employee());
+    sum = 0;
+    for (int i = 0; i < vector_28.size(); i++) sum += vector_28[i]->salary();
+    cout << "Sum of salaries of vector_28<*Employee>: " << sum << endl;
+    // Task 36. Just testing...
+    vector<int> vector_29;
+    for (int i = 0; i < 10; i++) vector_29.push_back(rand() % 10);
+    sort(vector_29.begin(), vector_29.end());
+    partial_sort(vector_29.begin(), vector_29.begin() + 3, vector_29.end());
+    nth_element(vector_29.begin(), vector_29.begin() + 5, vector_29.end());
+    cout << "Vector<int> sorted: ";
+    copy(vector_29.begin(), vector_29.end(), ostream_iterator<int>(cout, " "));
+    cout << endl;
 }
 
 void labs_0x02() {
