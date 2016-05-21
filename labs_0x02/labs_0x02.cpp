@@ -23,6 +23,7 @@
 #include "chapter_04.h"
 #include "chapter_05.h"
 #include "chapter_06.h"
+#include "chapter_07.h"
 
 #include "stdlib.h"
 
@@ -938,6 +939,35 @@ void Labs_0x02::chapter_06() {
     cout << endl;
 }
 
+void Labs_0x02::chapter_07() {
+    cout << "Chapter's 7 tasks.\n";
+    // Task 1. All ok...
+    fstream file;
+    file.open("labs_0x02/files/chapter-7-1.txt", ios::in);
+    string text;
+    set<char> set_1;
+    getline(file, text, '\0');
+    cout << "Source file 'chapter-7-1.txt:\n" << text;
+    for (int i = 0; i < text.size(); i++) set_1.insert(text[i]);
+    cout << "All characters in set_1<char>: ";
+    copy(set_1.begin(), set_1.end(), ostream_iterator<char>(cout, " "));
+    file.close();
+    // Task 2. Without testing perfomance.
+    vector<Noisy> vector_1;
+    list<Noisy> list_1;
+    deque<Noisy> deque_1;
+    cout << endl;
+    for (int i = 0; i < 3; i++) {
+        vector_1.push_back(Noisy());
+        deque_1.push_back(Noisy());
+        list_1.push_back(Noisy());
+    }
+    function_7_2<vector <Noisy> > (vector_1);
+    function_7_2<deque <Noisy> > (deque_1);
+    function_7_2(list_1);
+    Noisy::report();
+}
+
 void labs_0x02() {
-    chapter_06();
+    chapter_07();
 }
