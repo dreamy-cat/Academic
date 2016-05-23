@@ -966,6 +966,76 @@ void Labs_0x02::chapter_07() {
     function_7_2<deque <Noisy> > (deque_1);
     function_7_2(list_1);
     Noisy::report();
+    // Task 3. Too fast for testing perfomance. std::sort not actual...
+    list<int> list_2, list_3;
+    for (int i = 4; i >= 0; i--) {
+        list_2.push_back(i);
+        list_3.push_back(i);
+    }
+    list_2.sort();
+    // sort(list_3.begin(), list_3.end());
+    cout << "Source of list_2<int>: ";
+    copy(list_2.begin(), list_2.end(), ostream_iterator<int>(cout, " "));
+    cout << "\nSource of list_3<int>: ";
+    copy(list_2.begin(), list_2.end(), ostream_iterator<int>(cout, " "));
+    cout << endl;
+    // Task 4.
+    multiset<int> multiset_1;
+    cout << "Multiset<int> elements: ";
+    for (int i = 0; i < 10; i++) multiset_1.insert(rand() % 10);
+    for (multiset<int>::iterator it_1 = multiset_1.begin(); it_1 != multiset_1.end(); it_1++)
+        cout << *it_1 << "[" << multiset_1.count(*it_1) << "] ";
+    cout << endl;
+    // Task 5.
+    deque<Shape*> deque_2;
+    deque_2.push_back(new Circle);
+    deque_2.push_back(new Square);
+    deque_2.push_back(new Triangle);
+    deque<Shape*>::iterator it_2;
+    for ( it_2 = deque_2.begin(); it_2 != deque_2.end(); it_2++) (*it_2)->draw();
+    for ( it_2 = deque_2.begin(); it_2 != deque_2.end(); it_2++) delete (*it_2);
+    // Task 6.
+    file.open("labs_0x02/files/chapter-7-1.txt", ios::in);
+    list<string> list_4;
+    deque<string> deque_3;
+    while ( (getline(file, text, '\n')) ) {
+        list_4.push_back(text);
+        deque_3.push_back(text);
+    }
+    cout << "All lines from file 'chapter-7-1.txt' in reverse, using list<string>:\n";
+    for ( list<string>::reverse_iterator it_3 = list_4.rbegin(); it_3 != list_4.rend(); it_3++) cout << *it_3 << endl;
+    cout << "All lines from file 'chapter-7-1.txt' in reverse, using deque<string>:\n";
+    for ( deque<string>::reverse_iterator it_4 = deque_3.rbegin(); it_4 != deque_3.rend(); it_4++) cout << *it_4 << endl;
+    // Task 7.
+    const int fibMax = 10;
+    stack<int> stack_1;
+    cout << "Fiboncci numbers: ";
+    for (int i = 0; i < fibMax; i++)
+        if (i < 2)
+            stack_1.push(1);
+        else {
+            int prev_1 = stack_1.top();
+            stack_1.pop();
+            int prev_2 = stack_1.top();
+            stack_1.push(prev_1);
+            stack_1.push(prev_1 + prev_2);
+        }
+    for (int i = 0; i < fibMax; i++) {
+        cout << stack_1.top() << " ";
+        stack_1.pop();
+    }
+    // Task 8.
+    stack<int> source, sorted, less;
+    for (int i = 0; i < 10; i++) source.push(rand() % 10);
+    printStack(source, "source");
+    while ( !source.empty() ) {
+        sortStack(source, sorted, less);
+        sortStack(less, sorted, source);
+    }
+    cout << "After sort.\n";
+    printStack(source, "source");
+    printStack(sorted, "sorted");
+    printStack(less, "less");
 }
 
 void labs_0x02() {

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <algorithm>
 #include <list>
+#include <stack>
 
 class Noisy {
 public:
@@ -27,5 +28,33 @@ void function_7_2(T v) {
 }
 
 void function_7_2(std::list<Noisy> v);
+
+class Shape {
+public:
+    virtual void draw() = 0;
+    virtual ~Shape();
+};
+
+class Circle : public Shape {
+public:
+    void draw();
+    ~Circle();
+};
+
+class Triangle : public Shape {
+public:
+    void draw();
+    ~Triangle();
+};
+
+class Square : public Shape {
+public:
+    void draw();
+    ~Square();
+};
+
+void printStack(std::stack<int>& s, std::string name);
+
+void sortStack(std::stack<int>& source, std::stack<int>& sorted, std::stack<int>& tail);
 
 #endif
