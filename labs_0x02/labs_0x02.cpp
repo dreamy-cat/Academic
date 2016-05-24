@@ -1006,6 +1006,7 @@ void Labs_0x02::chapter_07() {
     for ( list<string>::reverse_iterator it_3 = list_4.rbegin(); it_3 != list_4.rend(); it_3++) cout << *it_3 << endl;
     cout << "All lines from file 'chapter-7-1.txt' in reverse, using deque<string>:\n";
     for ( deque<string>::reverse_iterator it_4 = deque_3.rbegin(); it_4 != deque_3.rend(); it_4++) cout << *it_4 << endl;
+    file.close();
     // Task 7.
     const int fibMax = 10;
     stack<int> stack_1;
@@ -1024,7 +1025,7 @@ void Labs_0x02::chapter_07() {
         cout << stack_1.top() << " ";
         stack_1.pop();
     }
-    // Task 8.
+    // Task 8. Not clear...
     stack<int> source, sorted, less;
     for (int i = 0; i < 10; i++) source.push(rand() % 10);
     printStack(source, "source");
@@ -1036,6 +1037,45 @@ void Labs_0x02::chapter_07() {
     printStack(source, "source");
     printStack(sorted, "sorted");
     printStack(less, "less");
+    // Task 9-10.
+    file.open("labs_0x02/files/chapter-7-1.txt", ios::in);
+    getline(file, text, '\0');
+    file.close();
+    multiset<string> multiset_2;
+    map<string, int> wordMap;
+    int pos = 0, next = 0;
+    while ( (next = text.find_first_of(" \n\0", pos)) != string::npos ) {
+        string word(text, pos, next-pos);
+        multiset_2.insert(word);
+        if ( wordMap.find(word) == wordMap.end() ) wordMap.insert(pair<string, int>(word, 1)); else
+            (*wordMap.find(word)).second++;
+        pos = next + 1;
+    }
+    cout << "Words and counters in multiset<string>: ";
+    for (multiset<string>::iterator it_3 = multiset_2.begin(); it_3 != multiset_2.end(); it_3++)
+        cout << *it_3 << "[" << multiset_2.count(*it_3) << "] ";
+    cout << "\nWords and counters in map<string, int>: ";
+    for (map<string, int>::iterator it_4 = wordMap.begin(); it_4 != wordMap.end(); it_4++)
+        cout << (*it_4).first << "[" << (*it_4).second << "] ";
+    cout << endl;
+    // Task 11.
+    priority_queue<Class_7_11> pQueue;
+    cout << "Priority queue:\n";
+    for (int i = 0; i < 5; i++) pQueue.push(Class_7_11());
+    for (int i = 0; i < 5; i++) {
+        cout << pQueue.top();
+        pQueue.pop();
+    }
+    // Task 12.
+    Ring<string> ring_1;
+    ring_1.push_back("one");
+    ring_1.push_back("two");
+    Ring<string>::iterator it_5 = ring_1.begin();
+    it_5.insert("three");
+    it_5 = ring_1.begin();
+    cout << "All strings in Ring<string>: ";
+    for (int i = 0; i < 10; i++) cout << *it_5++ << " ";
+    cout << endl;
 }
 
 void labs_0x02() {

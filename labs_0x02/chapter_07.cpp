@@ -92,3 +92,14 @@ void sortStack(std::stack<int>& source, std::stack<int>& sorted, std::stack<int>
     }
 }
 
+Class_7_11::Class_7_11() {
+    priority = rand() % 10;
+}
+
+bool operator<(const Class_7_11& lv, const Class_7_11& rv) {
+    return (lv.priority < rv.priority);
+}
+
+ostream& operator<<(ostream& os, const Class_7_11& value) {
+    return os << "Class_7_11::priority = " << value.priority << endl;
+}

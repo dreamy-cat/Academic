@@ -57,4 +57,84 @@ void printStack(std::stack<int>& s, std::string name);
 
 void sortStack(std::stack<int>& source, std::stack<int>& sorted, std::stack<int>& tail);
 
+class Class_7_11 {
+public:
+    Class_7_11();
+    int priority;
+    friend bool operator<(const Class_7_11& lv, const Class_7_11& rv);
+    friend std::ostream& operator<<(std::ostream& os, const Class_7_11& value);
+};
+
+template<class T> class Ring {
+public:
+    class iterator;
+    friend class iterator;
+    class iterator : public std::iterator<std::bidirectional_iterator_tag, T, std::ptrdiff_t> {
+    private:
+        typename std::deque<T>::iterator it;
+        std::deque<T>*  r;
+    public:
+        iterator(std::deque<T>& lst, const typename std::deque<T>::iterator& i) : r(&lst), it(i) {}
+
+        bool operator==(const iterator& x) const {
+            return (it == x.it);
+        }
+
+        bool operator!=(const iterator& x) const {
+            return !(*this == x.it);
+        }
+
+        typename std::deque<T>::reference operator*() const {
+            return *it;
+        }
+
+        iterator& operator++() {
+            ++it;
+            if ( it == r->end() )it = r->begin();
+            return *this;
+        }
+
+        iterator& operator++(int) {
+            iterator tmp = *this;
+            ++*this;
+            return tmp;
+        }
+
+        iterator& operator--() {
+            if (it == r->begin()) it = r->end();
+            --it;
+            return *this;
+        }
+
+        iterator& operator--(int) {
+            iterator tmp = *this;
+            --*this;
+            return tmp;
+        }
+
+        iterator insert(const T& x) {
+            return iterator(*r, r->insert(it, x));
+        }
+
+        iterator erase() {
+            return iterator(*r, r->erase(it));
+        }
+    };
+
+    void push_back(const T& x) {
+        lst.push_back(x);
+    }
+
+    iterator begin() {
+        return iterator(lst, lst.begin());
+    }
+
+    int size() {
+        return lst.size();
+    }
+
+private:
+    std::deque<T> lst;
+};
+
 #endif
