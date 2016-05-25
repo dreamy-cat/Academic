@@ -103,3 +103,9 @@ bool operator<(const Class_7_11& lv, const Class_7_11& rv) {
 ostream& operator<<(ostream& os, const Class_7_11& value) {
     return os << "Class_7_11::priority = " << value.priority << endl;
 }
+
+Class_7_15::Class_7_15(const char l) : letter(l), isExist(false) {}
+
+bool Class_7_15::exist(char c) { return (isExist = (toupper(c) == toupper(letter))); }
+
+char Class_7_15::getLetter() { return letter; }

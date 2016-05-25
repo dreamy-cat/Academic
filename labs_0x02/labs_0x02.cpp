@@ -1066,15 +1066,43 @@ void Labs_0x02::chapter_07() {
         cout << pQueue.top();
         pQueue.pop();
     }
-    // Task 12.
-    Ring<string> ring_1;
+    // Task 12-13.
+    Ring< std::string, std::deque > ring_1;
     ring_1.push_back("one");
     ring_1.push_back("two");
-    Ring<string>::iterator it_5 = ring_1.begin();
+    Ring< std::string, std::deque >::iterator it_5 = ring_1.begin();
     it_5.insert("three");
     it_5 = ring_1.begin();
     cout << "All strings in Ring<string>: ";
     for (int i = 0; i < 10; i++) cout << *it_5++ << " ";
+    cout << endl;
+    // Task 14. Very strange.
+    BitBucket<Noisy> bucket;
+    bucket.fill(vector_1);
+    // Task 15. Without keyboard input.
+    cout << "Words in map<string, int>: ";
+    srand(4);
+    int wordIdx = rand() % wordMap.size(), idx = 0;
+    string word;
+    for (map<string, int>::iterator it_4 = wordMap.begin(); it_4 != wordMap.end(); it_4++, idx++) {
+        if (idx == wordIdx) word = (*it_4).first;
+        cout << (*it_4).first << " ";
+    }
+    cout << "\nChosen word is: " << word;
+    vector<Class_7_15> vector_2;
+    for (int i = 0; i < word.size(); i++) vector_2.push_back(Class_7_15(word[i]));
+    vector<int> vector_3;
+    vector_3.resize(vector_2.size());
+    fill(vector_3.begin(), vector_3.end(), 0);
+    for (int i = 0; i < 30; i++) {
+        char fC = rand() % 26 + 'A';
+        for (int i = 0; i < word.size(); i++)
+            if ( vector_2[i].exist(fC) )
+                vector_3[i] = 1;
+    }
+    cout << "\nAfter 30 iterations, the existing letters is: ";
+    for (int i = 0; i < vector_3.size(); i++)
+        if ( vector_3[i] ) cout << vector_2[i].getLetter(); else cout << "_";
     cout << endl;
 }
 

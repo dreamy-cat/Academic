@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <list>
 #include <stack>
+#include <vector>
 
 class Noisy {
 public:
@@ -65,16 +66,16 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Class_7_11& value);
 };
 
-template<class T> class Ring {
+template<typename E, template < class T1, class Alloc = std::allocator<T1> > class T > class Ring {
 public:
     class iterator;
     friend class iterator;
-    class iterator : public std::iterator<std::bidirectional_iterator_tag, T, std::ptrdiff_t> {
+    class iterator : public std::iterator<std::bidirectional_iterator_tag, T<E>, std::ptrdiff_t> {
     private:
-        typename std::deque<T>::iterator it;
-        std::deque<T>*  r;
+        typename T<E>::iterator it;
+        T<E>*  r;
     public:
-        iterator(std::deque<T>& lst, const typename std::deque<T>::iterator& i) : r(&lst), it(i) {}
+        iterator(T<E>& lst, const typename T<E>::iterator& i) : r(&lst), it(i) {}
 
         bool operator==(const iterator& x) const {
             return (it == x.it);
@@ -84,7 +85,7 @@ public:
             return !(*this == x.it);
         }
 
-        typename std::deque<T>::reference operator*() const {
+        typename T<E>::reference operator*() const {
             return *it;
         }
 
@@ -112,7 +113,7 @@ public:
             return tmp;
         }
 
-        iterator insert(const T& x) {
+        iterator insert(const E& x) {
             return iterator(*r, r->insert(it, x));
         }
 
@@ -121,7 +122,7 @@ public:
         }
     };
 
-    void push_back(const T& x) {
+    void push_back(const E& x) {
         lst.push_back(x);
     }
 
@@ -134,7 +135,50 @@ public:
     }
 
 private:
-    std::deque<T> lst;
+    T<E> lst;
+};
+
+template <typename T> class BitBucket {
+public:
+    BitBucket() { std::cout << "BitBucket::BitBucket()" << std::endl; }
+    void fill(std::vector<T>& data) { std::cout << "BitBucket::fill()" << std::endl; }
+};
+
+class Class_7_15 {
+public:
+    Class_7_15(const char l);
+    bool exist(char c);
+    char getLetter();
+private:
+    char letter;
+    bool isExist;
+};
+
+struct Alpha : std::unary_function<char, bool> {
+    bool operator()(char c) { return std::isalpha(c); }
+};
+
+class Delim : std::unary_function<char, bool> {
+public:
+    Delim() {
+
+    }
+
+    Delim(const std::string& exc) : exclude(exc) {
+
+    }
+
+    bool operator()(char c) {
+        return ( exclude.find(c) == std::string::npos );
+    }
+
+private:
+    std::string exclude;
+};
+
+template <class InputIt, class P = Alpha>
+class TokenIt : public std::iterator<std::input_iterator_tag, std::string, std::ptrdiff_t> {
+
 };
 
 #endif
