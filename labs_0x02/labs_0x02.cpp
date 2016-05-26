@@ -3,6 +3,7 @@
 #include <signal.h>
 #include <vector>
 #include <map>
+#include <valarray>
 #include <queue>
 #include <fstream>
 #include <iomanip>
@@ -1104,6 +1105,8 @@ void Labs_0x02::chapter_07() {
     for (int i = 0; i < vector_3.size(); i++)
         if ( vector_3[i] ) cout << vector_2[i].getLetter(); else cout << "_";
     cout << endl;
+    // Task 16. Testing...
+
 }
 
 void labs_0x02() {

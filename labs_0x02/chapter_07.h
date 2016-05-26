@@ -178,6 +178,49 @@ private:
 
 template <class InputIt, class P = Alpha>
 class TokenIt : public std::iterator<std::input_iterator_tag, std::string, std::ptrdiff_t> {
+private:
+    InputIt first, last;
+    std::string word;
+    P predicate;
+public:
+    TokenIt(InputIt begin, InputIt end, P pred = P()) : first(begin), last(end), predicate(pred) {
+        ++*this;
+    }
+
+    TokenIt() {}
+
+    TokenIt& operator++() {
+        word.resze(0);
+        first = std::find_if(first, last, predicate);
+        while ( first != last && predicate(*first) ) word += *first++;
+        return *this;
+    }
+
+    class Capture {
+    private:
+        std::string word;
+    public:
+        Capture(const std::string& w) : word(w) {}
+        std::string operator*() { return word; }
+    };
+
+    Capture operator++(int) {
+        Capture t(word);
+        ++*this;
+        return t;
+    }
+
+    std::string operator*() const { return word; }
+
+    std::string* operator->() const { return &(operator*()); }
+
+    bool operator==(const TokenIt&) {
+        return (word.size() == 0 && first == last);
+    }
+
+    bool operator!=(const TokenIt& rv) {
+        return (!(*this == rv));
+    }
 
 };
 
