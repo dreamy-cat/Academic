@@ -1105,8 +1105,39 @@ void Labs_0x02::chapter_07() {
     for (int i = 0; i < vector_3.size(); i++)
         if ( vector_3[i] ) cout << vector_2[i].getLetter(); else cout << "_";
     cout << endl;
-    // Task 16. Testing...
-
+    // Task 16.
+    cout << "Words from file 'chapter-7-1.txt': ";
+    stringstream strStream(text);
+    list<string> list_5;
+    Delim delims(" \t\n~;()\"<>:{}[]+-=&*#.,/\\");
+    ostream_iterator<string> console(cout, " ");
+    istreambuf_iterator<char> isBegin(strStream), isEnd;
+    TokenIt<istreambuf_iterator<char>, Delim> wordIt(isBegin, isEnd, delims), end;
+    copy(wordIt, end, back_inserter(list_5));
+    copy(list_5.begin(), list_5.end(), console);
+    // Task 17. Too fast, just trying.
+    stack<int, vector<int> > stack_2;
+    stack<int, deque<int> > stack_3;
+    stack<int, list<int> > stack_4;
+    for (int i = 0; i < 5; i++) {
+        stack_2.push(i);
+        stack_3.push(i * 2);
+        stack_4.push(i * 3);
+    }
+    cout << "\nStacks variants (vector, deque, list), all elements: ";
+    for (int i = 0; i < 5; i++) {
+        cout << stack_2.top() << " ";
+        stack_2.pop();
+        cout << stack_3.top() << " ";
+        stack_3.pop();
+        cout << stack_4.top() << " ";
+        stack_4.pop();
+    }
+    // Task 18.
+    cout << endl;
+    FList<int> flist;
+    flist.push(5);
+    // FList<int>::iterator itFlist(flist.begin());
 }
 
 void labs_0x02() {

@@ -66,7 +66,8 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Class_7_11& value);
 };
 
-template<typename E, template < class T1, class Alloc = std::allocator<T1> > class T > class Ring {
+template<typename E, template < class T1, class Alloc = std::allocator<T1> > class T >
+class Ring {
 public:
     class iterator;
     friend class iterator;
@@ -190,7 +191,7 @@ public:
     TokenIt() {}
 
     TokenIt& operator++() {
-        word.resze(0);
+        word.resize(0);
         first = std::find_if(first, last, predicate);
         while ( first != last && predicate(*first) ) word += *first++;
         return *this;
@@ -221,7 +222,67 @@ public:
     bool operator!=(const TokenIt& rv) {
         return (!(*this == rv));
     }
+};
 
+template<typename T>
+class FList {
+public:
+    FList() : first(NULL) {
+        std::cout << "FList::FList()" << std::endl;
+    }
+
+    ~FList() {
+        std::cout << "FList::~FList()" << std::endl;
+    }
+
+    class iterator : public std::iterator<std::forward_iterator_tag, typename T::value_type> {
+    public:
+        iterator(T* first) : pos(first) {}
+
+        T& operator*() {
+            return *pos;
+        }
+
+        /*
+         *         iterator& operator++() {
+            ++it;
+            if ( it == r->end() )it = r->begin();
+            return *this;
+        }
+
+        iterator& operator++(int) {
+            iterator tmp = *this;
+            ++*this;
+            return tmp;
+        }
+*/
+
+    private:
+        T* pos;
+    };
+
+    bool empty() const {
+        return (first);
+    }
+
+    T front () const {
+        return *first;
+    }
+
+    void push(const T& elem) {
+
+    }
+
+    void pop() {
+
+    }
+
+    T* begin() {
+        return first;
+    }
+
+private:
+    T* first;
 };
 
 #endif
