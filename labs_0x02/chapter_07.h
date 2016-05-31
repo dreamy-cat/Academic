@@ -2,10 +2,12 @@
 #define L_02_CHAPTER_07_H
 
 #include <iostream>
+#include <iomanip>
 #include <algorithm>
 #include <list>
 #include <stack>
 #include <vector>
+#include <valarray>
 
 class Noisy {
 public:
@@ -235,18 +237,37 @@ public:
         std::cout << "FList::~FList()" << std::endl;
     }
 
-    class iterator : public std::iterator<std::forward_iterator_tag, typename T::value_type> {
-    public:
-        iterator(T* first) : pos(first) {}
+    struct node {
+        T element;
+        node* next;
+    };
 
-        T& operator*() {
-            return *pos;
+    class iterator : public std::iterator<std::forward_iterator_tag, T> {
+    public:
+        iterator() : pos(NULL) {}
+
+        iterator(node* n) : pos(n) {
+            // std::cout << "iterator(node)" << std::endl;
         }
 
-        /*
-         *         iterator& operator++() {
-            ++it;
-            if ( it == r->end() )it = r->begin();
+        T& operator*() {
+            return pos->element;
+        }
+
+        node* getNode() const {
+            return pos;
+        }
+
+        bool operator==(const iterator& x) const {
+            return (this->pos == x.pos);
+        }
+
+        bool operator!=(const iterator& x) const {
+            return !(this->pos == x.pos);
+        }
+
+        iterator& operator++() {
+            pos = pos->next;
             return *this;
         }
 
@@ -255,34 +276,96 @@ public:
             ++*this;
             return tmp;
         }
-*/
 
     private:
-        T* pos;
+        node* pos;
     };
 
     bool empty() const {
-        return (first);
+        return (!first);
     }
 
     T front () const {
-        return *first;
+        return first->element;
     }
 
     void push(const T& elem) {
-
+        node* n = new node;
+        n->element = elem;
+        n->next = first;
+        first = n;
     }
 
     void pop() {
-
+        node* next = first->next;
+        delete first;
+        first = next;
     }
 
-    T* begin() {
-        return first;
+    void insertAfter(iterator& pos, const T& elem) {
+        iterator it = begin();
+        while (it != pos && it != end())
+            it++;
+        if (it == end()) return;
+        node* founded = it.getNode();
+        node* next = founded->next;
+        node* newNode = new node;
+        newNode->element = elem;
+        newNode->next = next;
+        founded->next = newNode;
+    }
+
+    void eraseAfter(iterator& pos) {
+        iterator it = begin();
+        while (it != pos && it != end())
+            it++;
+        if (it == end()) return;
+        node* founded = it.getNode();
+        if (founded->next == NULL) return;
+        node* next = founded->next;
+        founded->next = next->next;
+        delete next;
+    }
+
+    iterator begin() {
+        return iterator(first);
+    }
+
+    iterator end() {
+        node* it = first;
+        while (it != NULL) it = it->next;
+        return iterator(it);
+    }
+
+    void print() {
+        std::cout << "Forward list elements: ";
+        for (FList<T>::iterator it = begin(); it != end(); it++) std::cout << *it << " ";
+        std::cout << std::endl;
     }
 
 private:
-    T* first;
+    node* first;
 };
+
+template<class T>
+void printMatrix(const std::valarray<T>& matrix, size_t n, size_t l) {
+    std::cout << "Matrix [" << n << "]:\n";
+    for (size_t i = 0; i < n; i++) {
+        std::cout << std::setw(3) << matrix[i];
+        if ( (i + 1) % l ) std::cout << ' '; else std::cout << '\n';
+    }
+}
+
+template<class T>
+std::valarray<T> multiplyMatrix(const std::valarray<T> m1, size_t m1_rows, size_t m1_columns, const std::valarray<T> m2, size_t m2_rows, size_t m2_columns) {
+    std::valarray<T> result(m1_rows * m2_columns);
+    for (size_t i = 0; i < m1_rows; i++)
+        for (size_t j = 0; j < m2_columns; j++) {
+            std::valarray<T> row = m1[std::slice(m1_columns * i, m1_columns, 1)];
+            std::valarray<T> col = m2[std::slice(j, m2_rows, m2_columns)];
+            result[i * m2_columns + j] = (row * col).sum();
+        }
+    return result;
+}
 
 #endif

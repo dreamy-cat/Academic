@@ -1136,8 +1136,43 @@ void Labs_0x02::chapter_07() {
     // Task 18.
     cout << endl;
     FList<int> flist;
-    flist.push(5);
-    // FList<int>::iterator itFlist(flist.begin());
+    cout << "Is forwarded list empty: " << flist.empty() << endl;
+    for (int i = 0; i < 5; i++) flist.push(i);
+    cout << "Is forwarded list empty after pushing: " << flist.empty() << endl;
+    flist.print();
+    for (int i = 0; i < 2; i++) flist.pop();
+    flist.print();
+    FList<int>::iterator it_1 = flist.begin();
+    it_1++;
+    cout << "Inserting element 7...\n";
+    flist.insertAfter(it_1, 7);
+    flist.print();
+    cout << "Erasing element 7...\n";
+    flist.eraseAfter(it_1);
+    flist.print();
+    // Task 19. A little strange with median.
+    const int vecSize = 10;
+    int vector_4[vecSize];
+    cout << "Elements of 'vector_4': ";
+    for (int i = 0; i < vecSize; i++) cout << (vector_4[i] = rand() % vecSize) << " ";
+    valarray<int> valarray_1(vector_4, vecSize);
+    cout << "\nSize of valarray<int> " << valarray_1.size() << ", elements: ";
+    for (int i = 0; i < valarray_1.size(); i++) cout << valarray_1[i] << " ";
+    cout << "\nMinimum " << valarray_1.min() << ", maximum " << valarray_1.max() << ", sum " << valarray_1.sum();
+    cout << "\nMedian " << valarray_1[vecSize/2] << ", arithmetical mean " << valarray_1.sum() / vecSize << endl;
+    // Task 20.
+    valarray<int> valarray_2;
+    valarray<int> valarray_3;
+    valarray<int> valarray_4;
+    valarray_2.resize(12);
+    valarray_3.resize(20);
+    for (int i = 0; i < 12; i++) valarray_2[i] = rand() % 5;
+    for (int i = 0; i < 20; i++) valarray_3[i] = rand() % 5;
+    printMatrix(valarray_2, 12, 3);
+    printMatrix(valarray_3, 20, 4);
+    valarray_4.resize(5 * 5);
+    valarray_4 = multiplyMatrix(valarray_2, 4, 3, valarray_3, 5, 4);
+    printMatrix(valarray_4, 16, 4);
 }
 
 void labs_0x02() {
