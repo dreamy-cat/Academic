@@ -25,6 +25,9 @@
 #include "chapter_05.h"
 #include "chapter_06.h"
 #include "chapter_07.h"
+#include "chapter_08.h"
+
+// #include "../academic/labs_0x01/chapter_16.h"
 
 #include "stdlib.h"
 
@@ -1175,6 +1178,28 @@ void Labs_0x02::chapter_07() {
     printMatrix(valarray_4, 16, 4);
 }
 
+void Labs_0x02::chapter_08() {
+    cout << "Chapter's 8 tasks.\n";
+    // Task 1. Testing both variants...
+    vector<Base*> vector_1;
+    vector<Derived*> vector_2;
+    for (int i = 0; i < 5; i++)
+        if ( i % 2 ) vector_1.push_back(new Base); else vector_1.push_back(new Derived);
+    cout << "All types in vector_1:\n";
+    for (int i = 0; i < vector_1.size(); i++) {
+        string typeN(typeid(*vector_1[i]).name());
+        cout << i << ": " << typeN << endl;
+        if ( typeN.find("Derived") != string::npos) {
+            Derived* dPtr = dynamic_cast<Derived*>(vector_1[i]);
+            vector_2.push_back(dPtr);
+        }
+    }
+    cout << "All types in vector_2:\n";
+    for (int i = 0; i < vector_2.size(); i++) cout << typeid(*vector_2[i]).name() << endl;
+    // Task 2.
+    // Class_2 cl_1;
+}
+
 void labs_0x02() {
-    chapter_07();
+    chapter_08();
 }

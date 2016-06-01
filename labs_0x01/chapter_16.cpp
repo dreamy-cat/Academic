@@ -17,4 +17,3 @@ std::ostream& operator<<(std::ostream& os, const Int* value) { return os << "Int
 template<class T> int ObjContainer_16<T>::i = 0;
 
 template<class T> int ObjContainer_16<T>::j = 0;
-
