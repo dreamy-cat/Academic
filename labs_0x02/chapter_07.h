@@ -8,6 +8,7 @@
 #include <stack>
 #include <vector>
 #include <valarray>
+#include <typeinfo>
 
 class Noisy {
 public:
@@ -35,25 +36,32 @@ void function_7_2(std::list<Noisy> v);
 class Shape {
 public:
     virtual void draw() = 0;
+    void altDraw();
     virtual ~Shape();
 };
 
 class Circle : public Shape {
 public:
+    Circle();
     void draw();
     ~Circle();
+    int radius;
 };
 
 class Triangle : public Shape {
 public:
-    void draw();
+    Triangle();
     ~Triangle();
+    void draw();
+    int line;
 };
 
 class Square : public Shape {
 public:
+    Square();
     void draw();
     ~Square();
+    int perimeter;
 };
 
 void printStack(std::stack<int>& s, std::string name);

@@ -52,15 +52,29 @@ void function_7_2(std::list<Noisy> v) {
 
 Shape::~Shape() {}
 
-void Circle::draw() { cout << "Circle::draw()" << endl; }
+void Shape::altDraw() {
+    string className = typeid(*this).name();
+    if ( className.find("Circle") != string::npos ) (dynamic_cast<Circle*>(this))->draw(); else
+        if ( className.find("Triangle") != string::npos ) (dynamic_cast<Triangle*>(this))->draw(); else
+            if ( className.find("Square") != string::npos ) (dynamic_cast<Square*>(this))->draw(); else
+                cout << "Something goes wrong with type " << className << endl;
+}
+
+Circle::Circle() { radius = rand() % 10; }
+
+void Circle::draw() { cout << "Circle::draw(), radius " << radius << endl; }
 
 Circle::~Circle() { cout << "Circle::~Circle()" << endl; }
 
-void Triangle::draw() { cout << "Triangle::draw()" << endl; }
+Triangle::Triangle() { line = rand() % 10; }
+
+void Triangle::draw() { cout << "Triangle::draw(), line length " << line << endl; }
 
 Triangle::~Triangle() { cout << "Triangle::~Triangle()" << endl; }
 
-void Square::draw() { cout << "Square::draw()" << endl; }
+Square::Square() { perimeter = rand() % 10; }
+
+void Square::draw() { cout << "Square::draw(), perimeter " << perimeter << endl; }
 
 Square::~Square() { cout << "Square::~Square()" << endl; }
 

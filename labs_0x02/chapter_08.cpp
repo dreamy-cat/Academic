@@ -10,6 +10,22 @@ Derived::Derived::Derived() { cout << "Derived::Derived()" << endl; }
 
 Derived::~Derived() { cout << "Derived::~Derived()" << endl; }
 
+template<class T> int AutoCounter<T>::count = 0;
+
+template<class T> std::map<std::string,int> AutoCounter<T>::cleanupCheck;
+
 Class_2::Class_2() { cout << "Class_2::Class_2()" << endl; }
 
 Class_2::~Class_2() { cout << "Class_2::~Class_2()" << endl; }
+
+Class_3::Class_3() { cout << "Class_3::Class_3()" << endl; }
+
+Class_3::~Class_3() { cout << "Class_3::~Class_3()" << endl; }
+
+void Instrument::prepare() {
+    string className = typeid(*this).name();
+    if ( className.find("Wind") != string::npos ) ((Wind*)this)->clearValve(); else
+        cout << "Instrument or Stringed class, method 'clear'." << endl;
+}
+
+void Wind::clearValve() { cout << "Wind::clearValve()" << endl; }

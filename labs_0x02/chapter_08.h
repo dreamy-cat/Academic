@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <set>
+#include <vector>
+#include <typeinfo>
+#include <map>
 
 class Base {
 public:
@@ -16,43 +19,66 @@ public:
     ~Derived();
 };
 
-class AutoCounter {
+template<class T> class AutoCounter {
 public:
-    static AutoCounter* create() { return new AutoCounter(); }
-    ~AutoCounter() {
-        std::cout << "Destroying[" << className << ":" << id << "]" << std::endl;
-        verifier.remove(this);
+    AutoCounter() : id(count++) {
+        className = typeid(T).name();
+        cleanupCheck[className]++;
+        std::cout << "AutoCounter::Autocounter(), class: " << className << ", id: " << id << ", counter: " << cleanupCheck.at(className) << std::endl;
     }
-    friend std::ostream& operator<<(std::ostream& os, const AutoCounter& value) { return os << "AutoCounter[" << value.id << "]"; }
-    friend std::ostream& operator<<(std::ostream& os, const AutoCounter* value) { return os << "AutoCounter[" << value->id << "]"; }
+    ~AutoCounter() {
+        cleanupCheck[className]--;
+        std::cout << "AutoCounter::Autocounter(), class: " << className << ", id: " << id << ", counter: " << cleanupCheck.at(className) << std::endl;
+    }
+    void trace() {
+        std::cout << "AutoCounter::Trace(), class: " << className << ", id: " << id << ", counter: " << cleanupCheck.at(className) << std::endl;
+    }
+    void verify() {
+        std::cout << "Autocounter::verify(), size " << cleanupCheck.size() << std::endl;
+        for (std::map<std::string, int>::iterator it = cleanupCheck.begin(); it != cleanupCheck.end(); it++)
+            std::cout << "Class: " << className << ", id: " << id << ", counter: " << cleanupCheck.at(className) << std::endl;
+    }
 private:
     static int count;
     int id;
     std::string className;
-    AutoCounter() : id(count++) {
-        verifier.add(this);
-        className = "AutoCounter";
-        std::cout << "AutoCounter constructor[" << className << ":" << id << "]" << std::endl;
-    }
+    static std::map<std::string,int> cleanupCheck;
     AutoCounter(const AutoCounter&);
     void operator=(const AutoCounter&);
-    class CleanupCheck {
-    public:
-        void add(AutoCounter* ap) { trace.insert(ap); }
-        void remove(AutoCounter* ap) { trace.erase(ap); }
-        ~CleanupCheck() { std::cout << "CleanupCheck destructor, elements in set: " << trace.size() << std::endl; }
-    private:
-        std::set<AutoCounter*> trace;
-    };
-    static CleanupCheck verifier;
 };
 
 class Class_2 {
 public:
     Class_2();
     ~Class_2();
-private:
-    // AutoCounter debug;
+    AutoCounter<Class_2> debug;
+};
+
+class Class_3 {
+public:
+    Class_3();
+    ~Class_3();
+    AutoCounter<Class_3> debug;
+};
+
+class Instrument {
+public:
+    Instrument() {}
+    virtual ~Instrument() {}
+    void prepare();
+};
+
+class Wind : public Instrument {
+public:
+    Wind() {}
+    ~Wind() {}
+    virtual void clearValve();
+};
+
+class Stringed : public Instrument {
+public:
+    Stringed() {}
+    ~Stringed() {}
 };
 
 #endif

@@ -27,8 +27,6 @@
 #include "chapter_07.h"
 #include "chapter_08.h"
 
-// #include "../academic/labs_0x01/chapter_16.h"
-
 #include "stdlib.h"
 
 using namespace Labs_0x02;
@@ -1196,8 +1194,47 @@ void Labs_0x02::chapter_08() {
     }
     cout << "All types in vector_2:\n";
     for (int i = 0; i < vector_2.size(); i++) cout << typeid(*vector_2[i]).name() << endl;
-    // Task 2.
-    // Class_2 cl_1;
+    // Tasks 2-3. Just works fine.
+    vector<Class_2*> vector_3;
+    vector<Class_3*> vector_4;
+    for (int i = 0; i < 3; i++) {
+        vector_3.push_back(new Class_2());
+        vector_4.push_back(new Class_3());
+    }
+    vector_3[0]->debug.trace();
+    vector_4[1]->debug.trace();
+    vector_3[0]->debug.verify();
+    vector_4[1]->debug.verify();
+    for (int i = 0; i < vector_3.size(); i++) {
+        delete(vector_3[i]);
+        delete(vector_4[i]);
+    }
+    // Tasks 4-5.
+    vector<Instrument*> vector_5;
+    vector_5.push_back(new Wind);
+    vector_5.push_back(new Stringed);
+    vector_5.push_back(new Instrument);
+    for (int i = 0; i < vector_5.size(); i++) vector_5[i]->prepare();
+    // Task 6-7. Virtual calls more convinient here.
+    vector<Shape*> vector_6;
+    vector<Shape*> vector_7;
+    for (int i = 0; i < 10; i++) {
+        switch (rand() % 3) {
+        case 0:
+            vector_7.push_back(new Circle);
+            break;
+        case 1:
+            vector_7.push_back(new Triangle);
+            break;
+        case 2:
+            vector_7.push_back(new Square);
+            break;
+        default:
+            break;
+        }
+        vector_7[vector_7.size() - 1]->altDraw();
+    }
+
 }
 
 void labs_0x02() {
