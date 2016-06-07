@@ -81,4 +81,49 @@ public:
     ~Stringed() {}
 };
 
+class Food {
+public:
+
+};
+
+class Beef : public Food {
+
+};
+
+class Fish : public Food {
+
+};
+
+class Oats : public Food {
+
+};
+
+class Pet {
+public:
+    Pet();
+    virtual ~Pet();
+    virtual void eat(Food& v);
+};
+
+class Dog : public Pet {
+public:
+    Dog();
+    ~Dog();
+    void eat(Beef& v);
+};
+
+class Cat : public Pet {
+public:
+     Cat();
+    ~Cat();
+    void eat(Fish & v);
+};
+
+class Horse : public Pet {
+public:
+    Horse();
+    ~Horse();
+    void eat(Oats & v);
+};
+
 #endif

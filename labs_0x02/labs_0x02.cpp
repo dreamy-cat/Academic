@@ -1216,25 +1216,64 @@ void Labs_0x02::chapter_08() {
     vector_5.push_back(new Instrument);
     for (int i = 0; i < vector_5.size(); i++) vector_5[i]->prepare();
     // Task 6-7. Virtual calls more convinient here.
-    vector<Shape*> vector_6;
-    vector<Shape*> vector_7;
-    for (int i = 0; i < 10; i++) {
+    vector<Shape*> vector_6, vector_7;
+    for (int i = 0; i < 10; i++)
         switch (rand() % 3) {
         case 0:
-            vector_7.push_back(new Circle);
+            vector_6.push_back(new Circle);
             break;
         case 1:
-            vector_7.push_back(new Triangle);
+            vector_6.push_back(new Triangle);
             break;
         case 2:
-            vector_7.push_back(new Square);
+            vector_6.push_back(new Square);
             break;
         default:
             break;
         }
-        vector_7[vector_7.size() - 1]->altDraw();
+    cout << "Sorting vector with Circles.\n";
+    vector<Circle*> vector_8;
+    vector<Square*> vector_9;
+    for (int i = 0; i < vector_6.size(); i++) {
+        string className = typeid(*vector_6[i]).name();
+        if ( className.find("Circle") !=  string::npos ) vector_8.push_back(dynamic_cast<Circle*>(vector_6[i])); else
+            if ( className.find("Square") != string::npos ) vector_9.push_back(dynamic_cast<Square*>(vector_6[i]));
     }
-
+    sort(vector_8.begin(), vector_8.end(), greaterRadius);
+    sort(vector_9.begin(), vector_9.end(), greaterPerimeter);
+    for (int i = 0; i < vector_8.size(); i++) vector_8[i]->altDraw();
+    cout << "Sorting vector with Squares.\n";
+    for (int i = 0; i < vector_9.size(); i++) vector_9[i]->altDraw();
+    vector_7 = vector_6;
+    for (int i = 0; i < vector_7.size(); i++)
+        vector_7[vector_7.size() - 1]->altDraw();
+    // Task 8. Not so intresting...
+    cout << "Stack of calls in vector with 'Pets*'.\n";
+    vector<Pet*> vector_10;
+    for (int i = 0; i < 10; i++)
+        switch (rand() % 3) {
+        case 0:
+            vector_10.push_back(new Dog);
+            break;
+        case 1:
+            vector_10.push_back(new Cat);
+            break;
+        case 2:
+            vector_10.push_back(new Horse);
+            break;
+        default:
+            break;
+        }
+    cout << "Calling all virtual functions 'eat' for the classes Dog, Cat and Horse.\n";
+    Beef food_1;
+    Fish food_2;
+    Oats food_3;
+    for (int i = 0; i < vector_10.size(); i++) {
+        string className = typeid(*vector_10[i]).name();
+        if ( className.find("Dog") != string::npos ) dynamic_cast<Dog*>(vector_10[i])->eat(food_1); else
+            if ( className.find("Cat") != string::npos ) dynamic_cast<Cat*>(vector_10[i])->eat(food_2); else
+                if ( className.find("Horse") != string::npos ) dynamic_cast<Horse*>(vector_10[i])->eat(food_3);
+    }
 }
 
 void labs_0x02() {

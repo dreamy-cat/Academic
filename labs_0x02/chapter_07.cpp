@@ -78,6 +78,15 @@ void Square::draw() { cout << "Square::draw(), perimeter " << perimeter << endl;
 
 Square::~Square() { cout << "Square::~Square()" << endl; }
 
+bool greaterRadius(const Circle *lv, const Circle *rv) {
+    return ( lv->radius > rv->radius );
+}
+
+bool greaterPerimeter(const Square *lv, const Square *rv) {
+    return ( lv->perimeter > rv->perimeter );
+}
+
+
 void printStack(stack<int>& s, string name) {
     cout << "Stack '"  << name << "': ";
     stack<int> tmp = s;

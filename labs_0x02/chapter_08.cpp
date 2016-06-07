@@ -29,3 +29,27 @@ void Instrument::prepare() {
 }
 
 void Wind::clearValve() { cout << "Wind::clearValve()" << endl; }
+
+Pet::Pet() { cout << "Pet::Pet()" << endl; }
+
+Pet::~Pet() { cout << "Pet::~Pet()" << endl; }
+
+void Pet::eat(Food& v) { cout << "Pet::eat()" << endl; }
+
+Dog::Dog() { cout << "Dog::Dog()" << endl; }
+
+Dog::~Dog() { cout << "Dog::~Dog()" << endl; }
+
+void Dog::eat(Beef& v) { cout << "Dog::eat()" << endl; }
+
+Cat::Cat() { cout << "Cat::Cat()" << endl; }
+
+Cat::~Cat() { cout << "Cat::~Cat()" << endl; }
+
+void Cat::eat(Fish& v) { cout << "Cat::eat()" << endl; }
+
+Horse::Horse() { cout << "Horse::Horse()" << endl; }
+
+Horse::~Horse() { cout << "Horse::~Horse()" << endl; }
+
+void Horse::eat(Oats& v) { cout << "Horse::eat()" << endl; }

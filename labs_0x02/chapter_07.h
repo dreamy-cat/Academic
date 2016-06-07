@@ -64,6 +64,12 @@ public:
     int perimeter;
 };
 
+// Couple functions, using in chapter 8.
+
+bool greaterRadius(const Circle* lv, const Circle* rv);
+
+bool greaterPerimeter(const Square* lv, const Square* rv);
+
 void printStack(std::stack<int>& s, std::string name);
 
 void sortStack(std::stack<int>& source, std::stack<int>& sorted, std::stack<int>& tail);
