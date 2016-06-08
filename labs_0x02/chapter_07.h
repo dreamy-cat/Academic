@@ -64,6 +64,13 @@ public:
     int perimeter;
 };
 
+class Rectangle : public Shape {
+public:
+    Rectangle();
+    void draw();
+    ~Rectangle();
+};
+
 // Couple functions, using in chapter 8.
 
 bool greaterRadius(const Circle* lv, const Circle* rv);

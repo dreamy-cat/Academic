@@ -53,3 +53,13 @@ Horse::Horse() { cout << "Horse::Horse()" << endl; }
 Horse::~Horse() { cout << "Horse::~Horse()" << endl; }
 
 void Horse::eat(Oats& v) { cout << "Horse::eat()" << endl; }
+
+void drawQuad(Shape* v) {
+    string className = typeid(*v).name();
+    if ( className.find("Square") != string::npos || className.find("Rectangle") != string::npos ) v->draw(); else
+        cout << "Shape object not a Square or Rectangle." << endl;
+}
+
+bool lessShapeType(const Shape* lv, const Shape* rv) {
+    return ( typeid(*lv).before(typeid(*rv)) );
+}

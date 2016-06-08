@@ -78,6 +78,13 @@ void Square::draw() { cout << "Square::draw(), perimeter " << perimeter << endl;
 
 Square::~Square() { cout << "Square::~Square()" << endl; }
 
+Rectangle::Rectangle() { cout << "Rectangle::Rectangle()" << endl; }
+
+void Rectangle::draw() { cout << "Rectangle::draw()" << endl; }
+
+Rectangle::~Rectangle() { cout << "Rectangle::~Rectangle()" << endl; }
+
+
 bool greaterRadius(const Circle *lv, const Circle *rv) {
     return ( lv->radius > rv->radius );
 }

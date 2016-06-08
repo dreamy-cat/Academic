@@ -7,6 +7,8 @@
 #include <typeinfo>
 #include <map>
 
+#include "chapter_07.h"
+
 class Base {
 public:
     Base();
@@ -125,5 +127,9 @@ public:
     ~Horse();
     void eat(Oats & v);
 };
+
+void drawQuad(Shape *v);
+
+bool lessShapeType(const Shape* lv, const Shape* rv);
 
 #endif

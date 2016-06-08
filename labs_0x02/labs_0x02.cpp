@@ -1274,6 +1274,30 @@ void Labs_0x02::chapter_08() {
             if ( className.find("Cat") != string::npos ) dynamic_cast<Cat*>(vector_10[i])->eat(food_2); else
                 if ( className.find("Horse") != string::npos ) dynamic_cast<Horse*>(vector_10[i])->eat(food_3);
     }
+    // Task 9-10.
+    vector<Shape*> vector_11;
+    for (int i = 0; i < 12; i++) {
+        switch (rand() % 4) {
+        case 0:
+            vector_11.push_back(new Circle);
+            break;
+        case 1:
+            vector_11.push_back(new Triangle);
+            break;
+        case 2:
+            vector_11.push_back(new Square);
+            break;
+        case 3:
+            vector_11.push_back(new Rectangle);
+            break;
+        default:
+            break;
+        }
+    }
+    for_each(vector_11.begin(), vector_11.end(), drawQuad);
+    cout << "After sorting vector<Shape*> with type_info::before().\n";
+    sort(vector_11.begin(), vector_11.end(), lessShapeType);
+    for_each(vector_11.begin(), vector_11.end(), drawQuad);
 }
 
 void labs_0x02() {
