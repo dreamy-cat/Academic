@@ -26,6 +26,7 @@
 #include "chapter_06.h"
 #include "chapter_07.h"
 #include "chapter_08.h"
+#include "chapter_09.h"
 
 #include "stdlib.h"
 
@@ -1300,6 +1301,23 @@ void Labs_0x02::chapter_08() {
     for_each(vector_11.begin(), vector_11.end(), drawQuad);
 }
 
+void Labs_0x02::chapter_09() {
+    cout << "Chapter's 9 tasks.\n";
+    // Tasks 1-2. Works only in .cpp, specified namespace.
+    Class_A cl_1;
+    cl_1.Class_Y::function();
+    Class_A* ptr_1 = &cl_1;
+    // Task 3. May be with the old version of compiler, it was possible to trace, but now it's error 'ambigous'.
+    ptr_1->Class_Y::function();
+    // Task 4.
+    Bat cl_2;
+    Tarantool cl_3;
+    FatCat cl_4;
+    noisy(&cl_3);
+    noisy(&cl_4);
+    saves(&cl_2);
+}
+
 void labs_0x02() {
-    chapter_08();
+    chapter_09();
 }
