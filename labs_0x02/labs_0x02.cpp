@@ -1309,13 +1309,43 @@ void Labs_0x02::chapter_09() {
     Class_A* ptr_1 = &cl_1;
     // Task 3. May be with the old version of compiler, it was possible to trace, but now it's error 'ambigous'.
     ptr_1->Class_Y::function();
-    // Task 4.
-    Bat cl_2;
-    Tarantool cl_3;
-    FatCat cl_4;
+    // Task 4-7.
+    Bat cl_2(1);
+    Tarantool cl_3(2);
+    FatCat cl_4(3);
     noisy(&cl_3);
     noisy(&cl_4);
-    saves(&cl_2);
+    move(&cl_3, &cl_4);
+    save(&cl_2, new Train, new Car);
+    // Task 8-9. Work fine with current hierarchy of classes.
+    save(&cl_4, new Train, new Car);
+    // Task 10. Both variants works fine.
+    FunnyFatCat cl_5(4), cl_6(5);
+    cl_5.Bat::eat(5);
+    cl_5.eat('a');
+    // Task 11-12.
+    cl_6 = cl_5;
+    cout << cl_6;
+    cl_4.workout();
+    // Task 13. Works fine, except calling virtual method.
+    SuperCat* cl_7_ptr = new SuperCat(6);
+    FatCat* ptr_2 = (FatCat*)(cl_7_ptr);
+    cout << "Using dangerous convertion from SuperCat class to FatCat.\n";
+    ptr_2->move();
+    ptr_2->noise();
+    ptr_2->eat('a');
+    // Task 14. Not working as described, maybe too old, simply add another layer of absctraction.
+    cout << "\nUsing class HuntingCat.\n";
+    HuntingCat cl_8(7);
+    cl_8.work();
+    // Task 15. Works, but very strange scheme of task.
+    Class_15 cl_9;
+    for (int i = 0; i < 3; i++) cl_9.create();
+    // Task 16. Ok, 'using' works correctly.
+    Class_16_3 cl_10;
+    cl_10.function();
+    Class_16_4 cl_11;
+    cl_11.function();
 }
 
 void labs_0x02() {
