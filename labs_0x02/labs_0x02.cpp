@@ -27,6 +27,7 @@
 #include "chapter_07.h"
 #include "chapter_08.h"
 #include "chapter_09.h"
+#include "chapter_10.h"
 
 #include "stdlib.h"
 
@@ -1348,6 +1349,27 @@ void Labs_0x02::chapter_09() {
     cl_11.function();
 }
 
+void Labs_0x02::chapter_10() {
+    cout << "Chapter's 10 tasks.\n";
+    // Task 1. No, method instance() not required.
+    Singleton::setValue(5);
+    cout << "Singleton::getValue() = " << Singleton::getValue() << endl;
+    // Task 2. Simplify...
+    cout << "Result of Class_10_2::reader():\n" << Class_10_2::readFile();
+    // Task 3.
+    cout << "Creating 3 objects of Class_10_3, limit 3.\n";
+    Class_10_3::init(3);
+    Class_10_3* lastObj;
+    for (int i = 0; i < 5; i++) Class_10_3::create(lastObj);
+    // Task 4. Think about namespaces for classes. Undefined behaviour, but works.
+    StateRotation rotate;
+    for (int i = 0; i < 5; i++) {
+        rotate.function();
+        rotate.action();
+    }
+
+}
+
 void labs_0x02() {
-    chapter_09();
+    chapter_10();
 }
