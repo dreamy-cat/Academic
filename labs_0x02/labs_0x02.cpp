@@ -1367,6 +1367,31 @@ void Labs_0x02::chapter_10() {
         rotate.function();
         rotate.action();
     }
+    // Task 5. Iterator delete elements from the stack.
+    Stack_10<std::string> stack;
+    stack.push(new string("first"));
+    cout << "Stack<string> elements: " << *stack.peek() << " ";
+    stack.push(new string("second"));
+    cout << *stack.peek() << " ";
+    stack.push(new string("third"));
+    cout << *stack.peek() << endl;
+    StackAdapter<string> stackA(stack);
+    StackAdapter<string>::iterator it_1(stackA);
+    cout << "All iterators in StackAdapter:\n";
+    while ( it_1 != stackA.end() ) cout << it_1++;
+    stack.push(new string("first"));
+    stack.push(new string("second"));
+    stack.push(new string("third"));
+    cout << "All elements and algorithm 'for_each':\n";
+    for_each(stackA.begin(), stackA.end(), function_10_5);
+    // Task 6.
+    string files("labs_0x02/files/chapter-10-1.txt");
+    vector<string> fileNames;
+    for (int i = 1; i <= 3; i++) {
+        files[files.find("-", 0) + 3] = char('0' + i);
+        fileNames.push_back(files);
+    }
+    Class_10_6_1 class_1(fileNames);
 
 }
 

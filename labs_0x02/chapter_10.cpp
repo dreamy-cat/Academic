@@ -30,7 +30,7 @@ string Class_10_2::readFile() {
     return result;
 }
 
-Class_10_2::Class_10_2() { file = "labs_0x02/files/chapter-10.txt"; }
+Class_10_2::Class_10_2() { file = "labs_0x02/files/chapter-10-1.txt"; }
 
 vector<Class_10_3*> Class_10_3::objects;
 
@@ -71,8 +71,6 @@ StateRotation::StateRotation() : iteration(0), limit(3) {
     state = new Object;
 }
 
-// StateRotation::~StateRotation() { cout << "StateRotation::~StateRotation()" << endl; }
-
 void StateRotation::function() {
     state->responce();
 }
@@ -93,4 +91,49 @@ void StateRotation::action() {
     default:
         break;
     }
+}
+
+void function_10_5(std::string value) { cout << "StackAdapter::operator*() = " << value << endl; }
+
+Class_10_6::Class_10_6(std::vector<std::string>& fileNames) {
+    for (int i = 0; i < fileNames.size(); i++) {
+        fstream* file = new fstream;
+        if ( i < fileNames.size() - 1) file->open(fileNames[i].data(), ios::in); else file->open(fileNames[i].data(), ios::out | ios::app);
+        files.push_back(file);
+    }
+}
+
+Class_10_6::~Class_10_6() {
+    for (int i = 0; i < files.size(); i++) {
+        files[i]->close();
+        delete files[i];
+    }
+}
+
+void Class_10_6::toUpperCase() {}
+
+void Class_10_6::searchWords() {}
+
+Class_10_6_1::Class_10_6_1(std::vector<string> &fileNames) : Class_10_6(fileNames) {
+    cout << "Class_10_6_1::Class_10_6_1()" << endl;
+}
+
+Class_10_6_1::~Class_10_6_1() {
+    cout << "Class_10_6_1::~Class_10_6_1()" << endl;
+}
+
+void Class_10_6_1::toUpperCase() {
+
+}
+
+Class_10_6_2::Class_10_6_2(std::vector<string> &fileNames) : Class_10_6(fileNames) {
+    cout << "Class_10_6_2::Class_10_6_2()" << endl;
+}
+
+Class_10_6_2::~Class_10_6_2() {
+    cout << "Class_10_6_2::~Class_10_6_2()" << endl;
+}
+
+void Class_10_6_2::searchWords() {
+
 }
