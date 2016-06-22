@@ -96,6 +96,7 @@ void StateRotation::action() {
 void function_10_5(std::string value) { cout << "StackAdapter::operator*() = " << value << endl; }
 
 Class_10_6::Class_10_6(std::vector<std::string>& fileNames) {
+    cout << "Class_10_6::Class_10_6()" << endl;
     for (int i = 0; i < fileNames.size(); i++) {
         fstream* file = new fstream;
         if ( i < fileNames.size() - 1) file->open(fileNames[i].data(), ios::in); else file->open(fileNames[i].data(), ios::out | ios::app);
@@ -104,6 +105,7 @@ Class_10_6::Class_10_6(std::vector<std::string>& fileNames) {
 }
 
 Class_10_6::~Class_10_6() {
+    cout << "Class_10_6::~Class_10_6()" << endl;
     for (int i = 0; i < files.size(); i++) {
         files[i]->close();
         delete files[i];
@@ -123,7 +125,12 @@ Class_10_6_1::~Class_10_6_1() {
 }
 
 void Class_10_6_1::toUpperCase() {
-
+    for (int i = 0; i < files.size() - 1; i++) {
+        string text;
+        getline(*files[i], text, '\0');
+        for (int j = 0; j < text.size(); j++) text[j] = toupper(text[j]);
+        *files[files.size()-1] << text;
+    }
 }
 
 Class_10_6_2::Class_10_6_2(std::vector<string> &fileNames) : Class_10_6(fileNames) {
@@ -135,5 +142,30 @@ Class_10_6_2::~Class_10_6_2() {
 }
 
 void Class_10_6_2::searchWords() {
-
+   vector<string> words;
+   string delim = " ,.;-\"'!?:\n\0";
+   int idx1 = 0, idx2, last = files.size() - 1;
+   string text;
+   getline(*files[0], text, '\0');
+   *files[last] << "All words in the first file: ";
+   while ( (idx2 = text.find_first_of(delim, idx1)) != string::npos ) {
+       words.push_back(string(text, idx1, idx2-idx1));
+       idx1 = text.find_first_not_of(delim, idx2);
+       *files[last] << words[words.size()-1] << " ";
+   }
+   *files[last] << "\nWords founded in all files except first one: ";
+   for (int i = 1; i < files.size() - 1; i++) {
+       text.clear();
+       getline(*files[i], text, '\0');
+       for (int j = 0; j < words.size(); j++) {
+           idx1 = 0;
+           while ( (idx2 = text.find(words[j], idx1)) != string::npos ) {
+               if ( idx2 != string::npos ) {
+                   *files[last] << words[j] << " ";
+                   idx1 = ++idx2;
+               }
+           }
+       }
+   }
+   *files[last] << endl;
 }

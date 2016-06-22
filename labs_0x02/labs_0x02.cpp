@@ -1384,14 +1384,19 @@ void Labs_0x02::chapter_10() {
     stack.push(new string("third"));
     cout << "All elements and algorithm 'for_each':\n";
     for_each(stackA.begin(), stackA.end(), function_10_5);
-    // Task 6.
+    // Task 6. Ok, uncomment later for not mess with files.
     string files("labs_0x02/files/chapter-10-1.txt");
     vector<string> fileNames;
+    cout << "Source text files:\n";
     for (int i = 1; i <= 3; i++) {
-        files[files.find("-", 0) + 3] = char('0' + i);
+        files[files.find("-", 0) + 4] = char('0' + i);
         fileNames.push_back(files);
+        cout << fileNames[fileNames.size()-1] << endl;
     }
-    Class_10_6_1 class_1(fileNames);
+    Class_10_6_1 cl_1(fileNames);
+    Class_10_6_2 cl_2(fileNames);
+    // class_1.toUpperCase();
+    // cl_2.searchWords();
 
 }
 

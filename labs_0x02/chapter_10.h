@@ -155,7 +155,7 @@ public:
     virtual ~Class_10_6();
     virtual void toUpperCase();
     virtual void searchWords();
-private:
+protected:
     std::vector<std::fstream*> files;
 };
 
