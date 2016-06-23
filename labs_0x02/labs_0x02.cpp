@@ -1384,7 +1384,7 @@ void Labs_0x02::chapter_10() {
     stack.push(new string("third"));
     cout << "All elements and algorithm 'for_each':\n";
     for_each(stackA.begin(), stackA.end(), function_10_5);
-    // Task 6. Ok, uncomment later for not mess with files.
+    // Tasks 6-7. Ok, uncomment later for not mess with files.
     string files("labs_0x02/files/chapter-10-1.txt");
     vector<string> fileNames;
     cout << "Source text files:\n";
@@ -1397,7 +1397,30 @@ void Labs_0x02::chapter_10() {
     Class_10_6_2 cl_2(fileNames);
     // class_1.toUpperCase();
     // cl_2.searchWords();
-
+    Class_10_7 cl_3(cl_1), cl_4(cl_2);
+    // cl_3.toUpperCase();
+    // cl_4.searchWords();
+    // Tasks 8-9.
+    vector<Class_10_8*> vector_1;
+    vector_1.push_back(new Class_10_8_1);
+    vector_1.push_back(new Class_10_8_2);
+    vector_1.push_back(new Class_10_8_3);
+    Class_10_8_4 cl_5(vector_1);
+    for (int i = 0; i < 5; i++) cl_5.function();
+    // Tasks 10-11.
+    vector<ShapeF1*> vector_2;
+    const char* classNames[] = { "Circle", "Square", "Square", "Triangle", "Circle" };
+    try {
+        for (int i = 0; i < sizeof(classNames) / sizeof (char*); i++)
+            vector_2.push_back( ShapeF1::factory(classNames[i]) );
+    } catch (ShapeF1::Error err) {
+        cout << err.what() << endl;
+    }
+    for (int i = 0; i < vector_2.size(); i++) {
+        vector_2[i]->draw();
+        vector_2[i]->erase();
+        delete ( vector_2[i] );
+    }
 }
 
 void labs_0x02() {

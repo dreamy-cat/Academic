@@ -6,6 +6,8 @@ Singleton Singleton::single(0);
 
 int Singleton::i;
 
+map<string, FactoryShapeF2*> FactoryShapeF2::factories ;
+
 Singleton& Singleton::instance() { return single; }
 
 int Singleton::getValue() { return i; }
@@ -146,6 +148,7 @@ void Class_10_6_2::searchWords() {
    string delim = " ,.;-\"'!?:\n\0";
    int idx1 = 0, idx2, last = files.size() - 1;
    string text;
+   for (int i = 0; i < last - 1; i++) files[i]->seekg(0, ios::beg);
    getline(*files[0], text, '\0');
    *files[last] << "All words in the first file: ";
    while ( (idx2 = text.find_first_of(delim, idx1)) != string::npos ) {
@@ -169,3 +172,73 @@ void Class_10_6_2::searchWords() {
    }
    *files[last] << endl;
 }
+
+Class_10_7::Class_10_7(Class_10_6 &iBase) : base(iBase) { cout << "Class_10_7::Class_10_7()" << endl; }
+
+void Class_10_7::toUpperCase() { base.toUpperCase(); }
+
+void Class_10_7::searchWords()  { base.searchWords(); }
+
+bool Class_10_8_1::function() {
+    cout << "Class_10_8_1::function()" << endl;
+    return false;
+}
+
+bool Class_10_8_2::function() {
+    cout << "Class_10_8_2::function()" << endl;
+    return false;
+}
+
+bool Class_10_8_3::function() {
+    cout << "Class_10_8_3::function()" << endl;
+    return true;
+}
+
+Class_10_8_4::Class_10_8_4(vector<Class_10_8*> iBase) {
+    base = iBase;
+    state = 0;
+}
+
+void Class_10_8_4::function() {
+    cout << "Class_10_8_4::function(), state: " << state << endl;
+    base[state++]->function();
+    if (state == base.size()) state = 0;
+    cout << "Class_10_8_4::function(), call all functions until success:" << endl;
+    while ( (base[state++]->function()) )
+        if (state == base.size()) state = 0;
+}
+
+ShapeF1::~ShapeF1() { cout << "ShapeF1::~ShapeF1()" << endl; }
+
+ShapeF1::Error::Error(std::string type) : logic_error("Error create " + type) {}
+
+ShapeF1* ShapeF1::factory(const std::string type) throw (Error) {
+    if (type == "Circle") return new CircleF1;
+    if (type == "Square") return new SquareF1;
+    if (type == "Triangle") return new TriangleF1;
+    throw Error(type);
+}
+
+CircleF1::CircleF1() { cout << "CircleF1::CircleF1()" << endl; }
+
+void CircleF1::draw() { cout << "CircleF1::draw()" << endl; }
+
+void CircleF1::erase() { cout << "CircleF1::erase()" << endl; }
+
+CircleF1::~CircleF1() { cout << "CircleF1::~CircleF1()" << endl; }
+
+SquareF1::SquareF1() { cout << "SquareF1::SquareF1()" << endl; }
+
+void SquareF1::draw() { cout << "SquareF1::draw()" << endl; }
+
+void SquareF1::erase() { cout << "SquareF1::erase()" << endl; }
+
+SquareF1::~SquareF1() { cout << "SquareF1::~SquareF1()" << endl; }
+
+TriangleF1::TriangleF1() { cout << "TriangleF1::TriangleF1()" << endl; }
+
+void TriangleF1::draw() { cout << "TriangleF1::draw()" << endl; }
+
+void TriangleF1::erase() { cout << "TriangleF1::erase()" << endl; }
+
+TriangleF1::~TriangleF1() { cout << "TriangleF1::~TriangleF1()" << endl; }

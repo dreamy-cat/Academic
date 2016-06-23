@@ -5,6 +5,8 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <stdexcept>
+#include <map>
 
 class Singleton {
 public:
@@ -171,6 +173,123 @@ public:
     Class_10_6_2(std::vector<std::string>& fileNames);
     ~Class_10_6_2();
     void searchWords();
+};
+
+class Class_10_7 {
+private:
+    Class_10_6& base;
+public:
+    Class_10_7(Class_10_6& iBase);
+    void toUpperCase();
+    void searchWords();
+};
+
+class Class_10_8 {
+public:
+    virtual bool function() = 0;
+};
+
+class Class_10_8_1 : public Class_10_8 {
+public:
+    bool function();
+};
+
+class Class_10_8_2 : public Class_10_8 {
+public:
+    bool function();
+};
+
+class Class_10_8_3 : public Class_10_8 {
+public:
+    bool function();
+};
+
+class Class_10_8_4 {
+private:
+    int state;
+    std::vector<Class_10_8*> base;
+public:
+    Class_10_8_4(std::vector<Class_10_8*> iBase);
+    void function();
+};
+
+class ShapeF1 {
+public:
+    virtual void draw() = 0;
+    virtual void erase() = 0;
+    virtual ~ShapeF1();
+    class Error : public std::logic_error {
+    public:
+        Error(std::string type);
+    };
+    static ShapeF1* factory(const std::string type) throw (Error);
+};
+
+class CircleF1 : public ShapeF1 {
+public:
+    void draw();
+    void erase();
+    ~CircleF1();
+private:
+    CircleF1();
+    friend class ShapeF1;
+};
+
+class SquareF1 : public ShapeF1 {
+public:
+    void draw();
+    void erase();
+    ~SquareF1();
+private:
+    SquareF1();
+    friend class ShapeF1;
+};
+
+class TriangleF1 : public ShapeF1 {
+public:
+    void draw();
+    void erase();
+    ~TriangleF1();
+private:
+    TriangleF1();
+    friend class ShapeF1;
+};
+
+class ShapeF2 {
+public:
+    virtual void draw() = 0;
+    virtual void erase() = 0;
+    virtual ~ShapeF2();
+};
+
+class FactoryShapeF2 {
+private:
+    virtual ShapeF2* create() = 0;
+    static std::map<std::string, FactoryShapeF2*> factories;
+public:
+    virtual ~FactoryShapeF2();
+    friend class FactoryShapeF2Init;
+    class Error : std::logic_error {
+    public:
+        Error(std::string type);
+    };
+    static ShapeF2* factory(const std::string& id) throw (Error);
+};
+
+class CircleF2 : public ShapeF2 {
+private:
+    CircleF2();
+    friend class FactoryShapeF2Init;
+    class Factory;
+    class Factory : public FactoryShapeF2 {
+    public:
+        ShapeF2* create();
+        friend class FactoryShapeF2Init;
+    };
+public:
+    void draw();
+    void erase();
+    ~CircleF2();
 };
 
 #endif
