@@ -8,6 +8,8 @@ int Singleton::i;
 
 map<string, FactoryShapeF2*> FactoryShapeF2::factories ;
 
+FactoryShapeF2Init FactoryShapeF2Init::factoryInit;
+
 Singleton& Singleton::instance() { return single; }
 
 int Singleton::getValue() { return i; }
@@ -242,3 +244,54 @@ void TriangleF1::draw() { cout << "TriangleF1::draw()" << endl; }
 void TriangleF1::erase() { cout << "TriangleF1::erase()" << endl; }
 
 TriangleF1::~TriangleF1() { cout << "TriangleF1::~TriangleF1()" << endl; }
+
+ShapeF2::~ShapeF2() { cout << "ShapeF2::~ShapeF2()" << endl; }
+
+FactoryShapeF2::~FactoryShapeF2() { cout << "FactoryShapeF2::~FactoryShapeF2()" << endl; }
+
+FactoryShapeF2::Error::Error(string type) : logic_error("Error creating " + type) {}
+
+ShapeF2* FactoryShapeF2::factory(const std::string& id) throw (Error) {
+    if (factories.find(id) != factories.end()) return factories[id]->create(); else throw Error(id);
+}
+
+CircleF2::CircleF2() { cout << "CircleF2::CircleF2()" << endl; }
+
+CircleF2::~CircleF2() { cout << "CircleF2::~CircleF2()" << endl; }
+
+ShapeF2* CircleF2::Factory::create() { return new CircleF2; }
+
+void CircleF2::draw() { cout << "CircleF2::draw()" << endl; }
+
+void CircleF2::erase() { cout << "CircleF2::erase()" << endl; }
+
+SquareF2::SquareF2() { cout << "SquareF2::SquareF2()" << endl; }
+
+ShapeF2* SquareF2::Factory::create() { return new SquareF2; }
+
+void SquareF2::draw() { cout << "SquareF2::draw()" << endl; }
+
+void SquareF2::erase() { cout << "SquareF2::erase()" << endl; }
+
+SquareF2::~SquareF2() { cout << "SquareF2::~SquareF2()" << endl; }
+
+TriangleF2::TriangleF2() { cout << "TriangleF2::TriangleF2()" << endl; }
+
+ShapeF2* TriangleF2::Factory::create() { return new TriangleF2; }
+
+void TriangleF2::draw() { cout << "TriangleF2::draw()" << endl; }
+
+void TriangleF2::erase() { cout << "TriangleF2::erase()" << endl; }
+
+TriangleF2::~TriangleF2() { cout << "TriangleF2::~TriangleF2()" << endl; }
+
+FactoryShapeF2Init::FactoryShapeF2Init() {
+    FactoryShapeF2::factories["Circle"] = new CircleF2::Factory;
+    FactoryShapeF2::factories["Square"] = new SquareF2::Factory;
+    FactoryShapeF2::factories["Triangle"] = new TriangleF2::Factory;
+}
+
+FactoryShapeF2Init::~FactoryShapeF2Init() {
+    map<string, FactoryShapeF2*>::iterator it = FactoryShapeF2::factories.begin();
+    while ( it != FactoryShapeF2::factories.end() ) delete it++->second;
+}

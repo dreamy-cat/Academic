@@ -269,7 +269,7 @@ private:
 public:
     virtual ~FactoryShapeF2();
     friend class FactoryShapeF2Init;
-    class Error : std::logic_error {
+    class Error : public std::logic_error {
     public:
         Error(std::string type);
     };
@@ -290,6 +290,45 @@ public:
     void draw();
     void erase();
     ~CircleF2();
+};
+
+class SquareF2 : public ShapeF2 {
+private:
+    SquareF2();
+    friend class FactoryShapeF2Init;
+    class Factory;
+    class Factory : public FactoryShapeF2 {
+    public:
+        ShapeF2* create();
+        friend class FactoryShapeF2;
+    };
+public:
+    void draw();
+    void erase();
+    ~SquareF2();
+};
+
+class TriangleF2 : public ShapeF2 {
+private:
+    TriangleF2();
+    friend class FactoryShapeF2Init;
+    class Factory;
+    class Factory : public FactoryShapeF2 {
+    public:
+        ShapeF2* create();
+        friend class FactoryShapeF2;
+    };
+public:
+    void draw();
+    void erase();
+    ~TriangleF2();
+};
+
+class FactoryShapeF2Init {
+private:
+    static FactoryShapeF2Init factoryInit;
+    FactoryShapeF2Init();
+    ~FactoryShapeF2Init();
 };
 
 #endif

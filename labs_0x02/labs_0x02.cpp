@@ -1421,6 +1421,20 @@ void Labs_0x02::chapter_10() {
         vector_2[i]->erase();
         delete ( vector_2[i] );
     }
+    vector<ShapeF2*> vector_3;
+    cout << "Polymorphic factory:\n";
+    try {
+        for (int i = 0; i < sizeof(classNames) / sizeof(char*); i++)
+            vector_3.push_back(FactoryShapeF2::factory(classNames[i]));
+    } catch ( FactoryShapeF2::Error e ) {
+        cout << e.what() << endl;
+    }
+    for (int i = 0; i < vector_3.size(); i++) {
+        vector_3[i]->draw();
+        vector_3[i]->erase();
+        delete vector_3[i];
+    }
+    // Task 12.
 }
 
 void labs_0x02() {
