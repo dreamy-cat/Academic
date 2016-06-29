@@ -247,27 +247,35 @@ TriangleF1::~TriangleF1() { cout << "TriangleF1::~TriangleF1()" << endl; }
 
 ShapeF2::~ShapeF2() { cout << "ShapeF2::~ShapeF2()" << endl; }
 
+FactoryShapeF2::FactoryShapeF2() { cout << "FactoryShapeF2::FactoryShapeF2()" << endl; }
+
 FactoryShapeF2::~FactoryShapeF2() { cout << "FactoryShapeF2::~FactoryShapeF2()" << endl; }
 
 FactoryShapeF2::Error::Error(string type) : logic_error("Error creating " + type) {}
 
-ShapeF2* FactoryShapeF2::factory(const std::string& id) throw (Error) {
-    if (factories.find(id) != factories.end()) return factories[id]->create(); else throw Error(id);
+ShapeF2* FactoryShapeF2::factory(const std::string& id, bool isBold) throw (Error) {
+    if (factories.find(id) != factories.end()) {
+        if ( isBold ) return factories[id]->createBold(); else return factories[id]->createThin();
+    } else throw Error(id);
 }
 
-CircleF2::CircleF2() { cout << "CircleF2::CircleF2()" << endl; }
+CircleF2::CircleF2(bool isBold) { cout << "CircleF2::CircleF2(" << isBold << ")" << endl; }
 
 CircleF2::~CircleF2() { cout << "CircleF2::~CircleF2()" << endl; }
 
-ShapeF2* CircleF2::Factory::create() { return new CircleF2; }
+ShapeF2* CircleF2::Factory::createThin() { return new CircleF2(false); }
+
+ShapeF2* CircleF2::Factory::createBold() { return new CircleF2(true); }
 
 void CircleF2::draw() { cout << "CircleF2::draw()" << endl; }
 
 void CircleF2::erase() { cout << "CircleF2::erase()" << endl; }
 
-SquareF2::SquareF2() { cout << "SquareF2::SquareF2()" << endl; }
+SquareF2::SquareF2(bool isBold) { cout << "SquareF2::SquareF2(" << isBold << ")" << endl; }
 
-ShapeF2* SquareF2::Factory::create() { return new SquareF2; }
+ShapeF2* SquareF2::Factory::createThin() { return new SquareF2(false); }
+
+ShapeF2* SquareF2::Factory::createBold() { return new SquareF2(true); }
 
 void SquareF2::draw() { cout << "SquareF2::draw()" << endl; }
 
@@ -275,9 +283,11 @@ void SquareF2::erase() { cout << "SquareF2::erase()" << endl; }
 
 SquareF2::~SquareF2() { cout << "SquareF2::~SquareF2()" << endl; }
 
-TriangleF2::TriangleF2() { cout << "TriangleF2::TriangleF2()" << endl; }
+TriangleF2::TriangleF2(bool isBold) { cout << "TriangleF2::TriangleF2(" << isBold << ")" << endl; }
 
-ShapeF2* TriangleF2::Factory::create() { return new TriangleF2; }
+ShapeF2* TriangleF2::Factory::createThin() { return new TriangleF2(false); }
+
+ShapeF2* TriangleF2::Factory::createBold() { return new TriangleF2(true); }
 
 void TriangleF2::draw() { cout << "TriangleF2::draw()" << endl; }
 
@@ -286,12 +296,62 @@ void TriangleF2::erase() { cout << "TriangleF2::erase()" << endl; }
 TriangleF2::~TriangleF2() { cout << "TriangleF2::~TriangleF2()" << endl; }
 
 FactoryShapeF2Init::FactoryShapeF2Init() {
-    FactoryShapeF2::factories["Circle"] = new CircleF2::Factory;
-    FactoryShapeF2::factories["Square"] = new SquareF2::Factory;
-    FactoryShapeF2::factories["Triangle"] = new TriangleF2::Factory;
+    FactoryShapeF2::factories["Thin circle"] = new CircleF2::Factory;
+    FactoryShapeF2::factories["Thin square"] = new SquareF2::Factory;
+    FactoryShapeF2::factories["Thin triangle"] = new TriangleF2::Factory;
+    FactoryShapeF2::factories["Bold circle"] = new CircleF2::Factory;
+    FactoryShapeF2::factories["Bold square"] = new SquareF2::Factory;
+    FactoryShapeF2::factories["Bold triangle"] = new TriangleF2::Factory;
 }
 
 FactoryShapeF2Init::~FactoryShapeF2Init() {
     map<string, FactoryShapeF2*>::iterator it = FactoryShapeF2::factories.begin();
     while ( it != FactoryShapeF2::factories.end() ) delete it++->second;
+}
+
+void Worker_1::interactWith(Material* obj) {
+    cout << "Worker_1 has work with ";
+    obj->action();
+}
+
+void Worker_2::interactWith(Material* obj) {
+    cout << "Worker_2 has work with ";
+    obj->action();
+}
+
+void Worker_3::interactWith(Material* obj) {
+    cout << "Worker_3 has work with ";
+    obj->action();
+}
+
+void Brick::action() { cout << "brick" << endl; }
+
+void Wood::action() { cout << "wood" << endl; }
+
+void Steel::action() { cout << "Steel" << endl; }
+
+Worker* Worker_1_Wood::makeWorker() { return new Worker_1; }
+
+Material* Worker_1_Wood::makeMaterial() { return new Wood; }
+
+Worker* Worker_2_Brick::makeWorker() { return new Worker_2; }
+
+Material* Worker_2_Brick::makeMaterial() { return new Brick; }
+
+Worker* Worker_3_Steel::makeWorker() { return new Worker_3; }
+
+Material* Worker_3_Steel::makeMaterial() { return new Steel; }
+
+WorkSet::WorkSet(WorkFactory* fcy) : factory(fcy), worker(factory->makeWorker()), obj(factory->makeMaterial()) {
+    cout << "WorkSet::WorkSet()" << endl;
+}
+
+void WorkSet::play() {
+    worker->interactWith(obj);
+}
+
+WorkSet::~WorkSet() {
+    delete worker;
+    delete obj;
+    delete factory;
 }

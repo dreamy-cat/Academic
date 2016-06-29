@@ -7,6 +7,7 @@
 #include <vector>
 #include <stdexcept>
 #include <map>
+#include <typeinfo>
 
 class Singleton {
 public:
@@ -263,27 +264,30 @@ public:
 };
 
 class FactoryShapeF2 {
-private:
-    virtual ShapeF2* create() = 0;
+protected:
     static std::map<std::string, FactoryShapeF2*> factories;
 public:
+    FactoryShapeF2();
+    virtual ShapeF2* createThin() = 0;
+    virtual ShapeF2* createBold() = 0;
     virtual ~FactoryShapeF2();
     friend class FactoryShapeF2Init;
     class Error : public std::logic_error {
     public:
         Error(std::string type);
     };
-    static ShapeF2* factory(const std::string& id) throw (Error);
+    static ShapeF2* factory(const std::string& id, bool isBold) throw (Error);
 };
 
 class CircleF2 : public ShapeF2 {
 private:
-    CircleF2();
+    CircleF2(bool isBold);
     friend class FactoryShapeF2Init;
     class Factory;
     class Factory : public FactoryShapeF2 {
     public:
-        ShapeF2* create();
+        ShapeF2* createThin();
+        ShapeF2* createBold();
         friend class FactoryShapeF2Init;
     };
 public:
@@ -294,12 +298,13 @@ public:
 
 class SquareF2 : public ShapeF2 {
 private:
-    SquareF2();
+    SquareF2(bool isBold);
     friend class FactoryShapeF2Init;
     class Factory;
     class Factory : public FactoryShapeF2 {
     public:
-        ShapeF2* create();
+        ShapeF2* createThin();
+        ShapeF2* createBold();
         friend class FactoryShapeF2;
     };
 public:
@@ -310,12 +315,13 @@ public:
 
 class TriangleF2 : public ShapeF2 {
 private:
-    TriangleF2();
+    TriangleF2(bool isBold);
     friend class FactoryShapeF2Init;
     class Factory;
     class Factory : public FactoryShapeF2 {
     public:
-        ShapeF2* create();
+        ShapeF2* createThin();
+        ShapeF2* createBold();
         friend class FactoryShapeF2;
     };
 public:
@@ -330,5 +336,123 @@ private:
     FactoryShapeF2Init();
     ~FactoryShapeF2Init();
 };
+
+class Material {
+public:
+    virtual void action() = 0;
+};
+
+class Worker {
+public:
+    virtual void interactWith(Material*) = 0;
+};
+
+class Worker_1 : public Worker {
+    virtual void interactWith(Material* obj);
+};
+
+class Worker_2 : public Worker {
+    virtual void interactWith(Material* obj);
+};
+
+class Worker_3 : public Worker {
+    virtual void interactWith(Material* obj);
+};
+
+class Brick : public Material {
+public:
+    void action();
+};
+
+class Wood : public Material {
+public:
+    void action();
+};
+
+class Steel : public Material {
+public:
+    void action();
+};
+
+class WorkFactory {
+public:
+    virtual Worker* makeWorker() = 0;
+    virtual Material* makeMaterial() = 0;
+};
+
+class Worker_1_Wood : public WorkFactory {
+public:
+    virtual Worker* makeWorker();
+    virtual Material* makeMaterial();
+};
+
+class Worker_2_Brick : public WorkFactory {
+public:
+    virtual Worker* makeWorker();
+    virtual Material* makeMaterial();
+};
+
+class Worker_3_Steel : public WorkFactory {
+public:
+    virtual Worker* makeWorker();
+    virtual Material* makeMaterial();
+};
+
+class WorkSet {
+private:
+    WorkFactory* factory;
+    Worker* worker;
+    Material* obj;
+public:
+    WorkSet(WorkFactory* fcy);
+    void play();
+    ~WorkSet();
+};
+
+class ShapeV {
+private:
+    ShapeV* shape;
+    ShapeV(ShapeV&);
+    ShapeV operator=(ShapeV&);
+protected:
+    ShapeV();
+public:
+    virtual void draw();
+    virtual void erase();
+    virtual void test();
+    virtual ~ShapeV();
+    class Error : public std::logic_error {
+        Error(std::string type);
+    };
+    ShapeV(std::string type) throw(Error);
+};
+
+class CircleV : public ShapeV {
+private:
+    CircleV();
+    CircleV(CircleV&);
+    CircleV operator=(CircleV&);
+    friend class ShapeV;
+public:
+    void draw();
+    void erase();
+    void test();
+    ~CircleV();
+};
+
+class SquareV : public ShapeV {
+private:
+    SquareV();
+    SquareV(SquareV&);
+    SquareV operator=(SquareV&);
+    friend class ShapeV;
+public:
+    void draw();
+    void erase();
+    void test();
+    ~SquareV();
+};
+
+
 
 #endif

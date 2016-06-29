@@ -1409,7 +1409,7 @@ void Labs_0x02::chapter_10() {
     for (int i = 0; i < 5; i++) cl_5.function();
     // Tasks 10-11.
     vector<ShapeF1*> vector_2;
-    const char* classNames[] = { "Circle", "Square", "Square", "Triangle", "Circle" };
+    const char* classNames[] = { "Thin circle", "Bold square", "Thin square", "Bold triangle", "Bold circle" };
     try {
         for (int i = 0; i < sizeof(classNames) / sizeof (char*); i++)
             vector_2.push_back( ShapeF1::factory(classNames[i]) );
@@ -1424,8 +1424,10 @@ void Labs_0x02::chapter_10() {
     vector<ShapeF2*> vector_3;
     cout << "Polymorphic factory:\n";
     try {
-        for (int i = 0; i < sizeof(classNames) / sizeof(char*); i++)
-            vector_3.push_back(FactoryShapeF2::factory(classNames[i]));
+        for (int i = 0; i < sizeof(classNames) / sizeof(char*); i++) {
+            if ( i % 2 ) vector_3.push_back(FactoryShapeF2::factory(classNames[i], false)); else
+                vector_3.push_back(FactoryShapeF2::factory(classNames[i], true));
+        }
     } catch ( FactoryShapeF2::Error e ) {
         cout << e.what() << endl;
     }
@@ -1434,7 +1436,13 @@ void Labs_0x02::chapter_10() {
         vector_3[i]->erase();
         delete vector_3[i];
     }
-    // Task 12.
+    // Task 12. Undefined behaviour, becuase of abscense of destructor in base class;
+    cout << "Abstract factory with WorkSet class:\n";
+    WorkSet set_1(new Worker_1_Wood), set_2(new Worker_2_Brick), set_3(new Worker_3_Steel);
+    set_1.play();
+    set_2.play();
+    set_3.play();
+    // Task 13. Strange and dangerous architecture, but works...
 }
 
 void labs_0x02() {
