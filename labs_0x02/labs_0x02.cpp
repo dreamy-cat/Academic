@@ -1443,6 +1443,20 @@ void Labs_0x02::chapter_10() {
     set_2.play();
     set_3.play();
     // Task 13. Strange and dangerous architecture, but works...
+    // Task 14. Think later, because of old method is still using.
+    vector<ShapeV*> vector_4;
+    const char* shapeNames[] = { "Circle", "Square", "Square" };
+    cout << "Virtual construction in ShapeV:\n";
+    try {
+        for (int i = 0; i < sizeof(shapeNames) / sizeof(char*); i++) {
+            if ( i % 2 ) vector_4.push_back(new ShapeV(shapeNames[i])); else
+                vector_4.push_back(new ShapeV(shapeNames[i]));
+        }
+    } catch ( ShapeV::Error e ) {
+        cout << e.what() << endl;
+    }
+    for (int i = 0; i < vector_4.size(); i++) delete vector_4[i];
+
 }
 
 void labs_0x02() {

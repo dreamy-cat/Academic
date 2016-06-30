@@ -8,6 +8,8 @@ int Singleton::i;
 
 map<string, FactoryShapeF2*> FactoryShapeF2::factories ;
 
+std::map<std::string, ShapeV*> ShapeV::shapesV;
+
 FactoryShapeF2Init FactoryShapeF2Init::factoryInit;
 
 Singleton& Singleton::instance() { return single; }
@@ -355,3 +357,49 @@ WorkSet::~WorkSet() {
     delete obj;
     delete factory;
 }
+
+ShapeV::ShapeV() { shape = NULL; }
+
+void ShapeV::draw() { shape->draw(); } // cout << "ShapeV::draw()" << endl; }
+
+void ShapeV::erase() { shape->erase(); } // cout << "ShapeV::erase()" << endl; }
+
+void ShapeV::test() { shape->test(); } // cout << "ShapeV::test()"
+
+ShapeV::~ShapeV() {
+    cout << "ShapeV::~ShapeV()" << endl;
+    if (shape) {
+        cout << "Making virtual call: ";
+        shape->erase();
+    }
+    cout << "Delete shape: ";
+    delete shape;
+}
+
+ShapeV::Error::Error(std::string type) : logic_error("Cannot create type " + type) {}
+
+ShapeV::ShapeV(std::string type) throw(Error) {
+    // if (shapesV.find(type) == shapesV.end()) throw(Error(type));
+    if (type == "Circle") shapesV[type] = new CircleV; else
+        if (type == "Square") shapesV[type] = new SquareV;
+}
+
+CircleV::CircleV() { cout << "CircleV::CircleV()" << endl;}
+
+void CircleV::draw() { cout << "CircleV::draw()" << endl; }
+
+void CircleV::erase() { cout << "CircleV::erase()" << endl; }
+
+void CircleV::test() { cout << "CircleV::test()" << endl; }
+
+CircleV::~CircleV() { cout << "CircleV::~CircleV()" << endl; }
+
+SquareV::SquareV() { cout << "SquareV::SquareV()" << endl; }
+
+void SquareV::draw() { cout << "SquareV::draw()" << endl; }
+
+void SquareV::erase() { cout << "SquareV::erase()" << endl; }
+
+void SquareV::test() { cout << "SquareV::test()" << endl; }
+
+SquareV::~SquareV() { cout << "SquareV::~SquareV()" << endl; }

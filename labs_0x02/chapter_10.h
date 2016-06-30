@@ -412,6 +412,7 @@ public:
 class ShapeV {
 private:
     ShapeV* shape;
+    static std::map<std::string, ShapeV*> shapesV;
     ShapeV(ShapeV&);
     ShapeV operator=(ShapeV&);
 protected:
@@ -422,6 +423,7 @@ public:
     virtual void test();
     virtual ~ShapeV();
     class Error : public std::logic_error {
+    public:
         Error(std::string type);
     };
     ShapeV(std::string type) throw(Error);
@@ -452,7 +454,6 @@ public:
     void test();
     ~SquareV();
 };
-
 
 
 #endif
