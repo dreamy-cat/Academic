@@ -403,3 +403,65 @@ void SquareV::erase() { cout << "SquareV::erase()" << endl; }
 void SquareV::test() { cout << "SquareV::test()" << endl; }
 
 SquareV::~SquareV() { cout << "SquareV::~SquareV()" << endl; }
+
+WordsAnalyzer::WordsAnalyzer(const std::string& fileName) {
+    fstream sourceFile;
+    sourceFile.open(fileName.data(), ios::in);
+    string delim = " ,.;-\"'!?:\n\0";
+    int idx1 = 0, idx2;
+    string text;
+    getline(sourceFile, text, '\0');
+    // *files[last] << "All words in the first file: ";
+    while ( (idx2 = text.find_first_of(delim, idx1)) != string::npos ) {
+        source.push_back(string(text, idx1, idx2-idx1));
+        idx1 = text.find_first_not_of(delim, idx2);
+    }
+    sourceFile.close();
+}
+
+int WordsAnalyzer::analyze() {
+    cout << "WordsAnalyzer::analyze()" << endl;
+}
+
+void WordsAnalyzer::getWords() {
+    cout << "All words in source file: ";
+    copy(source.begin(), source.end(), ostream_iterator<string>(cout, " "));
+    cout << endl;
+}
+
+WordsToSet::WordsToSet(const std::string& fileName) : WordsAnalyzer(fileName) {
+    cout << "WordsToSet::WordsToSet()" << endl;
+}
+
+int WordsToSet::analyze() {
+    for (int i = 0; i < source.size(); i++)
+        words.insert(source[i]);
+    return words.size();
+}
+
+void WordsToSet::getWords() {
+    cout << "All words in set<string>: ";
+    for (set<string>::iterator it = words.begin(); it != words.end(); it++)
+        cout << *it << " ";
+    cout << endl;
+}
+
+WordsToMap::WordsToMap(const std::string& fileName) : WordsAnalyzer(fileName) {
+    cout << "WordsToMap::WordsToMap()" << endl;
+}
+
+int WordsToMap::analyze() {
+    for (int i = 0; i < source.size(); i++)
+        if (words.find(source[i]) == words.end())
+            words[source[i]] = 1;
+        else
+            words[source[i]]++;
+    return words.size();
+}
+
+void WordsToMap::getWords() {
+    cout << "All words in map<string>: ";
+    for (map<string, int>::iterator it = words.begin(); it != words.end(); it++)
+        cout << it->first << "(" << it->second << ") ";
+    cout << endl;
+}

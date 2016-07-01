@@ -1456,7 +1456,13 @@ void Labs_0x02::chapter_10() {
         cout << e.what() << endl;
     }
     for (int i = 0; i < vector_4.size(); i++) delete vector_4[i];
-
+    // Task 15.
+    WordsToSet wordsSet("labs_0x02/files/chapter-10-2.txt");
+    WordsToMap wordsMap("labs_0x02/files/chapter-10-2.txt");
+    cout << "Result of WordsToSet::analyze(): " << wordsSet.analyze() << endl;
+    cout << "Result of WordsToMap::analyze(): " << wordsMap.analyze() << endl;
+    wordsSet.getWords();
+    wordsMap.getWords();
 }
 
 void labs_0x02() {

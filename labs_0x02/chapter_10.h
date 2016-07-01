@@ -7,7 +7,10 @@
 #include <vector>
 #include <stdexcept>
 #include <map>
+#include <set>
 #include <typeinfo>
+#include <algorithm>
+#include <iterator>
 
 class Singleton {
 public:
@@ -455,5 +458,31 @@ public:
     ~SquareV();
 };
 
+class WordsAnalyzer {
+public:
+    WordsAnalyzer(const std::string& fileName);
+    virtual int analyze();
+    virtual void getWords();
+protected:
+    std::vector<std::string> source;
+};
+
+class WordsToSet : public WordsAnalyzer {
+public:
+    WordsToSet(const std::string& fileName);
+    int analyze();
+    void getWords();
+private:
+    std::set<std::string> words;
+};
+
+class WordsToMap : public WordsAnalyzer {
+public:
+    WordsToMap(const std::string& fileName);
+    int analyze();
+    void getWords();
+private:
+    std::map<std::string, int> words;
+};
 
 #endif
