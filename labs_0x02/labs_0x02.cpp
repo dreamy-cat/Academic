@@ -1463,6 +1463,17 @@ void Labs_0x02::chapter_10() {
     cout << "Result of WordsToMap::analyze(): " << wordsMap.analyze() << endl;
     wordsSet.getWords();
     wordsMap.getWords();
+    // Task 16.
+    Object object;
+    vector<Observer*> vector_5;
+    for (int i = 0; i < 5; i++) {
+        vector_5.push_back(new Observer);
+        // if ( i % 2 ) vector_5[vector_5.size()-1]->setState(true);
+        object.addObserver(*vector_5[vector_5.size()-1]);
+    }
+    cout << "Object has " << object.count() << " observers. Notify all observers:\n";
+    object.setState(true);
+    object.notify();
 }
 
 void labs_0x02() {

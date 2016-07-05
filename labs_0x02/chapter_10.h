@@ -485,4 +485,27 @@ private:
     std::map<std::string, int> words;
 };
 
+class Observer;
+
+class Object {
+private:
+    bool changed;
+    std::set<Observer*> observers;
+public:
+    virtual void setState(bool change);
+    virtual void addObserver(Observer& obs);
+    virtual void deleteObserver(Observer& obs);
+    virtual void clearObservers();
+    virtual int count();
+    virtual bool hasChanged();
+    virtual void notify();
+    virtual ~Object();
+};
+
+class Observer {
+public:
+    virtual void update(Object* obj);
+    virtual ~Observer();
+};
+
 #endif

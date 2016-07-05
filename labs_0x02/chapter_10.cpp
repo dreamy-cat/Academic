@@ -465,3 +465,29 @@ void WordsToMap::getWords() {
         cout << it->first << "(" << it->second << ") ";
     cout << endl;
 }
+
+Observer::~Observer() { cout << "Observer::~Observer()" << endl; }
+
+void Object::setState(bool change) { changed = change; }
+
+void Object::addObserver(Observer& obs) { observers.insert(&obs); }
+
+void Object::deleteObserver(Observer& obs) { observers.erase(&obs); }
+
+void Object::clearObservers() { observers.clear(); }
+
+int Object::count() { return observers.size(); }
+
+bool Object::hasChanged() { return changed; }
+
+void Object::notify() {
+    if ( !changed ) return;
+    setState(false);
+    std::set<Observer*>::iterator it;
+    for (it = observers.begin(); it != observers.end(); it++)
+        (*it)->update(this);
+}
+
+void Observer::update(Object* obj) { cout << "Observer::update()" << endl; }
+
+Object::~Object() {}
