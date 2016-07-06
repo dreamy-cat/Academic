@@ -491,3 +491,41 @@ void Object::notify() {
 void Observer::update(Object* obj) { cout << "Observer::update()" << endl; }
 
 Object::~Object() {}
+
+void Class_17::function_1() { cout << "Class_17::function_1()" << endl; }
+
+void Class_17::function_2() { cout << "Class_17::function_2()" << endl; }
+
+Item::~Item() { cout << "Item::~Item()" << endl; }
+
+ostream& operator<<(ostream& os, const Item* value) { return value->print(os); }
+
+gameResult Paper::compete(const Item* item) { return item->evaluation(this); }
+
+gameResult Paper::evaluation(const Paper*) const { return draw; }
+
+gameResult Paper::evaluation(const Scissor*) const { return win; }
+
+gameResult Paper::evaluation(const Rock_1*) const { return lose; }
+
+ostream& Paper::print(ostream &os) const { return os << "paper"; }
+
+gameResult Scissor::compete(const Item* item) { return  item->evaluation(this); }
+
+gameResult Scissor::evaluation(const Paper*) const { return lose; }
+
+gameResult Scissor::evaluation(const Scissor*) const { return draw; }
+
+gameResult Scissor::evaluation(const Rock_1*) const { return win; }
+
+std::ostream& Scissor::print(std::ostream &os) const { return os << "scissor"; }
+
+gameResult Rock_1::compete(const Item* item) { return item->evaluation(this); }
+
+gameResult Rock_1::evaluation(const Paper*) const { return win; }
+
+gameResult Rock_1::evaluation(const Scissor*) const { return lose; }
+
+gameResult Rock_1::evaluation(const Rock_1*) const { return draw; }
+
+std::ostream& Rock_1::print(std::ostream &os) const { return os << "rock"; }

@@ -11,6 +11,7 @@
 #include <typeinfo>
 #include <algorithm>
 #include <iterator>
+#include <typeinfo>
 
 class Singleton {
 public:
@@ -506,6 +507,84 @@ class Observer {
 public:
     virtual void update(Object* obj);
     virtual ~Observer();
+};
+
+class Class_17_1 {
+public:
+    virtual void function_1() = 0;
+};
+
+class Class_17_2 {
+public:
+    virtual void function_2() = 0;
+};
+
+class Class_17 : public Class_17_1, public Class_17_2 {
+public:
+    void function_1();
+    void function_2();
+};
+
+class Paper;
+class Scissor;
+class Rock_1;
+
+enum gameResult { lose, draw, win };
+
+class Item {
+public:
+    virtual gameResult compete(const Item*) = 0;
+    virtual gameResult evaluation(const Paper*) const = 0;
+    virtual gameResult evaluation(const Scissor *) const = 0;
+    virtual gameResult evaluation(const Rock_1*) const = 0;
+    virtual std::ostream& print(std::ostream& os) const = 0;
+    virtual ~Item();
+    friend std::ostream& operator<<(std::ostream& os, const Item* value);
+};
+
+class Paper : public Item {
+public:
+    gameResult compete(const Item* item);
+    gameResult evaluation(const Paper*) const;
+    gameResult evaluation(const Scissor*) const;
+    gameResult evaluation(const Rock_1*) const;
+    std::ostream& print(std::ostream &os) const;
+};
+
+class Scissor : public Item {
+public:
+    gameResult compete(const Item* item);
+    gameResult evaluation(const Paper*) const;
+    gameResult evaluation(const Scissor*) const;
+    gameResult evaluation(const Rock_1*) const;
+    std::ostream& print(std::ostream &os) const;
+};
+
+class Rock_1 : public Item {
+public:
+    gameResult compete(const Item* item);
+    gameResult evaluation(const Paper*) const;
+    gameResult evaluation(const Scissor*) const;
+    gameResult evaluation(const Rock_1*) const;
+    std::ostream& print(std::ostream &os) const;
+};
+
+struct ItemGen  {
+    Item* operator()(std::map<std::string, Item*>& table) {
+        int type = rand() % 3;
+        if ( type == 0 ) {
+            Scissor* ptr = new Scissor;
+            table[typeid(ptr).name()] = ptr;
+            return ptr;
+        }
+    }
+};
+
+struct Compete  {
+    gameResult operator()(Item* first, Item* second) {
+        std::cout << first << " - " << second << " = ";
+        return first->compete(second);
+    }
 };
 
 #endif
