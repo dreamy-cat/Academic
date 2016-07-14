@@ -1480,19 +1480,18 @@ void Labs_0x02::chapter_10() {
     cl.function_2();
     // Task 18.
     vector<Item*> vector_6(10), vector_7(10);
-    map<std::string, Item*> map_1;
+    Item::createMap();
     cout << "Generating two vectors of Item, sizes =  " << vector_6.size() << " and " << vector_7.size() << ", generating...\n";
-    /*
     generate(vector_6.begin(), vector_6.end(), ItemGen());
-    // generate(vector_7.begin(), vector_7.end(), ItemGen());
+    generate(vector_7.begin(), vector_7.end(), ItemGen());
     for (int i = 0; i < 10; i++) {
         cout << vector_6.at(i) << " ";
         cout << vector_7.at(i) << " ";
         cout << typeid(vector_6[i]).name() << endl;
     }
-    cout << "\nResult of compteting with this object:\n";
+    cout << "Result of compteting with this object:\n";
     transform(vector_6.begin(), vector_6.end(), vector_7.begin(), ostream_iterator<gameResult>(cout, "\n"), Compete());
-    */
+
 }
 
 void labs_0x02() {

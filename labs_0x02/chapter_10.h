@@ -532,11 +532,16 @@ class Rock_1;
 enum gameResult { lose, draw, win };
 
 class Item {
+protected:
+    static std::map<std::string, std::map<std::string, gameResult> > resultMap;
 public:
+    static void createMap();
     virtual gameResult compete(const Item*) = 0;
+    /*
     virtual gameResult evaluation(const Paper*) const = 0;
     virtual gameResult evaluation(const Scissor *) const = 0;
     virtual gameResult evaluation(const Rock_1*) const = 0;
+    */
     virtual std::ostream& print(std::ostream& os) const = 0;
     virtual ~Item();
     friend std::ostream& operator<<(std::ostream& os, const Item* value);
@@ -545,37 +550,28 @@ public:
 class Paper : public Item {
 public:
     gameResult compete(const Item* item);
-    gameResult evaluation(const Paper*) const;
-    gameResult evaluation(const Scissor*) const;
-    gameResult evaluation(const Rock_1*) const;
     std::ostream& print(std::ostream &os) const;
 };
 
 class Scissor : public Item {
 public:
     gameResult compete(const Item* item);
-    gameResult evaluation(const Paper*) const;
-    gameResult evaluation(const Scissor*) const;
-    gameResult evaluation(const Rock_1*) const;
     std::ostream& print(std::ostream &os) const;
 };
 
 class Rock_1 : public Item {
 public:
     gameResult compete(const Item* item);
-    gameResult evaluation(const Paper*) const;
-    gameResult evaluation(const Scissor*) const;
-    gameResult evaluation(const Rock_1*) const;
     std::ostream& print(std::ostream &os) const;
 };
 
 struct ItemGen  {
-    Item* operator()(std::map<std::string, Item*>& table) {
-        int type = rand() % 3;
-        if ( type == 0 ) {
-            Scissor* ptr = new Scissor;
-            table[typeid(ptr).name()] = ptr;
-            return ptr;
+    Item* operator()() {
+        switch (rand() % 3) {
+        default:
+        case 0: return new Scissor;
+        case 1: return new Paper;
+        case 2: return new Rock_1;
         }
     }
 };

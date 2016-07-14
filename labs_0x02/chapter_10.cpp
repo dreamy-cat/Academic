@@ -496,36 +496,38 @@ void Class_17::function_1() { cout << "Class_17::function_1()" << endl; }
 
 void Class_17::function_2() { cout << "Class_17::function_2()" << endl; }
 
+std::map<std::string, std::map<std::string, gameResult> > Item::resultMap;
+
 Item::~Item() { cout << "Item::~Item()" << endl; }
 
 ostream& operator<<(ostream& os, const Item* value) { return value->print(os); }
 
-gameResult Paper::compete(const Item* item) { return item->evaluation(this); }
+gameResult Paper::compete(const Item* item) {
+    return resultMap[string(typeid(*item).name())][string(typeid(*this).name())];
+}
 
-gameResult Paper::evaluation(const Paper*) const { return draw; }
-
-gameResult Paper::evaluation(const Scissor*) const { return win; }
-
-gameResult Paper::evaluation(const Rock_1*) const { return lose; }
+void Item::createMap() {
+    resultMap["5Paper"]["5Paper"] = draw;
+    resultMap["5Paper"]["7Scissor"] = win;
+    resultMap["5Paper"]["6Rock_1"] = lose;
+    resultMap["7Scissor"]["7Scissor"] = draw;
+    resultMap["7Scissor"]["6Rock_1"] = win;
+    resultMap["7Scissor"]["5Paper"] = lose;
+    resultMap["6Rock_1"]["6Rock_1"] = draw;
+    resultMap["6Rock_1"]["7Scissor"] = lose;
+    resultMap["6Rock_1"]["7Scissor"] = win;
+}
 
 ostream& Paper::print(ostream &os) const { return os << "paper"; }
 
-gameResult Scissor::compete(const Item* item) { return  item->evaluation(this); }
-
-gameResult Scissor::evaluation(const Paper*) const { return lose; }
-
-gameResult Scissor::evaluation(const Scissor*) const { return draw; }
-
-gameResult Scissor::evaluation(const Rock_1*) const { return win; }
+gameResult Scissor::compete(const Item* item) {
+    return resultMap[string(typeid(*item).name())][string(typeid(*this).name())];
+}
 
 std::ostream& Scissor::print(std::ostream &os) const { return os << "scissor"; }
 
-gameResult Rock_1::compete(const Item* item) { return item->evaluation(this); }
-
-gameResult Rock_1::evaluation(const Paper*) const { return win; }
-
-gameResult Rock_1::evaluation(const Scissor*) const { return lose; }
-
-gameResult Rock_1::evaluation(const Rock_1*) const { return draw; }
+gameResult Rock_1::compete(const Item* item) {
+    return resultMap[string(typeid(*item).name())][string(typeid(*this).name())];
+}
 
 std::ostream& Rock_1::print(std::ostream &os) const { return os << "rock"; }
