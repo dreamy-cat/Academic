@@ -1030,6 +1030,7 @@ void Labs_0x02::chapter_07() {
         stack_1.pop();
     }
     // Task 8. Not clear...
+    cout << endl;
     stack<int> source, sorted, less;
     for (int i = 0; i < 10; i++) source.push(rand() % 10);
     printStack(source, "source");
@@ -1491,9 +1492,66 @@ void Labs_0x02::chapter_10() {
     }
     cout << "Result of compteting with this object:\n";
     transform(vector_6.begin(), vector_6.end(), vector_7.begin(), ostream_iterator<gameResult>(cout, "\n"), Compete());
-
+    // Task 19-20. Too many lines, just a few...
+    vector<Character*> vector_8, vector_9;
+    cout << "All characters in both vectors<Character*>: ";
+    srand(0);
+    for (int i = 0; i < 10; i++) {
+        Character* chr;
+        switch ( rand() % 3 ) {
+        case 0:
+            chr = new Troll;
+            break;
+        case 1:
+            chr = new Dwarf;
+            break;
+        case 2:
+            chr = new Elf;
+            break;
+        default:
+            cout << "Something goes wrong..." << endl;
+            break;
+        }
+        chr->setItem(rand() % 2);
+        chr->print();
+        if ( i % 2 ) vector_8.push_back(chr); else vector_9.push_back(chr);
+        cout << " ";
+    }
+    cout << endl;
+    for (int i = 0; i < 5; i++) vector_8[i]->interact(vector_9[i]);
+    // Tasks 21-23. Last task, too many.
+    vector<Place_0*> vector_10;
+    for (int i = 0; i < 10; i++)
+        switch ( rand() % 4 ) {
+        case 0:
+            vector_10.push_back(new Place_1);
+            break;
+        case 1:
+            vector_10.push_back(new Place_2);
+            break;
+        case 2:
+            vector_10.push_back(new Place_3);
+            break;
+        case 3:
+            vector_10.push_back(new Place_4);
+            break;
+        default:
+            cout << "Something goes wrong..." << endl;
+        }
+    VisitString stringV;
+    vector<Place_0*>::iterator it_2;
+    for (it_2 = vector_10.begin(); it_2 != vector_10.end(); it_2++) {
+        (*it_2)->accept(stringV);
+        cout << string(stringV) << endl;
+    }
+    VisitCat visitor_1;
+    VisitDog visitor_2;
+    for (it_2 = vector_10.begin(); it_2 != vector_10.end(); it_2++) {
+        (*it_2)->accept(visitor_1);
+        (*it_2)->accept(visitor_2);
+    }
 }
 
 void labs_0x02() {
-    chapter_10();
+    chapter_07();
 }

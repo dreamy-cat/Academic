@@ -583,4 +583,110 @@ struct Compete  {
     }
 };
 
+class Character {
+public:
+    virtual void interact(Character* chr) = 0;
+    virtual ~Character();
+    virtual void print() = 0;
+    void setItem(int it);
+    static void createMap();
+    static std::map<std::pair<int, int>, int> tResult;
+protected:
+    int item;
+};
+
+class Troll : public Character {
+public:
+    Troll();
+    void interact(Character* chr);
+    void print();
+private:
+    int action;
+};
+
+class Dwarf : public Character {
+public:
+    Dwarf();
+    void interact(Character* chr);
+    void print();
+private:
+    int action;
+};
+
+class Elf : public Character {
+public:
+    Elf();
+    void interact(Character* chr);
+    void print();
+private:
+    int action;
+};
+
+class Place_1;
+class Place_2;
+class Place_3;
+class Place_4;
+
+class Visit {
+public:
+    virtual void visit(Place_1* pl) = 0;
+    virtual void visit(Place_2* pl) = 0;
+    virtual void visit(Place_3* pl) = 0;
+    virtual void visit(Place_4* pl) = 0;
+    virtual ~Visit();
+};
+
+class Place_0 {
+public:
+    virtual void accept(Visit& v) = 0;
+    virtual ~Place_0();
+};
+
+class Place_1 : public Place_0 {
+public:
+    void accept(Visit &v);
+};
+
+class Place_2 : public Place_0 {
+public:
+    void accept(Visit &v);
+};
+
+class Place_3 : public Place_0 {
+public:
+    void accept(Visit &v);
+};
+
+class Place_4 : public Place_0 {
+public:
+    void accept(Visit &v);
+};
+
+class VisitString : public Visit {
+public:
+    operator const std::string&();
+    void visit(Place_1 *pl);
+    void visit(Place_2 *pl);
+    void visit(Place_3 *pl);
+    void visit(Place_4 *pl);
+private:
+    std::string s;
+};
+
+class VisitCat : public Visit {
+public:
+    void visit(Place_1 *pl);
+    void visit(Place_2 *pl);
+    void visit(Place_3 *pl);
+    void visit(Place_4 *pl);
+};
+
+class VisitDog : public Visit {
+public:
+    void visit(Place_1 *pl);
+    void visit(Place_2 *pl);
+    void visit(Place_3 *pl);
+    void visit(Place_4 *pl);
+};
+
 #endif

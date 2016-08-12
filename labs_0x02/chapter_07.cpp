@@ -105,16 +105,16 @@ void printStack(stack<int>& s, string name) {
 }
 
 void sortStack(std::stack<int>& source, std::stack<int>& sorted, std::stack<int>& tail) {
+    sorted.push(source.top());
+    source.pop();
     while ( !source.empty() ) {
-        sorted.push(source.top());
-        source.pop();
-        if (source.empty()) break;
         if ( source.top() > sorted.top() ) {
             if (sorted.empty()) cout << "sorted empty" << endl;
             tail.push(sorted.top());
             sorted.pop();
-        }
-        if ( source.top() <= sorted.top() ) {
+            sorted.push(source.top());
+            source.pop();
+        } else {
             if (source.empty()) cout << "source empty" << endl;
             tail.push(source.top());
             source.pop();

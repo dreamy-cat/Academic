@@ -531,3 +531,85 @@ gameResult Rock_1::compete(const Item* item) {
 }
 
 std::ostream& Rock_1::print(std::ostream &os) const { return os << "rock"; }
+
+Character::~Character() {}
+
+std::map<std::pair<int, int>, int> Character::tResult;
+
+void Character::createMap() {
+    tResult.clear();
+    tResult[std::make_pair(0, 0)] = draw;
+}
+
+void Troll::interact(Character* chr) {
+    this->print();
+    cout << " - ";
+    chr->print();
+    cout << endl;
+}
+
+void Dwarf::interact(Character* chr) {
+    this->print();
+    cout << " - ";
+    chr->print();
+    cout << endl;
+}
+
+void Elf::interact(Character* chr) {
+    this->print();
+    cout << " - ";
+    chr->print();
+    cout << endl;
+}
+
+Troll::Troll() { action = rand() % 3; }
+
+Dwarf::Dwarf() { action = rand() % 3; }
+
+Elf::Elf() { action = rand() % 3; }
+
+void Troll::print() { cout << "Troll(" << action << ", " << item << ")"; }
+
+void Dwarf::print() { cout << "Dwarf(" << action << ", " << item << ")"; }
+
+void Elf::print() { cout << "Elf(" << action << ", " << item << ")"; }
+
+void Character::setItem(int it) { item = it; }
+
+Visit::~Visit() {}
+
+Place_0::~Place_0() {}
+
+void Place_1::accept(Visit &v) { v.visit(this); }
+
+void Place_2::accept(Visit &v) { v.visit(this); }
+
+void Place_3::accept(Visit &v) { v.visit(this); }
+
+void Place_4::accept(Visit &v) { v.visit(this); }
+
+VisitString::operator const std::string &() { return s; }
+
+void VisitString::visit(Place_1 *pl) { s = "place_1"; }
+
+void VisitString::visit(Place_2 *pl) { s = "place_2"; }
+
+void VisitString::visit(Place_3 *pl) { s = "place_3"; }
+
+void VisitString::visit(Place_4 *pl) { s = "place_4"; }
+
+void VisitCat::visit(Place_1 *pl) { cout << "Cat at place_1" << endl; }
+
+void VisitCat::visit(Place_2 *pl) { cout << "Cat at place_2" << endl; }
+
+void VisitCat::visit(Place_3 *pl) { cout << "Cat at place_3" << endl; }
+
+void VisitCat::visit(Place_4 *pl) { cout << "Cat at place_4" << endl; }
+
+void VisitDog::visit(Place_1 *pl) { cout << "Dog at place_1" << endl; }
+
+void VisitDog::visit(Place_2 *pl) { cout << "Dog at place_2" << endl; }
+
+void VisitDog::visit(Place_3 *pl) { cout << "Dog at place_3" << endl; }
+
+void VisitDog::visit(Place_4 *pl) { cout << "Dog at place_4" << endl; }
