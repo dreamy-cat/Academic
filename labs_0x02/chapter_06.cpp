@@ -14,7 +14,7 @@ char to_Lower(char c) {
     return c;
 }
 
-string to_string(int i) {
+string toString(int i) {
     string r;
     do {
         r.insert(0, 1, char(i % 10 + '0'));
@@ -97,7 +97,7 @@ Town::Town() {
         weatherNames.push_back("cloudy");
         weatherNames.push_back("clear");
     }
-    name = "Town_" + to_string(counter++);
+    name = "Town_" + toString(counter++);
     population = rand() % 900 + 100;
     height = rand() % 90 + 10;
     wt = Town::weather(rand() % 4);

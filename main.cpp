@@ -12,4 +12,3 @@ int main(int argc, char** argv)
     labs_0x02();
     return 0;
 }
-

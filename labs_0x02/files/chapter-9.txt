@@ -1,0 +1,6 @@
+Class 'Class_15', counter = 0, global counter = 0
+Counter::attach(), count = 1
+Counter::attach(), count = 2
+Counter::attach(), count = 3
+Counter::detach(), counter = 2
+Some objects remains attached.

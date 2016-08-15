@@ -1,0 +1,2 @@
+Second file for chapter-10.txt.
+Words cat, cat, cat and dog.

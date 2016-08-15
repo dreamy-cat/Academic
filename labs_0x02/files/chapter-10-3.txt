@@ -1,0 +1,7 @@
+Results of chapter 10, file.
+All words in the first file: Text file of chapter 10 txt Some words cat dog 
+Words founded in all files except first one: file chapter 10 txt cat cat cat dog 
+TEXT FILE OF CHAPTER-10.TXT.
+SOME WORDS... CAT, DOG.
+SECOND FILE FOR CHAPTER-10.TXT.
+WORDS CAT, CAT, CAT AND DOG.

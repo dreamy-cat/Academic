@@ -963,7 +963,7 @@ void chapter_10() {
     // Passing 'volatile Class_10_14' as 'this' argument of 'char Class_10_14::read(int) const' discards qualifiers
     // cl14.read(0);
     // Task 15.
-    auto int i15_1 = 0;
+    int i15_1 = 0;
     register int i15_2 = 1;
     cout << "Auto and register integers : " << i15_1 << " " << i15_2 << endl;
     // Task 16.

@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 2.8)
 set(CMAKE_CXX_FLAGS "-Wall")
 
 #C++11
-#set(CMAKE_CXX_FLAGS "-std=c++11")
+set(CMAKE_CXX_FLAGS "-std=c++11")
 
 aux_source_directory(. SRC_LIST)
 aux_source_directory(./labs_0x00 SRC_LIST)
