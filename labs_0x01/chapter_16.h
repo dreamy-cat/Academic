@@ -248,7 +248,10 @@ private:
 
 class AutoCounter {
 public:
-    static AutoCounter* create() { return new AutoCounter(); }
+    static AutoCounter* create(bool quietly) {
+        quiet = quietly;
+        return new AutoCounter();
+    }
     ~AutoCounter() {
         std::cout << "Destroying[" << className << ":" << id << "]" << std::endl;
         verifier.remove(this);
@@ -258,11 +261,12 @@ public:
 private:
     static int count;
     int id;
+    static bool quiet;
     std::string className;
     AutoCounter() : id(count++) {
         verifier.add(this);
         className = "AutoCounter";
-        std::cout << "AutoCounter constructor[" << className << ":" << id << "]" << std::endl;
+        if (!quiet) std::cout << "AutoCounter constructor[" << className << ":" << id << "]" << std::endl;
     }
     AutoCounter(const AutoCounter&);
     void operator=(const AutoCounter&);
@@ -270,7 +274,7 @@ private:
     public:
         void add(AutoCounter* ap) { trace.insert(ap); }
         void remove(AutoCounter* ap) { trace.erase(ap); }
-        ~CleanupCheck() { std::cout << "CleanupCheck destructor, elements in set: " << trace.size() << std::endl; }
+        ~CleanupCheck() { if (!quiet) std::cout << "CleanupCheck destructor, elements in set: " << trace.size() << std::endl; }
     private:
         std::set<AutoCounter*> trace;
     };

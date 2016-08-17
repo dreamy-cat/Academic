@@ -4,6 +4,8 @@ using namespace std;
 
 int AutoCounter::count = 0;
 
+bool AutoCounter::quiet = true;
+
 AutoCounter::CleanupCheck AutoCounter::verifier;
 
 Int::Int(int ii) : i(ii) { cout << "Int constructor: " << i << endl; }

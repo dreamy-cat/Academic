@@ -21,7 +21,7 @@ public:
 private:
     static Singleton single;
     static int i;
-    Singleton(int x);
+    Singleton(int x, bool quietly);
     Singleton& operator=(Singleton&);
     Singleton(const Singleton&);
 };
@@ -268,10 +268,12 @@ public:
 };
 
 class FactoryShapeF2 {
+private:
+    bool quiet;
 protected:
     static std::map<std::string, FactoryShapeF2*> factories;
 public:
-    FactoryShapeF2();
+    FactoryShapeF2(bool quietly);
     virtual ShapeF2* createThin() = 0;
     virtual ShapeF2* createBold() = 0;
     virtual ~FactoryShapeF2();
@@ -290,6 +292,7 @@ private:
     class Factory;
     class Factory : public FactoryShapeF2 {
     public:
+        Factory(bool quietly);
         ShapeF2* createThin();
         ShapeF2* createBold();
         friend class FactoryShapeF2Init;
@@ -307,6 +310,7 @@ private:
     class Factory;
     class Factory : public FactoryShapeF2 {
     public:
+        Factory(bool quietly);
         ShapeF2* createThin();
         ShapeF2* createBold();
         friend class FactoryShapeF2;
@@ -324,6 +328,7 @@ private:
     class Factory;
     class Factory : public FactoryShapeF2 {
     public:
+        Factory(bool quietly);
         ShapeF2* createThin();
         ShapeF2* createBold();
         friend class FactoryShapeF2;
@@ -337,7 +342,7 @@ public:
 class FactoryShapeF2Init {
 private:
     static FactoryShapeF2Init factoryInit;
-    FactoryShapeF2Init();
+    FactoryShapeF2Init(bool quietly);
     ~FactoryShapeF2Init();
 };
 

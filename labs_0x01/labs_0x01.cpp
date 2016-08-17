@@ -1843,7 +1843,7 @@ void chapter_16() {
     for (int i = 0; i < 3; i++) tset_6.remove(&i);
     // Task 7.
     vector<AutoCounter*> vec7;
-    for (int i = 0; i < 3; i++) vec7.push_back(AutoCounter::create());
+    for (int i = 0; i < 3; i++) vec7.push_back(AutoCounter::create(true));
     for (int i = 0; i < 3; i++) delete vec7[i];
     // Task 8.
     OStack<int> ostack8(true);

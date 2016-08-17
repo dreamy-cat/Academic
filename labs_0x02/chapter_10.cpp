@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Singleton Singleton::single(0);
+Singleton Singleton::single(0, true);
 
 int Singleton::i;
 
@@ -10,7 +10,8 @@ map<string, FactoryShapeF2*> FactoryShapeF2::factories ;
 
 std::map<std::string, ShapeV*> ShapeV::shapesV;
 
-FactoryShapeF2Init FactoryShapeF2Init::factoryInit;
+// Change true to false, if output is needed.
+FactoryShapeF2Init FactoryShapeF2Init::factoryInit(true);
 
 Singleton& Singleton::instance() { return single; }
 
@@ -18,9 +19,9 @@ int Singleton::getValue() { return i; }
 
 void Singleton::setValue(int x) { i = x; }
 
-Singleton::Singleton(int x) {
+Singleton::Singleton(int x, bool quietly) {
     i = x;
-    cout << "Singleton::Singleton(" << i << ")" << endl;
+    if (!quietly) cout << "Singleton::Singleton(" << i << ")" << endl;
 }
 
 string Class_10_2::file;
@@ -249,9 +250,15 @@ TriangleF1::~TriangleF1() { cout << "TriangleF1::~TriangleF1()" << endl; }
 
 ShapeF2::~ShapeF2() { cout << "ShapeF2::~ShapeF2()" << endl; }
 
-FactoryShapeF2::FactoryShapeF2() { cout << "FactoryShapeF2::FactoryShapeF2()" << endl; }
 
-FactoryShapeF2::~FactoryShapeF2() { cout << "FactoryShapeF2::~FactoryShapeF2()" << endl; }
+
+FactoryShapeF2::FactoryShapeF2(bool quietly) : quiet(quietly) {
+    if (!quiet) cout << "FactoryShapeF2::FactoryShapeF2()" << endl;
+}
+
+FactoryShapeF2::~FactoryShapeF2() {
+    if (!quiet) cout << "FactoryShapeF2::~FactoryShapeF2()" << endl;
+}
 
 FactoryShapeF2::Error::Error(string type) : logic_error("Error creating " + type) {}
 
@@ -265,6 +272,8 @@ CircleF2::CircleF2(bool isBold) { cout << "CircleF2::CircleF2(" << isBold << ")"
 
 CircleF2::~CircleF2() { cout << "CircleF2::~CircleF2()" << endl; }
 
+CircleF2::Factory::Factory(bool quietly) : FactoryShapeF2(quietly) {}
+
 ShapeF2* CircleF2::Factory::createThin() { return new CircleF2(false); }
 
 ShapeF2* CircleF2::Factory::createBold() { return new CircleF2(true); }
@@ -272,6 +281,8 @@ ShapeF2* CircleF2::Factory::createBold() { return new CircleF2(true); }
 void CircleF2::draw() { cout << "CircleF2::draw()" << endl; }
 
 void CircleF2::erase() { cout << "CircleF2::erase()" << endl; }
+
+SquareF2::Factory::Factory(bool quietly) : FactoryShapeF2(quietly) {}
 
 SquareF2::SquareF2(bool isBold) { cout << "SquareF2::SquareF2(" << isBold << ")" << endl; }
 
@@ -285,6 +296,8 @@ void SquareF2::erase() { cout << "SquareF2::erase()" << endl; }
 
 SquareF2::~SquareF2() { cout << "SquareF2::~SquareF2()" << endl; }
 
+TriangleF2::Factory::Factory(bool quietly) : FactoryShapeF2(quietly) {}
+
 TriangleF2::TriangleF2(bool isBold) { cout << "TriangleF2::TriangleF2(" << isBold << ")" << endl; }
 
 ShapeF2* TriangleF2::Factory::createThin() { return new TriangleF2(false); }
@@ -297,13 +310,13 @@ void TriangleF2::erase() { cout << "TriangleF2::erase()" << endl; }
 
 TriangleF2::~TriangleF2() { cout << "TriangleF2::~TriangleF2()" << endl; }
 
-FactoryShapeF2Init::FactoryShapeF2Init() {
-    FactoryShapeF2::factories["Thin circle"] = new CircleF2::Factory;
-    FactoryShapeF2::factories["Thin square"] = new SquareF2::Factory;
-    FactoryShapeF2::factories["Thin triangle"] = new TriangleF2::Factory;
-    FactoryShapeF2::factories["Bold circle"] = new CircleF2::Factory;
-    FactoryShapeF2::factories["Bold square"] = new SquareF2::Factory;
-    FactoryShapeF2::factories["Bold triangle"] = new TriangleF2::Factory;
+FactoryShapeF2Init::FactoryShapeF2Init(bool quietly) {
+    FactoryShapeF2::factories["Thin circle"] = new CircleF2::Factory(quietly);
+    FactoryShapeF2::factories["Thin square"] = new SquareF2::Factory(quietly);
+    FactoryShapeF2::factories["Thin triangle"] = new TriangleF2::Factory(quietly);
+    FactoryShapeF2::factories["Bold circle"] = new CircleF2::Factory(quietly);
+    FactoryShapeF2::factories["Bold square"] = new SquareF2::Factory(quietly);
+    FactoryShapeF2::factories["Bold triangle"] = new TriangleF2::Factory(quietly);
 }
 
 FactoryShapeF2Init::~FactoryShapeF2Init() {
