@@ -71,7 +71,28 @@ void Labs_0x04::chapter_1()
     for (auto &element : v2) function_7(&element);
 }
 
+void Labs_0x04::chapter_2()
+{
+    // Part 2.1. Trying to compile, ok.
+    cout << "Chapter 2." << endl;
+    auto lambda1 = [] (const unique_ptr<int>& pointer1, const unique_ptr<int>& pointer2) { return (*pointer1 < *pointer2); };
+    unique_ptr<int> ptr1(new int(5)), ptr2(new int(3));
+    cout << "Compare two pointers with first lambda in c++11 style '" << *ptr1 << " < " << *ptr2 << "': " << lambda1(ptr1, ptr2) << endl;
+    auto lambda2 = [] (const auto& pointer1, const auto& pointer2) { return ( *pointer1 < *pointer2 ); };
+    cout << "Compare two pointers with second lambda in c++14 style '" << *ptr1 << " < " << *ptr2 << "': " << lambda2(ptr1, ptr2) << endl;
+    // function<bool(const unique_ptr<int>& pointer1, const unique_ptr<int>& pointer2)> fPtr1;
+    function<bool(const unique_ptr<int>&, const unique_ptr<int>&)> fPtr1 = [] (const unique_ptr<int>& pointer1, const unique_ptr<int>& pointer2) {
+        return ( *pointer1 < *pointer2 );
+    };
+    vector<int> v1(5);
+    unsigned size1 = v1.size();
+    auto size2 = v1.size();
+    cout << "Size of vector v1 = " << size1 << ", type of size(unsigned) and sizeof() " << typeid(size1).name() << ", " << size1 << endl;
+    cout << "Size of vector v1 = " << size2 << ", type of size(auto) " << typeid(size2).name() << " and sizeof() " << ", " << size2 << endl;
+
+}
+
 void labs_0x04()
 {
-    Labs_0x04::chapter_1();
+    Labs_0x04::chapter_2();
 }

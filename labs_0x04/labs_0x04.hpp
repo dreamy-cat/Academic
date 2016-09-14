@@ -6,12 +6,15 @@
 #include <string>
 #include <typeinfo>
 #include <iterator>
+#include <memory>
+#include <functional>
 
 void labs_0x04();
 
 namespace Labs_0x04 {
 
 void chapter_1();
+void chapter_2();
 
 template<typename T>
 void function_1(T& parameter)
@@ -70,6 +73,11 @@ template<typename T> void function_7(const T& parameter) {
 
 std::vector<int> createVector(const int vSize);
 
+}
+
+template<typename It> void function_8(It a, It b) {
+    while ( a != b) typename std::iterator_traits<It>::value_type value = *a;
+    while ( a != b) auto value = *a;
 }
 
 #endif
