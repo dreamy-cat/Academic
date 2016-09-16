@@ -80,4 +80,6 @@ template<typename It> void function_8(It a, It b) {
     while ( a != b) auto value = *a;
 }
 
+
+
 #endif

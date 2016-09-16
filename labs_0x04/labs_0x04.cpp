@@ -89,7 +89,14 @@ void Labs_0x04::chapter_2()
     auto size2 = v1.size();
     cout << "Size of vector v1 = " << size1 << ", type of size(unsigned) and sizeof() " << typeid(size1).name() << ", " << size1 << endl;
     cout << "Size of vector v1 = " << size2 << ", type of size(auto) " << typeid(size2).name() << " and sizeof() " << ", " << size2 << endl;
-
+    // Part 2.2
+    vector<bool> v2(8);
+    bool first = v2[1];
+    auto second = v2[2];
+    cout << "First element of vector<bool> and types " << first << "(" << typeid(first).name() <<
+            "), second " << second << "(" << typeid(second).name() << ")" << endl;
+    auto third = static_cast<bool>(v2[3]);
+    cout << "Third element of vector<bool> and type " << third << "(" << typeid(third).name() << ")" << endl;
 }
 
 void labs_0x04()
