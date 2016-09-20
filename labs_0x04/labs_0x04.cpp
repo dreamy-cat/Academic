@@ -99,7 +99,85 @@ void Labs_0x04::chapter_2()
     cout << "Third element of vector<bool> and type " << third << "(" << typeid(third).name() << ")" << endl;
 }
 
+void function_9(int i)
+{
+    cout << "Function_9(int)." << endl;
+}
+
+void function_9(bool b)
+{
+    cout << "Function_9(bool)." << endl;
+}
+
+void function_9(void* ptr)
+{
+    cout << "Function_9(void*)." << endl;
+}
+
+int function_10(shared_ptr<Class2> ptr)
+{
+    cout << "Function_10(shared_ptr<Class2>)." << endl;
+    return 1;
+}
+
+double function_11(unique_ptr<Class2> ptr)
+{
+    cout << "Function_11(unique_ptr<Class2>)." << endl;
+    return 2.0;
+}
+
+bool function_12(Class2* ptr)
+{
+    cout << "Function_12(Class2* ptr)." << endl;
+    return true;
+}
+
+void Labs_0x04::chapter_3()
+{
+    // Part 3.1.
+    cout << "Chapter 3." << endl;
+    int i1(1);
+    int i2 = 2;
+    int i3 = { 3 };
+    cout << "Simple out for all integers: " << i1 << " " << i2 << " " << i3 << endl;
+    Class2 cl1;
+    Class2 cl2 = cl1;
+    cl1 = cl2;
+    vector<int> v1 = { 1, 2, 3 };
+    double d1 = 1.0, d2 = 2.0;
+    // int i4 { d1 + d2 };  // Warning: Narrowing conversion.
+    // Class2 cl3();        // Redeclared as different kind of symbol.
+    Class2 cl3{};
+    Class2 cl4(1, true);
+    Class2 cl5{ "string" };
+    Class2 cl6{};
+    // Part 3.2.
+    function_9(0);
+    function_9(true);
+    // call of overloaded 'function_9(NULL)' is ambigious
+    // function_9(NULL);
+    function_9(nullptr);
+    mutex func10, func11, func12;
+    lock_guard<mutex> g1(func10);
+    auto result1 = function_10(0);
+    lock_guard<mutex> g2(func11);
+    auto result2 = function_11(NULL);
+    lock_guard<mutex> g3(func12);
+    auto result3 = function_12(nullptr);
+    // could not convert 'ptr' from...
+    // auto result4 = getResult(function_10, func10, 0);
+    // auto result5 = getResult(function_11, func11, NULL);
+    auto result6 = getResult(function_12, func12, nullptr);
+    cout << "Results of calling all functions, 10, 11 and 12: " << result1 << " " << result2 << " " << result3 << endl;
+    cout << "Results of calling function_12 with template: " << result6 << endl;
+    // Part 3.3. Just compile a some declarations.
+    using UPtr = std::unique_ptr<std::unordered_map<std::string, std::string>>;
+    List1<Class2> cl7;
+    List2<Class2>::type cl8;
+
+}
+
 void labs_0x04()
 {
-    Labs_0x04::chapter_2();
+    Labs_0x04::chapter_3();
 }
