@@ -11,6 +11,7 @@
 #include <mutex>
 #include <unordered_map>
 #include <list>
+#include <type_traits>
 
 void labs_0x04();
 

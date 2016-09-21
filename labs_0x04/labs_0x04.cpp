@@ -174,7 +174,9 @@ void Labs_0x04::chapter_3()
     using UPtr = std::unique_ptr<std::unordered_map<std::string, std::string>>;
     List1<Class2> cl7;
     List2<Class2>::type cl8;
-
+    const List1<int> cl9;
+    cout << typeid(remove_const_t<List1<int>>(cl9)).name() << endl;
+    // Part 3.4.
 }
 
 void labs_0x04()
