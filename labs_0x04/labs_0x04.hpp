@@ -154,4 +154,16 @@ private:
     List1<T> list;
 };
 
+template<typename E> constexpr auto toInfoType(E enumerator) noexcept {
+    return static_cast<std::underlying_type_t<E>>(enumerator);
+}
+
+class Class5 {
+public:
+    Class5();
+    Class5(const Class5&) = delete;
+    template<typename T> bool isLucky(T number);
+    bool isLucky(char) = delete;
+};
+
 #endif

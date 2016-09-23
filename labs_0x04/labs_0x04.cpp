@@ -132,6 +132,11 @@ bool function_12(Class2* ptr)
     return true;
 }
 
+Class5::Class5()
+{
+    cout << "Class5 constructor." << endl;
+}
+
 void Labs_0x04::chapter_3()
 {
     // Part 3.1.
@@ -177,6 +182,26 @@ void Labs_0x04::chapter_3()
     const List1<int> cl9;
     cout << typeid(remove_const_t<List1<int>>(cl9)).name() << endl;
     // Part 3.4.
+    enum class Color { black, white, red };
+    auto white = false;
+    // Color cl10 = white;      // cannot convert 'bool' to ...
+    Color cl10 = Color::white;
+    // if (cl10 < 1.0) cout << "Less than...";  // no match for 'operator<'
+    if ( static_cast<double>(cl10) <= 1.0)
+        cout << "Color::white less than '1.0'" << endl;
+    enum class Height : char { one, two, three };      // declaration
+    Height cl11 = Height::one;
+    cout << "Type of Height enum " << typeid(cl11).name() << endl;
+    tuple<string, string, int> info("string1", "string2", 5);
+    enum class InfoT { p1, p2, p3};
+    auto t1 = get<static_cast<size_t>(InfoT::p1)>(info);
+    cout << "First parameter in tuple " << t1 << endl;
+    auto t2 = get<toInfoType(InfoT::p2)>(info);
+    cout << "Second parameter in tuple " << t2 << endl;
+    // Part 3.5.
+    Class5 cl12;
+    // cl12.isLucky('a');   // use of deleted function
+
 }
 
 void labs_0x04()
