@@ -12,6 +12,7 @@
 #include <unordered_map>
 #include <list>
 #include <type_traits>
+#include <algorithm>
 
 void labs_0x04();
 
@@ -165,5 +166,37 @@ public:
     template<typename T> bool isLucky(T number);
     bool isLucky(char) = delete;
 };
+
+class Class6 {
+public:
+    virtual void function1() const;
+    virtual void function2(int i);
+    virtual void function3() &;
+    virtual void function4() const;
+};
+
+class Class6_1 : public Class6 {
+public:
+    virtual void function1() const override;
+    virtual void function2(int i) override;
+    virtual void function3() & override;
+    virtual void function4() const override;
+};
+
+class Class7 {
+public:
+    Class7();
+    Class7 create();
+    std::vector<int>& data() &;
+    std::vector<int>&&  data() &&;
+private:
+    std::vector<int> v;
+};
+
+template<typename C, typename V> void findIns(C& container, const V& element1, const V& element2)
+{
+    auto it = std::find(std::cbegin(container), std::cend(container), element1);
+    container.insert(it, element2);
+}
 
 #endif

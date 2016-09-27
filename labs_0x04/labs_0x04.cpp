@@ -137,6 +137,71 @@ Class5::Class5()
     cout << "Class5 constructor." << endl;
 }
 
+void Class6::function1() const
+{
+    cout << "Class6::function1()." << endl;
+}
+
+void Class6::function2(int i)
+{
+    cout << "Class6::function2() const." << endl;
+}
+
+void Class6::function3() &
+{
+    cout << "Class6::function3() &." << endl;
+}
+
+void Class6::function4() const
+{
+    cout << "Class6::function4() const." << endl;
+}
+
+void Class6_1::function1() const
+{
+    cout << "Class6_1::function1()." << endl;
+}
+
+void Class6_1::function2(int i)
+{
+    cout << "Class6_1::function2(unsigned int)." << endl;
+}
+
+void Class6_1::function3() &
+{
+    cout << "Class6_1::function3() &&." << endl;
+}
+
+void Class6_1::function4() const
+{
+    cout << "Class6_1::function4() const" << endl;
+}
+
+Class7::Class7()
+{
+    cout << "Elements in vector: ";
+    v.insert(v.begin(), {1, 2, 3} );
+    for (auto& e : v) cout << e << " ";
+    cout << endl;
+}
+
+Class7 Class7::create()
+{
+    return *(new Class7);
+}
+
+vector<int>& Class7::data() &
+{
+    cout << "Return lvalue of vector<int>." << endl;
+    return v;
+}
+
+vector<int>&& Class7::data() &&
+{
+    cout << "Return rvalue of vector<int>." << endl;
+    return move(v);
+}
+
 void Labs_0x04::chapter_3()
 {
     // Part 3.1.
@@ -201,7 +266,27 @@ void Labs_0x04::chapter_3()
     // Part 3.5.
     Class5 cl12;
     // cl12.isLucky('a');   // use of deleted function
-
+    // Part 3.6. 'virtual void Class6_1::...' marked 'overrride', but does not...
+    Class6* ptr1 = new Class6_1;
+    ptr1->function1();
+    ptr1->function2(1);
+    ptr1->function3();
+    ptr1->function4();
+    Class7 cl13;
+    auto v2 = cl13.data();
+    auto v3 = cl13.create().data();
+    // Part 3.7.
+    vector<int>::iterator it1 = find(v3.begin(), v3.end(), 3);
+    typedef vector<int>::const_iterator constIterV;
+    constIterV it2 = find(static_cast<constIterV>(v3.begin()), static_cast<constIterV>(v3.end()), 3);
+    cout << "Find third element in vector, with iterator " << *it1 << " and const iterator " << *it2;
+    // v3.insert(static_cast<vector<int>::iterator>(it2), 4);  // no matching for function call...
+    auto it3 = find(v3.cbegin(), v3.cend(), 3);
+    cout << " with auto iterator " << *it3 << endl;
+    findIns<vector<int>>(v3, 2, 1);
+    cout << "After replace element 2, vector<int>: ";
+    copy(v3.begin(), v3.end(), ostream_iterator<int>(cout, " "));
+    cout << endl;
 }
 
 void labs_0x04()
