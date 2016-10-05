@@ -202,6 +202,37 @@ vector<int>&& Class7::data() &&
     return move(v);
 }
 
+int function_13() throw()
+{
+    cout << "Function_13(), throw doesn't generate warning." << endl;
+    // throw -1;
+}
+
+int function_14() noexcept
+{
+    cout << "Function_14(), throw will always call terminate." << endl;
+    // throw -1;
+}
+
+int Class8::constructor = 0;
+
+int Class8::copyConstructor = 0;
+
+Class8::Class8()
+{
+    constructor++;
+}
+
+Class8::Class8(const Class8 &)
+{
+    copyConstructor++;
+}
+
+void Class8::printCounters()
+{
+    cout << "Class8::constructor counter " << constructor << ", copy constructor counter " << copyConstructor << endl;
+}
+
 void Labs_0x04::chapter_3()
 {
     // Part 3.1.
@@ -287,6 +318,17 @@ void Labs_0x04::chapter_3()
     cout << "After replace element 2, vector<int>: ";
     copy(v3.begin(), v3.end(), ostream_iterator<int>(cout, " "));
     cout << endl;
+    // Part 3.8
+    try {
+        function_13();
+        function_14();
+    } catch (int) {
+        cout << "Catch an exception." << endl;
+    }
+    vector<Class8> v4;
+    v4.reserve(256);
+    for (int i = 0; i < 1024; ++i) v4.push_back(Class8());
+    Class8::printCounters();
 }
 
 void labs_0x04()

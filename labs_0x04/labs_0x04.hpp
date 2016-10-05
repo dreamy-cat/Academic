@@ -199,4 +199,18 @@ template<typename C, typename V> void findIns(C& container, const V& element1, c
     container.insert(it, element2);
 }
 
+int function_13() throw();
+
+int function_14() noexcept;
+
+class Class8 {
+private:
+    static int constructor;
+    static int copyConstructor;
+public:
+    Class8();
+    Class8(const Class8&);
+    static void printCounters();
+};
+
 #endif
