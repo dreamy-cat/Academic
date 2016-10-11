@@ -213,4 +213,21 @@ public:
     static void printCounters();
 };
 
+constexpr int pow(int base, int exp);
+
+class Point {
+public:
+    constexpr Point(double iX = 0, double iY = 0) noexcept;
+    constexpr double xValue() const noexcept;
+    constexpr double yValue() const noexcept;
+    constexpr void setX(double sX) noexcept;
+    constexpr void setY(double sY) noexcept;
+private:
+    double x, y;
+};
+
+constexpr Point middlePoint(const Point& p1, const Point& p2) noexcept;
+
+constexpr Point reflection(const Point& p) noexcept;
+
 #endif

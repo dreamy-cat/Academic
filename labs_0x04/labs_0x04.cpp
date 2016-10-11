@@ -233,6 +233,46 @@ void Class8::printCounters()
     cout << "Class8::constructor counter " << constructor << ", copy constructor counter " << copyConstructor << endl;
 }
 
+constexpr int pow(int base, int exp)
+{
+    return (exp == 0 ? 1 : base * pow(base, exp - 1));
+}
+
+constexpr Point::Point(double iX, double iY) noexcept : x(iX), y(iY) {}
+
+constexpr double Point::xValue() const noexcept
+{
+    return x;
+}
+
+constexpr double Point::yValue() const noexcept
+{
+    return y;
+}
+
+constexpr void Point::setX(double sX) noexcept
+{
+    x = sX;
+}
+
+constexpr void Point::setY(double sY) noexcept
+{
+    y = sY;
+}
+
+constexpr Point middlePoint(const Point& p1, const Point& p2) noexcept
+{
+    return { (p1.xValue() + p2.xValue()) / 2, (p1.yValue() + p2.yValue()) / 2  };
+}
+
+constexpr Point reflection(const Point& p) noexcept
+{
+    Point reflect;
+    reflect.setX(-p.xValue());
+    reflect.setY(-p.yValue());
+    return reflect;
+}
+
 void Labs_0x04::chapter_3()
 {
     // Part 3.1.
@@ -329,6 +369,22 @@ void Labs_0x04::chapter_3()
     v4.reserve(256);
     for (int i = 0; i < 1024; ++i) v4.push_back(Class8());
     Class8::printCounters();
+    // Part 3.9
+    constexpr auto vSize = 5;
+    vector<int> v5(vSize);
+    constexpr auto base = 2;
+    cout << "Constant expression 2^5 with pow(2,5) " << pow(base, vSize) << endl;
+    int i4 = 2, i5 = 5;
+    cout << "In a runtime pow(2, 5) " << pow(i4, i5) << endl;
+    constexpr Point p1 (1.5, 2.3);
+    constexpr Point p2 ( 0.5, 3.5 );
+    constexpr auto p3 = middlePoint(p1, p2);
+    cout << "Points p1(" << p1.xValue() << "," << p1.yValue() << "), p2(" << p2.xValue() << "," << p2.yValue()
+         << "), and middle p3(" << p3.xValue() << "," << p3.yValue() << ")" << endl;
+    constexpr Point p4(3.5, 4.2);
+    constexpr Point p5(2.5, 1.3);
+    constexpr auto middlePoint2(p4, p5);
+    constexpr auot reflectedMiddle = reflection(mid);
 }
 
 void labs_0x04()
