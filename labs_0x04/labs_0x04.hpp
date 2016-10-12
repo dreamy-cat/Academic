@@ -230,4 +230,25 @@ constexpr Point middlePoint(const Point& p1, const Point& p2) noexcept;
 
 constexpr Point reflection(const Point& p) noexcept;
 
+class Polynom {
+public:
+    std::vector<double> roots() const;
+private:
+    mutable std::mutex m;
+    mutable bool isValid{};
+    mutable std::vector<double> rootVals{};
+};
+
+class Class9 {
+public:
+    Class9();
+    Class9(const Class9&) = default;
+    Class9& operator=(const Class9&) = default;
+    template<typename T> Class9(const T&);
+    template<typename T> Class9& operator=(const T& r);
+    Class9(Class9&& r) = default;
+    Class9& operator=(Class9&& r);
+    virtual ~Class9() = default;
+};
+
 #endif

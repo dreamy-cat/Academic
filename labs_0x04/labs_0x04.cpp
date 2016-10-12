@@ -273,6 +273,18 @@ constexpr Point reflection(const Point& p) noexcept
     return reflect;
 }
 
+std::vector<double> Polynom::roots() const
+{
+    lock_guard<mutex> g(m);
+    if (!isValid) isValid = true;
+    return rootVals;
+}
+
+Class9::Class9()
+{
+    cout << "Class9::Class9()" << endl;
+}
+
 void Labs_0x04::chapter_3()
 {
     // Part 3.1.
@@ -383,8 +395,14 @@ void Labs_0x04::chapter_3()
          << "), and middle p3(" << p3.xValue() << "," << p3.yValue() << ")" << endl;
     constexpr Point p4(3.5, 4.2);
     constexpr Point p5(2.5, 1.3);
-    constexpr auto middlePoint2(p4, p5);
-    constexpr auot reflectedMiddle = reflection(mid);
+    constexpr auto p6 = middlePoint(p4, p5);
+    constexpr auto p7 = reflection(p6);
+    cout << "Points p4(" << p4.xValue() << "," << p4.yValue() << "), p5(" << p5.xValue() << "," << p5.yValue()
+         << "), and middle p6(" << p6.xValue() << "," << p6.yValue() << "), reflection p7("
+         << p7.xValue() << "," << p7.yValue() << ")" << endl;
+    // Part 3.10-11. Just compile a simple example.
+    Class9 cl14, cl15;
+    cl15 = cl14;
 }
 
 void labs_0x04()
