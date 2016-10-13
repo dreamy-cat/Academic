@@ -405,7 +405,41 @@ void Labs_0x04::chapter_3()
     cl15 = cl14;
 }
 
+Class10::Class10()
+{
+    cout << "Class10::Class10()." << endl;
+}
+
+void Class10::function1()
+{
+    // free(): invalid next size (fast)
+    // v.emplace_back(this);
+}
+
+void Labs_0x04::chapter_4()
+{
+    cout << "Chapter 4." << endl;
+    // Part 4.1. Without C++14 style.
+    int i1 = 1;
+    auto cl1 = factory1(i1);
+    cout << "Type returned by factory1() " << typeid(cl1).name() << endl;
+    auto cl2 = factory2(i1);
+    cout << "Type returned by factory1() " << typeid(cl2).name() << endl;
+    shared_ptr<Class10> cl3 = factory1(i1);
+    // Part 4.2.
+    shared_ptr<Class10> cl4(new Class10, delClass10_1);
+    shared_ptr<Class10> cl5(new Class10, delClass10_2);
+    vector<shared_ptr<Class10>> v1{ cl4, cl5 };
+    auto ptr1 = new Class10;
+    shared_ptr<Class10> ptr2(ptr1, delClass10_1);
+    // undefined behaviour
+    // shared_ptr<Class10> ptr3(ptr1, delClass10_2);
+    shared_ptr<Class10> ptr4(ptr2);
+    Class10 cl6;
+    cl6.function1();
+}
+
 void labs_0x04()
 {
-    Labs_0x04::chapter_3();
+    Labs_0x04::chapter_4();
 }

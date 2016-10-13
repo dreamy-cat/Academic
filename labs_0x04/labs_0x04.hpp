@@ -21,6 +21,7 @@ namespace Labs_0x04 {
 void chapter_1();
 void chapter_2();
 void chapter_3();
+void chapter_4();
 
 template<typename T>
 void function_1(T& parameter)
@@ -249,6 +250,51 @@ public:
     Class9(Class9&& r) = default;
     Class9& operator=(Class9&& r);
     virtual ~Class9() = default;
+};
+
+class Class10 {
+public:
+    Class10();
+    void function1();
+    virtual ~Class10() = default;
+private:
+    std::vector<std::shared_ptr<Class10>> v;
+};
+
+class Class10_1 : public Class10 {};
+
+class Class10_2 : public Class10 {};
+
+class Class10_3 : public Class10 {};
+
+template<typename T> std::unique_ptr<Class10> factory1(T&& p)
+{
+    return std::unique_ptr<Class10>(new Class10);
+}
+
+auto delClass10 = [](Class10* ptr)
+{
+    std::cout << "Calling custom delete for unique<Class10, decltype()>." << std::endl;
+    delete ptr;
+};
+
+template<typename T> std::unique_ptr<Class10, decltype(delClass10)> factory2(T&& p)
+{
+    std::unique_ptr<Class10, decltype(delClass10)> ptr(nullptr, delClass10);
+    ptr.reset(new Class10());
+    return ptr;
+}
+
+auto delClass10_1 = [](Class10* ptr)
+{
+    std::cout << "Second custom deleter for Class10." << std::endl;
+    delete ptr;
+};
+
+auto delClass10_2 = [](Class10* ptr)
+{
+    std::cout << "Third custom deleter for Class10." << std::endl;
+    delete ptr;
 };
 
 #endif
