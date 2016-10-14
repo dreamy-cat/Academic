@@ -252,7 +252,7 @@ public:
     virtual ~Class9() = default;
 };
 
-class Class10 {
+class Class10 : public std::enable_shared_from_this<Class10> {
 public:
     Class10();
     void function1();

@@ -412,8 +412,9 @@ Class10::Class10()
 
 void Class10::function1()
 {
-    // free(): invalid next size (fast)
-    // v.emplace_back(this);
+    // v.emplace_back(this);                    // free(): invalid next size (fast)
+    // v.emplace_back(shared_from_this());      // bad_weak_ptr
+    cout << "Class10::function1() has called." << endl;
 }
 
 void Labs_0x04::chapter_4()
@@ -437,6 +438,19 @@ void Labs_0x04::chapter_4()
     shared_ptr<Class10> ptr4(ptr2);
     Class10 cl6;
     cl6.function1();
+    // Part 4.3.
+    auto ptr5 = make_shared<Class10>();
+    weak_ptr<Class10> ptr6(ptr5);
+    ptr5 = nullptr;
+    if (ptr6.expired()) cout << "Weak pointer to Class10 object is expired." << endl;
+    shared_ptr<Class10> ptr7 = ptr6.lock();
+    auto ptr8 = ptr6.lock();
+    // try not expired weak pointer.
+    ptr5 = make_shared<Class10>();
+    ptr6 = weak_ptr<Class10>(ptr5);
+    shared_ptr<Class10> ptr9(ptr6);
+    cout << "Calling function1() using sharing pointer, converted from weak pointer." << endl;
+    ptr9->function1();
 }
 
 void labs_0x04()
