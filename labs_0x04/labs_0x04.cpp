@@ -410,11 +410,29 @@ Class10::Class10()
     cout << "Class10::Class10()." << endl;
 }
 
-void Class10::function1()
+void Class10::function1() const
 {
     // v.emplace_back(this);                    // free(): invalid next size (fast)
     // v.emplace_back(shared_from_this());      // bad_weak_ptr
     cout << "Class10::function1() has called." << endl;
+}
+
+unique_ptr<const Class10> factory3(int id)
+{
+    cout << "Calling unique_ptr<const Class10> factory3(int id)." << endl;
+    return unique_ptr<const Class10>(new Class10);
+}
+
+shared_ptr<const Class10> factory4(int id)
+{
+    cout << "Calling shared_ptr<const Class10> factory4(int id)." << endl;
+    static unordered_map<int, weak_ptr<const Class10>> cache;
+    auto oPtr = cache[id].lock();
+    if (!oPtr) {
+        oPtr = factory3(id);
+        cache[id] = oPtr;
+    }
+    return oPtr;
 }
 
 void Labs_0x04::chapter_4()
@@ -451,6 +469,22 @@ void Labs_0x04::chapter_4()
     shared_ptr<Class10> ptr9(ptr6);
     cout << "Calling function1() using sharing pointer, converted from weak pointer." << endl;
     ptr9->function1();
+    cout << "Using factory with cache to make couple pointers." << endl;
+    auto ptr10 = factory4(0);
+    auto ptr11 = factory4(0);
+    cout << "Calling function1() from pointers, using factory with cache." << endl;
+    ptr10->function1();
+    ptr11->function1();
+    cout << "Simple pointers status P1 -> P2 <- P3 with standard, shared and waek pointers." << endl;
+    int* ptr12 = &i1, *ptr13 = ptr12, *ptr14 = ptr12;
+    cout << "Standard pointers: " << *ptr13 << " " << *ptr12 << " " << *ptr14 << endl;
+    int* i2 = new int(1);
+    shared_ptr<int> ptr15(i2);
+    shared_ptr<int> ptr17(i2);
+    cout << "Shared pointers: " << *ptr15 << " " << *i2 << " " << *ptr17 << endl;
+    weak_ptr<int> ptr18(make_shared<int>(*i2));
+    weak_ptr<int> ptr19(make_shared<int>(*i2));
+    cout << "Weak pointers: " << *ptr18.lock() << " " << *i2 << " " << *ptr19.lock() << endl;
 }
 
 void labs_0x04()

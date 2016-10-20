@@ -255,7 +255,7 @@ public:
 class Class10 : public std::enable_shared_from_this<Class10> {
 public:
     Class10();
-    void function1();
+    void function1() const;
     virtual ~Class10() = default;
 private:
     std::vector<std::shared_ptr<Class10>> v;
@@ -296,5 +296,9 @@ auto delClass10_2 = [](Class10* ptr)
     std::cout << "Third custom deleter for Class10." << std::endl;
     delete ptr;
 };
+
+std::unique_ptr<const Class10> factory3(int id);
+
+std::shared_ptr<const Class10> factory4(int id);
 
 #endif
