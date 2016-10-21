@@ -435,6 +435,22 @@ shared_ptr<const Class10> factory4(int id)
     return oPtr;
 }
 
+void function15(shared_ptr<int> sp, int p)
+{
+    cout << "Function15 with shared pointer, value " << *sp << endl;
+}
+
+Class11::Class11() : impl(new Class12)
+{
+    cout << "Class11::Class11()." << endl;
+}
+
+Class11::~Class11()
+{
+    cout << "Class11::~Class11()." << endl;
+    delete impl;
+}
+
 void Labs_0x04::chapter_4()
 {
     cout << "Chapter 4." << endl;
@@ -482,9 +498,50 @@ void Labs_0x04::chapter_4()
     shared_ptr<int> ptr15(i2);
     shared_ptr<int> ptr17(i2);
     cout << "Shared pointers: " << *ptr15 << " " << *i2 << " " << *ptr17 << endl;
-    weak_ptr<int> ptr18(make_shared<int>(*i2));
-    weak_ptr<int> ptr19(make_shared<int>(*i2));
-    cout << "Weak pointers: " << *ptr18.lock() << " " << *i2 << " " << *ptr19.lock() << endl;
+    weak_ptr<int> ptr18(ptr15);
+    weak_ptr<int> ptr19(ptr17);
+    cout << "Weak pointers: " << *(ptr18.lock()) << " " << *i2 << " " << *(ptr19.lock()) << endl;
+    // Part 4.4
+    auto ptr20(make_unique<int>());
+    unique_ptr<int> ptr21(new int(1));
+    auto ptr22(make_shared<int>());
+    shared_ptr<int> ptr23(new int(1));
+    // Both variants works.
+    function15(shared_ptr<int>(new int(3)), 1);
+    function15(make_shared<int>(3), 1);
+    auto deleter1 = [](int* ptr) {
+        cout << "Custom delter for int." << endl;
+        delete ptr;
+    };
+    unique_ptr<int, decltype(deleter1)> ptr24(new int, deleter1);
+    shared_ptr<int> ptr25(new int, deleter1);
+    auto ptr26 = make_unique<vector<int>>(5, 3);
+    auto ptr27 = make_shared<vector<int>>(5, 3);
+    cout << "Verify elements of first vector: ";
+    for (auto &e : *ptr26) cout << e << " ";
+    cout << "\nSecond vector: ";
+    for (auto &e : *ptr27) cout << e << " ";
+    auto list1 = { 1, 2, 3, 4, 5 };
+    auto ptr28 = make_shared<vector<int>> (list1);
+    cout << "\nThird vector initialiazed with list: ";
+    for (auto &e : *ptr28) cout << e << " ";
+    cout << "\nCreate objects with many shared and weak pointers: ";
+    vector<shared_ptr<int>> v2;
+    vector<weak_ptr<int>> v3;
+    for (int i = 0; i < 5; ++i) {
+        v2.push_back(make_shared<int>(i));
+        v3.push_back(weak_ptr<int>(v2[i]));
+        cout << *(v2[i]) << " ";
+    }
+    // Probably not working as planned, or may be with specific compiler.
+    cout << "\nAfter clearing shared pointers, weak pointers contains: ";
+    // v2.clear();
+    for (auto &e : v3) cout << *(e.lock()) << " ";
+    v3.clear();
+    shared_ptr<int> ptr29(new int, deleter1);
+    function15(ptr29, 1);
+    function15(move(ptr29), 2);
+    // Part 4.5.
 }
 
 void labs_0x04()

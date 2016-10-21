@@ -301,4 +301,30 @@ std::unique_ptr<const Class10> factory3(int id);
 
 std::shared_ptr<const Class10> factory4(int id);
 
+template<typename T, typename... Ts> std::unique_ptr<T> makeUnique(Ts&&... p)
+{
+    // Compile with c++11
+    return std::unique_ptr<T>(new T(std::forward<Ts>(p)...));
+}
+
+void function15(std::shared_ptr<int> sp, int p);
+
+class Class12;
+
+class Class11 {
+public:
+    Class11();
+    ~Class11();
+private:
+    Class12 *impl;
+};
+
+class Class12 {
+public:
+    std::string name;
+    std::vector<double> data;
+};
+
+
+
 #endif
