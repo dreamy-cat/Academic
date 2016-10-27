@@ -314,9 +314,14 @@ class Class12;
 class Class11 {
 public:
     Class11();
+    Class11(const Class11& r);
+    Class11& operator=(const Class11& r);
     ~Class11();
+    Class11(Class11&& r);
+    Class11& operator=(Class11&& r);
 private:
-    Class12 *impl;
+    std::unique_ptr<Class12> impl;
+    std::shared_ptr<Class12> impl2;
 };
 
 class Class12 {
@@ -324,7 +329,5 @@ public:
     std::string name;
     std::vector<double> data;
 };
-
-
 
 #endif

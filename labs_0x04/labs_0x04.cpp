@@ -440,7 +440,7 @@ void function15(shared_ptr<int> sp, int p)
     cout << "Function15 with shared pointer, value " << *sp << endl;
 }
 
-Class11::Class11() : impl(new Class12)
+Class11::Class11() : impl(make_unique<Class12>())
 {
     cout << "Class11::Class11()." << endl;
 }
@@ -448,7 +448,28 @@ Class11::Class11() : impl(new Class12)
 Class11::~Class11()
 {
     cout << "Class11::~Class11()." << endl;
-    delete impl;
+    // Previous version.
+    // delete impl;
+}
+
+Class11::Class11(Class11&& r) = default;
+
+Class11& Class11::operator=(Class11&& r) = default;
+
+Class11::Class11(const Class11& r) : impl(nullptr)
+{
+    cout << "Class11::Class11(const Class11& r)." << endl;
+    if ( r.impl )
+        impl = make_unique<Class12>(*r.impl);
+}
+
+Class11& Class11::operator=(const Class11& r)
+{
+    cout << "Class11::operator=(const Class11& r)." << endl;
+    if ( !r.impl ) impl.reset(); else
+        if ( !impl ) impl = make_unique<Class12>(*r.impl); else
+            *impl = *r.impl;
+    return *this;
 }
 
 void Labs_0x04::chapter_4()
@@ -541,7 +562,9 @@ void Labs_0x04::chapter_4()
     shared_ptr<int> ptr29(new int, deleter1);
     function15(ptr29, 1);
     function15(move(ptr29), 2);
-    // Part 4.5.
+    // Part 4.5. Working but very unusual.
+    Class11 cl7, cl8, cl9(cl7);
+    cl8 = cl7;
 }
 
 void labs_0x04()
