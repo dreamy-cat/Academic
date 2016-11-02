@@ -22,6 +22,7 @@ void chapter_1();
 void chapter_2();
 void chapter_3();
 void chapter_4();
+void chapter_5();
 
 template<typename T>
 void function_1(T& parameter)
@@ -329,5 +330,53 @@ public:
     std::string name;
     std::vector<double> data;
 };
+
+template<typename T>
+typename std::remove_reference<T>::type&& move1(T&& param)
+{
+    return static_cast<typename std::remove_reference<T>::type&&>(param);
+}
+
+template<typename T>
+decltype(auto) move2(T&& param)
+{
+    return static_cast<std::remove_reference_t<T>&&>(param);
+}
+
+class Class13 {
+public:
+    explicit Class13(const std::string text);
+    Class13(Class13&& r);
+
+    template<typename T>
+    void setValue(T&& newValue)
+    {
+        std::cout << "Setting value of string to " << newValue << std::endl;
+        value = std::forward<T>(newValue);
+    }
+
+    std::string getValue() const;
+
+private:
+    std::string value;
+    static std::size_t moveCounter;
+    std::shared_ptr<int> ptr;
+};
+
+void function_16(const Class13& lv);
+
+void function_16(Class13&& rv);
+
+template<typename T>
+void function_17(T&& parameter)
+{
+    auto now = std::chrono::system_clock::now();
+    std::cout << "Function_17 has called." << std::endl;
+    function_16(std::forward<T>(parameter));
+}
+
+template<typename T>
+void function_18(std::vector<T>&& parameter) {}
+
 
 #endif

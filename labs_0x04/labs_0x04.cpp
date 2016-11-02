@@ -567,7 +567,59 @@ void Labs_0x04::chapter_4()
     cl8 = cl7;
 }
 
+Class13::Class13(const std::string text) : value(move(text))
+{
+    cout << "Class13::Class13(const std::string)." << endl;
+}
+
+void function_16(const Class13& lv)
+{
+    cout << "Function using lvalue." << endl;
+}
+
+void function_16(Class13 &&rv)
+{
+    cout << "Function using rvalue" << endl;
+}
+
+std::size_t Class13::moveCounter = 0;
+
+Class13::Class13(Class13&& r) : value(move(r.value)), ptr(r.ptr)
+{
+    cout << "Move counter for Class13 = " << ++moveCounter << endl;
+}
+
+string Class13::getValue() const
+{
+    return value;
+}
+
+void Labs_0x04::chapter_5()
+{
+    cout << "Chapter 5." << endl;
+    // Part 5.1.
+    Class13 cl1("string 1");
+    function_17(cl1);
+    function_17(move(cl1));
+    Class13 cl2(forward<Class13>(cl1));
+    // Part 5.2.
+    vector<int> v1;
+    // function_18(v1);     // cannot bind 'std::vector<int> lvalue to std::vector<int>&&'
+    auto lambda1 = [](auto&& f, auto&& p)
+    {
+        forward<decltype(f)>(f)(forward<decltype(p)>(p));
+    };
+    cout << "Function_17 calling as lambda.\n";
+    lambda1(function_17<Class13>, forward<Class13>(cl1));
+    // Part 5.3.
+    Class13 cl3("object 3");
+    auto str1 = new string("text");
+    cl3.setValue(*str1);
+    delete str1;
+    cout << "Getting value from object Class13, while using rvalue: " << cl3.getValue() << endl;
+}
+
 void labs_0x04()
 {
-    Labs_0x04::chapter_4();
+    Labs_0x04::chapter_5();
 }
