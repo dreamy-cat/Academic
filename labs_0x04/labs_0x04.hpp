@@ -13,6 +13,7 @@
 #include <list>
 #include <type_traits>
 #include <algorithm>
+#include <set>
 
 void labs_0x04();
 
@@ -347,6 +348,7 @@ class Class13 {
 public:
     explicit Class13(const std::string text);
     Class13(Class13&& r);
+    Class13(const Class13& lv);
 
     template<typename T>
     void setValue(T&& newValue)
@@ -357,11 +359,30 @@ public:
 
     std::string getValue() const;
 
+    template<typename T>
+    void function_1(T&& value)
+    {
+        std::cout << "Setting string value from Class13::function_1." << std::endl;
+        setValue(value);
+        std::forward<T>(value);
+    }
+
+    Class13 operator+(const Class13& rv);
+
+    template<typename T>
+    Class13 function_2(T&& v)
+    {
+        std::cout << "Class13::function_1()." << std::endl;
+        return std::forward<T>(v);
+    }
+
 private:
     std::string value;
     static std::size_t moveCounter;
     std::shared_ptr<int> ptr;
 };
+
+
 
 void function_16(const Class13& lv);
 
@@ -378,5 +399,44 @@ void function_17(T&& parameter)
 template<typename T>
 void function_18(std::vector<T>&& parameter) {}
 
+Class13 function_19();
+
+static int counterFunc20 = 0;
+
+template<typename T>
+void function_20(T&& name, std::multiset<std::string>& data)
+{
+    std::cout << counterFunc20++ << ": " << name << std::endl;
+    data.emplace(std::forward<T>(name));
+}
+
+void function_20(int index, std::multiset<std::string>& data);
+
+std::string function_21(int index, std::multiset<std::string>& data);
+
+class Class14 {
+public:
+    template<typename T>
+    explicit Class14(T&& n) : name(std::forward<T>(n))
+    {
+        std::cout << "Class14 constructor with parameter " << name << std::endl;
+    }
+
+    explicit Class14(int index, std::multiset<std::string>& data) : name (function_21(index, data))
+    {
+        std::cout << "Class14 constructor(index) with string " << name << std::endl;
+    }
+
+    Class14(const Class14& r) = default;
+    Class14(Class14&& r) = default;
+private:
+    std::string name;
+};
+
+class Class14_1 : public Class14 {
+public:
+    Class14_1(const Class14_1& r);
+    Class14_1(Class14_1&& r);
+};
 
 #endif

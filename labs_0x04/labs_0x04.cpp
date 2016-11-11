@@ -584,6 +584,12 @@ void function_16(Class13 &&rv)
 
 std::size_t Class13::moveCounter = 0;
 
+Class13::Class13(const Class13& lv)
+{
+    setValue(lv.getValue());
+    cout << "Copy constructor for Class13. Value is " << getValue() << endl;
+}
+
 Class13::Class13(Class13&& r) : value(move(r.value)), ptr(r.ptr)
 {
     cout << "Move counter for Class13 = " << ++moveCounter << endl;
@@ -592,6 +598,46 @@ Class13::Class13(Class13&& r) : value(move(r.value)), ptr(r.ptr)
 string Class13::getValue() const
 {
     return value;
+}
+
+Class13 Class13::operator+(const Class13& rv)
+{
+    setValue(getValue() + rv.getValue());
+    return move(*this);
+}
+
+Class13 function_19()
+{
+    // Works ok, with gcc 6.2.0.
+    Class13 cl("local");
+    cout << "Returning local object, using GCC compiler and Return Value Optimization." << endl;
+    return cl;
+}
+
+void function_20(int index, multiset<string>& data)
+{
+    multiset<string>::iterator it = data.cbegin();
+    for (int i = 0; i < index; i++, it++);
+    std::cout << counterFunc20++ << ": " << *it << std::endl;
+    data.emplace(*it);
+}
+
+string function_21(int index, std::multiset<std::string>& data)
+{
+    multiset<string>::iterator it = data.cbegin();
+    for (int i = 0; i < index; i++, it++);
+    data.emplace(*it);
+    return (*it);
+}
+
+Class14_1::Class14_1(const Class14_1& r) : Class14("error")
+{
+    cout << "Class14_1 copy constructor." << endl;
+}
+
+Class14_1::Class14_1(Class14_1&& r) : Class14("errror")
+{
+    cout << "Class14_1 move constructor." << endl;
 }
 
 void Labs_0x04::chapter_5()
@@ -612,11 +658,28 @@ void Labs_0x04::chapter_5()
     cout << "Function_17 calling as lambda.\n";
     lambda1(function_17<Class13>, forward<Class13>(cl1));
     // Part 5.3.
-    Class13 cl3("object 3");
+    Class13 cl3("object 3"), cl4("object 4"), cl5("object 5");
     auto str1 = new string("text");
     cl3.setValue(*str1);
     delete str1;
     cout << "Getting value from object Class13, while using rvalue: " << cl3.getValue() << endl;
+    cout << "Result of operator+(Class13&&, const Class13&) is " << (cl3 + cl4).getValue() << endl;
+    cout << "Calling function with forward.\n" << (cl4.function_2(cl5)).getValue() << endl;
+    cout << "Value of returning local object from function_19(), " << function_19().getValue() << endl;
+    // Part 5.4.
+    // Works, but need an extra class for good output...
+    multiset<string> strings;
+    string str2("string_1");
+    function_20(str2, strings);
+    function_20(string("string_2"), strings);
+    function_20("string_3", strings);
+    cout << "Calling overloaded function_20(int index, ...).\n";
+    function_20(2, strings);
+    // no matching function for call ...
+    // short sh1 = 1;
+    // function_20(sh1, strings);
+    const Class14 cl6("object 6"), cl7(0, strings);
+    auto cl8(cl6);      // Works with const modifier.
 }
 
 void labs_0x04()
