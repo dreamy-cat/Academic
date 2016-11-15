@@ -640,6 +640,31 @@ Class14_1::Class14_1(Class14_1&& r) : Class14("errror")
     cout << "Class14_1 move constructor." << endl;
 }
 
+Class15::Class15(string n) : name(move(n))
+{
+    cout << "Class15 constructor with parameter " << name << endl;
+}
+
+Class15::Class15(int index)
+{
+    cout << "Class15 constructor with parameter " << index << endl;
+}
+
+void function_22(int index, std::true_type)
+{
+    cout << "Function22(int, std::true_type), index " << index << endl;
+}
+
+Class15_1::Class15_1(const Class15_1& r) : Class15(r)
+{
+    cout << "Class15_1 copy constructor." << endl;
+}
+
+Class15_1::Class15_1(Class15_1&& r) : Class15(move(r))
+{
+    cout << "Class15_1 move constructor." << endl;
+}
+
 void Labs_0x04::chapter_5()
 {
     cout << "Chapter 5." << endl;
@@ -680,9 +705,17 @@ void Labs_0x04::chapter_5()
     // function_20(sh1, strings);
     const Class14 cl6("object 6"), cl7(0, strings);
     auto cl8(cl6);      // Works with const modifier.
+    // Part 5.5
+    function_23(str2);
+    function_23(1);
+    Class15 cl9("object 9");
+    Class15 cl10(cl9);
 }
 
 void labs_0x04()
 {
+
+
+
     Labs_0x04::chapter_5();
 }

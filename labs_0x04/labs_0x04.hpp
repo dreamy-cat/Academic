@@ -439,4 +439,39 @@ public:
     Class14_1(Class14_1&& r);
 };
 
+class Class15 {
+public:
+    template<typename T, typename = typename std::enable_if<
+                 !std::is_same<Class15, typename std::decay<T>::type>::value>::type>
+    explicit Class15(T&& n)
+    {
+        std::cout << "Class15(T&&)" << std::endl;
+    }
+
+    explicit Class15(std::string n);
+    explicit Class15(int index);
+private:
+    std::string name;
+};
+
+class Class15_1 : public Class15 {
+public:
+    Class15_1(const Class15_1& r);
+    Class15_1(Class15_1&& r);
+};
+
+template<typename T>
+void function_22(T&& name, std::false_type)
+{
+    std::cout << "Function22(T&&, std::false_type), name is " << name << std::endl;
+}
+
+void function_22(int index, std::true_type);
+
+template<typename T>
+void function_23(T&& name)
+{
+    function_22(std::forward<T>(name), std::is_integral<std::remove_reference_t<T>>());
+}
+
 #endif
