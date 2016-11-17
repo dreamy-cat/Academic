@@ -441,10 +441,14 @@ public:
 
 class Class15 {
 public:
-    template<typename T, typename = typename std::enable_if<
-                 !std::is_same<Class15, typename std::decay<T>::type>::value>::type>
-    explicit Class15(T&& n)
+    template<typename T, typename = std::enable_if_t<
+                 !std::is_base_of<Class15, typename std::decay<T>::type>::value &&
+                 !std::is_integral<std::remove_reference_t<T>>::value>
+             >
+    explicit Class15(T&& n) : name(std::forward<T>(n))
     {
+        static_assert(std::is_constructible<std::string, T>::value,
+                      "Cannot construct std::string from value.");
         std::cout << "Class15(T&&)" << std::endl;
     }
 
@@ -472,6 +476,23 @@ template<typename T>
 void function_23(T&& name)
 {
     function_22(std::forward<T>(name), std::is_integral<std::remove_reference_t<T>>());
+}
+
+class Class16 {
+public:
+    Class16();
+
+};
+
+Class16 function_24();
+
+void function_25(Class16 p);
+
+template<typename T>
+void function_26(T&& param)
+{
+    std::cout << "Function_25(T&&), " << typeid(param).name() << std::endl;
+    function_25(std::forward<T>(param));
 }
 
 #endif

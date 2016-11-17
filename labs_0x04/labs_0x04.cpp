@@ -665,6 +665,19 @@ Class15_1::Class15_1(Class15_1&& r) : Class15(move(r))
     cout << "Class15_1 move constructor." << endl;
 }
 
+Class16::Class16()
+{
+    cout << "Class16 constructor." << endl;
+}
+
+Class16 function_24()
+{
+    cout << "Returning Class16 object." << endl;
+    return Class16();
+}
+
+void function_25(Class16 p) {}
+
 void Labs_0x04::chapter_5()
 {
     cout << "Chapter 5." << endl;
@@ -705,11 +718,33 @@ void Labs_0x04::chapter_5()
     // function_20(sh1, strings);
     const Class14 cl6("object 6"), cl7(0, strings);
     auto cl8(cl6);      // Works with const modifier.
-    // Part 5.5
+    // Part 5.5 Very unclear, but works fine.
     function_23(str2);
     function_23(1);
     Class15 cl9("object 9");
     Class15 cl10(cl9);
+    // Part 5.6.
+    int i1;
+    // auto& && ri = i1;        // cannot declare reference t 'auto &'...
+    Class16 cl11;
+    function_26(cl11);
+    function_26(function_24());
+    // Part 5.7.
+    vector<int> v2(5, 1);
+    cout << "Vectors and move function.\n";
+    for (auto& e : v2) cout << e << " ";
+    auto v3 = move(v2);
+    cout << endl;
+    for (auto& e : v3) cout << e << " ";
+    cout << endl;
+    array<int, 5> v4;
+    v4.fill(3);
+    cout << "Array of ints.\n";
+    for (auto& e : v4) cout << e << " ";
+    cout << endl;
+    auto v5 = move(v4);
+    for (auto& e : v5) cout << e << " ";
+    cout << endl;
 }
 
 void labs_0x04()
