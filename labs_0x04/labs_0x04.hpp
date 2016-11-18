@@ -481,7 +481,7 @@ void function_23(T&& name)
 class Class16 {
 public:
     Class16();
-
+    static constexpr std::size_t minValue = 5;
 };
 
 Class16 function_24();
@@ -494,5 +494,31 @@ void function_26(T&& param)
     std::cout << "Function_25(T&&), " << typeid(param).name() << std::endl;
     function_25(std::forward<T>(param));
 }
+
+void function_27(const std::vector<int>& v);
+
+void function_27(int (*pf)(int));
+
+void function_27(std::size_t s);
+
+template<typename T>
+void function_28(T&& parameter)
+{
+    function_27(std::forward<T>(parameter));
+}
+
+int function_29(int p);
+
+int function_29(int p, int q);
+
+template<typename T>
+int function_30(T p)
+{
+    std::cout << "Template function_30(T), with type " << typeid(p).name() << std::endl;
+}
+
+struct Struct1 {
+    std::uint32_t v:4, i:4, d:6, e:2, t:16;
+};
 
 #endif

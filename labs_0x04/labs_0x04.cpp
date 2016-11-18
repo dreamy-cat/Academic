@@ -678,6 +678,34 @@ Class16 function_24()
 
 void function_25(Class16 p) {}
 
+void function_27(const vector<int>& v)
+{
+    cout << "Function27 with vector: ";
+    for (auto& e : v) cout << e << " ";
+    cout << endl;
+}
+
+void function_27(int (*pf)(int)) {
+    cout << "Function_27 calling with pointer to other function." << endl;
+    pf(1);
+}
+
+void function_27(size_t s)
+{
+    cout << "Function_27(size_t)." << endl;
+}
+
+
+int function_29(int p)
+{
+    cout << "Function_29(int), parameter " << p << endl;
+}
+
+int function_29(int p, int q)
+{
+    cout << "Function_29(int, int), parameters " << p << " " << q << endl;
+}
+
 void Labs_0x04::chapter_5()
 {
     cout << "Chapter 5." << endl;
@@ -745,12 +773,29 @@ void Labs_0x04::chapter_5()
     auto v5 = move(v4);
     for (auto& e : v5) cout << e << " ";
     cout << endl;
+    // Part 5.8.
+    function_27({1, 2, 3});
+    // function_28({1, 2, 3});  // no matching function for call to...
+    auto v6 = { 1, 2, 3 };
+    function_28(v6);
+    vector<int> v7(Class16::minValue, 1);
+    function_27(v7);
+    function_28(v7);    // compile ok.
+    function_27(function_29);
+    // function_28(function_29);    // no matching function for call to...
+    // function_28(function_30);
+    using typeFPtr = int (*)(int);
+    typeFPtr ptr1 = function_29;
+    function_28(ptr1);
+    function_28(static_cast<typeFPtr>(function_30));
+    Struct1 structure1;
+    function_27(structure1.t);
+    // function_28(structure1.t);   // cannot bind bitfield...
+    auto tl = static_cast<uint16_t>(structure1.t);
+    function_28(tl);                // compile ok.
 }
 
 void labs_0x04()
 {
-
-
-
     Labs_0x04::chapter_5();
 }
