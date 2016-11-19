@@ -795,7 +795,30 @@ void Labs_0x04::chapter_5()
     function_28(tl);                // compile ok.
 }
 
+void function_31(vector<function<bool(int)>>& v)
+{
+    static int next = 1;
+    auto divValue = next++;
+    // v.emplace_back([&](int value) {} );
+}
+
+void Labs_0x04::chapter_6()
+{
+    cout << "Chapter 6.\n";
+    // Part 6.1.
+    vector<int> v1(5,3);
+    cout << "find_if result: ";
+    cout << *(find_if(v1.begin(), v1.end(), [](int e) { return 0 < e && e < 10; })) << endl;
+    int i1 = 5, i2 = 3;
+    auto l1 = [i1](int i2) { return i1 * i2 > 55; };
+    auto l2 = l1;
+    auto l3 = l2;
+    vector<function<bool(int)>> v2;
+    v2.emplace_back([](int value) { return value % 2 == 0; });
+
+}
+
 void labs_0x04()
 {
-    Labs_0x04::chapter_5();
+    Labs_0x04::chapter_6();
 }

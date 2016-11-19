@@ -24,6 +24,7 @@ void chapter_2();
 void chapter_3();
 void chapter_4();
 void chapter_5();
+void chapter_6();
 
 template<typename T>
 void function_1(T& parameter)
@@ -520,5 +521,7 @@ int function_30(T p)
 struct Struct1 {
     std::uint32_t v:4, i:4, d:6, e:2, t:16;
 };
+
+// void function_31(vector<function<(int)>> v);
 
 #endif
