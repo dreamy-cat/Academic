@@ -799,7 +799,49 @@ void function_31(vector<function<bool(int)>>& v)
 {
     static int next = 1;
     auto divValue = next++;
-    // v.emplace_back([&](int value) {} );
+    v.emplace_back([&](int value) { return value % divValue == 0; } );
+    // Other solutions.
+    v.emplace_back( [&divValue](int value){ return value % divValue == 0; } );
+    v.emplace_back( [=](int value){ return value % divValue == 0; });
+    static auto divValue2 = next++;
+    v.emplace_back( [=](int value){ return value % divValue2 == 0; });
+}
+
+void Class17::addFilter(vector<function<bool(int)>>& v)
+{
+    v.emplace_back( [=](int value){ return value % divValue == 0;});
+    // 'this' was not captured for this lambda function
+    // v.emplace_back( [](int value){ return value % divValue == 0;});
+    // capture of non-variable 'Class17...'
+    // v.emplace_back( [divValue](int value){ return value % divValue == 0; });
+    auto objectPtr = this;
+    v.emplace_back( [objectPtr](int value){ return value % objectPtr->divValue == 0; });
+    cout << "Size of vector<function<bool(int)>> is " << v.size() << endl;
+    // auto divValue = this->divValue;
+    // c++14 style.
+    v.emplace_back( [divValue = divValue](int value){ return value % divValue == 0; });
+}
+
+bool Class17::function1()
+{
+    cout << "Class17::function1()." << endl;
+    return true;
+}
+
+bool Class17::function2()
+{
+    cout << "Class17::function2()." << endl;
+    return true;
+}
+
+Class17_1::Class17_1(unique_ptr<Class17>&& p) : ptr(move(p))
+{
+    cout << "Class17_1 constructor." << endl;
+}
+
+bool Class17_1::operator()() const
+{
+    return ptr->function1() && ptr->function2();
 }
 
 void Labs_0x04::chapter_6()
@@ -815,7 +857,22 @@ void Labs_0x04::chapter_6()
     auto l3 = l2;
     vector<function<bool(int)>> v2;
     v2.emplace_back([](int value) { return value % 2 == 0; });
-
+    function_31(v2);
+    // cout << "In vector<function<bool(int)>> ";
+    function_32(v1);
+    auto ptr1 = make_unique<Class17>();
+    ptr1->addFilter(v2);
+    // Part 6.2.
+    auto ptr2 = make_unique<Class17>();
+    auto l4 = [ptr2 = move(ptr2)]{ return ptr2->function1() && ptr2->function2(); };
+    auto l5 = [ptr2 = make_unique<Class17>()]{ return ptr2->function1() && ptr2->function2(); };
+    auto l6 = Class17_1(make_unique<Class17>());
+    vector<int> v3(3, 7);
+    auto l7 = [v3 = move(v3)]{ return v3.size(); };
+    // c++11 style.
+    auto l8 = bind([](const vector<int>& v3){ return v3.size(); }, move(v3));
+    auto l9 = bind([](vector<int>& v3) mutable { return v3.size(); }, move(v3));
+    auto l10 = bind([](const unique_ptr<Class17>& ptr){ return ptr->function1() && ptr->function2(); }, make_unique<Class17>());
 }
 
 void labs_0x04()

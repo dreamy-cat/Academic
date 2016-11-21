@@ -522,6 +522,36 @@ struct Struct1 {
     std::uint32_t v:4, i:4, d:6, e:2, t:16;
 };
 
-// void function_31(vector<function<(int)>> v);
+void function_31(std::vector<std::function<bool(int)>>& v);
+
+template<typename T>
+void function_32(const T& container)
+{
+    auto divValue = 3;
+    using elementType = typename T::value_type;
+    if (std::all_of(std::begin(container), std::end(container),
+                    [&](const elementType& value){ return value & divValue == 0; } ))
+        std::cout << "Result of std::all_of algorithm." << std::endl;
+    else
+        std::cout << "Result of std::all_of algorithm, non founded." << std::endl;
+}
+
+class Class17 {
+public:
+    Class17() = default;
+    void addFilter(std::vector<std::function<bool(int)>>& v);
+    bool function1();
+    bool function2();
+private:
+    int divValue;
+};
+
+class Class17_1 {
+public:
+    explicit Class17_1(std::unique_ptr<Class17>&& p);
+    bool operator()() const;
+private:
+    std::unique_ptr<Class17> ptr;
+};
 
 #endif
