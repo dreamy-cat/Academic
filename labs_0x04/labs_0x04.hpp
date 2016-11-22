@@ -554,4 +554,25 @@ private:
     std::unique_ptr<Class17> ptr;
 };
 
+class Class18 {
+public:
+    template<typename T>
+    auto operator()(T x) const
+    {
+        return x;
+    }
+};
+
+Class18&& forward1(Class18& p);
+
+enum class Sound { Beep, Siren, Whistle };
+
+enum class Volume { Low, Medium, High };
+
+void setAlarm(std::chrono::steady_clock::time_point t, Sound s, std::chrono::steady_clock::duration d);
+
+void setAlarm(std::chrono::steady_clock::time_point t, Sound s, std::chrono::steady_clock::duration d, Volume v);
+
+
+
 #endif

@@ -844,6 +844,21 @@ bool Class17_1::operator()() const
     return ptr->function1() && ptr->function2();
 }
 
+Class18&& forward1(Class18& p)
+{
+    return static_cast<Class18&&>(p);
+}
+
+void setAlarm(std::chrono::steady_clock::time_point t, Sound s, std::chrono::steady_clock::duration d)
+{
+    cout << "setAlarm function, with Sound " << (int)s << endl;
+}
+
+void setAlarm(chrono::steady_clock::time_point t, Sound s, chrono::steady_clock::duration d, Volume v)
+{
+    cout << "setAlarm function, with Volume " << (int)v << endl;
+}
+
 void Labs_0x04::chapter_6()
 {
     cout << "Chapter 6.\n";
@@ -872,7 +887,45 @@ void Labs_0x04::chapter_6()
     // c++11 style.
     auto l8 = bind([](const vector<int>& v3){ return v3.size(); }, move(v3));
     auto l9 = bind([](vector<int>& v3) mutable { return v3.size(); }, move(v3));
-    auto l10 = bind([](const unique_ptr<Class17>& ptr){ return ptr->function1() && ptr->function2(); }, make_unique<Class17>());
+    auto l10 = bind([](const unique_ptr<Class17>& ptr)
+    {
+        return ptr->function1() && ptr->function2(); },
+    make_unique<Class17>());
+    // Part 6.3.
+    int i3 = 5;
+    auto l11 = [](auto x){ return x; };
+    Class18 cl1;
+    cout << "Lambda with auto, " << l11(i3) << ", with class " << cl1.operator()(i3) << endl;
+    auto l12 = [](auto&& x){ return function_29(forward<decltype(x)>(x)); };
+    l12(i3);
+    auto l13 = [](auto&&... xs){ return function_29(forward<decltype(xs)>(xs)...); };
+    l13(i3);
+    // Part 6.4.
+    auto setSoundLambda1 = [](Sound s)
+    {
+        setAlarm(chrono::steady_clock::now() + chrono::hours(1), s, chrono::seconds(30));
+    };
+    auto setSoundLabmda2 = [](Sound s)
+    {
+        using namespace std::literals;
+        setAlarm(chrono::steady_clock::now() + 1h, s, 30s);
+    };
+    setSoundLambda1(Sound(0));
+    setSoundLabmda2(Sound(1));
+    using namespace chrono;
+    using namespace literals;
+    using namespace placeholders;
+    using setAlarmType = void(*)(steady_clock::time_point t, Sound s, steady_clock::duration d);
+    auto setSound1 = bind(static_cast<setAlarmType>(setAlarm), steady_clock::now() + 1h, _1, 30s);
+    auto setSound2 = bind(static_cast<setAlarmType>(setAlarm), bind(plus<>(), bind(steady_clock::now), 1h), _1, 30s);
+    // c++11 style, hard to use...
+    auto setSound3 = bind(static_cast<setAlarmType>(setAlarm), bind(plus<steady_clock::time_point>(),
+                                         bind(steady_clock::now), hours(1)),
+                          _1, seconds(30));
+    int i4 = 0, i5 = 5;
+    auto l14 = [i4, i5](const auto& value){ return i4 <= value && value <= i5; };
+    auto l15 = bind(logical_and<bool>(), bind(less_equal<int>(), i4, _1), bind(less_equal<int>(), _1, i5));
+    auto l16 = [i4, i5](int value){ return i4 <= value && value <= i5; };
 }
 
 void labs_0x04()
