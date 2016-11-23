@@ -14,6 +14,8 @@
 #include <type_traits>
 #include <algorithm>
 #include <set>
+#include <thread>
+#include <future>
 
 void labs_0x04();
 
@@ -25,6 +27,7 @@ void chapter_3();
 void chapter_4();
 void chapter_5();
 void chapter_6();
+void chapter_7();
 
 template<typename T>
 void function_1(T& parameter)
@@ -383,8 +386,6 @@ private:
     std::shared_ptr<int> ptr;
 };
 
-
-
 void function_16(const Class13& lv);
 
 void function_16(Class13&& rv);
@@ -559,6 +560,7 @@ public:
     template<typename T>
     auto operator()(T x) const
     {
+        std::cout << "Class18::operator()(T)." << std::endl;
         return x;
     }
 };
@@ -569,10 +571,44 @@ enum class Sound { Beep, Siren, Whistle };
 
 enum class Volume { Low, Medium, High };
 
+enum class Level { Low, Normal, High };
+
 void setAlarm(std::chrono::steady_clock::time_point t, Sound s, std::chrono::steady_clock::duration d);
 
 void setAlarm(std::chrono::steady_clock::time_point t, Sound s, std::chrono::steady_clock::duration d, Volume v);
 
+Class18 compress(const Class18& cl, Level l);
 
+void function_33();
+
+template<typename F, typename... Ts>
+inline std::future<typename std::result_of<F(Ts...)>::type>
+myAsync(F&& f, Ts&&... p)
+{
+    return std::async(std::launch::async, std::forward<F>(f), std::forward<Ts>(p)...);
+}
+
+template<typename F, typename... Ts>
+inline auto myAsync2(F&& f, Ts&&... p)
+{
+    return std::async(std::launch::async, std::forward<F>(f), std::forward<Ts>(p)...);
+}
+
+bool function_34(std::function<bool(int)> f, int max = 1000);
+
+bool function_35(int value);
+
+class Class19 {
+public:
+    enum class Action { join, detach };
+    Class19(std::thread&& t, Action a);
+    ~Class19();
+    std::thread& get();
+    Class19(Class19&&) = default;
+    Class19& operator=(Class19&&) = default;
+private:
+    Action action;
+    std::thread thr;
+};
 
 #endif

@@ -859,6 +859,11 @@ void setAlarm(chrono::steady_clock::time_point t, Sound s, chrono::steady_clock:
     cout << "setAlarm function, with Volume " << (int)v << endl;
 }
 
+Class18 compress(const Class18& cl, Level l)
+{
+    cout << "Class18 compress(), level " << (int)l << endl;
+}
+
 void Labs_0x04::chapter_6()
 {
     cout << "Chapter 6.\n";
@@ -926,9 +931,95 @@ void Labs_0x04::chapter_6()
     auto l14 = [i4, i5](const auto& value){ return i4 <= value && value <= i5; };
     auto l15 = bind(logical_and<bool>(), bind(less_equal<int>(), i4, _1), bind(less_equal<int>(), _1, i5));
     auto l16 = [i4, i5](int value){ return i4 <= value && value <= i5; };
+    Class18 cl2;
+    auto compressB = bind(compress, cl2, _1);
+    auto compressL = [cl2](Level l){ return compress(cl2, l); };
+    compressB(Level(0));
+    compressL(Level(1));
+    auto boundB = bind(cl2, _1);
+    boundB(5);
+    auto boundL = [cl2](const auto& parameter){ cl2(parameter); };
+    boundL(15);
+}
+
+void function_33()
+{
+    cout << "Function_33()" << endl;
+    using namespace literals;
+    this_thread::sleep_for(1s);
+}
+
+bool function_34(function<bool(int)> f, int max)
+{
+    vector<int> values;
+    Class19 t( thread([&f, max, &values]
+    {
+        for (auto i = 0; i <= max; ++i)
+            if (f(i)) values.push_back(i);
+    }), Class19::Action::join);
+    auto n = t.get().native_handle();
+    if ( values.size() ) {
+        t.get().join();
+        cout << "All elements in vector: ";
+        for (auto& e : values) cout << e << " ";
+        cout << endl;
+        return true;
+    }
+    return false;
+}
+
+bool function_35(int value)
+{
+    return (value % 2);
+}
+
+Class19::Class19(std::thread&& t, Action a) : action(a), thr(move(t))
+{
+    cout << "Class19 constructor with action " << (int)a << endl;
+}
+
+Class19::~Class19()
+{
+    if (thr.joinable()) {
+        if (action == Action::detach) {
+            thr.join();
+            cout << "Thread joined." << endl;
+        } else {
+            thr.detach();
+            cout << "Thread detached." << endl;
+        }
+    }
+}
+
+thread& Class19::get()
+{
+    return thr;
+}
+
+void Labs_0x04::chapter_7()
+{
+    cout << "Chapter 7.\n";
+    // Part 7.1.
+    using namespace literals;
+    thread t1(function_33);
+    t1.join();
+    auto t2 = async(function_33);
+    // Part 7.2.
+    int i1 = 0;
+    cout << "Waiting for 1 second, with output every 0.1 second, counter.\n";
+    if ( t2.wait_for(0s) == future_status::deferred )
+        cout << "Task is deferred." << endl;
+    else
+        while (t2.wait_for(100ms) != future_status::ready)
+            cout << i1++ << " ";
+    cout << endl;
+    auto t3 = myAsync(function_33);
+    auto t4 = myAsync2(function_33);
+    // Part 7.3. // Works, but very strange.
+    function_34(function_35);
 }
 
 void labs_0x04()
 {
-    Labs_0x04::chapter_6();
+    Labs_0x04::chapter_7();
 }
