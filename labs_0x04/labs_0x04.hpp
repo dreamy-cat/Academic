@@ -594,7 +594,7 @@ inline auto myAsync2(F&& f, Ts&&... p)
     return std::async(std::launch::async, std::forward<F>(f), std::forward<Ts>(p)...);
 }
 
-bool function_34(std::function<bool(int)> f, int max = 1000);
+bool function_34(std::function<bool(int)> f, int max = 10);
 
 bool function_35(int value);
 
@@ -609,6 +609,7 @@ public:
 private:
     Action action;
     std::thread thr;
+    std::shared_future<int> sf;
 };
 
 #endif

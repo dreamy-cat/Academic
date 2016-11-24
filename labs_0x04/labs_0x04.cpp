@@ -958,7 +958,7 @@ bool function_34(function<bool(int)> f, int max)
             if (f(i)) values.push_back(i);
     }), Class19::Action::join);
     auto n = t.get().native_handle();
-    if ( values.size() ) {
+    if ( values.empty() ) {
         t.get().join();
         cout << "All elements in vector: ";
         for (auto& e : values) cout << e << " ";
@@ -1017,6 +1017,22 @@ void Labs_0x04::chapter_7()
     auto t4 = myAsync2(function_33);
     // Part 7.3. // Works, but very strange.
     function_34(function_35);
+    // Part 7.4.
+    packaged_task<void()> t5(function_33);
+    auto ft5 = t5.get_future();
+    thread t6(move(t5));
+    t6.join();
+    // Part 7.5.
+    condition_variable c1;
+    mutex m1;
+    c1.notify_one();
+    atomic<bool> f1(false);
+    while ( !f1 ) {
+        unique_lock<mutex> ul1(m1);
+        c1.wait(ul1, [&f1]{ return (f1 = true); });
+        f1 = true;
+    }
+
 }
 
 void labs_0x04()
