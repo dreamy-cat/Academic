@@ -612,4 +612,8 @@ private:
     std::shared_future<int> sf;
 };
 
+void function_36();
+
+void function_37();
+
 #endif

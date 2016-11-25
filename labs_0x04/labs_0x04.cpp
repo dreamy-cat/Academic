@@ -996,6 +996,23 @@ thread& Class19::get()
     return thr;
 }
 
+void function_36()
+{
+    cout << "Function_36, react to thread." << endl;
+}
+
+static atomic<int> ai2;
+
+static volatile int vi2;
+
+void function_37()
+{
+    for (int i = 0; i < 5; ++i) {
+        ++ai2;
+        ++vi2;
+    }
+}
+
 void Labs_0x04::chapter_7()
 {
     cout << "Chapter 7.\n";
@@ -1032,7 +1049,65 @@ void Labs_0x04::chapter_7()
         c1.wait(ul1, [&f1]{ return (f1 = true); });
         f1 = true;
     }
-
+    promise<void> p1;
+    p1.set_value();
+    p1.get_future().wait();
+    promise<void> p2;
+    thread t7([&p2] {
+        p2.get_future().wait();
+        function_36();
+    });
+    p2.set_value();
+    t7.join();
+    // Alternative path.
+    promise<void> p3;
+    Class19 cl1(thread([&p3] {
+        p3.get_future().wait();
+        function_36();
+    }), Class19::Action::join);
+    p3.set_value();
+    // More safe...
+    promise<void> p4;
+    auto sf = p4.get_future().share();
+    vector<thread> v1;
+    for (int i = 0; i < 3; ++i) {
+        v1.emplace_back([sf]{
+            sf.wait();
+            function_36();
+        });
+    }
+    p4.set_value();
+    for (auto& t : v1) t.join();
+    // Part 7.6.
+    atomic<int> ai1(0);
+    ai1 = 10;
+    cout << "Atomic integer " << ai1 << endl;
+    ++ai1;
+    --ai1;
+    volatile int vi1(0);
+    vi1 = 10;
+    cout << "Volatile integer " << vi1 << endl;
+    ++vi1;
+    --vi1;
+    ai2 = 0;
+    vi2 = 0;
+    auto t8 = async(function_37);
+    auto t9 = async(function_37);
+    t8.wait();
+    t9.wait();
+    cout << "Atomic integer after 5 iterations " << ai2 << ", volatile integer " << vi2 << endl;
+    atomic<int> ai3;
+    // use of deleted function.
+    /*
+    auto ai4 = ai3;
+    ai4 = ai3;
+    */
+    ai3 = 1;
+    atomic<int> ai4(ai3.load());
+    ai4.store(ai3.load());
+    // register = ai5.load();       // Not compile.
+    // atomic<int> ai6(register);
+    volatile atomic<int> vai;
 }
 
 void labs_0x04()
