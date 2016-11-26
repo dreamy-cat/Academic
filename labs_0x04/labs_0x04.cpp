@@ -1110,7 +1110,79 @@ void Labs_0x04::chapter_7()
     volatile atomic<int> vai;
 }
 
+void Class20::addName1(const std::string& newN)
+{
+    names.push_back(newN);
+    if (newN.length())
+        cout << "Class20::addName1(const string&), string " << newN << endl;
+}
+
+void Class20::addName2(std::string&& newN)
+{
+    names.push_back(move(newN));
+    if (newN.length())
+        cout << "Class20::addName2(string&&), string " << newN << endl;
+}
+
+void Class20::addName4(std::string newN)
+{
+    names.push_back(move(newN));
+    if (newN.length())
+        cout << "Class20::addName4(string), string " << newN << endl;
+}
+
+void Class20::setPtr(unique_ptr<string>&& ptr)
+{
+    p = move(ptr);
+    cout << "Class20::setPtr(unique_ptr<string>), moving parameter." << endl;
+}
+
+void Class20::setPtr1(std::unique_ptr<std::string> ptr)
+{
+    p = move(ptr);
+    cout << "Class20::setPtr(unique_ptr<string>), copy parameter." << endl;
+}
+
+Class20::Class20(std::string p) : text(move(p))
+{
+    cout << "Class20 constructor, parameter " << p << endl;
+}
+
+void Class20::change(std::string& newP)
+{
+    text = newP;
+    cout << "Class20::change(string), parameter " << newP << endl;
+}
+
+void Labs_0x04::chapter_8()
+{
+    cout << "Chapter 8.\n";
+    // Part 8.1.
+    string str0 = "text 1";
+    Class20 cl1(str0);
+    string str1("string 1");
+    cl1.addName3(str1);
+    cl1.addName3(str1 + " and string 2.");
+    cl1.setPtr1(make_unique<string>("unique pointer"));
+    string str2 = "text 2";
+    cl1.change(str2);
+    // Part 8.2.
+    vector<string> v1;
+    v1.push_back("string 3");
+    v1.emplace_back("string 4");
+    list<shared_ptr<int>> ptrs;
+    ptrs.push_back(shared_ptr<int>(new int));
+    // Other way...
+    shared_ptr<int> ptr1(new int);
+    ptrs.push_back(move(ptr1));
+    ptrs.emplace_back(move(ptr1));
+    vector<regex> v2;
+    //  regex r1 = nullptr;         // conversation from ... to non-scalary type.
+    //  v2.push_back(nullptr);      // no matching function for call to...
+    //  v2.emplace_back(nullptr);   // compile ok, but crashed.
+}
+
 void labs_0x04()
 {
-    Labs_0x04::chapter_7();
+    Labs_0x04::chapter_8();
 }

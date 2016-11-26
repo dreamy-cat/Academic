@@ -16,6 +16,7 @@
 #include <set>
 #include <thread>
 #include <future>
+#include <regex>
 
 void labs_0x04();
 
@@ -28,6 +29,7 @@ void chapter_4();
 void chapter_5();
 void chapter_6();
 void chapter_7();
+void chapter_8();
 
 template<typename T>
 void function_1(T& parameter)
@@ -615,5 +617,26 @@ private:
 void function_36();
 
 void function_37();
+
+class Class20 {
+public:
+    explicit Class20(std::string p);
+    void change(std::string& newP);
+    void addName1(const std::string& newN);
+    void addName2(std::string&& newN);
+    template<typename T>
+    void addName3(T&& newN)
+    {
+        names.push_back(std::forward<T>(newN));
+        std::cout << "Class20::addName3(T&&), string " << newN << std::endl;
+    }
+    void addName4(std::string newN);
+    void setPtr(std::unique_ptr<std::string>&& ptr);
+    void setPtr1(std::unique_ptr<std::string> ptr);
+private:
+    std::vector<std::string> names;
+    std::unique_ptr<std::string> p;
+    std::string text;
+};
 
 #endif
