@@ -4,6 +4,9 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <map>
+
+#include "chapter_01.hpp"
 
 void labs_0x05();
 
