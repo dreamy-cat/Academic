@@ -6,11 +6,11 @@
 
 class StringInsens {
 public:
-    StringInsens(const char* str);
-    char* getData();
-    bool operator==(const char* rv);
+    StringInsens(const char *str);
+    const char* getData() const;
+    friend int operator==(const StringInsens& lv, const char* rv);
 private:
-    char* text;
+    const char* text;
 };
 
 #endif

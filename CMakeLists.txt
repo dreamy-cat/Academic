@@ -10,6 +10,7 @@ set(CMAKE_CXX_FLAGS "-Wall")
 #set(CMAKE_LIBRARY_PATH "/usr/local/lib64")
 
 set(CMAKE_CXX_FLAGS "-std=c++14")
+#set(CMAKE_INCLUDE_PATH "/usr/local/include")
 
 aux_source_directory(. SRC_LIST)
 aux_source_directory(./labs_0x00 SRC_LIST)
