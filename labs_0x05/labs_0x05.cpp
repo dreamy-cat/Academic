@@ -11,12 +11,15 @@ void Labs_0x05::chapter_01()
     // Task 1.2-3. Too new gcc for additional task.
     StringInsens s1("String 1.");
     if (s1 == "string 1.") cout << "'String 1.' equal 'string 1.', ok.\n"; else cout << "Strings not equal.\n";
-    // Task 1.4.
-    Vector_1<int, 3> v3(1), v4(4);
+    // Task 1.4-5.
+    Vector_1<int, 3> v3(1), v4(v3);
     v3.elements();
     v4.elements();
-    cout << "Copy constructor testing.\n";
-    v3.function_1(v4);
+    Vector_2<int, 1> v5;
+    Vector_2<int, 1> v6(v5);
+    Vector_2<int, 1> v7;
+    v7 = v5;
+
 }
 
 void labs_0x05()

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <algorithm>
 
 class StringInsens {
 public:
@@ -22,10 +23,12 @@ public:
     }
 
     Vector_1(const Vector_1& rv) {
+        std::cout << "Vector_1, copy constructor.\n";
         for (int i = 0; i < size; ++i) data[i] = rv.data[i];
     }
 
     Vector_1& operator=(const Vector_1& rv) {
+        std::cout << "Vector_1, operator=().\n";
         for (int i = 0; i < size; ++i) data[i] = rv.data[i];
         return *this;
     }
@@ -36,19 +39,62 @@ public:
         std::cout << std::endl;
     }
 
-    void function_1(Vector_1 v) {
-        std::cout << "Vector_1::function_1. ";
-        v.elements();
-    }
-
-    typedef T* iterator;
-    typedef const T* const_iterator;
     T* begin() { return  data; }
     T* end() { return data + size; }
     const T* begin() const { return data;  }
     const T* end() const { return data + size; }
 private:
     T data[size];
+};
+
+template<typename T, size_t size>
+class Vector_2 {
+public:
+    Vector_2() : data(new T[size]) { std::cout << "Vector_2, constructor.\n"; }
+    ~Vector_2() {
+        std::cout << "Vector_2 destructor.\n";
+        delete [] data;
+    }
+
+    template<typename U, size_t uSize>
+    Vector_2(const Vector_2<U, uSize>& rv) : data( new T[size]) {
+        std::cout << "Vector_2, copy constructor with template.\n";
+        try {
+            std::copy(rv.begin(), rv.begin() + std::min(size, uSize), begin());
+        } catch (...) { delete [] data; throw; }
+    }
+
+    Vector_2(const Vector_2<T, size>& rv) : data( new T[size] ) {
+        std::cout << "Vector_2, copy constructor.\n";
+        try {
+            std::copy(rv.begin(), rv.end(), begin() );
+        } catch (...) { delete [] data; throw; }
+    }
+
+    void swap( Vector_2<T, size>& rv) throw() { std::swap(data, rv.data); }
+
+    template<typename U, size_t uSize>
+    Vector_2<T, size>& operator=(const Vector_2<U, uSize>& rv) {
+        std::cout << "Using Vector_2::operator=(), with template.\n";
+        Vector_2<T, size> tmp(rv);
+        swap(tmp);
+        return *this;
+    }
+
+    Vector_2<T, size>& operator=(const Vector_2<T, size>& rv)
+    {
+        std::cout << "Vector_2, operator=().\n";
+        Vector_2<T, size> tmp(rv);
+        swap(tmp);
+        return *this;
+    }
+
+    T* begin() { return data; }
+    T* end() { return data + size; }
+    const T* begin() const { return data; }
+    const T* end() const { return data + size; }
+private:
+    T* data;
 };
 
 #endif
