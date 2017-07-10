@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include <list>
 
 class StringInsens {
 public:
@@ -96,5 +97,15 @@ public:
 private:
     T* data;
 };
+
+std::string& function_1_6(std::list<std::string> &source, std::string &value);
+
+std::string function_1_7(const std::list<std::string> &source, const std::string &value);
+
+template<typename I, typename O>
+void function_1_8(I& in, O& out)
+{
+
+}
 
 #endif

@@ -24,4 +24,20 @@ const char *StringInsens::getData() const
     return text;
 }
 
+string& function_1_6(list<string>& source, string &value)
+{
+    static string notFound("Value not founded in the list.");
+    cout << "Function_1_6, finding value in the list.\n";
+    list<string>::iterator end(source.end());
+    for (list<string>::iterator it = source.begin(); it != end; ++it)
+        if (*it == value) return value;
+    return notFound;
+}
 
+string function_1_7(const list<string> &source, const string &value)
+{
+    cout << "Function_1_7, finding value in the list.";
+    list<string>::const_iterator it(find(source.begin(), source.end(), value));
+    if (it != source.end()) return value;
+    return string("Value not founded in the list.");
+}
