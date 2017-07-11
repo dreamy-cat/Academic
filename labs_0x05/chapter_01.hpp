@@ -105,7 +105,7 @@ std::string function_1_7(const std::list<std::string> &source, const std::string
 template<typename I, typename O>
 void function_1_8(I& in, O& out)
 {
-
+    std::cout << "Function_1_8: " << in << " " << out << std::endl;
 }
 
 #endif

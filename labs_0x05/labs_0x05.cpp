@@ -26,6 +26,16 @@ void Labs_0x05::chapter_01()
     cout << function_1_6(list1, s3) << endl;
     // Task 1.8. Without input from istream.
     cout << "Standard stream.\n";
+    function_1_8<string, string> (s2, s3);
+    // Task 1.9
+    vector<int> v8 = { 3, 5, 7, 3, 1 };
+    const int i1 = 3;
+    cout << "Elements in Vector 8: ";
+    for (vector<int>::iterator it = v8.begin(); it != v8.end(); it++) {
+        if (*it == i1) v8.erase(it);
+        cout << *it << " ";
+    }
+    cout << endl;
 }
 
 void labs_0x05()
