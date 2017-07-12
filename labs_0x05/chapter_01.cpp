@@ -41,3 +41,31 @@ string function_1_7(const list<string> &source, const string &value)
     if (it != source.end()) return value;
     return string("Value not founded in the list.");
 }
+
+bool greaterSeven(int i) { return i > 7; }
+
+bool isGreater_1(std::vector<int>& source)
+{
+    return (find_if(source.begin(), source.end(), greaterSeven) != source.end());
+}
+
+bool Greater_1::operator()(int i) const { return i > 7; }
+
+bool isGreater_2(vector<int>& source)
+{
+    return (find_if(source.begin(), source.end(), Greater_1()) != source.end());
+}
+
+Greater_2::Greater_2(int rv) : value(rv) {}
+
+bool Greater_2::operator()(int i) const { return i > value; }
+
+bool isGreater_3(std::vector<int>& source)
+{
+    return (find_if(source.begin(), source.end(), Greater_2(7)) != source.end());
+}
+
+bool isGreater_4(std::vector<int>& source)
+{
+    return (find_if(source.begin(), source.end(), Greater_3<int>(7)) != source.end());
+}

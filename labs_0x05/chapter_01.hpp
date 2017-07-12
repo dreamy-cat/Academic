@@ -5,6 +5,8 @@
 #include <iostream>
 #include <algorithm>
 #include <list>
+#include <vector>
+#include <assert.h>
 
 class StringInsens {
 public:
@@ -107,5 +109,71 @@ void function_1_8(I& in, O& out)
 {
     std::cout << "Function_1_8: " << in << " " << out << std::endl;
 }
+
+template<typename I>
+I removeValue(I first, I last, size_t n)
+{
+    return (std::remove(first, last, n));        // Simple solution.
+}
+
+class Class_1_9 {
+public:
+    Class_1_9(size_t n) : iter(0), max(n) {}
+    template<typename T>
+    bool operator() (const T&) { return (++iter == max); }
+private:
+    size_t iter, max;
+};
+
+template<typename I>
+I removeValueRange (I first, I last, size_t n)
+{
+    assert(std::distance(first, last) >= n);
+    std::advance(first, n);
+    if (first != last) {
+        I dst = first;
+        return std::copy(++first, last, dst);
+    }
+    return last;
+}
+
+template<typename I, typename P>
+I find_10(I first, I last, P predic)
+{
+    while (first != last && !predic(*first)) first++;
+    return first;
+}
+
+bool greaterSeven(int i);
+
+bool isGreater_1(std::vector<int>& source);
+
+class Greater_1 : public std::unary_function<int, bool> {
+public:
+    bool operator()(int i) const;
+};
+
+bool isGreater_2(std::vector<int>& source);
+
+class Greater_2 : public std::unary_function<int, bool> {
+public:
+    Greater_2(int rv);
+    bool operator()(int i) const;
+private:
+    const int value;
+};
+
+bool isGreater_3(std::vector<int>& source);
+
+template<typename T>
+class Greater_3 : public std::unary_function<int, bool> {
+public:
+    Greater_3(T rv) : value(rv) {}
+    bool operator()(const T& t) const { return t > value; }
+private:
+    const int value;
+};
+
+bool isGreater_4(std::vector<int>& source);
 
 #endif
