@@ -176,4 +176,55 @@ private:
 
 bool isGreater_4(std::vector<int>& source);
 
+template<typename T>
+class Counter {
+private:
+    class Impl {
+    public:
+        Impl(T* ptr) : p(ptr), references(1) {}
+        ~Impl() { delete p; }
+        T* p;
+        size_t references;
+    };
+    Impl* impl;
+public:
+    explicit Counter(T* ptr) : impl(new Impl(ptr)) {}
+    ~Counter() { dec(); }
+    Counter(const Counter& rv) : impl(rv.impl) { inc(); }
+    Counter& operator=(const Counter& rv) {
+        if (impl != rv.impl) {
+            dec();
+            impl = rv.impl;
+            inc();
+        }
+        return *this;
+    }
+    T* operator->() const { return impl->p; }
+    T& operator*() const { return *(impl->p); }
+private:
+    void dec() {
+        std::cout << "Decreasing, references object " << impl->references << std::endl;
+        if (--(impl->references) == 0) delete impl; }
+    void inc() {
+        std::cout << "Increasing, references object " << impl->references << std::endl;
+        ++(impl->references);
+    }
+};
+
+class Greater_4_1 {
+public:
+    Greater_4_1(size_t n);
+    size_t i;
+    const size_t m;
+};
+
+class Greater_4 {
+public:
+    Greater_4(size_t n) : impl(new Greater_4_1(n)) {}
+    template<typename T>
+    bool operator()(const T&) { return (++(impl->i) == impl->m); }
+private:
+    Counter<Greater_4_1> impl;
+};
+
 #endif

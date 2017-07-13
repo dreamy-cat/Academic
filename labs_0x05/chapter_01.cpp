@@ -69,3 +69,5 @@ bool isGreater_4(std::vector<int>& source)
 {
     return (find_if(source.begin(), source.end(), Greater_3<int>(7)) != source.end());
 }
+
+Greater_4_1::Greater_4_1(size_t n) : i(0), m(n) {}

@@ -55,6 +55,9 @@ void Labs_0x05::chapter_01()
         cout << "No elements greater than 7 founded in vector.\n";
     if (isGreater_4(v10)) cout << "Founded elements greater than 7.\n"; else
         cout << "No elements greater than 7 founded in vector.\n";
+    Greater_4* cPtr1 = new Greater_4(3);
+    delete cPtr1;
+
 }
 
 void labs_0x05()
