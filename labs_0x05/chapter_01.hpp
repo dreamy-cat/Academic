@@ -227,4 +227,25 @@ private:
     Counter<Greater_4_1> impl;
 };
 
+class Class_2_Test {
+public:
+    Class_2_Test();
+};
+
+template<typename T>
+class Class_2 {
+public:
+    void function(const T* t) { t->testing(); }
+};
+
+template<typename T>
+class Class_3 {
+public:
+    ~Class_3() {
+        const T t;
+        t.testing();
+    }
+};
+
+
 #endif
