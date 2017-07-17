@@ -227,25 +227,53 @@ private:
     Counter<Greater_4_1> impl;
 };
 
-class Class_2_Test {
-public:
-    Class_2_Test();
-};
-
-template<typename T>
 class Class_2 {
 public:
-    void function(const T* t) { t->testing(); }
+    void testing() const;
 };
 
 template<typename T>
 class Class_3 {
 public:
-    ~Class_3() {
+    void function(const T* t) {
+        std::cout << "Class_3::function().\n";
+        t->testing();
+    }
+};
+
+template<typename T>
+class Class_4 {
+public:
+    ~Class_4() {
+        std::cout << "Class_4, destructor.\n";
         const T t;
         t.testing();
     }
 };
 
+template<typename T>
+class Class_5 {
+public:
+    ~Class_5() {
+        void (T::*test)() const = &T::testing;
+        test;
+    }
+};
+
+template<typename T>
+class Class_6 {
+private:
+    bool verify() const {
+        std::cout << "Class_6, verify.\n";
+        T* (T::*vrfy)() const = &T::testing;
+        vrfy;
+        return true;
+    }
+public:
+    ~Class_6() {
+        std::cout << "Class_6, destructor.\n";
+        assert(verify());
+    }
+};
 
 #endif

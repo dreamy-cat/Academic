@@ -57,8 +57,13 @@ void Labs_0x05::chapter_01()
         cout << "No elements greater than 7 founded in vector.\n";
     Greater_4* cPtr1 = new Greater_4(3);
     delete cPtr1;
-    // Task 1.11.
-
+    // Task 1.11. A litle strange, but works fine.
+    Class_2 cl1;
+    Class_3<Class_2> cl2;
+    cl2.function(&cl1);
+    Class_4<Class_2> cl3;
+    Class_5<Class_2> cl4;
+    Class_6<Class_2> cl5;
 }
 
 void labs_0x05()
