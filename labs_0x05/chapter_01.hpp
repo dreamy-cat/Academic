@@ -276,4 +276,30 @@ public:
     }
 };
 
+template<typename D, typename B>
+class Class_7 {
+private:
+    class NotDerived {};
+    class Derived { NotDerived nd[2]; };
+    static Derived verify( B* );
+    static NotDerived verify( ... );
+public:
+    enum { isExist = sizeof(verify(static_cast<D*>(0))) == sizeof(Derived) };
+};
+
+template<typename T>
+class Class_8 {
+private:
+    bool verifyRequirments() const {
+        std::cout << "Verify requirments for Class_6<Class_2>.\n";
+        typedef Class_7<T, Class_2> t;
+        assert(t::isExist);
+        return true;
+    }
+public:
+    ~Class_8() {
+        verifyRequirments();
+    }
+};
+
 #endif

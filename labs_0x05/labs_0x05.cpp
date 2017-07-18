@@ -64,6 +64,8 @@ void Labs_0x05::chapter_01()
     Class_4<Class_2> cl3;
     Class_5<Class_2> cl4;
     Class_6<Class_2> cl5;
+    Class_8< Class_6<Class_2> > cl6;
+
 }
 
 void labs_0x05()
