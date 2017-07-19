@@ -73,3 +73,9 @@ bool isGreater_4(std::vector<int>& source)
 Greater_4_1::Greater_4_1(size_t n) : i(0), m(n) {}
 
 void Class_2::testing() const { cout << "Class_2::testing().\n"; }
+
+Class_14a::Class_14a() { cout << "Class_14a, constructor.\n"; }
+
+Class_14a* Class_14a::verify() { cout << "Class_14a::verify().\n"; }
+
+void function_1(Class_16) { cout << "Function_1a(Class_16).\n"; }

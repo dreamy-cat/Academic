@@ -65,7 +65,15 @@ void Labs_0x05::chapter_01()
     Class_5<Class_2> cl4;
     Class_6<Class_2> cl5;
     Class_8< Class_6<Class_2> > cl6;
-
+    Class_10<Class_6 <Class_2> > cl7;
+    Class_11<Class_2, Greater_1> cl8;
+    Class_13<Class_2> cl9;
+    Class_14<Class_2> cl10;
+    Class_14a cl11;
+    Class_14a* ptr = Class_14<Class_2>::function(&cl11);
+    // Task 1.12.
+    function_1(Class_16a::cl());
+    function_1(Class_16b<Class_16a>::clB());
 }
 
 void labs_0x05()

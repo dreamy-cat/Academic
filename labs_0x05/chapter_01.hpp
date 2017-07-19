@@ -227,7 +227,7 @@ private:
     Counter<Greater_4_1> impl;
 };
 
-class Class_2 {
+class Class_2 : public Greater_1 {
 public:
     void testing() const;
 };
@@ -301,5 +301,106 @@ public:
         verifyRequirments();
     }
 };
+
+template<typename D, typename B>
+class Class_9 {
+private:
+    static void verifyRequirments(D* ptr) {
+        B* pointer = ptr;
+        pointer = ptr;
+    }
+protected:
+    Class_9() { void (*p)(D*) = verifyRequirments; }
+};
+
+template<typename T>
+class Class_10 : Class_9<T, Class_6<Class_2> > {
+public:
+    Class_10() { std::cout << "Class_10, constructor.\n"; }
+};
+
+template<typename D, typename B>
+class Class_11 {                    // Variant with both methods.
+private:
+    class NotDerived {};
+    class Derived { NotDerived nd[2]; };
+    static Derived verify(B*);
+    static NotDerived verify(...);
+    static void verifyRequirments(D* p) {
+        B* ptr = p;
+        ptr = p;
+        std::cout << "Class_11::verifyRequirments.\n";
+    }
+public:
+    enum { isExist = sizeof(verify(static_cast<D*>(0))) == sizeof(Derived) };
+    Class_11() {
+        std::cout << "Class_11, constructor.\n";
+        void (*p)(D*) = verifyRequirments;
+    }
+};
+
+template<typename T, int>
+class Class_12 {};
+
+template<typename T>
+class Class_12<T, 1> {};
+
+template<typename T>
+class Class_13 {
+    Class_12<T, Class_11<T, Greater_1>::isExist> impl;
+};
+
+template<typename T>
+class Class_14 {
+public:
+    static T* function(const T* ptr) { return new T(*ptr); }
+};
+
+class Class_14a : public Class_2 {
+public:
+    Class_14a();
+    static Class_14a* verify();
+};
+
+template<>
+class Class_14<Class_2> {
+public:
+    static Class_14a* function(const Class_14a* ptr) { return ptr->verify(); }
+};
+
+template<typename T>
+class Class_15 {
+public:
+    typedef T obj;
+};
+
+template<typename A, typename B>
+class Class_15a : public Class_15<B> {
+public:
+    bool operator()(const typename Class_15<A>::obj& i) const {
+        return i != typename::Class_15<A>::obj();
+    }
+};
+
+class Class_16 {};
+
+class Class_16a {
+public:
+    typedef Class_16 cl;
+};
+
+template<typename T>
+class Class_16b : public T {
+public:
+    typedef typename T::cl clB;
+};
+
+template<typename T>
+void function_1(T) { std::cout << "Function(T).\n"; }
+
+void function_1(Class_16);
+
+
+
 
 #endif
