@@ -74,6 +74,10 @@ void Labs_0x05::chapter_01()
     // Task 1.12.
     function_1(Class_16a::cl());
     function_1(Class_16b<Class_16a>::clB());
+    // Task 1.13.
+    vector<char> v;
+    char* ptr1 = &v[0];
+    function_2<vector<char>>(v);
 }
 
 void labs_0x05()

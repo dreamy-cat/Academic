@@ -400,7 +400,10 @@ void function_1(T) { std::cout << "Function(T).\n"; }
 
 void function_1(Class_16);
 
-
-
+template<typename T>
+void function_2(T& t) {
+    typename T::value_type* ptr1 = &t[0];
+    typename T::value_type* ptr2 = &*t.begin();
+}
 
 #endif
