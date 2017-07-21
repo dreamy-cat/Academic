@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <list>
 #include <vector>
+#include <set>
+#include <map>
 #include <assert.h>
 
 class StringInsens {
@@ -405,5 +407,9 @@ void function_2(T& t) {
     typename T::value_type* ptr1 = &t[0];
     typename T::value_type* ptr2 = &*t.begin();
 }
+
+int findKey(const int key, int* vecKeys, size_t maxElements);
+
+
 
 #endif

@@ -79,3 +79,10 @@ Class_14a::Class_14a() { cout << "Class_14a, constructor.\n"; }
 Class_14a* Class_14a::verify() { cout << "Class_14a::verify().\n"; }
 
 void function_1(Class_16) { cout << "Function_1a(Class_16).\n"; }
+
+int findKey(const int key, int* vecKeys, size_t maxElements)
+{
+    int i = 0;
+    while (key != vecKeys[i] && i < maxElements) i++;
+    if (i != maxElements) return i; else return -1;
+}

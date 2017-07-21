@@ -78,6 +78,38 @@ void Labs_0x05::chapter_01()
     vector<char> v;
     char* ptr1 = &v[0];
     function_2<vector<char>>(v);
+    // Task 1.14.
+    const int maxVectorSize = 5;
+    int vector9[maxVectorSize] = { 1, 2, 3, 4, 5 };
+    cout << "All elements in vector 9: " ;
+    for (int i = 0; i < maxVectorSize; i++) cout << vector9[i] << " ";
+    cout << "\nPosition of key '3' in vector 9: " << findKey(3, vector9, maxVectorSize) << endl;
+    vector<int> vector10 = { 1, 2, 3, 4, 5 };
+    cout << "Position of key '4' in vector 10: " << findKey(4, &vector10[0], maxVectorSize) << endl;
+    vector<int> vector11(256);
+    cout << "Size and capacity of vector 11 are " << vector11.size() << " " << vector11.capacity() << endl;
+    vector11.erase(vector11.begin() + 128, vector11.end());
+    cout << "After erase last 128 elements in vector 11, size and capacity are "
+         << vector11.size() << " " << vector11.capacity() << endl;
+    vector11.reserve(128);
+    cout << "After reserve 128 elements in vector 11, size and capacity are "
+         << vector11.size() << " " << vector11.capacity() << endl;
+    vector11.shrink_to_fit();
+    cout << "Using new method from standard, size and capacity "
+         << vector11.size() << " " << vector11.capacity() << endl;
+    // Task 1.15.
+    map<int, string> map1 = {{1, "one"}, {2, "two"}, {3, "three"}};
+    map<int, string>::iterator it1 = map1.find(1);
+    if ( it1 != map1.end() ) const_cast<int&>(it1->first) = 5;
+    cout << "Finding '5' at map 1, after replacement with cast " << map1[5] << endl;
+    it1 = map1.find(3);
+    if (it1 != map1.end()) {
+        map1.erase(it1);
+        map1.insert(make_pair(4, "four"));
+    }
+    cout << "Finding '4' at map 1, after replacment with erase/insert methods " << map1[4] << endl;
+    // Task 1.16.
+
 }
 
 void labs_0x05()
