@@ -8,6 +8,7 @@
 #include <vector>
 #include <set>
 #include <map>
+#include <complex>
 #include <assert.h>
 
 class StringInsens {
@@ -410,6 +411,55 @@ void function_2(T& t) {
 
 int findKey(const int key, int* vecKeys, size_t maxElements);
 
+class Class_17 {
+public:
+    Class_17();
+    friend const Class_17 operator++(Class_17& rv, int);
+    int n;
+};
 
+int function_2(Class_17 value);
+
+template<typename T1, typename T2>
+void function_3(T1, T2) {
+    std::cout << "<typename T1, T2>(T1, T2)\n";
+}
+
+template<typename T>
+void function_3(T) {
+    std::cout << "<typename T>(T)\n";
+}
+
+template<typename T>
+void function_3(T, T) {
+    std::cout << "<typename>(T, T)\n";
+}
+
+template<typename T>
+void function_3(T*) {
+    std::cout << "<typename>(T*)\n";
+}
+
+template<typename T>
+void function_3(T*, T) {
+    std::cout << "<typename>(T*, T)\n";
+}
+
+template<typename T>
+void function_3(T, T*) {
+    std::cout << "<typename>(T, T*)\n";
+}
+
+/*
+template<>
+void function_3<int>(int) {
+    std::cout << "<>(int)";
+}
+
+void function_3(int, double) { std::cout << "function_3(int, double)"; }
+
+void function_3(int) { std::cout << "function_3(int)"; }
+
+*/
 
 #endif

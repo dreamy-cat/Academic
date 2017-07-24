@@ -108,8 +108,27 @@ void Labs_0x05::chapter_01()
         map1.insert(make_pair(4, "four"));
     }
     cout << "Finding '4' at map 1, after replacment with erase/insert methods " << map1[4] << endl;
-    // Task 1.16.
-
+    // Task 1.16. Quick example.
+    Class_17 cl12;
+    int i2 = function_2(cl12);
+    cout << "Result of function_2 is " << i2 << endl;
+    // Task 1.17. Multiply calls for one overloaded function.
+    double d1 = 0.5;
+    float f1 = 0.3;
+    complex<double> c1;
+    cout << "Calling function_3() with various templates.\n";
+    function_3(i2);
+    function_3<int>(i2);
+    function_3(i2, i2);
+    function_3(c1);
+    function_3(i2, f1);
+    function_3(i2, d1);
+    function_3(c1, &c1);
+    function_3(i2, &d1);
+    function_3(&d1, d1);
+    function_3(&d1);
+    function_3(d1, &d1);
+    function_3(&i2, &i2);
 }
 
 void labs_0x05()

@@ -86,3 +86,18 @@ int findKey(const int key, int* vecKeys, size_t maxElements)
     while (key != vecKeys[i] && i < maxElements) i++;
     if (i != maxElements) return i; else return -1;
 }
+
+Class_17::Class_17() : n(0) {}
+
+const Class_17 operator++(Class_17& rv, int)
+{
+    cout << "Postfix operator++ for Class_17.\n";
+    rv.n++;
+}
+
+int function_2(Class_17 value)
+{
+    cout << "Function_2(Class_17).\n";
+    return value.n;
+}
+
