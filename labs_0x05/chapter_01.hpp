@@ -450,16 +450,14 @@ void function_3(T, T*) {
     std::cout << "<typename>(T, T*)\n";
 }
 
-/*
-template<>
-void function_3<int>(int) {
-    std::cout << "<>(int)";
-}
-
-void function_3(int, double) { std::cout << "function_3(int, double)"; }
-
-void function_3(int) { std::cout << "function_3(int)"; }
-
-*/
+template<typename T>
+class Stack_1 {
+public:
+    Stack_1();
+    ~Stack_1();
+private:
+    T* data;
+    size_t size, used;
+};
 
 #endif
