@@ -131,8 +131,26 @@ void Labs_0x05::chapter_01()
     function_3(&i2, &i2);
 }
 
+void Labs_0x05::chapter_02()
+{
+    cout << "Chapter's 2 tasks.\n";
+    // Task 2.1-10. One classic example.
+    Stack<int> stack1;
+    stack1.push(1);
+    stack1.push(2);
+    stack1.push(3);
+    cout << "Elements in stack<int> " << stack1.count() << ", values ";
+    for (int i = 0; !stack1.empty(); i++) {
+        cout << stack1.top() << " ";
+        stack1.pop();
+    }
+    cout << endl;
+    if ( stack1.empty() ) cout << "Stack is empty.\n"; else
+        cout << "Stack is still contains some elements.\n";
+}
+
 void labs_0x05()
 {
     cout << "Starting Labs_0x05." << endl;
-    Labs_0x05::chapter_01();
+    Labs_0x05::chapter_02();
 }

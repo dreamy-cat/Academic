@@ -450,14 +450,4 @@ void function_3(T, T*) {
     std::cout << "<typename>(T, T*)\n";
 }
 
-template<typename T>
-class Stack_1 {
-public:
-    Stack_1();
-    ~Stack_1();
-private:
-    T* data;
-    size_t size, used;
-};
-
 #endif
