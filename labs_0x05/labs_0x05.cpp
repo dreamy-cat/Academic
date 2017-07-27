@@ -134,8 +134,8 @@ void Labs_0x05::chapter_01()
 void Labs_0x05::chapter_02()
 {
     cout << "Chapter's 2 tasks.\n";
-    // Task 2.1-10. One classic example.
-    Stack<int> stack1;
+    // Task 2.1-10. One classic example, try to recompile later with c++17.
+    Stack<int> stack1(5), stack2(5);
     stack1.push(1);
     stack1.push(2);
     stack1.push(3);
@@ -147,6 +147,21 @@ void Labs_0x05::chapter_02()
     cout << endl;
     if ( stack1.empty() ) cout << "Stack is empty.\n"; else
         cout << "Stack is still contains some elements.\n";
+    stack1.push(1);
+    stack1.push(2);
+    stack2.push(3);
+    stack2.push(4);
+    cout << "Stack 1 elements: ";
+    stack1.print();
+    cout<< "\nStack 2 elements: ";
+    stack2.print();
+    cout << "\nSwap stacks.\n" << "Stack 1 elements: ";
+    stack1.swapStack(stack2);
+    stack1.print();
+    cout << "\nStack 2 elements: ";
+    stack2.print();
+    cout << endl;
+
 }
 
 void labs_0x05()
