@@ -19,7 +19,11 @@ void destroy(T* ptr) {
 template<typename FIter>
 void destroy(FIter first, FIter last) {
     while (first != last) {
-        destroy(&*first);
+        try {
+            destroy(&*first);
+        } catch (...) {
+            std::cout << "Catching...\n";
+        }
         ++first;
     }
 }
