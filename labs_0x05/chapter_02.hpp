@@ -249,4 +249,34 @@ private:
     */
 };
 
+std::string function_4(std::string s);
+
+class Class_2_1 {
+public:
+    Class_2_1(bool isException);
+    ~Class_2_1();
+};
+
+class Class_2_2 {
+public:
+    Class_2_2(bool isException = false);
+    ~Class_2_2();
+};
+
+class Class_2_3 : private Class_2_1 {
+public:
+    Class_2_3(bool isException = false);
+private:
+    Class_2_2 obj;
+};
+
+class Class_2_4 : private Class_2_1 {
+private:
+    int* i;
+    char* c;
+public:
+    Class_2_4(bool isException = false);
+    ~Class_2_4();
+};
+
 #endif

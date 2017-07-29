@@ -161,7 +161,13 @@ void Labs_0x05::chapter_02()
     cout << "\nStack 2 elements: ";
     stack2.print();
     cout << endl;
-
+    // Tasks 2.11-12. Just theory and quick try.
+    function_4("string");
+    // Tasks 2.13-14. Not seen much of this examples in real.
+    // Class_2_3 cl1(true);
+    Class_2_3 cl2(false);       // No exception.
+    // Class_2_4 cl3(true);
+    Class_2_4 cl4(false);
 }
 
 void labs_0x05()
