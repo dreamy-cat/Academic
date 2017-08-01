@@ -47,3 +47,40 @@ Class_2_4::Class_2_4(bool isException) try
 }
 
 Class_2_4::~Class_2_4() { cout << "Class_2_4 destructor.\n"; }
+
+Class_2_5::~Class_2_5() {
+    try {
+        cout << "Class_2_5 destructor.\n";
+        Class_2_6 obj;
+    } catch ( ... ) {
+        cout << "Catching in Class_2_5 destructor.\n";
+    }
+}
+
+Class_2_6::~Class_2_6() {
+    if (uncaught_exception()) {
+        cout << "Uncaught exception().\n";
+    } else {
+        cout << "Uncaught exception().\n";
+    }
+}
+
+Class_2_7::Class_2_7() {
+    cout << "No exceptions in constructor Class_2_7.\n";
+}
+
+Class_2_7::~Class_2_7() {
+    try {
+        function(true);
+    } catch ( const char* s ) {
+        cout << "Catching exception, " << s << endl;
+    }
+}
+
+void Class_2_7::function(bool isException) {
+    cout << "Empty function in Class_2_7.\n";
+    if (isException) throw("Exception in function.");
+
+}
+
+

@@ -168,6 +168,9 @@ void Labs_0x05::chapter_02()
     Class_2_3 cl2(false);       // No exception.
     // Class_2_4 cl3(true);
     Class_2_4 cl4(false);
+    // Task 2.15. Example one with throw() in destructor not compile since c++11 standard.
+    Class_2_5 cl5;
+    Class_2_7 cl6;
 }
 
 void labs_0x05()

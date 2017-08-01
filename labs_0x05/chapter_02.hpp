@@ -279,4 +279,21 @@ public:
     ~Class_2_4();
 };
 
+class Class_2_5 {
+public:
+    ~Class_2_5();
+};
+
+class Class_2_6 {
+public:
+    ~Class_2_6();
+};
+
+class Class_2_7 {
+public:
+    Class_2_7();
+    void function(bool isException = false);
+    ~Class_2_7();
+};
+
 #endif
