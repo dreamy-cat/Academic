@@ -296,4 +296,49 @@ public:
     ~Class_2_7();
 };
 
+int function_5(int v1, int v2);
+
+int function_5_1(int v1, int v2);
+
+int function_5_2(int v1, int v2);
+
+int function_5_3(int* v1, int* v2);
+
+class WidgetImpl {
+public:
+    WidgetImpl(char a, char b);
+    WidgetImpl& operator=(const WidgetImpl& rv);
+    char c1, c2;
+};
+
+class Widget {
+public:
+    Widget(char a, char b);
+    ~Widget();
+    Widget& operator=(const Widget& rv);
+    Widget& swap(Widget& rv);
+    void print() const;
+private:
+    WidgetImpl* ptr;
+};
+
+class Class_2_8 {
+public:
+    Class_2_8();
+};
+
+class Class_2_9 {
+public:
+    Class_2_9();
+    Class_2_9& operator=(const Class_2_9& rv);
+private:
+    Class_2_8* obj;
+};
+
+class Class_2_10 : private Class_2_8 {
+public:
+    Class_2_10();
+    Class_2_10& operator=(const Class_2_10& rv);
+};
+
 #endif

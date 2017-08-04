@@ -171,6 +171,22 @@ void Labs_0x05::chapter_02()
     // Task 2.15. Example one with throw() in destructor not compile since c++11 standard.
     Class_2_5 cl5;
     Class_2_7 cl6;
+    // Task 2.16-17. 'auto_ptr' depricated since c++11 and removed from c++17.
+    cout << "Result of simple multyply is " << function_5(3, 5) << endl;
+    cout << "Calling with two additional function, result " << function_5(function_5_1(1, 2), function_5_2(5, 0)) << endl;
+    cout << "Calling function with operator new in arguments, result " << function_5_3(new int(3), new int(5)) << endl;
+    // Task 2.18-19. In task 19, simple classes declarations.
+    Widget cl7('a', 'b'), cl8('c', 'd');
+    cout << "Widget 1 values ";
+    cl7.print();
+    cout << "\nWidget 2 values ";
+    cl8.print();
+    cout << endl;
+    cl8 = cl7;
+    cout << "Widget 2 after operator=() values ";
+    cl8.print();
+    cout << endl;
+
 }
 
 void labs_0x05()

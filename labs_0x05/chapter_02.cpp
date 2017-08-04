@@ -83,4 +83,50 @@ void Class_2_7::function(bool isException) {
 
 }
 
+int function_5(int v1, int v2) { return (v1 * v2); }
 
+int function_5_1(int v1, int v2) { return (v1 + v2); }
+
+int function_5_2(int v1, int v2) { return (v1 - v2); }
+
+int function_5_3(int* v1, int* v2) { return (*v1 + *v2); }
+
+WidgetImpl::WidgetImpl(char a, char b) : c1(a), c2(b) {}
+
+WidgetImpl& WidgetImpl::operator=(const WidgetImpl& rv) {
+    c1 = rv.c1;
+    c2 = rv.c2;
+    cout << "WidgetImpl operator=(), values " << c1 << " " << c2 << endl;
+    return *this;
+}
+
+Widget::Widget(char a, char b) {
+    cout << "Widget constructor with chars " << a << " " << b << endl;
+    ptr = new WidgetImpl(a, b);
+}
+
+Widget::~Widget() {
+    cout<< "Widget destructor with chars " << ptr->c1 << " " << ptr->c2 << endl;
+}
+
+Widget& Widget::operator=(const Widget& rv) {
+    Widget tmp(rv);
+    swap(tmp);
+    return *this;
+}
+
+Widget &Widget::swap(Widget& rv) {
+    WidgetImpl* tmp = new WidgetImpl(rv.ptr->c1, rv.ptr->c2);
+    ptr = rv.ptr;
+    rv.ptr = tmp;
+}
+
+void Widget::print() const { cout << ptr->c1 << " " << ptr->c2; }
+
+Class_2_9& Class_2_9::operator=(const Class_2_9& rv) {
+    Class_2_8* tmp = new Class_2_8(*rv.obj);
+    obj = tmp;
+    return *this;
+}
+
+Class_2_10& Class_2_10::operator=(const Class_2_10& rv) {}
