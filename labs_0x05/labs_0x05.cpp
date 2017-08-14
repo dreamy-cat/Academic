@@ -186,11 +186,21 @@ void Labs_0x05::chapter_02()
     cout << "Widget 2 after operator=() values ";
     cl8.print();
     cout << endl;
+}
 
+void Labs_0x05::chapter_03()
+{
+    cout << "Chapter's 3 tasks.\n";
+    // Task 3.1 Some simple tries.
+    Complex c1(1, 0), c2(2, 5);
+    cout << "Two complex numbers and result of operator+=().\n" << c1 << c2;
+    c1 += c2;
+    cout << c1 << "Result of operator++().\n" << ++c1;
+    cout << "Result of operator+().\n" << c1 + c2;
 }
 
 void labs_0x05()
 {
     cout << "Starting Labs_0x05." << endl;
-    Labs_0x05::chapter_02();
+    Labs_0x05::chapter_03();
 }

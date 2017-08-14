@@ -8,6 +8,7 @@
 
 #include "chapter_01.hpp"
 #include "chapter_02.hpp"
+#include "chapter_03.hpp"
 
 void labs_0x05();
 
@@ -15,6 +16,7 @@ namespace Labs_0x05 {
 
 void chapter_01();
 void chapter_02();
+void chapter_03();
 
 }
 
