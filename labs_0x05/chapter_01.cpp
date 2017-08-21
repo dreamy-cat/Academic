@@ -101,3 +101,71 @@ int function_2(Class_17 value)
     return value.n;
 }
 
+TerminalHacked::TerminalHacked(int wordS, int attempts) : wordSize(wordS), attemptsLimit(attempts), attempt(0) {}
+
+void TerminalHacked::play()
+{
+    srand(time(0));
+    cout << "Game 'Terminal Hacked'.\n";
+    word.resize(wordSize);
+    for (auto& literal : word)
+        literal = 'A' + char(trunc((double)rand() / (double)RAND_MAX * (double)('Z' - 'A')));
+    cout << "Word to find: " << word << endl;
+    const int variantFactor = 2;
+    vector<string> wordVariants(variantFactor * attemptsLimit);
+    int originalPos = 4; // trunc((float)rand() / (float)RAND_MAX * (float)(wordSize));
+    cout << "Position of original word: " << originalPos << endl;
+    cout << "All variants of the word: ";
+    for (int j = 0; j < variantFactor * attemptsLimit; j++) {
+        wordVariants[j] = word;
+        for (int i = 0; j != originalPos && i < wordSize; i++) {
+            int pos1 = trunc((float)rand() / (float)RAND_MAX * (float)(wordSize));
+            int pos2 = trunc((float)rand() / (float)RAND_MAX * (float)(wordSize));
+            char literal = wordVariants[j][pos1];
+            wordVariants[j][pos1] = wordVariants[j][pos2];
+            wordVariants[j][pos2] = literal;
+        }
+        cout << wordVariants[j] << " ";
+    }
+    cout << endl;
+    cout << "Trying to find word.\n";
+    int likeness = 0, bestPosition = 0;
+    vector<int> previousLikeness(attemptsLimit);
+    for (int i = 0, guess = 0; /*wordVariants[guess] != word && */ i < attemptsLimit; i++) {
+        // string guess = wordVariants[i];
+        cout << "Try " << guess << ": " << wordVariants[guess] << endl;
+        for (int k = 0; k < i; k++) {
+            likeness = 0;
+            cout << "\tCompare with " << wordVariants[k] << " guess, ";
+            for (int j = 0; j < wordSize; j++)
+                if (wordVariants[guess][j] == wordVariants[k][j])
+                    likeness++;
+            cout << "likeness is " << likeness;
+            if (previousLikeness[k] == 0 && likeness > 0)
+                cout << ", original likeness was zero, so skipped this variant.";
+            if (previousLikeness[k] == likeness)
+                cout << ", this is equal of previous guess.";
+            if (previousLikeness[bestPosition] < likeness) {
+                cout << ", is greater than one of previous.";
+                bestPosition = k;
+            }
+            cout << endl;
+        }
+        // if (likeness >= previousLikeness[bestPosition]) {
+            likeness = 0;
+            for (int j = 0; j < wordVariants[guess].size(); j++)
+                if ( wordVariants[guess][j] == word[j] ) likeness++;
+            cout << "\tLikeness with original " << likeness;
+            if (likeness == wordSize) cout << ", founded.";
+            previousLikeness[i] = likeness;
+            // bestPosition = guess;
+        // } else cout << "\tSkip attempt because of low likeness.";
+        cout << endl;
+        guess++;
+    }
+}
+
+TerminalHacked::~TerminalHacked()
+{
+
+}

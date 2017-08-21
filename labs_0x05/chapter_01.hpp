@@ -450,4 +450,17 @@ void function_3(T, T*) {
     std::cout << "<typename>(T, T*)\n";
 }
 
+class TerminalHacked {
+public:
+    TerminalHacked(int wordS, int attempts);
+    void play();
+    ~TerminalHacked();
+private:
+    int wordSize, attemptsLimit, attempt;
+    std::string word;
+    TerminalHacked(const TerminalHacked&);
+    TerminalHacked operator=(const TerminalHacked&);
+    TerminalHacked(const TerminalHacked&&);
+};
+
 #endif

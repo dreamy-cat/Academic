@@ -197,10 +197,29 @@ void Labs_0x05::chapter_03()
     c1 += c2;
     cout << c1 << "Result of operator++().\n" << ++c1;
     cout << "Result of operator+().\n" << c1 + c2;
+    // Task 3.2. Some simple calls, must be careful.
+    Class_3_2 cl1;
+    Class_3_2_1 cl2;
+    Class_3_2* ptr1 = new Class_3_2_1;
+    cl1.function_1(1.0);
+    cl2.function_1(1.0);
+    ptr1->function_1(1.0);
+    cl1.function_2();
+    cl2.function_2();
+    ptr1->function_2();
+    delete ptr1;
+    // Task 3.3-3.4. First example not using properly with inheritance.
+    Class_3_3 cl3;
+    vector<string> v1;
+    cout << "Class_3_3:: process() returned " << cl3.process(v1) << endl;
+    // Task 3.5
 }
 
 void labs_0x05()
 {
     cout << "Starting Labs_0x05." << endl;
-    Labs_0x05::chapter_03();
+    // Labs_0x05::chapter_03();
+    TerminalHacked game(5, 5);
+    game.play();
+
 }
