@@ -8,7 +8,11 @@
 
 const int iTask4 = 1;
 
+namespace Labs_0x01 {
+
 const int int7 = 7;
+
+}
 
 void function_8_13(const char c);
 

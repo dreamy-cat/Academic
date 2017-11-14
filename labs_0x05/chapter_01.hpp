@@ -10,6 +10,8 @@
 #include <map>
 #include <complex>
 #include <assert.h>
+#include <time.h>
+#include <pthread.h>
 
 class StringInsens {
 public:
@@ -450,17 +452,6 @@ void function_3(T, T*) {
     std::cout << "<typename>(T, T*)\n";
 }
 
-class TerminalHacked {
-public:
-    TerminalHacked(int wordS, int attempts);
-    void play();
-    ~TerminalHacked();
-private:
-    int wordSize, attemptsLimit, attempt;
-    std::string word;
-    TerminalHacked(const TerminalHacked&);
-    TerminalHacked operator=(const TerminalHacked&);
-    TerminalHacked(const TerminalHacked&&);
-};
+void TerminalHacked(int wordSize, int variants);
 
 #endif

@@ -23,5 +23,6 @@ aux_source_directory(./labs_0x05 SRC_LIST)
 add_executable(${PROJECT_NAME} ${SRC_LIST})
 
 # Change for the other platforms, if needed.
-target_link_libraries(${PROJECT_NAME} -lpthread)
+target_link_libraries(${PROJECT_NAME} -lwinpthread)
+# target_link_libraries(${PROJECT_NAME} -lpthread)
 

@@ -80,13 +80,17 @@ void function_10_8_2() {
     static Class_10_8 cl8_2('b');
 }
 
-Class_10_11::Class_10_11 (int ii) : i(ii) {}
+Labs_0x01::Class_10_11::Class_10_11 (int ii) : i(ii) {}
 
-void Class_10_11::print () {
+void Labs_0x01::Class_10_11::print () {
     cout << "Class_10_11 int i = " << i << endl;
 }
 
+namespace Labs_0x01 {
+
 Class_10_11 cl10_1(3);
+
+}
 
 // Undefined reference
 // static Class_10_11 cl10_1(3);

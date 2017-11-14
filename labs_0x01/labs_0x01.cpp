@@ -22,9 +22,10 @@
 #include "chapter_15.h"
 #include "chapter_16.h"
 
+using namespace Labs_0x01;
 using namespace std;
 
-void chapter_02 () {
+void Labs_0x01::chapter_02 () {
     cout << "Chapter's 2 tasks.\n";
     // Tasks 1,2.
     cout << "Radius:  ";
@@ -88,7 +89,7 @@ void chapter_02 () {
     cout << endl;
 }
 
-void chapter_03 () {
+void Labs_0x01::chapter_03 () {
     cout << "Chapter's 3 tasks.\n";
     // Task 1.
     function_3_1();
@@ -341,7 +342,7 @@ void chapter_03 () {
     for (int i = 0; i < 3; i++) cout << ((*funcTable[i])()) << endl;
 }
 
-void chapter_04() {
+void Labs_0x01::chapter_04() {
     cout << "Chapter's 4 tasks.\n";
     // Task 1. Not possible to use C flag. Try it later in separate project.
     // Task 2-6.
@@ -455,7 +456,7 @@ void chapter_04() {
     cout << endl;
 }
 
-void chapter_05 () {
+void Labs_0x01::chapter_05 () {
     cout << "Chapter's 5 tasks.\n";
     // Task 1. Only public members compiles.
     Class_5_1 class1;
@@ -549,7 +550,7 @@ void chapter_05 () {
     cout << endl;
 }
 
-void chapter_06() {
+void Labs_0x01::chapter_06() {
     cout << "Chapter's 6 tasks.\n";
     // Tasks 1-4.
     Simple class1(0), class2(1);
@@ -598,7 +599,7 @@ jump: ;
     cout << endl;
 }
 
-void chapter_07() {
+void Labs_0x01::chapter_07() {
     cout << "Chapter's 7 tasks.\n";
     // Task 1.
     Text class1("labs_0x01/files/chapter-07.txt");
@@ -667,7 +668,7 @@ void chapter_07() {
     cout << "And after second call : " << mem1.moved() << endl;
 }
 
-void chapter_08() {
+void Labs_0x01::chapter_08() {
     cout << "Chapter's 8 tasks.\n";
     // Tasks 1-2. Not possible in this project.
     const int i1 = 1, i2 = 1, i3 = 1;
@@ -816,7 +817,7 @@ void chapter_08() {
     class28_1Ptr->function_1();
 }
 
-void chapter_09 () {
+void Labs_0x01::chapter_09 () {
     cout << "Chapter's 9 tasks.\n";
     // Task 1.
     // 'x' was not declared in this scope
@@ -917,7 +918,7 @@ void chapter_09 () {
     // Task 22. Bonus.
 }
 
-void chapter_10() {
+void Labs_0x01::chapter_10() {
     cout << "Chapter's 10 tasks.\n";
     // Task 1.
     int arrayInt[5] = { 1, 2, 3, 4, -1 };
@@ -952,8 +953,8 @@ void chapter_10() {
     //extern ofstream stream9;
     //stream9 << "Tasks9, test.\n";
     // Task 10. Worked, but it's not convinient in current project.
-    // Task 11-12. See chapter_10.cpp.
-    extern Class_10_11 cl10_1;
+    // Task 11-12. See chapter_10.cpp. Rethink task.
+    extern Labs_0x01::Class_10_11 cl10_1;
     cl10_1.print();
     // Task 13.
     function_10_13();
@@ -1030,7 +1031,7 @@ void chapter_10() {
     cout << "Address of calling cl32_2 : " << (long)cl32_2.test() << endl;
 }
 
-void chapter_11 () {
+void Labs_0x01::chapter_11 () {
     cout << "Chapter's 11 tasks.\n";
     // Task 1. Not possible to using C compiler.
     int* intPtr1;
@@ -1160,7 +1161,7 @@ void chapter_11 () {
     cl27.run();
 }
 
-void chapter_12() {
+void Labs_0x01::chapter_12() {
     cout << "Chapter's 12 tasks.\n";
     // Task 1. no 'operator++(int) declared for postfix '++'
     Class_12_1 cl1;
@@ -1386,7 +1387,7 @@ void chapter_12() {
     // function_31(cl31);
 }
 
-void chapter_13() {
+void Labs_0x01::chapter_13() {
     cout << "Chapter's 13 tasks.\n";
     // Task 1.
     Counted cl1_1, cl1_2;
@@ -1493,7 +1494,7 @@ void chapter_13() {
     delete cl15_1;
 }
 
-void chapter_14() {
+void Labs_0x01::chapter_14() {
     cout << "Chapter's 14 tasks.\n";
     // Task 1.
     Car_14 cl1(1);
@@ -1625,7 +1626,7 @@ void chapter_14() {
     delete cl29;
 }
 
-void chapter_15() {
+void Labs_0x01::chapter_15() {
     cout << "Chapter's 15 tasks.\n";
     // Task 1-3. With reference works fine.
     Shape_1* ar1[] = { new Circle_1, new Square_1, new Triangle_1 };
@@ -1803,7 +1804,7 @@ void chapter_15() {
     for (int i = 0; i < 3; i++) cout << (cl36->*ptrs36[i])(i) << endl;
 }
 
-void chapter_16() {
+void Labs_0x01::chapter_16() {
     cout << "Chapter's 16 tasks." << endl;
     // Task 1. See in .h file.
     // Task 2.
@@ -1993,6 +1994,6 @@ void chapter_16() {
     cout << (cat26->*ptrMember3)('a', 'b') << endl;
 }
 
-void Labs_0x01() {
+void labs_0x01() {
     chapter_16();
 }

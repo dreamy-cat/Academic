@@ -22,7 +22,11 @@ void function_3_7();
 
 // Task 10.
 
+namespace Labs_0x01 {
+
 static int fs;
+
+}
 
 // Task 12.
 

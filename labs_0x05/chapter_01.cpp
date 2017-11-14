@@ -101,71 +101,98 @@ int function_2(Class_17 value)
     return value.n;
 }
 
-TerminalHacked::TerminalHacked(int wordS, int attempts) : wordSize(wordS), attemptsLimit(attempts), attempt(0) {}
-
-void TerminalHacked::play()
+void TerminalHacked(int wordSize, int variants)
 {
-    srand(time(0));
-    cout << "Game 'Terminal Hacked'.\n";
+    srand(3);
+    cout << "Game 'Terminal Hacked!'.\n";
+    string word;
     word.resize(wordSize);
-    for (auto& literal : word)
-        literal = 'A' + char(trunc((double)rand() / (double)RAND_MAX * (double)('Z' - 'A')));
-    cout << "Word to find: " << word << endl;
-    const int variantFactor = 2;
-    vector<string> wordVariants(variantFactor * attemptsLimit);
-    int originalPos = 4; // trunc((float)rand() / (float)RAND_MAX * (float)(wordSize));
-    cout << "Position of original word: " << originalPos << endl;
-    cout << "All variants of the word: ";
-    for (int j = 0; j < variantFactor * attemptsLimit; j++) {
-        wordVariants[j] = word;
-        for (int i = 0; j != originalPos && i < wordSize; i++) {
-            int pos1 = trunc((float)rand() / (float)RAND_MAX * (float)(wordSize));
-            int pos2 = trunc((float)rand() / (float)RAND_MAX * (float)(wordSize));
-            char literal = wordVariants[j][pos1];
-            wordVariants[j][pos1] = wordVariants[j][pos2];
-            wordVariants[j][pos2] = literal;
+    const int alphabetSize = 'z' - 'a' + 1;
+    for (auto& literal : word) literal = 'a' + rand() % alphabetSize;
+    cout << "Word to find is '" << word << "', variants " << variants << ".\n";
+    cout << "Generate mask and word's variants.\n";
+    cout << "Variant:\tLikeness:\tNext:\tMask:\tRandom mask:\tWord:\n";
+    vector<string> words(variants + 1);
+    vector<int> mask(wordSize);
+    int likeness = 0;
+    for (int i = 0, next = variants / wordSize + (variants % wordSize > 0); i <= variants; i++) {
+        if (i == next)
+            if (wordSize > variants)
+                likeness += (wordSize / variants) + (next++ <= wordSize % variants);
+            else
+                next += (variants / wordSize) + (++likeness < variants % wordSize);
+        cout <<  i << "\t\t" << likeness << "\t\t" << next << "\t";
+        for (int j = 0; j < wordSize; j++) {
+            if (j < likeness) mask[j] = 1; else mask[j] = 0;
+            cout << mask[j];
         }
-        cout << wordVariants[j] << " ";
+        cout << "\t";
+        for (int j = 0; j < variants * variants; j++) {
+            int left = rand() % wordSize, right = rand() % wordSize;
+            int element = mask[left];
+            mask[left] = mask[right];
+            mask[right] = element;
+        }
+        words[i].resize(wordSize);
+        for (int j = 0; j < wordSize; j++) {
+            cout << mask[j];
+            if (mask[j] == 1) words[i][j] = word[j]; else
+                while ((words[i][j] = ('a' + rand() % alphabetSize)) == word[j]);
+        }
+        cout << "\t\t" << words[i] << endl;
     }
-    cout << endl;
-    cout << "Trying to find word.\n";
-    int likeness = 0, bestPosition = 0;
-    vector<int> previousLikeness(attemptsLimit);
-    for (int i = 0, guess = 0; /*wordVariants[guess] != word && */ i < attemptsLimit; i++) {
-        // string guess = wordVariants[i];
-        cout << "Try " << guess << ": " << wordVariants[guess] << endl;
-        for (int k = 0; k < i; k++) {
-            likeness = 0;
-            cout << "\tCompare with " << wordVariants[k] << " guess, ";
-            for (int j = 0; j < wordSize; j++)
-                if (wordVariants[guess][j] == wordVariants[k][j])
-                    likeness++;
-            cout << "likeness is " << likeness;
-            if (previousLikeness[k] == 0 && likeness > 0)
-                cout << ", original likeness was zero, so skipped this variant.";
-            if (previousLikeness[k] == likeness)
-                cout << ", this is equal of previous guess.";
-            if (previousLikeness[bestPosition] < likeness) {
-                cout << ", is greater than one of previous.";
-                bestPosition = k;
-            }
+    cout << "Resort all variants, source:\n";
+    for (int i = 0; i < variants * variants; i++) {
+        int left = rand() % (variants + 1);
+        int right = rand() % (variants + 1);
+        string element = words[left];
+        words[left] = words[right];
+        words[right] = element;
+    }
+    const int terminalWidth = 40;
+    for (int column = 0, i = 0; i < words.size(); i++) {
+        cout << words[i] << "\t";
+        if ((column += wordSize) > terminalWidth) {
+            column = 0;
             cout << endl;
         }
-        // if (likeness >= previousLikeness[bestPosition]) {
-            likeness = 0;
-            for (int j = 0; j < wordVariants[guess].size(); j++)
-                if ( wordVariants[guess][j] == word[j] ) likeness++;
-            cout << "\tLikeness with original " << likeness;
-            if (likeness == wordSize) cout << ", founded.";
-            previousLikeness[i] = likeness;
-            // bestPosition = guess;
-        // } else cout << "\tSkip attempt because of low likeness.";
-        cout << endl;
-        guess++;
     }
-}
-
-TerminalHacked::~TerminalHacked()
-{
-
+    cout << "\nTrying to find the word.\n";
+    cout << "Try and guess:\tAttempt:\tLikeness:\tPrevious:\tComment:\n";
+    map<string, int> attempts;
+    likeness = 0;
+    for (int i = 0, j = 0, satisfy = 0; likeness < word.size() && i < words.size(); i = j) {
+        string attempt = words[i];
+        likeness = 0;
+        for (int j = 0; j < attempt.size(); j++)
+            if (attempt[j] == word[j]) likeness++;
+        cout << i << " : 0\t\t" << attempt << "\t\t" << likeness << "\t\t-\t\t";
+        attempts[attempt] = likeness;
+        if (likeness < word.size()) {
+            cout << "Word not correct, trying to guess next variant.\n";
+            for (j = i + 1; satisfy != attempts.size() && j < words.size(); ) {
+                satisfy = 0;
+                attempt = words[j];
+                for (map<string, int>::const_iterator aPtr = attempts.begin(); aPtr != attempts.end(); aPtr++) {
+                    int prevLikeness = 0;
+                    for (int l = 0; l < attempt.size(); l++)
+                        if (attempt[l] == (*aPtr).first[l]) prevLikeness++;
+                    cout << i << " : " << j - i << "\t\t";
+                    cout << attempt << "\t\t" << prevLikeness << "\t\t" << (*aPtr).first << "\t\t";
+                     if ((*aPtr).second == prevLikeness) {
+                        satisfy++;
+                        cout << "Guess likeness is good as previous attempt.\n";
+                     } else cout << "Guess likeness not satisfy previous attempt.\n";
+                }
+                for (int k = 0; k < 8; k++) cout << "\t";
+                if (satisfy == attempts.size())
+                    cout << "The guess satisfies all previous attempts.\n";
+                else {
+                    cout << "The guess not satisfies all previous attempts.\n";
+                    j++;
+                }
+            }
+            if (satisfy != attempts.size()) cout << "\t\t\t\tSomething goes wrong, next word not found.\n";
+        } else cout << "Word founded, OK!\n";
+    }
 }

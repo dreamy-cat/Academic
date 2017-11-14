@@ -129,6 +129,8 @@ void Labs_0x05::chapter_01()
     function_3(&d1);
     function_3(d1, &d1);
     function_3(&i2, &i2);
+    // Task 1.18. A litle different from source.
+    TerminalHacked(4, 7);
 }
 
 void Labs_0x05::chapter_02()
@@ -218,8 +220,6 @@ void Labs_0x05::chapter_03()
 void labs_0x05()
 {
     cout << "Starting Labs_0x05." << endl;
-    // Labs_0x05::chapter_03();
-    TerminalHacked game(5, 5);
-    game.play();
+    Labs_0x05::chapter_01();
 
 }

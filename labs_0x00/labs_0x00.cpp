@@ -5,17 +5,14 @@
 #include <math.h>
 #include <stdarg.h>
 #include <sys/file.h>
-#include <sys/syscall.h>
-#include <sys/io.h>
+#include <io.h>
 #include <sys/fcntl.h>
 #include <sys/unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <sys/dir.h>
-#include <syscall.h>
+#include <dir.h>
+// #include <syscall.h>
 #include <dirent.h>
-
-#include "labs_0x00.h"
 
 int getLine(char line[], FILE* stream, int limit) {
     char c;
@@ -2023,7 +2020,9 @@ void chapter_7() {
 
 // Chapter 8.
 
-#define OPEN_MAX 8
+/*
+
+#define OPEN_MAX_A 8
 
 struct FileFlags {
     unsigned int _READ : 1;
@@ -2050,7 +2049,7 @@ typedef struct _iobuf {
 static FileFlags clearFlag = { 0, 0, 0, 0, 0 };
 static int openedStreams = 3;
 
-FILE_8 _iob[OPEN_MAX] = {
+FILE_8 _iob[OPEN_MAX_A] = {
     { 0, (char*) 0, (char*) 0, { 1, 0, 0, 0, 0 }, 0 },
     { 0, (char*) 0, (char*) 0, { 0, 1, 0, 0, 0 }, 1 },
     { 0, (char*) 0, (char*) 0, { 0, 1, 1, 0, 0 }, 2 }
@@ -2083,17 +2082,23 @@ FILE_8* fOpen(const char *name, char *mode) {
     int fd;
     if (*mode != 'r' && *mode != 'w' && *mode != 'a')
         return NULL;
-    if (openedStreams == OPEN_MAX) {
+    if (openedStreams == OPEN_MAX_A) {
         printf("Reach limit of opened files.\n");
         return NULL;
     }
     FILE_8* fp = &_iob[openedStreams++];
+
+    */
+
 /*
     for (fp = _iob; fp < _iob + OPEN_MAX; fp++)
         if (fp->flag._READ == 0 && fp->flag._WRITE == 0)
             break;
             */
     // printf("Create with _iob = %ld\n", (long)fp);
+
+    /*
+
     if (fp > _iob + OPEN_MAX)
         return NULL;
     if (*mode == 'w')
@@ -2116,6 +2121,8 @@ FILE_8* fOpen(const char *name, char *mode) {
         fp->flag._WRITE = 1;
     return fp;
 }
+
+
 
 int fSeek(FILE_8 *file, long offset, int origin) {
     if (file == NULL) {
@@ -2501,6 +2508,18 @@ void chapter_8() {
     heap.state();
 }
 
+*/
+
+int TerminalHacked(unsigned char word, unsigned char variants)
+{
+    printf("Game 'Terminal Hacked!'\n");
+    if (!variants || !word) {
+        printf("Game settings must be more than zero. Word size or variants.\n");
+        return -1;
+    }
+    return 0;
+}
+
 void labs_0x00() {
-    chapter_8();
+    chapter_7();
 }

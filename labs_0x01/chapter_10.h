@@ -59,6 +59,8 @@ void function_10_8_2();
 
 void function_10_8_1();
 
+namespace Labs_0x01 {
+
 class Class_10_11 {
 public:
     Class_10_11 (int ii);
@@ -66,6 +68,8 @@ public:
 private:
     int i;
 };
+
+}
 
 void function_10_13 ();
 
