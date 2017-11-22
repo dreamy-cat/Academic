@@ -2510,16 +2510,6 @@ void chapter_8() {
 
 */
 
-int TerminalHacked(unsigned char word, unsigned char variants)
-{
-    printf("Game 'Terminal Hacked!'\n");
-    if (!variants || !word) {
-        printf("Game settings must be more than zero. Word size or variants.\n");
-        return -1;
-    }
-    return 0;
-}
-
 void labs_0x00() {
     chapter_7();
 }

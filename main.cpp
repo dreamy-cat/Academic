@@ -7,5 +7,5 @@
 
 int main(int argc, char** argv)
 {
-    labs_0x00();
+    labs_0x05();
 }

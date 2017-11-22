@@ -192,7 +192,7 @@ void TerminalHacked(int wordSize, int variants)
                     j++;
                 }
             }
-            if (satisfy != attempts.size()) cout << "\t\t\t\tSomething goes wrong, next word not found.\n";
+            if (satisfy != attempts.size()) cout << "Something goes wrong, next word not found.\n";
         } else cout << "Word founded, OK!\n";
     }
 }

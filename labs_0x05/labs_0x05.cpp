@@ -4,7 +4,7 @@ using namespace std;
 
 void Labs_0x05::chapter_01()
 {
-    cout << "Chapter's 1, tasks.\n";
+    cout << "Chapter's 1 tasks.\n";
     // Task 1.1.
     vector<int> v1(3, 1), v2(3, 2);
     copy(v1.begin(), v2.begin(), back_inserter(v1));
@@ -192,7 +192,7 @@ void Labs_0x05::chapter_02()
 
 void Labs_0x05::chapter_03()
 {
-    cout << "Chapter's 3 tasks.\n";
+    cout << "Chapter's 3, tasks.\n";
     // Task 3.1 Some simple tries.
     Complex c1(1, 0), c2(2, 5);
     cout << "Two complex numbers and result of operator+=().\n" << c1 << c2;
@@ -214,12 +214,64 @@ void Labs_0x05::chapter_03()
     Class_3_3 cl3;
     vector<string> v1;
     cout << "Class_3_3:: process() returned " << cl3.process(v1) << endl;
-    // Task 3.5
+    // Task 3.5. See .h file, just some declarations about inheritance.
+    // Task 3.6. Theoretical task, language is multi-paradigm.
+    // Task 3.7. Multiple inheritance.
+    // Task 3.8. Works, but only in if all methods in class defined in header file, and not as expected.
+    Class_3_D cl4;
+    Class_3_B* ptr2 = &cl4;
+    Class_3_C* ptr3 = &cl4;
+    Class_3_B& ref1 = cl4;
+    Class_3_C& ref2 = cl4;
+    function_3_1("Function_1(Class_3_A&), ", cl4);
+    function_3_2("Function_2(Class_3_B&), ", cl4);
+    function_3_3("Function_3(Class_3_C&), ", cl4);
+    cout << "After first three calls.\n";
+    function_3_1("Function_1(Class_3_A&), ", cl4);
+    function_3_2("Function_2(Class_3_B&), ", cl4);
+    function_3_3("Function_3(Class_3_C&), ", cl4);
+    cout << "Trying to use dynmical casting for pointers Classes_3_B and Class_3_C: ";
+    cout << ((dynamic_cast<Class_3_D*>(ptr2) != 0) ? "Ok." : "Not ok.") << " ";
+    cout << ((dynamic_cast<Class_3_D*>(ptr3) != 0) ? "Ok." : "Not ok.") << endl;;
+    cout << "Trying with exceptions: ";
+    try {
+        dynamic_cast<Class_3_D&>(ref1);
+        cout << "Ok. ";
+    } catch (...) {
+        cout << "Not ok. ";
+    }
+    try {
+        dynamic_cast<Class_3_D&>(ref2);
+        cout << "Ok.\n";
+    } catch (...) {
+        cout << "Not ok.\n";
+    }
+    // Task 3.9. Not working as it should be, rethink.
+    cout << "All calls of derived, base and base classes.\n";
+    Derived_3_9A cl5;
+    Base_3_9A* ptr4 = &cl5;
+    Base_3_9B* ptr5 = &cl5;
+    cl5.function();
+    ptr4->function();
+    ptr5->function();
+    cout << "Imitation of multiple inheritance and calls functions.\n";
+    Derived_3_9B cl6;
+    Base_3_9A* ptr6 = &cl6;
+    Base_3_9B* ptr7 = &cl6;
+    ptr6->function();
+    ptr7->function();
+    // Task 3.10. Just some examples, gcc works fine and private virtual function don't called.
+    cout << "Some examples with pure virtual functions.\n";
+    Derived_3_10 cl7;
+    cl7.function();
+    Base_3_10* ptr8 = &cl7;
+    // ptr8->function_1();
+    // Task 3.11. Using private with base class to prevent from this.
+    function_3_4(*ptr8);
 }
 
 void labs_0x05()
 {
-    cout << "Starting Labs_0x05." << endl;
-    Labs_0x05::chapter_01();
-
+    cout << "Starting Labs_0x05.\n";
+    Labs_0x05::chapter_03();
 }
