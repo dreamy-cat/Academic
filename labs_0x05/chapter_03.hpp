@@ -1,5 +1,5 @@
-#ifndef L_05_CHAPTER_03_H
-#define L_05_CHAPTER_03_H
+#ifndef LAB_05_CHAPTER_03_H
+#define LAB_05_CHAPTER_03_H
 
 #include <iostream>
 #include <complex>

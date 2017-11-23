@@ -270,8 +270,17 @@ void Labs_0x05::chapter_03()
     function_3_4(*ptr8);
 }
 
+void Labs_0x05::chapter_04()
+{
+    cout << "Chapter's 4 tasks.\n";
+    // Tasks 4.1-4.3. Useful in complicated projects, in other case not, see .hpp file.
+    // Task 4.4. Just a question, implementation pointer better contains non virtual private memebers.
+    // Task 4.5. Works fine, but more theory, using pImpl, don't reinterpret.
+    Class_4_5B cl1;
+}
+
 void labs_0x05()
 {
     cout << "Starting Labs_0x05.\n";
-    Labs_0x05::chapter_03();
+    Labs_0x05::chapter_04();
 }
