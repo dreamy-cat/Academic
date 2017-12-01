@@ -205,7 +205,7 @@ private:
 class Base_3_10 {
 public:
     virtual bool function() = 0;
-    virtual void function_2();
+    virtual void function_2() = 0;
     virtual ~Base_3_10() = 0;
 private:
     virtual bool function_1() = 0;

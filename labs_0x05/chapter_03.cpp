@@ -85,7 +85,7 @@ void Derived_3_9B::function_A() { cout << "Derived_3_9B::function_A().\n"; }
 
 void Derived_3_9B::function_B() { cout << "Derived_3_9B::function_B().\n"; }
 
-Base_3_10::~Base_3_10() { "Class_3_10, public pure virtual destructor.\n"; }
+Base_3_10::~Base_3_10() { "Base_3_10, public pure virtual destructor.\n"; }
 
 bool Base_3_10::function() { return true; }
 

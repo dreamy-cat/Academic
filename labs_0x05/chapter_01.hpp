@@ -232,7 +232,7 @@ private:
     Counter<Greater_4_1> impl;
 };
 
-class Class_2 : public Greater_1 {
+class Class_2B : public Greater_1 {
 public:
     void testing() const;
 };
@@ -270,7 +270,7 @@ class Class_6 {
 private:
     bool verify() const {
         std::cout << "Class_6, verify.\n";
-        T* (T::*vrfy)() const = &T::testing;
+        T* (T::*vrfy)() = (T* (Class_2B::*)())&T::testing;
         vrfy;
         return true;
     }
@@ -296,8 +296,8 @@ template<typename T>
 class Class_8 {
 private:
     bool verifyRequirments() const {
-        std::cout << "Verify requirments for Class_6<Class_2>.\n";
-        typedef Class_7<T, Class_2> t;
+        std::cout << "Verify requirments for Class_6<Class_2B>.\n";
+        typedef Class_7<T, Class_2B> t;
         assert(t::isExist);
         return true;
     }
@@ -319,7 +319,7 @@ protected:
 };
 
 template<typename T>
-class Class_10 : Class_9<T, Class_6<Class_2> > {
+class Class_10 : Class_9<T, Class_6<Class_2B> > {
 public:
     Class_10() { std::cout << "Class_10, constructor.\n"; }
 };
@@ -361,14 +361,14 @@ public:
     static T* function(const T* ptr) { return new T(*ptr); }
 };
 
-class Class_14a : public Class_2 {
+class Class_14a : public Class_2B {
 public:
     Class_14a();
     static Class_14a* verify();
 };
 
 template<>
-class Class_14<Class_2> {
+class Class_14<Class_2B> {
 public:
     static Class_14a* function(const Class_14a* ptr) { return ptr->verify(); }
 };

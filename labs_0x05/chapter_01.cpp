@@ -46,7 +46,7 @@ bool greaterSeven(int i) { return i > 7; }
 
 bool isGreater_1(std::vector<int>& source)
 {
-    return (find_if(source.begin(), source.end(), greaterSeven) != source.end());
+    return (std::find_if(source.begin(), source.end(), greaterSeven) != source.end());
 }
 
 bool Greater_1::operator()(int i) const { return i > 7; }
@@ -72,7 +72,7 @@ bool isGreater_4(std::vector<int>& source)
 
 Greater_4_1::Greater_4_1(size_t n) : i(0), m(n) {}
 
-void Class_2::testing() const { cout << "Class_2::testing().\n"; }
+void Class_2B::testing() const { cout << "Class_2::testing().\n"; }
 
 Class_14a::Class_14a() { cout << "Class_14a, constructor.\n"; }
 

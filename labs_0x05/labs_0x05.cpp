@@ -58,19 +58,19 @@ void Labs_0x05::chapter_01()
     Greater_4* cPtr1 = new Greater_4(3);
     delete cPtr1;
     // Task 1.11. A litle strange, but works fine.
-    Class_2 cl1;
-    Class_3<Class_2> cl2;
+    Class_2B cl1;
+    Class_3<Class_2B> cl2;
     cl2.function(&cl1);
-    Class_4<Class_2> cl3;
-    Class_5<Class_2> cl4;
-    Class_6<Class_2> cl5;
-    Class_8< Class_6<Class_2> > cl6;
-    Class_10<Class_6 <Class_2> > cl7;
-    Class_11<Class_2, Greater_1> cl8;
-    Class_13<Class_2> cl9;
-    Class_14<Class_2> cl10;
+    Class_4<Class_2B> cl3;
+    Class_5<Class_2B> cl4;
+    Class_6<Class_2B> cl5;
+    Class_8< Class_6<Class_2B> > cl6;
+    Class_10<Class_6 <Class_2B> > cl7;
+    Class_11<Class_2B, Greater_1> cl8;
+    Class_13<Class_2B> cl9;
+    Class_14<Class_2B> cl10;
     Class_14a cl11;
-    Class_14a* ptr = Class_14<Class_2>::function(&cl11);
+    Class_14a* ptr = Class_14<Class_2B>::function(&cl11);
     // Task 1.12.
     function_1(Class_16a::cl());
     function_1(Class_16b<Class_16a>::clB());
@@ -279,8 +279,32 @@ void Labs_0x05::chapter_04()
     Class_4_5B cl1;
 }
 
+void Labs_0x05::chapter_05()
+{
+    cout << "Chapter's 5 tasks.\n";
+    // Task 5.1-5.4. call of overloaded 'function_2(NameSpace_A::struct_1&) if ambiguous.
+    // NameSpace_B::function_1(1);  // Function is infinite loop.
+    NameSpace_A::Struct_1 st1;
+    NameSpace_B::function_2(st1);
+    NameSpace_A::Struct_2 st2;
+    // NameSpace_B::function_3(st2);    // infinite loop.
+    // NameSpace_B::function_3(st2);    // same result.
+    NameSpace_C::Class_5_1 cl1("one", "two");
+    function_5_1(cl1);
+    NameSpace_D::function_5_2(cl1);
+    const int objSize = 5;
+    NameSpace_E::Class_5_2 vector1[objSize];
+    // not compile, not match for 'operator+', if not in namespace.
+    accumulate(vector1, vector1 + objSize, 0);
+    Struct_5B st3;
+    int i1;
+    st3.function_1(i1);
+    // st3.function_2(i1);              // no matching for call.
+    st3.Struct_5A::function_2(i1);      // compiles fine.
+}
+
 void labs_0x05()
 {
     cout << "Starting Labs_0x05.\n";
-    Labs_0x05::chapter_04();
+    Labs_0x05::chapter_05();
 }
