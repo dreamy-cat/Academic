@@ -303,8 +303,76 @@ void Labs_0x05::chapter_05()
     st3.Struct_5A::function_2(i1);      // compiles fine.
 }
 
+void Labs_0x05::chapter_06()
+{
+    cout << "Chapter's 6 tasks.\n";
+    // Tasks depricated, since c++17 and auto_ptr removed from standard.
+    // Tasks 6.1-6.2.
+    const int sizeV = 3;
+    cout << "Pointer 1 to object with custom operators new and delete.\n";
+    Class_6_1B* ptr1 = new Class_6_1B;
+    delete ptr1;
+    cout << "Pointer 2.\n";
+    Class_6_1A* ptr2 = new Class_6_1B;
+    delete ptr2;
+    cout << "Pointer 3, vector with objects.\n";
+    Class_6_1B* ptr3 = new Class_6_1B[sizeV];
+    delete[] ptr3;
+    cout << "Pointer 4, vector with objects, works correct, but expected error.\n";
+    Class_6_1A* ptr4 = new Class_6_1B[sizeV];
+    delete[] ptr4;
+    Class_6_1A cl1;
+    typedef void (Class_6_1A::*PMF)(void*, size_t);
+    PMF ptr5 = &Class_6_1A::function;
+    // PMF ptr6 = &Class_6_1A::operator delete; // error, cannot convert...
+    // Tasks 6.3-6.4.
+    unique_ptr<int> ptr7(new int);
+    char* ptr8 = new char;
+    unique_ptr<char> ptr9(ptr8);
+    *ptr8 = 'a';
+    *ptr9 = 'b';
+    assert( ptr8 == ptr9);
+    char* ptr10 = ptr9.release();
+    unique_ptr<char> ptr11(new char);
+    *ptr11 = 'c';
+    cout << "All chars in unique pointers: " << *ptr8 << " " << *ptr10 << " " << *ptr11 << endl;
+    unique_ptr<char> ptr12(new char('d'));
+    cout << "Pointer to char is " << *ptr12;
+    ptr12.reset(new char('e'));
+    cout << ", after reset is " << *ptr12 << endl;
+    function_6_1();
+    function_6_2();
+    cout << "Function returned unique_ptr: " << *(function_6_3()) << endl;
+    function_6_4(ptr11);        // error using copy constructor, deleted function.
+    vector< unique_ptr<char> > vector1;
+    vector1.push_back(unique_ptr<char>(new char('c')));
+    vector1.push_back(unique_ptr<char>(new char('b')));
+    vector1.push_back(unique_ptr<char>(new char('a')));
+    cout << "Vector with unique pointers: ";            // Vector works without errors.
+    for (auto& e : vector1) cout << *e << " ";
+    sort(vector1.begin(), vector1.end());
+    cout << "\nAfter sorting: ";
+    for (auto& e : vector1) cout << *e << " ";
+    cout << endl;
+    cout << "Return object: " << function_6_5() << endl;
+    const unique_ptr<char> ptr13(new char('a'));
+    //  ptr11 = ptr13;      // use of deleted function.
+    //  ptr13.release();        // argument discards qualifiers.
+    //  ptr13.reset(new char);  // same as previous.
+    for (int i = 0; i < 3; i++) function_6_6<Class_6_4>(i);
+    vector<Class_6_4> vector2;  // prefer vector, not C-style array.
+    // Tasks 6.5-6.6.
+    Class_6_5* cl2 = new Class_6_5('a');
+    delete cl2;
+    Class_6_5 cl3('b'), cl4(cl3);    // works, but very strange, better using other options.
+    Class_6_5 cl5('c'), cl6('a');
+    cl6 = cl5;
+    Class_6_7<char> cl7(new char('a')), cl8(new char('b'));
+    cl8 = cl7;
+}
+
 void labs_0x05()
 {
     cout << "Starting Labs_0x05.\n";
-    Labs_0x05::chapter_05();
+    Labs_0x05::chapter_06();
 }
