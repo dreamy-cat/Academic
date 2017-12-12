@@ -371,8 +371,25 @@ void Labs_0x05::chapter_06()
     cl8 = cl7;
 }
 
+void Labs_0x05::chapter_07()
+{
+    cout << "Chapter's 7 tasks.\n";
+    // Task 7.1. Just some theory to read.
+    // Tasks 7.2-7.5. An example is strange, add variant later.
+    Word cl1("Word A.");
+    cout << "Word, " << cl1.text() << endl;
+    cl1.append('A');
+    cout << "Word, " << cl1.text() << endl;
+    cout << "Symbol of word [2] is " << cl1[2] << endl;
+    cl1.setReadOnly(true);
+    cl1.append('B');
+    cl1.setReadOnly(false);
+    cl1.append('B');
+    cout << "Word, " << cl1.text() << endl;
+}
+
 void labs_0x05()
 {
     cout << "Starting Labs_0x05.\n";
-    Labs_0x05::chapter_06();
+    Labs_0x05::chapter_07();
 }

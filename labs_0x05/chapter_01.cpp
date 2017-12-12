@@ -103,7 +103,7 @@ int function_2(Class_17 value)
 
 void TerminalHacked(int wordSize, int variants)
 {
-    srand(3);
+    srand(9);
     cout << "Game 'Terminal Hacked!'.\n";
     string word;
     word.resize(wordSize);
