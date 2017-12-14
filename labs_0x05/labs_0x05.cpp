@@ -388,8 +388,28 @@ void Labs_0x05::chapter_07()
     cout << "Word, " << cl1.text() << endl;
 }
 
+void Labs_0x05::chapter_08()
+{
+    cout << "Chapter's 8 tasks.\n";
+    // Task 8.1. Using proxy-class, using void* in first try.
+    FPtr ptr1 = function_8_2();
+    ptr1();
+    // Task 8.2. Last variant, using local class.
+    Outer_8 cl1(1);
+    cl1.function();
+    cout << "Result of class functions, " << cl1.operator int() << endl;
+    // Task 8.3. Theory to read.
+    // Task 8.4. May be a little old.
+#define lmax(a,b) ((a) < (b) ? (b) : (a))
+    int i1 = 1, i2 = 2;
+    cout << "Results of simple macros: " << lmax(i1 += 3, i2);
+    cout << ", " << lmax(5,3);
+    cout << ", " << lmax(++i2, i1) << endl;
+#undef lmax
+}
+
 void labs_0x05()
 {
     cout << "Starting Labs_0x05.\n";
-    Labs_0x05::chapter_07();
+    Labs_0x05::chapter_08();
 }

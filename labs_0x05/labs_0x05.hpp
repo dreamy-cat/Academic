@@ -14,6 +14,7 @@
 #include "chapter_05.hpp"
 #include "chapter_06.hpp"
 #include "chapter_07.hpp"
+#include "chapter_08.hpp"
 
 void labs_0x05();
 
@@ -26,6 +27,7 @@ void chapter_04();
 void chapter_05();
 void chapter_06();
 void chapter_07();
+void chapter_08();
 
 }
 
