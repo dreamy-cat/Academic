@@ -408,8 +408,32 @@ void Labs_0x05::chapter_08()
 #undef lmax
 }
 
+void Labs_0x05::chapter_09()
+{
+    cout << "Chapter's 9 tasks.\n";
+    // Task 9.1. Simple example.
+    Class_9_1 cl1('a'), cl2('b'), cl3(cl1);
+    cl1 = cl2;
+    cl1 = cl1;
+    cout << "Paramteters of both objects: " << cl1.c << ", " << cl2.c << " and " << cl3.c << endl;
+    // Task 9.2. All works as it should.
+    Class_9_1 cl4("word A"), cl5("word B");
+    cl3 = cl4 - cl5;
+    // Task 9.3. Not usable pointer after delete, crash.
+    Class_9_1* ptr1 =  new Class_9_1('d');
+    Class_9_1& ref1 = *ptr1;
+    // delete ptr1;
+    new (ptr1) Class_9_1('a');
+    cout << "Class_9_1, object after calling delete, parameter is " << ptr1->c << endl;
+    // cl3.function();     // Works but may be it's just a luck with memory and same types of objects.
+    // Task 9.4. Works, but shouldn't.
+    Class_9_2 cl7('e'), cl8('f');
+    cl8 = cl7;
+    cout << "Class_9_2, derived objects with parameters " << cl7.c << ", " << cl8.c << endl;
+}
+
 void labs_0x05()
 {
     cout << "Starting Labs_0x05.\n";
-    Labs_0x05::chapter_08();
+    Labs_0x05::chapter_09();
 }
