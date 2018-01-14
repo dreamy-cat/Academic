@@ -432,8 +432,109 @@ void Labs_0x05::chapter_09()
     cout << "Class_9_2, derived objects with parameters " << cl7.c << ", " << cl8.c << endl;
 }
 
+void Labs_0x05::chapter_10()
+{
+    cout << "Chapter's 10 tasks.\n";
+    // Task 10.1-10.2. Just quick test, all works fine.
+    char c1;            // default.
+    char c2();          // function declaration.
+    char c3('a');       // direct value to constructor.
+    char c4 = 'b';      // using copy constructor.
+    cout << "All characters after initialization: " << c1 << " " << c2 << " " << c3 << " " << c4 << endl;
+    Base_10 cl1('a');
+    Derived_10 cl2('b');
+    Base_10& ref1 = cl2;
+    reinterpret_cast<Base_10&>(cl2);
+    dynamic_cast<Derived_10&>(ref1);
+    const_cast<const Derived_10&>(cl2);
+    static_cast<Base_10>(cl2);
+    try {
+        throw Derived_10('c');
+    } catch (Derived_10 obj) {
+        cout << "Catching exception, Derived object, " << obj.b << ".\n";
+    }
+    cout << "Result of Derived_10 function, " << cl2.function().b << endl;
+    Base_10 cl4[3] = { 'd', 'e', 'f' };
+    Base_10* ptr1 = new Base_10('g');
+    // Task 10.3. Some simple recommendations.
+    Lines cl5, cl6, cl7;
+    cl5.addLine(0, 5);
+    cl5.addLine(1, 7);
+    cl6.addLine(0, 3);
+    cl6.addLine(2, 3);
+    cout << "Size of both Lines objects, " << cl5.getSize() << ", " << cl6.getSize() << endl;
+    cl7 = cl5 + cl6;
+    cout << "Result size of Lines after operator+() " << cl7.getSize() << endl;
+    // Task 10.4. Try to compile.
+    Base_10_1 cl8;
+    Derived_10_1 cl9;
+    Derived_10_2 cl10;
+    Derived_10_3 cl11;
+    const Base_10_1 cl12;
+    const Base_10_1& ref2 = cl8;
+    // const Base_10_1& ref3 = cl9;     // Base_10_1 is an inaccessible base of derived class.
+    c1 = 'a';
+    // Base_10_1* ptr2 = (Base_10_1*)&ref2;
+    Base_10_1* ptr2 = const_cast<Base_10_1*>(&ref2);
+    ptr2 = (Base_10_1*)&cl12;
+    // Derived_10_2* ptr3 = (Base_10_1*)&ref3;
+    Derived_10_2* ptr3 = reinterpret_cast<Derived_10_2*>(&c1);
+    Derived_10_3* ptr4 = (Derived_10_3*)(&c1);
+    // unsigned char* ptr5 = static_cast<unsigned char*>(&c1);      // invalid static_cast...
+    // signed char* ptr6 = static_cast<unsigned char*>(&c1);
+    unsigned char* ptr5 = reinterpret_cast<unsigned char*>(&c1);
+    signed char* ptr6 = reinterpret_cast<signed char*>(&c1);
+    void* ptr7 = static_cast<void*>(&cl9);
+    Derived_10_1* ptr8 = static_cast<Derived_10_1*>(ptr7);
+    Derived_10_1* ptr9 = static_cast<Derived_10_1*>(&cl9);
+    Base_10_1* ptr10 = const_cast<Base_10_1*>(&ref2);
+    // Base_10_1* ptr11 = const_cast<Base_10_1*>(&ref3);
+    // Derived_10_1* ptr12 = dynamic_cast<Derived_10_1*>(&cl10);    // Source type is not polymorphic.
+    // Base_10_1* ptr13 = dynamic_cast<Base_10_1*>(&cl9);           // Base_10_1 is inaccessible base.
+    Derived_10_1* ptr14 = static_cast<Derived_10_1*>(&cl11);
+    // Derived_10_3* ptr15 = static_cast<Derived_10_3*>(&ptr14);    // Invalid cast.
+    // ptr10 = dynamic_cast<Base_10_1*>(ptr9);
+    // ptr10 = dynamic_cast<Base_10_1*>(ptr14);
+    // Derived_10_2* ptr16 = dynamic_cast<Derived_10_2*>(ptr14);    // Source not polymorphic.
+    // Derived_10_2& ref4 = dynamic_cast<Derived_10_2&>(*ptr9);
+    // Task 10.5. Some examples.
+#define typeBool int
+#define typeYes 1
+#define typeNo 0
+#undef typeBool
+#undef typeYes
+#undef typeNo
+    enum typeBool { nop, yep };
+    const typeBoolC yes(1);
+    const typeBoolC no(0);
+    // Task 10.6. Using reference as default.
+    cout << "Result of function_10_2a(int). " << function_10_2b(0) << endl;
+    // Task 10.7. Only some thoughts, code needs additional classes.
+    // Task 10.8. Not possible for templates, just for classes.
+    // Task 10.9. Quick try.
+    int i1 = 1, i2 = 2;
+    typedef int Integer;
+    Integer i3 = 3, i4 = 4;
+    Text vector3;
+    function_10_3(vector3);
+    // Task 10.10-10.11. Namespaces within old #include, not working on actual compilers.
+    using namespace NameSpace_1;
+    integer = 1;
+    // function(integer);   // reference to function is ambigious.
+    cout << "Returning increment of i = " << integer << ", " << NameSpace_1::function(integer) << endl;
+    using NameSpace_2::Class_10a;
+    using NameSpace_2::Class_10b;
+    using NameSpace_2::function_2;
+    Class_10a cl13(1);
+    Class_10b cl14(3);
+    function_2(3.0);
+    NameSpace_3::Class_11a cl15;
+    NameSpace_3::Class_11b cl16;
+    NameSpace_3::function(3.0);
+}
+
 void labs_0x05()
 {
     cout << "Starting Labs_0x05.\n";
-    Labs_0x05::chapter_09();
+    Labs_0x05::chapter_10();
 }
