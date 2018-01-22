@@ -65,7 +65,7 @@ public:
 template<class T> class Class_5 {
 public:
     Class_5();
-    friend void function_5<T>(T* ptr);
+    // friend void function_5(T* ptr);     // friend declaration declares a non-template function
 };
 
 template<class T> class Class_5<T*>  {};
@@ -76,6 +76,31 @@ template<class T> struct Struct_1 {
     static void function(T value) {
         std::cout << "Function in Struct_1, parameter " << value << std::endl;
     }
+};
+
+void function_7() throw(int, char);
+
+void UnxpectedHandler();
+
+void function_8();
+
+int function_9() throw();
+
+int function_10() throw(int, bool);
+
+void function_11() throw(char, bool);
+
+// typedef void (*ptr)() throw(char, bool);     // declared with an exception specification.
+
+class Base_2 {
+public:
+virtual void function() throw(int, char);
+};
+
+class Derived_2 : public Base_2 {
+public:
+    // void function();        // looser throw specifier.
+    void function() throw(int, char);
 };
 
 }

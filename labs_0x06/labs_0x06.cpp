@@ -156,6 +156,29 @@ template<class T> void function_6(T value) {
     Struct_1<T>::function(value);
 }
 
+void Labs_0x06::function_7() throw(int, char) {
+    throw(string("Throwing unexpected exception."));
+}
+
+void Labs_0x06::UnxpectedHandler() {
+    cout << "Handler for unxepected exception.\n";
+}
+
+void Labs_0x06::function_8() {
+    cout << "Function with any exception.\n";
+    throw('a');
+}
+
+int Labs_0x06::function_9() throw() {
+    cout << "Function without exceptions.\n";
+    throw('a');
+}
+
+int Labs_0x06::function_10() throw(int, bool) {
+    cout << "Function with specified exceptions.\n";
+    throw(true);
+}
+
 void labs_0x06()
 {
     cout << "Starting Labs_0x06.\n";
@@ -251,4 +274,35 @@ void labs_0x06()
     function_6<int>(5);
     // Task 8. Using boost, so just quick try with previous classes.
     // Tasks. 9-10. In c++17, keyword 'export' reserved, but unused since c++03.
+    // Task 11. Quick try and catch.
+    const int i5 = 1;
+    try {
+        if (i5 > 0) throw string("Throw exception with string."); else
+            throw(1);
+    } catch (const string& s) {
+        cout << "Catching exception with string parameter.\n";
+    } catch (...) {
+        cout << "Catching exception with other parameter.\n";
+    }
+    // Task 12. Just some theory about code stability.
+    // Task 13. Shorts examples.
+    set_unexpected(&UnxpectedHandler);      // terminated anyway.
+    try {
+        // function_7();
+        function_8();
+    } catch (const char& c) {
+        cout << "Catching exception with char, " << c << endl;
+    }
+    try {
+        // function_9();        // no exceptions.
+    } catch (const char& c) {
+        cout << "Catching exception with char, " << c << endl;
+    }
+    try {
+        function_10();
+    } catch (const bool& b) {
+        cout << "Catch exception with bool, " << b << endl;
+    }
+    void (*ptr6)() throw(char, bool, int);   // compiles ok in both cases.
+    ptr6 = function_11;
 }
