@@ -7,7 +7,9 @@
 #include <iomanip>
 #include <functional>
 #include <algorithm>
+#include <complex>
 #include <assert.h>
+#include <memory.h>
 
 void labs_0x06();
 
@@ -103,6 +105,203 @@ public:
     void function() throw(int, char);
 };
 
+class Base_3 {
+public:
+    Base_3(const std::string& s);
+    std::string getString();
+};
+
+class Derived_3 : public Base_3 {
+public:
+    Derived_3();
+private:
+    std::string data;
+};
+
+class Base_3a {
+public:
+    Base_3a();
+};
+
+class Base_3b {
+public:
+    Base_3b();
+};
+
+class Base_3c {
+public:
+    Base_3c();
+};
+
+class Virtual_3a : public Base_3a {
+public:
+    Virtual_3a();
+};
+
+class Virtual_3b : public Base_3a, public Base_3b {
+public:
+    Virtual_3b();
+};
+
+class Derived_3a : virtual public Virtual_3a {
+public:
+    Derived_3a();
+};
+
+class Derived_3b : virtual public Virtual_3b, public Base_3c {
+public:
+    Derived_3b();
+};
+
+class Class_6 : public Derived_3a, public Derived_3b {
+public:
+    char a, b;
+};
+
+class Class_7 {
+public:
+    Class_7(char ai) : a(ai) {}
+    template<class T>
+    void function(const T& value) {
+        std::cout << "Class_7, function, parameter " << a << std::endl;
+    }
+    friend void function_12(Class_7& value);
+private:
+    char a;
+};
+
+namespace {
+    struct Struct_2 {};
+} template<> void Class_7::function(const Struct_2&) {
+    std::cout << "In Class_7, parameter " << a << std::endl;
 }
+
+void function_12(Class_7& value);
+
+class Base_4 {
+private:
+    virtual void function();
+};
+
+class Derived_4 : public Base_4 {
+    void function();
+};
+
+class Class_8;
+
+typedef int (Class_8::*PtrMem)(int);
+
+class Class_8 {
+public:
+    PtrMem getPtr();
+    double multiply(double d);
+private:
+    int multiply(int i);
+    std::complex<float> multiply(std::complex<float> c);
+};
+
+template<class T, class U>
+class Pair {
+public:
+    Pair() : deleted(false) {}
+    void setDeleted() { deleted = true; }
+    bool isDeleted() { return deleted; }
+    T& first();
+    U& second();
+private:
+    bool deleted;
+    T firstP;
+    U secondP;
+};
+
+class Class_9 {
+public:
+    Class_9(char i);
+    char getChar() const;
+    char c1;
+protected:
+    char getCharP() const;
+    char c2;
+private:
+    char c3, c4;
+};
+
+class Base_5 {
+public:
+    Base_5();
+    int process(const std::string &name);
+    virtual ~Base_5();
+private:
+    virtual int processA(const std::string& name);
+    virtual int processB(const std::string& name);
+    virtual bool ready();
+};
+
+class Derived_5 : public Base_5 {
+public:
+    Derived_5();
+    ~Derived_5();
+    int processA(const std::string &name);
+};
+
+class Derived_6;
+class Base_6 {
+public:
+    // virtual Base_6& operator=(const Derived_6&) throw(int);
+    virtual ~Base_6() throw(int);
+};
+
+class Derived_6 : public Base_6 {
+public:
+    class Data {
+    public:
+        Data& operator=(const Data&) throw(char);
+        ~Data() throw(int);
+    };
+    Data d;
+    ~Derived_6();
+    // ~Derived_6() throw(int, char);
+};
+
+class Base_7 {
+public:
+    Base_7(int a, int b);
+    virtual ~Base_7();
+private:
+    Base_7(const Base_7&);
+    Base_7& operator=(const Base_7&);
+};
+
+class Derived_7 : private virtual Base_7 {
+public:
+    Derived_7(int i, int j);
+    int i;
+};
+
+struct Struct_3 {
+    char c1;
+    long l1;
+    char c2;
+};
+
+struct Struct_4 {
+    long l1;
+    char c1;
+    char c2;
+};
+
+class Base_8 {
+public:
+    static void* operator new(std::size_t, const void*);
+};
+
+class Derived_8 : public Base_8 {
+public:
+    static void* operator new(std::size_t) throw ();
+    static void* operator new(std::size_t, const std::nothrow_t&) throw();
+    static void* operator new(std::size_t, void*) throw();
+};
+
+}   // namespace Labs_0x06.
 
 #endif

@@ -179,6 +179,99 @@ int Labs_0x06::function_10() throw(int, bool) {
     throw(true);
 }
 
+Base_3::Base_3(const std::string& s) { cout << "Base_3, constructor.\n"; }
+
+string Base_3::getString() { return "Base_3, getString() method."; }
+
+Derived_3::Derived_3() : Base_3(data = getString()) {}
+
+Base_3a::Base_3a() { cout << "Base_3a, constructor.\n"; }
+
+Base_3b::Base_3b() { cout << "Base_3b, constructor.\n"; }
+
+Base_3c::Base_3c() { cout << "Base_3c, constructor.\n"; }
+
+Virtual_3a::Virtual_3a() { cout << "Virtual_3a, constructor.\n"; }
+
+Virtual_3b::Virtual_3b() { cout << "Virtual_3b, constructor.\n"; }
+
+Derived_3a::Derived_3a() { cout << "Derived_3a, constructor.\n"; }
+
+Derived_3b::Derived_3b() { cout << "Derived_3b, constructor.\n"; }
+
+void Labs_0x06::function_12(Class_7& value) {
+    cout << "Friend function with Class_7 parameter, " << value.a << endl;
+    if (value.a < 'z') value.a++;
+    cout << "Using reinterpret_cast to this class.\n";
+}
+
+// void Derived_4::function() { Base_4::function(); }  // private
+
+double Class_8::multiply(double d) { return d * d; }
+
+int Class_8::multiply(int i) { return i * i; }
+
+PtrMem Class_8::getPtr() { return &Class_8::multiply; }
+
+Class_9::Class_9(char i) : c1(i), c2(i), c3(i), c4(i) {}
+
+char Class_9::getChar() const { return c3; }
+
+char Class_9::getCharP() const { return c4; }
+
+Base_5::Base_5() { cout << "Base_5, constructor.\n"; }
+
+int Base_5::process(const string &name) {
+    cout << "Process with name " << name << endl;
+    processA(name);
+    processB(name);
+}
+
+Base_5::~Base_5() { cout << "Base_5, destructor.\n"; }
+
+int Base_5::processA(const std::string& name) { cout << "Base_5, process A, name " << name << endl; }
+
+int Base_5::processB(const string &name) { cout << "Base_5, process B, name " << name << endl; }
+
+bool Base_5::ready() { }
+
+Derived_5::Derived_5() { cout << "Derived_5, constructor.\n"; }
+
+Derived_5::~Derived_5() { cout << "Derived_5, destructor.\n"; }
+
+int Derived_5::processA(const string &name) { cout << "Derived_5, process A, name " << name << endl; }
+
+Base_6::~Base_6() throw(int) { cout << "Base_6, destructor.\n"; }
+
+Derived_6::~Derived_6() { cout << "Derived_6, destructor.\n"; }
+
+Derived_6::Data::~Data() throw(int) { cout << "Data subclass, destructor.\n"; }
+
+Base_7::Base_7(int a, int b) {
+    cout << "Base_7, constructor, parameters " << a << " " << b << endl;
+}
+
+Derived_7::Derived_7(int i, int j) : Base_7(i, j) {
+    cout << "Derived_7, constructor, parameters " << i << " " << j << endl;
+}
+
+Base_7::~Base_7() { cout << "Base_7, destructor.\n"; }
+
+void* Derived_8::operator new(std::size_t) throw () {
+    cout << "Operator new(size_t) throw().\n";
+    return (::operator new(sizeof(Derived_8)));
+}
+
+void* Derived_8::operator new(std::size_t, const std::nothrow_t&) throw() {
+    cout << "Operator new(size_t, nothrow_t) throw().\n";
+    return (::operator new(sizeof(Derived_8)));
+}
+
+void* Derived_8::operator new(std::size_t, void*) throw() {
+    cout << "Operator new(size_t, void*) throw().\n";
+    return (::operator new(sizeof(Derived_8)));
+}
+
 void labs_0x06()
 {
     cout << "Starting Labs_0x06.\n";
@@ -305,4 +398,66 @@ void labs_0x06()
     }
     void (*ptr6)() throw(char, bool, int);   // compiles ok in both cases.
     ptr6 = function_11;
+    // Task 14. Not try reinterpret_cast.
+    // Derived_3 cl9;      // compiles, but crashed as expected.
+    cout << "Classes structure, all constructors included in Class_6.\n";
+    Class_6 cl10;
+    Class_7 cl11('a');
+    function_12(cl11);
+    cout << "Second variant using #define public and private.\n";
+    cout << "Using structure, ";
+    cl11.function(Struct_2());
+    // Task 15. Using just 5, is private or ambigious.
+    Base_4 cl12;
+    // cl12.function();     // private.
+    cout << "Address of object of Class_8, " << (&cl12.function) << endl;
+    Class_8 cl13;
+    cout << "Twice with integer parameter 5, " << cl13.multiply(5.0) << endl;
+    // Task 16. Last part as previous.
+    PtrMem ptr7 = cl13.getPtr();
+    cout << "Using pointer to method of Class::multiply(), parameter 3.0, " << (cl13.*ptr7)(3.0) << endl;
+    // Task 17. Calling protected method not possible.
+    Class_9 cl14('a');
+    cout << "Using public method to get char: " << cl14.getChar() << endl;
+    // cout << "Using protected method to get char: " << cl14.getCharP() << endl;
+    Pair<char, int> cl15;
+    // Task 18. Virtual functions are private, unary_function with delete works not as planned.
+    Base_5* ptr8 = new Derived_5;
+    // ptr8->processA("derived object");
+    ptr8->process("derived polymorphic object");
+    delete ptr8;
+    // Task 19. Looser throw for ~Derived_6(). Don't use virtual for operator=().
+    Base_6 cl16;
+    Derived_6 cl17;
+    Base_6* ptr9 = new Derived_6;
+    delete ptr9;
+    // class { auto_ptr<int> i }. auto_ptr depricated since c++11.
+    Derived_7* ptr10 = new Derived_7(1, 2);      // Use of deleted function.
+    delete ptr10;
+    // Task 20-21. Some theory.
+    Struct_3 str1;
+    cout << "Actual size of Struct_3[char, long, char] local object " << sizeof(str1) << endl;
+    Struct_4 str2;
+    cout << "Actual size of Struct_4[long, char, char] local object " << sizeof(str2) << endl;
+    // Tasks 22-23.
+    void* ptr11 = ::operator new(sizeof(int));
+    new (ptr11)int(3);
+    cout << "Create integer in memory, " << *((int*)ptr11) << endl;
+    void* ptr12 = ::operator new(1024);
+    new (ptr12)char('a');
+    // new (42, 3.0, "abc")char('b');   // example of custom operator new.
+    char* ptr13 = new(std::nothrow)char('b');
+    cout << "Operators new with chars " << *((char*)ptr12) << " and " << *ptr13 << endl;
+    Derived_8* ptr14 = new Derived_8, *ptr15 = new(nothrow)Derived_8;
+    new (ptr12) Derived_8;
+    cout << "After adding derived class for operator new.\n";
+    Derived_8* ptr16 = new Derived_8, *ptr17 = new(nothrow) Derived_8;
+    new (ptr12) Derived_8;
+    const int dataSize = 4;
+    char* ptr18 = new char[dataSize];
+    char ptr19[dataSize];
+    // memset(ptr18, 0, dataSize);      // zeros anyway.
+    cout << "All array of char creating by operator new and old plain data[]: ";
+    for (int i = 0; i < dataSize; i++) cout << (int)ptr18[i] << "[" << (int)ptr19[i] << "] ";
+    cout << endl;
 }
