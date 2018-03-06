@@ -272,6 +272,174 @@ void* Derived_8::operator new(std::size_t, void*) throw() {
     return (::operator new(sizeof(Derived_8)));
 }
 
+const char& Labs_0x06::function_13(const int& i) {
+    cout << "Function_13, object int " << i << " returning const reference to char 'a'.\n";
+    // char *r = new char(i % (sizeof(char) * 0x100));
+    char* r = new char('a');
+    return *r;
+}
+
+void Labs_0x06::function_14(const int i) { cout << "Function_14 with parameter " << i << endl; }
+
+float Labs_0x06::square(float side) { return side * side; }
+
+BitsVectorChars::BitsVectorChars() : actualSize(0) { buffer.clear(); }
+
+BitsVectorChars::~BitsVectorChars() {
+    actualSize = 0;
+    buffer.clear();
+}
+
+void BitsVectorChars::append(unsigned char* p, size_t n) {
+    if (n == 0 || p == nullptr) return;
+    unsigned char data, offset = actualSize % bitsPerChar, mask = 0x00;
+    if (actualSize + n > buffer.size() * bitsPerChar) {
+        int newSize = (actualSize + n) / bitsPerChar;
+        if ((actualSize + n) % bitsPerChar != 0) newSize++;
+        buffer.resize(newSize, 0);
+        cout << "Not enough free buffer space, new size is " << buffer.size() << endl;
+    } else cout << "All bits are fit in that buffer size.\n";
+    unsigned char* destination = &buffer[actualSize / bitsPerChar];
+    cout << "Offset is " << (int)offset << ", adding to free bits to last byte.\n";
+    if (offset > 0 || (offset + n) <= bitsPerChar) {
+        for (int i = 0; i < n; i++) mask = (mask << 1) | 0x01;
+        *destination = *destination | (((*p) << offset) & (mask << offset));
+        destination++;
+    }
+    if (offset + n > bitsPerChar) {
+        int fullBytes = (n + offset) / bitsPerChar;
+        if ((n + offset) % bitsPerChar == 0) fullBytes--;
+        cout << "Some bytes needs to add, " << fullBytes << ": ";
+        for (int i = 0; i < fullBytes; ++i) {
+            data = (*p >> (bitsPerChar - offset));
+            if (n > bitsPerChar) data = data | ((*(p+1)) << offset);
+            cout << (int)data << " ";
+            *destination++ = data;
+            p++;
+        }
+        cout << endl;
+    }
+    actualSize += n;
+}
+
+size_t BitsVectorChars::size() const { return actualSize; }
+
+void BitsVectorChars::get(size_t p, size_t n, unsigned char* d) {
+    cout << "Get bits from vector<unsigned char>, position " << p << ", bits " << n << endl;
+    if (p + n > actualSize || d == nullptr || n == 0) {
+        cout << "Wrong pointer or position and size more than possible.\n";
+        return;
+    }
+    int index = p / bitsPerChar;
+    cout << "\tIndex in vector is " << index;
+    unsigned char mask = 0x00, offset = p % bitsPerChar, *data = d;
+    for (int i = 0; i < n && i < bitsPerChar; i++) mask = mask << 1 | 0x01;
+    mask = mask << offset;
+    cout << ", mask offset is " << (int)mask;
+    if (offset > 0 || offset + n <= bitsPerChar) {
+        *data = (buffer[index] & mask) >> offset;
+        cout << "\n\tHead processing byte in data: " << (int)*data;
+        index++;
+    }
+    cout << endl;
+    if (offset + n > bitsPerChar) {
+        int fullBytes = (n + offset) / bitsPerChar;
+        unsigned char tailMask = 0;
+        for (int i = 0; i < n % bitsPerChar + offset; ++i) tailMask = tailMask << 1 | 0x01;
+        cout << "\tMain part processing full bytes range " << fullBytes << ", tail mask " << (int)tailMask << endl;
+        for (int i = 0; i < fullBytes; i++) {
+            cout << "\t[" << i << "]";
+            if (offset > 0) *data = *data | (buffer[index] << (bitsPerChar - offset)); else
+                if (i < fullBytes-1) *data = buffer[index++];
+            cout << "\t" << int(*data);
+            if (n > bitsPerChar) {
+                cout << "\t" << int(*data);
+                *(data+1) = (buffer[index] >> offset);
+                if (i == fullBytes - 1) *(data+1) = *(data+1) & tailMask;
+                cout << "\t" << (int)(*(data+1));
+            }
+            cout << endl;
+            data++;
+            index++;
+        }
+        cout << endl;
+    }
+}
+
+void BitsVectorChars::print() const {
+    cout << "All bits in vector, with actual size " << actualSize << " bits.";
+    for (int i = 0; i < buffer.size(); ++i) {
+        cout << "\n\t[" << (int)buffer[i] << "]\t";
+        for (unsigned char mask = 0x80; mask != 0; mask = mask >> 1)
+            if ((buffer[i] & mask) == mask) cout << "1"; else cout << "0";
+    }
+    cout << endl;
+}
+
+BitsVectorBools::BitsVectorBools() : actualSize(0) { buffer.clear(); }
+
+BitsVectorBools::~BitsVectorBools() {
+    actualSize = 0;
+    buffer.clear();
+}
+
+void BitsVectorBools::append(unsigned char* p, size_t n) {
+    cout << "Adding bits to vector<bool>: ";
+    if (n == 0 || p == nullptr) {
+        cout << "Pointer or amount of bits incorrect.\n";
+        return;
+    }
+    unsigned char byte = 0x00;
+    for (int i = 0; i < n; ) {
+        unsigned char mask = 0x01 << (i % bitsPerChar);
+        buffer.push_back(*p & mask);
+        cout << ((*p & mask) > 0);
+        byte = byte | ((unsigned char)(*p & mask) << ((bitsPerChar - 1) - i % bitsPerChar));
+        ++i;
+        if (i % bitsPerChar == 0 || i == (n - 1)) {
+            p++;
+            cout << " [" << (int)byte << "] ";
+            byte = 0x00;
+        }
+    }
+    cout << endl;
+    actualSize += n;
+}
+
+void BitsVectorBools::get(size_t p, size_t n, unsigned char* d) {
+    cout << "Get bits from vector<bool> to data.\n";
+    if (p + n > buffer.size() || n == 0 || d == nullptr) {
+        cout << "Incorrect position or destination is null pointer or N more than size of buffer<bool>.\n";
+        return;
+    }
+    unsigned char byte = 0x00, mask = 0x00;
+    for (int i = p; i < p + n; ) {
+        unsigned char byteSize = (i - p) % bitsPerChar;
+        byte = byte | ((unsigned char)buffer[i++] << ((bitsPerChar - 1) - byteSize));
+        if ((i - p) % bitsPerChar == 0 || i == (p + n)) {
+            *d++ = byte;
+            byte = 0x00;
+        }
+    }
+}
+
+void BitsVectorBools::print() const {
+    cout << "All bits and bytes in vector<bool>, with actual size " << buffer.size() << " bits.\n\t";
+    unsigned char mask = 0x01, byte = 0x00;
+    for (int i = 0; i < buffer.size(); ) {
+        byte = byte | ((unsigned char)buffer[i] << ((bitsPerChar - 1) - i % bitsPerChar));
+        cout << (char)('0' + (buffer[i] == true)) << " ";
+        i++;
+        if (i % bitsPerChar == 0 || i == buffer.size()) {
+            cout << " [" << (int)byte << "]\n\t";
+            byte = 0x00;
+        }
+    }
+    cout << endl;
+}
+
+size_t BitsVectorBools::size() const { return actualSize; }
+
 void labs_0x06()
 {
     cout << "Starting Labs_0x06.\n";
@@ -459,5 +627,33 @@ void labs_0x06()
     // memset(ptr18, 0, dataSize);      // zeros anyway.
     cout << "All array of char creating by operator new and old plain data[]: ";
     for (int i = 0; i < dataSize; i++) cout << (int)ptr18[i] << "[" << (int)ptr19[i] << "] ";
+    cout << endl;
+    // Task 24. Simple examples.
+    function_13(1);
+    function_14(2);
+    // Task 25. Don't using inline, only if perfomance issue.
+    cout << "Function square, within labs_0x06.hpp file, parameter 3, result " << square(3) << endl;
+    // Tasks 26-27. Refactor later, very poor solution.
+    BitsVectorChars bits;
+    const int dSize = 4;
+    // unsigned char data[dSize] = { 3, 3, 9, 4, 5, 1, 255, 5, 26, 5 };    // bits data & amount for testing.
+    unsigned char data[dSize] = { 6, 173, 155, 79};
+    unsigned char dest1[dSize] = { 0, 0, 0, 0 }, dest2[dSize] = {0, 0, 0, 0};
+    cout << "Adding bits to buffer, using vector<unsigned char> container.\n";
+    bits.append(&data[0], 1);
+    bits.print();
+    bits.append(&data[1], 19);
+    bits.print();
+    bits.get(2, 17, &dest1[0]);
+    cout << "Result of new data: ";
+    for (int i = 0; i < dSize; ++i) cout << (int)dest1[i] << " ";
+    cout << "\nAdding bits to buffer, using vector<bool> container.\n";
+    BitsVectorBools bitsBool;
+    bitsBool.append(&data[0], 4);
+    bitsBool.append(&data[1], 17);
+    bitsBool.print();
+    bitsBool.get(0, 21, dest2);
+    cout << "Result of read vector<bool>: ";
+    for (int i = 0; i < dSize; i++) cout << (int)dest2[i] << " ";
     cout << endl;
 }

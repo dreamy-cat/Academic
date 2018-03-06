@@ -536,5 +536,5 @@ void Labs_0x05::chapter_10()
 void labs_0x05()
 {
     cout << "Starting Labs_0x05.\n";
-    Labs_0x05::chapter_10();
+    Labs_0x05::chapter_01();
 }

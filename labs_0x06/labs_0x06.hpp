@@ -302,6 +302,44 @@ public:
     static void* operator new(std::size_t, void*) throw();
 };
 
+const char& function_13(const int& i);
+
+void function_14(const int i);
+
+float square(float side);
+
+class BitsVectorChars {
+public:
+    BitsVectorChars();
+    ~BitsVectorChars();
+    void append(unsigned char* p, size_t n);
+    size_t size() const;
+    void get(size_t p, size_t n, unsigned char* d);
+    void print() const;
+private:
+    std::vector<unsigned char> buffer;
+    size_t actualSize;
+    static const int bitsPerChar = sizeof(char) * 8;
+    BitsVectorChars(const BitsVectorChars&);
+    BitsVectorChars& operator=(const BitsVectorChars&);
+};
+
+class BitsVectorBools {
+public:
+    BitsVectorBools();
+    ~BitsVectorBools();
+    void append(unsigned char* p, size_t n);
+    void get(size_t p, size_t n, unsigned char* d);
+    void print() const;
+    size_t size() const;
+private:
+    std::vector<bool> buffer;
+    size_t actualSize;
+    static const int bitsPerChar = sizeof(char) * 8;
+    BitsVectorBools(const BitsVectorBools&);
+    BitsVectorBools& operator=(const BitsVectorBools&);
+};
+
 }   // namespace Labs_0x06.
 
 #endif
