@@ -8,6 +8,8 @@
 #include <functional>
 #include <algorithm>
 #include <complex>
+#include <deque>
+#include <iterator>
 #include <assert.h>
 #include <memory.h>
 
@@ -338,6 +340,24 @@ private:
     static const int bitsPerChar = sizeof(char) * 8;
     BitsVectorBools(const BitsVectorBools&);
     BitsVectorBools& operator=(const BitsVectorBools&);
+};
+
+class Class_10 {
+public:
+    int operator()(bool);
+};
+
+struct Struct_5 {
+    static bool function(int *ptr);
+};
+
+class Class_11 {
+public:
+    Class_11& operator++();
+    Class_11& operator+();
+    void operator&&(int);
+    void operator<<(int);
+    void operator||(int);
 };
 
 }   // namespace Labs_0x06.

@@ -440,6 +440,20 @@ void BitsVectorBools::print() const {
 
 size_t BitsVectorBools::size() const { return actualSize; }
 
+int Class_10::operator()(bool) { return 1; }
+
+bool Struct_5::function(int *ptr) { return ptr && 0[ptr] and not ptr[1:>>ptr[2]; }
+
+Class_11& Class_11::operator++() { return *this; }
+
+Class_11& Class_11::operator+() { return *this; }
+
+void Class_11::operator&&(int) {}
+
+void Class_11::operator<<(int) {}
+
+void Class_11::operator||(int) {}
+
 void labs_0x06()
 {
     cout << "Starting Labs_0x06.\n";
@@ -656,4 +670,48 @@ void labs_0x06()
     cout << "Result of read vector<bool>: ";
     for (int i = 0; i < dSize; i++) cout << (int)dest2[i] << " ";
     cout << endl;
+    // Task 28. Not compile, theory.
+    if (true) cout << "Just a true statement at if(true).\n";
+    if (5) cout << "Another statement with integer at if.\n";
+    /*
+    class if {
+    public:
+        if(char);
+    };
+    */
+    // Class_10 if; // expected unqualified-id before 'if'
+    // auto since c++11 has other mean.
+    // Task 29. Commenting some lines because of console input.
+    deque<string> deque1 = { "one", "two", "three" }, deque2;
+    copy(deque1.begin(), deque1.end(), back_inserter(deque2));
+    cout << "Check deque copy source: ";
+    for (auto& e : deque1) cout << e << " ";
+    cout << "and destination: ";
+    for (auto& e : deque2) cout << e << " ";
+    cout << endl;
+    typedef istream_iterator<string> (FunctionType)();
+    deque<string> deque3(istream_iterator<string>, FunctionType);
+    // Using extra pair of ().
+    // deque<string> deque4((istream_iterator<string>(cin)), istream_iterator<string>());
+    // Using extra variables.
+    // istream_iterator<string> first(cin), last;
+    // deque<string> deque5(first, last);
+    // Task 30. Too long to wait with float, may be a bad conversion.
+    double d2 = 1e8;
+    while (d2 > 0) --d2;
+    /*
+    float f1 = 1e8;
+    while (f1 > 0) --f1;
+    */
+    // Task 31. Works fine with actual compiler.
+    // Task 32. Very intresting but compiles ok.
+    int i6 = 1;
+    for (int i = 0; i < 5; ++i);
+    ++i6;
+    cout << "Result of simple example with error at for(...): " << i6 << endl;
+    // Task 33. Very danger to use in real world.
+    Class_11 cl18;
+    +++++cl18;
+    typedef void (Class_11::*FPtr)(int);
+
 }
