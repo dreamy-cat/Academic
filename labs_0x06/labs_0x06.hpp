@@ -9,6 +9,8 @@
 #include <algorithm>
 #include <complex>
 #include <deque>
+#include <map>
+#include <memory>
 #include <iterator>
 #include <assert.h>
 #include <memory.h>
@@ -359,6 +361,98 @@ public:
     void operator<<(int);
     void operator||(int);
 };
+
+template<typename Iter>
+class SortIndex_1 {
+public:
+    void set(const Iter& it, int i) {
+        iter = it;
+        idx = i;
+    }
+    bool operator<(const SortIndex_1& other) const {
+        return *iter < *other.iter;
+    }
+private:
+    Iter iter;
+    int idx;
+};
+
+template<typename IterIn, typename IterOut>
+void SortIdx_1(IterIn first, IterOut last, IterOut result) {
+    std::vector< SortIndex_1<IterIn> > v(last - first);
+    for (int i = 0; i < last - first; ++i) v[i].set(first + i, i);
+    std::sort(v.begin(), v.end());
+    for (IterIn it = first; it != last; ++it) *result++ = *it;
+}
+
+template<typename T, typename U>
+struct ComparePair {
+    bool operator()(const std::pair<T,U>& a, const std::pair<T, U>& b) const {
+        return *a.first < *b.first;
+    }
+    template<typename IterIn, typename IterOut>
+    void SortIdx_2(IterIn first, IterOut last, IterOut result) {
+        std::vector< std::pair<IterIn, int> > p(last - first);
+        for (int i = 0; i < p.size(); ++i)
+            p[i] = std::make_pair(first + i, i);
+        std::sort(p.begin(), p.end(), ComparePair<IterIn, int>());
+    }
+};
+
+template<typename T>
+struct CompareMap {
+    bool operator()(const T& a, const T& b) const {
+        return *a < *b;
+    }
+};
+
+template<typename T, typename U>
+struct PairMap {
+    const U& operator()(const std::pair<T, U>& a) const {
+        return a.second;
+    }
+};
+
+template<typename IterIn, typename IterOut>
+void SortIdx_3(IterIn first, IterOut last, IterOut result) {
+    std::multimap< IterIn, int, CompareMap<IterIn> > m;
+    for (int i = 0; first != last; ++i, ++first)
+        m.insert(std::make_pair(first, i));
+    std::transform(m.begin(), m.end(), result, PairMap<IterIn, int>());
+}
+
+class BaseCallFPtr {
+public:
+    virtual void operator()() const { }
+    virtual ~BaseCallFPtr() = 0;
+};
+
+template<typename T>
+class CallFPtr : public BaseCallFPtr {
+public:
+    typedef void (T::*FPtr)();
+    CallFPtr(T& t, FPtr ptr) : tp(&t), fptr(ptr) { }
+    void operator()() const { (tp->*fptr)(); }
+private:
+    T* tp;
+    FPtr fptr;
+};
+
+template<typename T>
+CallFPtr<T> runFPtr( T& t, void (T::*FPtr)() ) {
+    return CallFPtr<T>(t, FPtr);
+}
+
+struct Union_1 {
+    Union_1(std::string si);
+    ~Union_1();
+    std::string getString() const;
+    std::string s;
+    int i;
+    float f;
+};
+
+void function_15();
 
 }   // namespace Labs_0x06.
 

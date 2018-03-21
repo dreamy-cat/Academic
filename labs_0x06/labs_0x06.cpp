@@ -454,6 +454,28 @@ void Class_11::operator<<(int) {}
 
 void Class_11::operator||(int) {}
 
+BaseCallFPtr::~BaseCallFPtr() {}
+
+Union_1::Union_1(std::string si) : s(si) {}
+
+Union_1::~Union_1() {}
+
+string Union_1::getString() const { return s; }
+
+void Labs_0x06::function_15() {
+    union U {
+        U() : s("") {}
+        U(int* ptr) : p(ptr) {}
+        U& operator=(int* ptr) { *p = *ptr; }
+        ~U() {}
+        string s;
+        unique_ptr<int> p;
+    };
+    U obj;
+    obj.s = "String in Union, first parameter.\n";
+    obj.p = unique_ptr<int>(new int(4));
+}
+
 void labs_0x06()
 {
     cout << "Starting Labs_0x06.\n";
@@ -713,5 +735,43 @@ void labs_0x06()
     Class_11 cl18;
     +++++cl18;
     typedef void (Class_11::*FPtr)(int);
-
+    // Task 34. Last element still not sorted, as is example.
+    const int vSize = 5;
+    int vector3[vSize] = { 3, 4, 2, 1, 2 };
+    vector<int> vector4(vector3, vector3 + vSize);
+    vector<int> index(vSize);
+    SortIdx_1(vector4.begin(), vector4.end(), index.begin());
+    cout << "All elements of vector after sort.\n\t[Index] and element first example:";
+    for (int i = 0; i < vSize; ++i)
+        cout << " [" << index[i] << "] " << vector4[index[i]];
+    vector<int> vector5(vector3, vector3 + vSize);
+    cout << "\n\tSecond example using pair:";
+    ComparePair<vector<int>::iterator, vector<int>::iterator> Sort2;
+    Sort2.SortIdx_2(vector5.begin(), vector5.end(), index.begin());
+    for (int i = 0; i < vSize; ++i)
+        cout << " [" << index[i] << "] " << vector5[index[i]];
+    cout << "\n\tThird example using pair and map: ";
+    vector<int> vector6(vector3, vector3 + vSize);
+    SortIdx_3(vector6.begin(), vector6.end(), index.begin());
+    for (int i = 0; i < vSize; ++i)
+        cout << " [" << index[i] << "] " << vector6[index[i]];
+    cout << endl;
+    // Task 35. Quick testing.
+    vector< CallFPtr<Class_1> > vector7;
+    Class_1 cl19('a');
+    vector7.push_back(CallFPtr<Class_1>(cl19, &Class_1::function));
+    runFPtr(cl19, &Class_1::function)();
+    // Task 36.
+    Union_1 un1("Union_1, structure string.");
+    Union_1 un2("Second union for operator=().");
+    un1.i = 3;
+    cout << "Testing simple union, integer " << un1.i;
+    un1.f = 3.14;
+    cout << ", float " << un1.f << endl;
+    function_15();
+    cout << "String from union " << un1.getString() << endl;
+    cout << "String from second union, " << un2.getString() << endl;
+    un2 = un1;
+    cout << "After using operator=(), by compiler, " << un2.getString() << endl;
+    // Tasks 37-40. Only theory.
 }
