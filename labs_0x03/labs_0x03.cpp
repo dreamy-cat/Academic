@@ -2,6 +2,7 @@
 #include "chapter_01.hpp"
 
 using namespace std;
+using namespace Labs_0x03;
 
 void Labs_0x03::chapter_01()
 {

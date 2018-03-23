@@ -30,6 +30,8 @@ void Instrument::prepare() {
 
 void Wind::clearValve() { cout << "Wind::clearValve()" << endl; }
 
+#ifndef DANGER_CODE
+
 Pet::Pet() { cout << "Pet::Pet()" << endl; }
 
 Pet::~Pet() { cout << "Pet::~Pet()" << endl; }
@@ -53,6 +55,8 @@ Horse::Horse() { cout << "Horse::Horse()" << endl; }
 Horse::~Horse() { cout << "Horse::~Horse()" << endl; }
 
 void Horse::eat(Oats& v) { cout << "Horse::eat()" << endl; }
+
+#endif  // DANGER_CODE
 
 void drawQuad(Shape* v) {
     string className = typeid(*v).name();

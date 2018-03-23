@@ -4,6 +4,8 @@ using namespace std;
 
 Animal::~Animal() { cout << "Animal::~Animal()" << endl; }
 
+#ifndef DANGER_CODE
+
 HuntingCat::HuntingCat(int i) : Hero(i), s(i) { cout << "HuntingCat::HuntingCat(" << i << ")" << endl; }
 
 HuntingCat::~HuntingCat() { cout << "HuntingCat::~HuntingCat(" << s << ")" << endl; }
@@ -63,6 +65,8 @@ FunnyFatCat& FunnyFatCat::operator=(const FunnyFatCat& rv) {
 std::ostream& operator<<(std::ostream& os, const FunnyFatCat& rv) {
     return os << "FunnyFatCat, id " << rv.FatCat::Bat::str << endl;
 }
+
+#endif // DANGER_CODE
 
 void Train::stopTrain() { cout << "Train::stopTrain()" << endl; }
 

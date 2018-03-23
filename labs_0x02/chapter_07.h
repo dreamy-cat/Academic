@@ -101,6 +101,8 @@ public:
     public:
         iterator(T<E>& lst, const typename T<E>::iterator& i) : r(&lst), it(i) {}
 
+        iterator() : r(nullptr) { }
+
         bool operator==(const iterator& x) const {
             return (it == x.it);
         }
@@ -120,9 +122,10 @@ public:
         }
 
         iterator& operator++(int) {
-            iterator tmp = *this;
+            iterator* tmp = new iterator;
+            *tmp = *this;
             ++*this;
-            return tmp;
+            return *tmp;
         }
 
         iterator& operator--() {
@@ -293,9 +296,10 @@ public:
         }
 
         iterator& operator++(int) {
-            iterator tmp = *this;
+            iterator *tmp = new iterator;
+            *tmp = *this;
             ++*this;
-            return tmp;
+            return *tmp;
         }
 
     private:

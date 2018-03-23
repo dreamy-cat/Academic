@@ -100,6 +100,8 @@ class Oats : public Food {
 
 };
 
+#ifndef DANGER_CODE
+
 class Pet {
 public:
     Pet();
@@ -127,6 +129,8 @@ public:
     ~Horse();
     void eat(Oats & v);
 };
+
+#endif // DANGER_CODE
 
 void drawQuad(Shape *v);
 

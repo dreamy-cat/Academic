@@ -1250,6 +1250,7 @@ void Labs_0x02::chapter_08() {
     vector_7 = vector_6;
     for (int i = 0; i < vector_7.size(); i++)
         vector_7[vector_7.size() - 1]->altDraw();
+#ifndef DANGER_CODE
     // Task 8. Not so intresting...
     cout << "Stack of calls in vector with 'Pets*'.\n";
     vector<Pet*> vector_10;
@@ -1268,6 +1269,7 @@ void Labs_0x02::chapter_08() {
             break;
         }
     cout << "Calling all virtual functions 'eat' for the classes Dog, Cat and Horse.\n";
+
     Beef food_1;
     Fish food_2;
     Oats food_3;
@@ -1277,6 +1279,7 @@ void Labs_0x02::chapter_08() {
             if ( className.find("Cat") != string::npos ) dynamic_cast<Cat*>(vector_10[i])->eat(food_2); else
                 if ( className.find("Horse") != string::npos ) dynamic_cast<Horse*>(vector_10[i])->eat(food_3);
     }
+#endif  // DANGER_CODE
     // Task 9-10.
     vector<Shape*> vector_11;
     for (int i = 0; i < 12; i++) {
@@ -1312,6 +1315,7 @@ void Labs_0x02::chapter_09() {
     // Task 3. May be with the old version of compiler, it was possible to trace, but now it's error 'ambigous'.
     ptr_1->Class_Y::function();
     // Task 4-7.
+#ifndef DANGER_CODE
     Bat cl_2(1);
     Tarantool cl_3(2);
     FatCat cl_4(3);
@@ -1340,6 +1344,7 @@ void Labs_0x02::chapter_09() {
     cout << "\nUsing class HuntingCat.\n";
     HuntingCat cl_8(7);
     cl_8.work();
+#endif  // DANGER_CODE
     // Task 15. Works, but very strange scheme of task.
     Class_15 cl_9;
     for (int i = 0; i < 3; i++) cl_9.create();

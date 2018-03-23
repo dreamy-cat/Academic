@@ -44,6 +44,8 @@ public:
     virtual void move() = 0;
 };
 
+#ifndef DANGER_CODE
+
 class Hero {
 public:
     Hero(int s);
@@ -108,6 +110,8 @@ public:
     Bat h;
     FatCat fc;
 };
+
+#endif  // DANGER_CODE
 
 class Counter {
 public:

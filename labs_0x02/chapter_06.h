@@ -266,8 +266,14 @@ public:
         result = (*this) * (rOperand);
         return result;
     }
-
-    friend std::ostream& operator<<(std::ostream& os, const Matrix<T>& value);
+    friend std::ostream& operator<<(std::ostream& os, const Matrix<T>& value) {
+        for (int i = 0; i < value.data.size(); i++) {
+            for (int j = 0; j < value.data[i].size(); j++)
+                std::cout << value.data[i][j] << " ";
+            std::cout << std::endl;
+        }
+        return os;
+    }
 private:
     std::vector<std::vector<T> > data;
 };

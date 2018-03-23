@@ -211,15 +211,6 @@ std::ostream& operator<<(std::ostream& os, const Class_6_13_2 value) {
     return os << "Total [quantity, value]: [" << value.quantity << "," << value.value << "]" << endl;
 }
 
-std::ostream& operator<<(std::ostream& os, const Matrix<int>& value) {
-    for (int i = 0; i < value.data.size(); i++) {
-        for (int j = 0; j < value.data[i].size(); j++)
-            cout << value.data[i][j] << " ";
-        cout << endl;
-    }
-    return os;
-}
-
 Employee::Employee() {
     hours = rand() % 10;
     hourlyPay = rand() % 5 + 1;

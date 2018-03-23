@@ -4,15 +4,20 @@
 #include <float.h>
 #include <math.h>
 #include <stdarg.h>
-#include <sys/file.h>
 #include <io.h>
+#include <dir.h>
+#include <dirent.h>
+
+#ifndef UNIX_DISABLE
+
+#include <syscall.h>
+#include <sys/file.h>
 #include <sys/fcntl.h>
 #include <sys/unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <dir.h>
-// #include <syscall.h>
-#include <dirent.h>
+
+#endif  // UNIX_DISABLE
 
 int getLine(char line[], FILE* stream, int limit) {
     char c;
@@ -351,8 +356,11 @@ int bitCount(unsigned char x) {
 }
 
 void lower(char text[]) {
-    for (int i = 0; text[i] != '\0'; i++)
-        (text[i] >= 'A' && text[i] <= 'Z') ? text[i] += 32 : text[i] = text[i];
+    for (int i = 0; text[i] != '\0'; i++) {
+        // Fix tri-operator.
+        if (text[i] >= 'A' && text[i] <= 'Z') text[i] += 32;
+        // (text[i] >= 'A' && text[i] <= 'Z') ? text[i] += 32 : text[i] = text[i];
+    }
 }
 
 void chapter_2() {
@@ -383,7 +391,8 @@ void chapter_2() {
     printf("Function hex 0x1F to integer:%d\n", htol(hex));
     const int maxString = 256;
     // Task 4-5.
-    char string_1[maxString] = "String_1", string_2[maxString] = "tn";
+    // Fix with copy string.
+    char string_1[] = "String_1", string_2[] = "tn";
     printf("Source string = %s. Symbols to cut = %s.\n", string_1, string_2);
     printf("First position in source string, where found any of symbol of string %s = %d.\n", string_2, any(string_1, string_2));
     squeeze(string_1, string_2);
@@ -401,7 +410,7 @@ void chapter_2() {
     printf("String after calling function lower: %s\n", string_10);
 }
 
-int binSearch(int x, int v[], int n) {
+int int_binSearch(int x, int v[], int n) {
     int low = 0, high = n-1, mid = (low+high)/2;
     while (low <= high && v[mid] != x) {
         if (x < v[mid]) high = mid -1; else low = mid + 1;
@@ -469,7 +478,7 @@ void expand(char s1[], char s2[]) {
     s2[j++] = '\0';
 }
 
-void itoa(unsigned char n, int sign, char s[]) {
+void my_itoa(unsigned char n, int sign, char s[]) {
     int i = 0;
     while (n) {
         s[i++] = n % 10 + '0';
@@ -502,7 +511,7 @@ void itob(unsigned char n, char s[], unsigned char b) {
     s[i] = '\0';
 }
 
-void itoa (unsigned char n, char s[], unsigned char field) {
+void my_itoa_2 (unsigned char n, char s[], unsigned char field) {
     int i = 0;
     while (n) {
         s[i++] = n % 10 + '0';
@@ -544,12 +553,13 @@ void chapter_3() {
     }
     fclose(textFile);
     // Task 3.
-    char line_31[maxLineSize] = "a-e0-3 -a-c-e-- ok.c-a", line_32[maxLineSize];
+    // Fix later with copy.
+    char line_31[] = "a-e0-3 -a-c-e-- ok.c-a", line_32[maxLineSize];
     expand(line_31, line_32);
     printf("Expand line %s to %s\n", line_31, line_32);
     // Task 4.
     char line_4[maxLineSize];
-    itoa(128, -1, line_4);
+    my_itoa(128, -1, line_4);
     printf("Iteger -128 to string = %s\n", line_4);
     // Task 5.
     char line_5_1[maxLineSize], line_5_2[maxLineSize], line_5_3[maxLineSize];
@@ -602,11 +612,11 @@ double aToF(const char s[]) {
 
 // Chapter's 4 variables.
 
-const int stackSize = 16;
-int sp = 0;
-double stack4[stackSize];
-static const int bufSize = 8;
+#define stackSize 16
+#define bufSize 8
+static double stack4[stackSize];
 static char buf4[bufSize];
+static int sp = 0;
 
 void push(double value) {
     if (sp < stackSize) stack4[sp++] = value; else printf("Push error, stack is full.\n");
@@ -769,7 +779,7 @@ void chapter_4() {
     fclose(dest);
     fclose(source);
     // Task 12-13.
-    char line12[maxLength] = "";
+    char line12[maxLength];
     int lenStr = itoaRec(128, line12);
     printf("Integer 128 to string : %s, length = %d\n", line12, lenStr);
     reverseRec(line12, 0, lenStr-1);
@@ -907,9 +917,9 @@ int strIndexPtr(char s[], char t[]) {
 
 // Task 5-7.
 
-static const int maxLines = 256;
+#define maxLines 256
 static int lines = 0;
-static const char* strings[maxLines];
+static char* strings[maxLines];
 
 void readLines(const char *s[], int n) {
     if ((lines + n)>= maxLines) return;
@@ -927,8 +937,8 @@ char toUpper(char c) {
     return (c >= 'a' && c <= 'z') ? c - ('a' - 'A') : c;
 }
 
-bool isDir(const char c) {
-    return (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9' || c == ' ') ? true : false;
+int isDir(const char c) {
+    return (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9' || c == ' ') ? 1 : 0;
 }
 
 int strCmp_5(const char s1[], const char s2[], int caseSens, int dirOrder, int n) {
@@ -1023,11 +1033,11 @@ double expr(int arg_c, const char *arg_v[]) {
     double operand;
     while (--arg_c && *++arg_v != 0) {
         int i, j;
-        bool isCorrectArg = true;
+        int isCorrectArg = 1;
         for (i = 0; (*arg_v)[i] != '\0' && isCorrectArg; i++) {
             for (j = 0; (*arg_v)[i] != symTable[j] && symTable[j] != '\0'; j++);
             if (symTable[j] == '\0')
-                isCorrectArg = false;
+                isCorrectArg = 0;
         }
         if (isCorrectArg && i > 0) {
             if ((*arg_v)[i-1] >= '0' && (*arg_v)[i-1] <= '9')
@@ -1196,7 +1206,7 @@ void dirDcl(const char source[], char name[], char destination[], int *sp) {
 
 void declarationToText(const char source[]) {
     const int maxLength = 256;
-    char type[maxLength] = "", name[maxLength] = "", output[maxLength] = "";
+    char type[maxLength], name[maxLength], output[maxLength];
     int i, j = 0;
     for (i = 0; source[i] != ' ' && source[i] != '\0'; i++)
         type[j++] = source[i];
@@ -1323,18 +1333,18 @@ void chapter_5() {
 
 // Chapter 6.
 
-struct Key {
+typedef struct {
     const char *word;
     int count;
-};
+} Key;
 
-struct Def {
+typedef struct {
     const char *word;
     int length;
-};
+} Def;
 
-static const int maxWordLen = 32;
-static const int maxDefs = 16;
+#define maxWordLen 32
+#define maxDefs 16
 
 Key keys[] = { "for", 0, "if", 0, "while", 0 };
 Def defTab[] = { "#define", 7, "#ifdef", 6, "#ifndef", 7, "#endif", 6 };
@@ -1360,7 +1370,8 @@ int binSearch(char *word, Key tab[], int n) {
 int getWord(const char *text, char *word, int index) {
     if (text[index] == '\0')
         return -1;
-    bool isWord = true;
+    // Check.
+    int isWord = 1;
     int i, j, next;
     for (j = 0, i = index;  isWord && text[i] != '\0'; ) {
         if (text[i+1] != '\0') {
@@ -1396,10 +1407,11 @@ int getWord(const char *text, char *word, int index) {
             if (next == i)
                 printf("Error in #ifdef or #ifndef expression.\n");
             i = next;
-            bool isExist = false;
+            // check bool
+            int isExist = 0;
             for (int k = 0; k < defsCount && !isExist; k++)
                 if (strnCmp(defs[k], parameter, maxWordLen) == 0)
-                    isExist = true;
+                    isExist = 1;
             if (defType == 1 && !isExist || defType == 2 && isExist)
                 while (text[i] != '\0' && strnCmp(text + i, defTab[3].word, defTab[3].length) != 0)
                     i++;
@@ -1411,7 +1423,7 @@ int getWord(const char *text, char *word, int index) {
                 text[i] == '_') {
             word[j++] = text[i++];
         } else
-            isWord = false;
+            isWord = 0;
     }
     word[j] = '\0';
     return i;
@@ -1426,13 +1438,15 @@ int strLen(char s[]) {
     return i;
 }
 
-struct tNode {
+// Fix structure.
+
+typedef struct {
     char *word;
     int count;
     int *nLines;
-    tNode *left;
-    tNode *right;
-};
+    struct tNode *left;
+    struct tNode *right;
+} tNode;
 
 tNode *addNode(tNode *ptr, char *word, int maxLen, int nLine) {
     int cmp;
@@ -1461,7 +1475,7 @@ tNode *addNode(tNode *ptr, char *word, int maxLen, int nLine) {
     return ptr;
 }
 
-void printTree(tNode *ptr, bool printLines) {
+void printTree(tNode *ptr, int printLines) {
     if (ptr != NULL) {
         printTree(ptr->left, printLines);
         printf("%4d %s", ptr->count, ptr->word);
@@ -1523,23 +1537,25 @@ void printTreeDescending(tNode *ptr) {
         printf("%4d %s\n", nodes[i]->count, nodes[i]->word);
 }
 
-bool isType(char *word) {
+// Check all booleans.
+
+int isType(char *word) {
     const char *types[] = { "char", "int", "float", "double" };
     for (int i = 0; i < sizeof(types)/sizeof(char*); i++)
         if (strnCmp(word, types[i], maxWordLen) == 0)
-            return true;
-    return false;
+            return 1;
+    return 0;
 }
 
 // Tasks 6.5-6.6
 
-struct nList {
-    nList *next;
+typedef struct {
+    struct nList *next;
     char *name;
     char *defn;
-};
+} nList;
 
-static const unsigned int hashSize = 256;
+#define hashSize 256
 
 nList *hashTab[hashSize];
 
@@ -1595,11 +1611,11 @@ nList *undef(char *s) {
 
 // Task 6-6.
 
-struct Define {
-    Define *next;
+typedef struct {
+    struct Define *next;
     char *name;
     char *parameter;
-};
+} Define;
 
 Define *addDefine(Define *node, char *name, char *parameter) {
     if (node == NULL) {
@@ -1718,10 +1734,10 @@ void chapter_6() {
             nLine++;
     }
     printf("Full binary tree from 'root' compare up to 'length' = %d. Groups of variables and their counters:\n", wordLen);
-    printTree(root, false);
+    printTree(root, 0);
     printf("Lines found = %d, and source string length = %d\n", nLine, sourceLength);
     printf("Words references with length more than %d: \n", refLen);
-    printTree(references, true);
+    printTree(references, 1);
     printTreeDescending(references);
     // Task 5.
     const char *strings_5[] = { "name_1", "def_1", "name_2", "def_2" };
@@ -2018,9 +2034,9 @@ void chapter_7() {
     printf("Is 'c' and 'A' upper = %d %d\n", isUpper('c'), isUpper('A'));
 }
 
-// Chapter 8.
+#ifndef UNIX_DISABLE
 
-/*
+// Chapter 8.
 
 #define OPEN_MAX_A 8
 
@@ -2097,8 +2113,6 @@ FILE_8* fOpen(const char *name, char *mode) {
             */
     // printf("Create with _iob = %ld\n", (long)fp);
 
-    /*
-
     if (fp > _iob + OPEN_MAX)
         return NULL;
     if (*mode == 'w')
@@ -2121,8 +2135,6 @@ FILE_8* fOpen(const char *name, char *mode) {
         fp->flag._WRITE = 1;
     return fp;
 }
-
-
 
 int fSeek(FILE_8 *file, long offset, int origin) {
     if (file == NULL) {
@@ -2508,7 +2520,7 @@ void chapter_8() {
     heap.state();
 }
 
-*/
+#endif  // UNIX_DISABLE
 
 void labs_0x00() {
     chapter_7();
