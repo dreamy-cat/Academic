@@ -19,7 +19,351 @@
 
 #endif  // UNIX_DISABLE
 
-int getLine(char line[], FILE* stream, int limit) {
+int power(int base, int n)
+{
+    int r = 1;
+    for (int i = 1; i <= n; ++i)
+        r = r * base;
+    return r;
+}
+
+float celsius(int fahr)
+{
+    float r = (5.0 / 9.0) * (fahr - 32);
+    return r;
+}
+
+int getline(char s[], int lim)
+{
+    int c, i;
+    for (i = 0; i < lim - 1 && (c = getchar()) != '\n'; ++i)
+        s[i] = c;
+    s[i] = '\0';
+    return i;
+}
+
+void copy(char to[], char from[])
+{
+    int i = 0;
+    while ((to[i] = from[i]) != '\0')
+        ++i;
+}
+
+int length(char s[])
+{
+    int i = 0;
+    while (s[i] != '\0')
+        ++i;
+    return i;
+}
+
+void reverse(char s[])
+{
+    for (int i = 0, j = length(s) - 1; i < j; ++i, --j) {
+        char c = s[i];
+        s[i] = s[j];
+        s[j] = c;
+    }
+}
+
+void chapter_1()
+{
+    printf("Hello World!\n");
+    printf("\nChapter 1.\n");
+    printf("\nHorizontal tab:\t\tHello!\n");
+    printf("Vertical tab:\vHello!\n");
+    printf("Hello!\b.\n");
+    printf("\tCarriage return.\rOk.\n");
+    printf("New page.\f\n");
+    printf("Sound beeper.\a\n");
+    printf("Hex char 'A': \x41\n");
+    printf("\nFahrenheit:\tCelsius:\n");
+    float fahr, cels;
+    int lower = 0, upper = 200, step = 20;
+    fahr = lower;
+    while (fahr <= upper) {
+        cels = (5.0 / 9.0) * (fahr - 32);
+        printf("%3.0f\t\t%.2f\n", fahr, cels);
+        fahr = fahr + step;
+    }
+    printf("\nCelsius:\tFahrenheit:\n");
+#define CelsMax 100
+#define CelsMin 0
+#define CelsStep 10
+    lower = CelsMin;
+    upper = CelsMax;
+    step = CelsStep;
+    cels = lower;
+    while (cels <= CelsMax) {
+        fahr = cels * (9.0 / 5.0) + 32.0;
+        printf("%.2f\t\t%3.0f\n", cels, fahr);
+        cels = cels + CelsStep;
+    }
+    printf("\nFahrenheit:\tCelsius, using operator for.\n");
+    for (int fahr = 0; fahr <= 200; fahr = fahr + 20)
+        printf("%d\t\t%.2f\n", fahr, (5.0 / 9.0) * (fahr - 32));
+    printf("\nCelsius:\tFahrenheit, using operator for.\n");
+    for (int cels = 100; cels >= 0; cels = cels - 10)
+        printf("%d\t\t%.2f\n", cels, cels * (9.0 / 5.0) + 32.0);
+    printf("\nStandard input/output stream, enter for exit, not EOF.\n");
+    int c = 0;
+    while ((c = getchar()) != '\n')
+        putchar(c);
+    printf("\nConstant EOF = %d and logic (c != EOF) is %d\n", EOF, (c != EOF));
+
+#define IN 1
+#define OUT 0
+    printf("\nCount for chars, lines, spaces and tabs in stream, enter to exit.\n");
+    int size = 0, lines = 0, spaces = 0, tabs = 0;
+    int prev = 0, state = OUT, word = 0;
+    while ((c = getchar()) != '\n') {
+        ++size;
+        if (c == '\n')
+            ++lines;
+        if (c == '\t')
+            ++tabs;
+        if (c == ' ')
+            ++spaces;
+        if (c == ' ' || c == '\t' || c == '\n') {
+            if (state == IN)
+                putchar('\n');
+            state = OUT;
+        }
+        else if (state == OUT) {
+            state = IN;
+            ++word;
+        }
+        if (c == '\t') {
+            putchar('\\');
+            putchar('t');
+        } else if (c == '\b') {
+            putchar('\\');
+            putchar('b');
+        } else if (c == '\\') {
+            putchar('\\');
+            putchar('\\');
+        } else if (c != ' ' || prev != ' ')
+            putchar(c);
+        prev = c;
+    }
+    printf("\nChars %d, lines %d, spaces %d, tabs %d\n", size, lines, spaces, tabs);
+    printf("All words in stream %d\n", word);
+    printf("\nDigits in stream.\n");
+    int digits[10], chars[256], words[10];
+    word = 0;
+    for (int i = 0; i < 10; ++i) {
+        digits[i] = 0;
+        words[i] = 0;
+    }
+    for (int i = 0; i < 256; ++i)
+        chars[i] = 0;
+    while ((c = getchar()) != '\n') {
+        if (c >= ' ' && c <= '~')
+            ++chars[c];
+        if (c >= '0' &&  c <= '9')
+            ++digits[c - '0'];
+        if (c == ' ' || c == '\t') {
+            if (word > 0)
+                ++words[--word];
+            word = 0;
+        } else if (word == 0)
+            word = 1;
+        if (word > 0) {
+            ++word;
+            putchar(c);
+        }
+    }
+    if (word > 0)
+        ++words[--word];
+    printf("\nDigits frequency in stream: ");
+    for (int i = 0; i < 10; ++i)
+        if (digits[i] > 0)
+            printf("%d[%d] ", i, digits[i]);
+    printf("\nChars frequency in stream: ");
+    for (int i = 0; i < 256; ++i)
+        if (chars[i] > 0)
+            printf("%c[%d] ", i, chars[i]);
+    printf("\nWords frequency in stream, length: ");
+    for (int i = 0; i < 10; ++i)
+        if (words[i] > 0)
+            printf("%d[%d] ", i, words[i]);
+    printf("\n\nPower function(5,3) = %d\n", power(5,3));
+    printf("\nFahrenheit:\tCelsius:\n");
+    for (int fahr = 0; fahr <= 200; fahr = fahr + 20) {
+        float cels = celsius(fahr);
+        printf("%d\t\t%.2f\n", fahr, cels);
+    }
+#define MAXLINE 0x100
+    char line[MAXLINE], longest[MAXLINE];
+    int max = 0, len, longer = 5;
+    printf("\nThe longest string in stream. Empty string to exit.\n");
+    printf("Echo strings with length more than %d.\n", longer);
+    printf("Spaces and tabs in tail of strings will be removed.\n");
+    printf("All strings in stream reversed.\n");
+    while ((len = getline(line, MAXLINE)) > 0) {
+        reverse(line);
+        int i = len;
+        while ((i > 0) && (line[i - 1] == '\t' || line[i - 1] == ' '))
+            line[--i] = '\0';
+        if (i < len)
+            printf("String '%s' has extra tabs and spaces in tail.\n", line);
+        else
+            printf("String has no extra tail.\n");
+        len = i;
+        if (len > longer)
+            printf("String '%s' is longer than %d.\n", line, longer);
+        if (len > max) {
+            copy(longest, line);
+            max = len;
+        }
+    }
+    if (max > 0)
+        printf("The longest string '%s' with length %d.\n", longest, max);
+    else
+        printf("No strings was found in stream.\n");
+    int tabSize = 8, column = 0;
+    printf("\nReplace all tabs in stream, with spaces.\n");
+    printf("TABS:\t1:\t2:\t3:\t4:\t5:\n");
+    while ((c = getchar()) != '\n') {
+        if (c == '\t') {
+            do  {
+                putchar('.');
+                ++column;
+            } while (column % tabSize != 0);
+        } else {
+            putchar(c);
+            ++column;
+        }
+    }
+    putchar('\n');
+    printf("\nReplace extra spaces with tabs and spaces.\n");
+    printf("TABS:\t1:\t2:\t3:\t4:\t5:\n");
+    column = 0;
+    spaces = 0;
+    while ((c = getchar()) != '\n') {
+        if (c == '\t')
+            column += tabSize - (column % tabSize);
+        else
+            ++column;
+        if (c == ' ')
+            ++spaces;
+        else
+            while (spaces > 0) {
+                putchar(' ');
+                --spaces;
+            }
+        if (spaces > 0) {
+            if (column % tabSize == 0) {
+                putchar('\t');
+                spaces = 0;
+            }
+        } else
+            putchar(c);
+    }
+    putchar('\n');
+    longer = 16;
+    printf("\nFormat long strings to %d chars.\n", longer);
+    printf("TABS:\t1:\t2:\t3:\t4:\t5:\n");
+    while ((len = getline(line, MAXLINE)) > 0) {
+        int word = 0;
+        column = 0;
+        for (int i = 0; i <= length(line); ++i) {
+            if (line[i] == '\t' || line[i] == ' ' || line[i] == '\0')
+                while (word != i)
+                    putchar(line[word++]);
+            if (c == '\t')
+                column += tabSize - (column % tabSize);
+            else
+                ++column;
+            if (column > longer) {
+                while ((word < i) && (line[word] == '\t' || line[word] == ' '))
+                    ++word;
+                putchar('\n');
+                column = i - word + (column - longer);
+            }
+        }
+        putchar('\n');
+    }
+    // This section need to test next task and various comments types.
+    // Non of variables are using in tasks.
+    char p = '\''; /**/
+        /**/char s = '/';
+        const char str[] = "Comment \" in str/ing /* not comment */, after chars // not comment too...";
+        int ai;            // Comment with string and literal char c = 'r'; /* trying many lines*/
+        /* ai = 0;         // Comment with many lines. And string "text". Literal ''.
+         *                 /* Open comment, but not actual.
+         * */   ai = 15;   // In the same line.
+        char w2 = '\"';    /**/// Constant char with all comments.
+        w2 = 'a';
+    // End of section.
+    printf("\nContent of the file main.c without comments, file must compile correctly.\n");
+    FILE* main = fopen("labs_0x00\\labs_0x00.c", "r");
+    if (!main) {
+        printf("File main.c does not exist. Check paths.\n");
+        return;
+    }
+    int isString = 0, isSingleLine = 0, isManyLines = 0;
+    const char brackets[] = "()[]{}";
+    int bracketCounters[] = { 0, 0, 0, 0, 0, 0 };
+    while ( (c = getc(main)) != EOF) {
+        if ( !isSingleLine && !isManyLines ) {
+            if ( c == '\\' ) {
+                printf("%c", c);
+                c = getc(main);
+            } else {
+                if ( !isString && ( c == '\'' || c == '"'))
+                    isString = c;
+                else
+                    if ( isString == c )
+                        isString = 0;
+                if ( !isString ) {
+                    if ( c == '/' ) {
+                        c = getc(main);
+                        if ( c == '*' )
+                            isManyLines = 1;
+                        else if ( c == '/' )
+                            isSingleLine = 1;
+                        else
+                            printf("/");
+                    }
+                }
+            }
+            if ( !isSingleLine && !isManyLines ) {
+                printf("%c", c);
+                int i = 0;
+                while (brackets[i] != '\0' && brackets[i] != c)
+                    i++;
+                if ( c == brackets[i] )
+                    bracketCounters[i]++;
+            }
+        } else {
+            if ( isSingleLine && c == '\n' ) {
+                printf("\n");
+                isSingleLine = 0;
+            }
+            if ( isManyLines && c == '*') {
+                c = getc(main);
+                if ( c == '/' )
+                    isManyLines = 0;
+            }
+        }
+    }
+    printf("\nAll brackets in source file main.c: ");
+    for (int i = 0; i < 6; i++)
+        printf("'%c':%i ", brackets[i], bracketCounters[i]);
+    printf("\n");
+    fclose(main);
+}
+
+
+/*
+ *
+ *
+ *
+
+
+int getLine(char line[], FILE* stream, int limit)
+{
     char c;
     int i;
     for (i = 0; i < limit-1 && (c = getc(stream)) != EOF && c != '\n'; ++i)
@@ -30,384 +374,6 @@ int getLine(char line[], FILE* stream, int limit) {
     }
     line[i] = '\0';
     return i;
-}
-
-void copyLine(char dest[], char source[]) {
-    /* Copy // line function. */
-    int i = -1; /* Complex comment for task 1-23.
-                 *
-                 */ i++;
-    while ((dest[i] = source[i]) != '\0') ++i;
-}
-
-void reverse(char source[], int length) {
-    for (int i = 0; i < length/2; i++) {
-        char c = source[i];
-        source[i] = source[length-1-i];
-        source[length-1-i] = c;
-    }
-}
-
-float toCelsius(float fahr) {
-    return (5.0/9.0) * (fahr-32);
-}
-
-void chapter_1() {
-    printf("Hello World!\n");
-    // unknown escape sequence '\c'
-    // printf("\c");
-    float fahr, celsius;
-    int upper = 300, lower = 0, step = 20;
-    fahr = lower;
-    printf ("Fahrenheit Celsius:\n");
-    while (fahr <= upper) {
-        celsius = (5.0 / 9.0) * (fahr - 32);
-        printf ("%8.0f %8.1f\n", fahr, celsius);
-        fahr += step;
-    }
-    upper = 100;
-    lower = -50;
-    step = 10;
-    celsius = lower;
-    printf ("Celsius Fahrenheit:\n");
-    while (celsius <= upper) {
-        fahr = celsius * (9.0/5.0) + 32;
-        printf ("%8.1f %8.1f\n", celsius, fahr);
-        celsius += step;
-    }
-    printf("Fahrenheit Celsius:\n");
-    for (fahr = 300; fahr >= 0; fahr -= 20)
-        printf("%5.1f %8.1f\n", fahr, (5.0/9.0) * (fahr-32));
-    printf("Press any key.\n");
-    printf("'getchar() != EOF' = %d, EOF = %d\n", getchar() != EOF, EOF);
-    FILE* text = fopen("labs_0x00/files/chapter-1.txt", "r");
-    char c, pc = 0;
-    int spaces = 0, tabs = 0, lines = 0;
-    printf("Original file 'labs_0x00/files/chapter-1.txt'(with tabs):\n");
-    while ((c = getc(text)) != EOF) {
-        if (c == ' ') spaces++;
-        if (c == '\t') {
-            printf("\\");
-            c = 't';
-            tabs++;
-        }
-        if (c == '\n') lines++;
-        printf("%c", c);
-        pc = c;
-    }
-    printf("Spaces in text: %d, tabs: %d, full lines: %d\n\n", spaces, tabs, lines);
-    fseek(text, 0, 0);
-    printf("Task result:\n");
-    while ((c = getc(text)) != EOF) {
-        if ((c == ' ' && c != pc) || (c != ' '))
-            printf("%c", c);
-        pc = c;
-    }
-    fseek(text, 0, 0);
-    int isWord = 0, words = 0, wordLength = 0;
-    int wordsSizes[16], symbolsFreq[128];
-    for (int i = 0; i < 16; i++) wordsSizes[i] = 0;
-    for (int i = 0; i < 128; i++) symbolsFreq[i] = 0;
-    printf("List of 3 first words: \n");
-    while ((c = getc(text)) != EOF) {
-        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
-            if (!isWord) {
-                isWord = 1;
-                words++;
-            }
-            wordLength++;
-            if (words <= 3) printf("%c", c);
-        } else {
-            if (isWord) {
-                if (wordLength < 16) wordsSizes[wordLength]++;
-                wordLength = 0;
-                isWord = 0;
-            }
-            if (words <= 3) printf("\n");
-        }
-        symbolsFreq[c]++;
-    }
-    printf("\nWords in file: %d\n", words);
-    printf("Histogram of word sizes(max 16 symbols):\n");
-    for (int i = 0; i < 16; i++) {
-        printf("%2d:", i);
-        for (int j = 0; j < wordsSizes[i]; j++) printf(".");
-        printf("\n");
-    }
-    printf("Histogram of symbols(without 0 values):\n");
-    for (int i = 0; i < 128; i++)
-        if (symbolsFreq[i] > 0) {
-            printf("%2d:", i);
-            for (int j = 0; j < symbolsFreq[i]; j++) printf(".");
-            printf("\n");
-        }
-    upper = 300, lower = 0, step = 20;
-    fahr = lower;
-    printf ("Fahrenheit Celsius(with function):\n");
-    while (fahr <= upper) {
-        printf ("%8.0f %8.1f\n", fahr, toCelsius(fahr));
-        fahr += step;
-    }
-    fseek(text, 0, 0);
-    // Task 16-17. Strange.
-#define MAXLENGTH 256
-    char line[MAXLENGTH], maxLine[MAXLENGTH];
-    int sizeOfLine = 0, maxSizeLine = 0;
-
-    while (sizeOfLine = getLine(line, text, MAXLENGTH)) {
-        if (sizeOfLine > maxSizeLine) {
-            copyLine(maxLine, line);
-            maxSizeLine = sizeOfLine;
-        }
-    }
-    printf("Maximum line: ");
-    if (maxSizeLine > 0) printf("%s", maxLine); else printf("Not exist.");
-    fseek (text, 0,0);
-    // Task 18-19.
-    printf("Packed text with reverse lines(no empty lines):");
-    while (sizeOfLine = getLine(line, text, MAXLENGTH)) {
-        for (int i = 0; i < sizeOfLine-1; i++) {
-            if (line[i] == '\t') line[i] = ' ';
-            while (line[i] == ' ' && line[i+1] == ' ') {
-                int j = i;
-                while (line[j] != '\0') {
-                    line[j] = line[j+1];
-                    j++;
-                }
-                sizeOfLine--;
-            }
-        }
-        if (line[0] == '\n' && sizeOfLine == 1) line[0] = '\0';
-        reverse(line, sizeOfLine);
-        printf("%s", line);
-    }
-    printf("\n");
-    // Task 20.
-    printf("Replace tabs with spaces from text:\n");
-    fseek(text, 0, 0);
-    int tabSpaces = 8;
-    while ((sizeOfLine = getLine(line, text, MAXLENGTH)) > 0) {
-        for (int i = 0; i < sizeOfLine; i++)
-            if (line[i] == '\t') {
-                for (int j = 0; j < sizeOfLine-(i+1); j++) {
-                    line[sizeOfLine-1-j+tabSpaces-1] = line[sizeOfLine-1-j];
-                }
-                for (int j = 0; j < tabSpaces; j++) line[i+j] = ' ';
-                sizeOfLine += tabSpaces-1;
-                line[sizeOfLine] = '\0';
-            }
-        printf("%s", line);
-    }
-    // Task 21.
-    printf("Replace spaces with tabs from text:\n");
-    fseek(text, 0,0);
-    while ((sizeOfLine = getLine(line, text, MAXLENGTH)) > 0) {
-        int spaceCounter = 0;
-        for (int i = 0; i < sizeOfLine; i++) {
-            if (line[i] == ' ') {
-                spaceCounter++;
-                if (spaceCounter == tabSpaces) {
-                   for (int j = 0; i+j < sizeOfLine; j++)
-                       line[i-(tabSpaces-1-1)+j] = line[i+1+j];
-                   i -= tabSpaces-1;
-                   line[i] = '\t';
-                   sizeOfLine -= tabSpaces-1;
-                   line[sizeOfLine] = '\0';
-                   spaceCounter = 0;
-                }
-            } else spaceCounter = 0;
-        }
-        printf("%s", line);
-    }
-   // Task 22.
-   printf("Text align to 40 symbols:\n");
-   int textWidth = 40;
-   fseek(text, 0, 0);
-   char printLine[256];
-   while ((sizeOfLine = getLine(line, text, MAXLENGTH)) > 0) {
-       while (sizeOfLine) {
-           int isWord = 0, lastWord = -1;
-           for (int j = 0; j < textWidth && j < sizeOfLine; j++) {
-               if ((line[j] >= 'a' && line[j] <= 'z') || (line[j] >= 'A' && line[j] <= 'Z')) {
-                   isWord = 1;
-               } else {
-                   if (isWord) lastWord = j;
-                   isWord = 0;
-               }
-           }
-           copyLine(printLine, line);
-           if (lastWord == -1) lastWord = textWidth;
-           if (sizeOfLine < textWidth) {
-               lastWord = sizeOfLine;
-               printLine[lastWord] = '\0';
-           } else {
-               printLine[lastWord] = '\n';
-               printLine[lastWord+1] = '\0';
-           }
-           printf("%s", printLine);
-           for (int j = 0; j < sizeOfLine-lastWord; j++)
-               line[j] = line[lastWord+j];
-           sizeOfLine -= lastWord;
-       }
-   }
-   fclose(text);
-   // Task 23-24.
-   fopen("labs_0x00/labs_0x00.cpp", "r");
-   printf("Main source file labs_0x00.cpp, without comments. First 30 lines and braces counters.\n");
-   int inComment = -1, inString = 0, viewLines = 0;
-   int openBraces = 0, closeBraces = 0;
-   while ((sizeOfLine = getLine(line, text, MAXLENGTH))) {
-       for (int i = 0; i < sizeOfLine-1; i++) {
-           if (line[i] == '"' || line[i] == '\'') inString = inString ^ 1;
-           if (!inString) {
-               if (line[i] == '/' && line[i+1] == '/' && inComment == -1) {
-                   sizeOfLine = i+1;
-                   line[i] = '\n';
-                   line[i+1] = '\0';
-               }
-               if (line[i] == '/' && line[i+1] == '*' && inComment == -1) {
-                   inComment = i;
-               }
-               if (line[i] == '*' && line[i+1] == '/' && inComment != -1) {
-                   for (int j = 0; j < sizeOfLine-i-2; j++)
-                       line[inComment+j] = line[i+2+j];
-                   inComment = -1;
-                   sizeOfLine -= (i+2-inComment);
-                   line[sizeOfLine+1] = '\0';
-               }
-           }
-       }
-       if (inComment != -1) {
-           line[inComment] = '\n';
-           line[inComment+1] = '\0';
-           inComment = 0;
-       } else
-           for (int i = 0; line[i] != '\0'; i++) {
-               if (line[i] == '{') openBraces++;
-               if (line[i] == '}') closeBraces++;
-           }
-       if (viewLines < 30) {
-           printf("%s", line);
-           viewLines++;
-       }
-   }
-   printf("Open braces in source file = %d, close braces = %d.\n", openBraces, closeBraces);
-   fclose(text);
-}
-
-int htol(const char hex[]) {
-    int n = 0;
-    if (hex[0] != '0' && hex[1] != 'x')
-        return n;
-    for (int i = 2; hex[i] != '\0'; i++) {
-        if (hex[i] >= '0' && hex[i] <= '9')
-            n = n * 16 + (hex[i] - '0');
-        if (hex[i] >= 'A' && hex[i] <= 'F')
-            n = n * 16 + (hex[i] - 'A' + 10);
-    }
-    return n;
-}
-
-void squeeze(char source[], char toFind[]) {
-    int i, j, k;
-    for (i = 0, j = 0; source[i] != '\0'; i++) {
-        k = 0;
-        while (toFind[k] != '\0' && source[i] != toFind[k])
-            k++;
-        if (toFind[k] == '\0')
-            source[j++] = source[i];
-    }
-    source[j] = '\0';
-}
-
-int any(char source[], char toFind[]) {
-    for (int i = 0; source[i] != '\0'; i++) {
-        for (int j = 0; toFind[j] != '\0'; j++)
-            if (source[i] == toFind[j]) return i;
-    }
-    return -1;
-}
-
-unsigned char setBits(unsigned char x, unsigned char p, unsigned char n, unsigned char y) {
-    if (n > p+1 || n > 8 || p > 7) return 0;
-    y = y & (0xFF >> sizeof(char)*8-n);
-    x = x & ((0xFF << p+1) | (0xFF >> sizeof(char)*8-(p+1-n)));
-    x = x | (y << (p+1-n));
-    return x;
-}
-
-unsigned char invertBits(unsigned char x, unsigned char p, unsigned char n) {
-    if (n > p+1 || n > 8 || p > 7) return 0;
-    unsigned char mask = 0xFF << p+1 | 0xFF >> sizeof(char)*8-(p+1-n);
-    x = x & mask | (~x & ~mask);
-    return x;
-}
-
-unsigned char rollRightBits(unsigned char x, unsigned char n) {
-    for (int i = 0; i < n; i++)
-        if (x & 0x01) x = (x >> 1) | 0x80; else x = x >> 1;
-    return x;
-}
-
-int bitCount(unsigned char x) {
-    int b;
-    for (b = 0; x > 0; b++) x &= (x-1);
-    return b;
-}
-
-void lower(char text[]) {
-    for (int i = 0; text[i] != '\0'; i++) {
-        // Fix tri-operator.
-        if (text[i] >= 'A' && text[i] <= 'Z') text[i] += 32;
-        // (text[i] >= 'A' && text[i] <= 'Z') ? text[i] += 32 : text[i] = text[i];
-    }
-}
-
-void chapter_2() {
-    printf("Chapter's 2 tasks.\n");
-    // Task 1.
-    printf ("Table of types(limits.h).\n");
-    printf("Type:\t\tBits:\tMIN:\t\t\tMAX:\n");
-    printf("Char\t\t%d\t%d\t\t\t%d\n", (int)sizeof(char)*8, SCHAR_MIN, SCHAR_MAX);
-    printf("Unsigned char\t%d\t%d\t\t\t%d\n", (int)sizeof(char)*8, 0, UCHAR_MAX);
-    printf("Short\t\t%d\t%d\t\t\t%d\n", (int)sizeof(short)*8, SHRT_MIN, SHRT_MAX);
-    printf("Unsigned short\t%d\t%d\t\t\t%d\n", (int)sizeof(short)*8, 0, USHRT_MAX);
-    printf("Int\t\t%d\t%d\t\t%d\n", (int)sizeof(int)*8, INT_MIN, INT_MAX);
-    printf("Unsigned int\t%d\t%d\t\t\t%u\n", (int)sizeof(int)*8, 0, UINT_MAX);
-    printf("Long\t\t%d\t%ld\t%lu\n", (int)sizeof(long)*8, LONG_MIN, LONG_MAX);
-    printf("Unsigned long\t%d\t%d\t\t\t%lu\n", (int)sizeof(long)*8, 0, ULONG_MAX);
-    printf("Float\t\t%d\t%.1f\t\t\t%.1f\n", (int)sizeof(float)*8, FLT_MIN, FLT_MAX);
-    // Task 2.
-    char c;
-    const int limit = 1;
-    for (int i = 0; i < limit; i++) {
-        if ((c = getchar()) != EOF) {
-            if (c != '\n') printf("Symbol: %c", c);
-        }
-    }
-    printf("\n");
-    // Task 3.
-    const char hex[] = "0x1F";
-    printf("Function hex 0x1F to integer:%d\n", htol(hex));
-    const int maxString = 256;
-    // Task 4-5.
-    // Fix with copy string.
-    char string_1[] = "String_1", string_2[] = "tn";
-    printf("Source string = %s. Symbols to cut = %s.\n", string_1, string_2);
-    printf("First position in source string, where found any of symbol of string %s = %d.\n", string_2, any(string_1, string_2));
-    squeeze(string_1, string_2);
-    printf("String after squeeze = %s.\n", string_1);
-    // Tasks 6-8.
-    printf("Set 2 last bits from 0x03 byte to position 2 of 0x0F byte(hex): %x\n", setBits(0x0F, 2, 2, 0x03));
-    printf("Invert 2 bits from 0x0F from position 2(hex): %x\n", invertBits(0x0F, 2, 2));
-    printf("Roll cyclic 0x07 to the right, 3 bits(hex): %x\n", rollRightBits(0x07, 3));
-    // Task 9.
-    printf("Bits in 0x0F: %d\n", bitCount(0x0F));
-    // Task 10.
-    char string_10[] = "StRiNg_10";
-    printf("Source string: %s\n", string_10);
-    lower(string_10);
-    printf("String after calling function lower: %s\n", string_10);
 }
 
 int int_binSearch(int x, int v[], int n) {
@@ -686,7 +652,12 @@ void chapter_4() {
     printf ("E notation of number %s = %.2f\n", string2, aToF(string2));
     // Task 3-6. Errors correction works only with symbols. Task 6 - only read/write 1 variable.
     const int maxLength = 256;
-    const char string3_1[] = "3 D + 4 2 X / * P 0 S + 2 4 O + 0 E + 1 W R +", symTable[] = "0123456789+-*/%PDCXSOERW";
+
+    */
+
+    // const char string3_1[] = "3 D + 4 2 X / * P 0 S + 2 4 O + 0 E + 1 W R +", symTable[] = "0123456789+-*/%PDCXSOERW";
+
+/*
     char operandStr[maxLength];
     int operandSize = 0;
     double operand, extraOperand, variable = 0.0;
@@ -1028,7 +999,12 @@ void monthDay_2(int year, int yearday, int *pmonth, int *pday) {
 // Task 10.
 
 double expr(int arg_c, const char *arg_v[]) {
-    const char symTable[] = "0123456789+-*/";
+
+*/
+  //   const char symTable[] = "0123456789+-*/";
+
+/*
+ *
     const int maxLength = 256;
     double operand;
     while (--arg_c && *++arg_v != 0) {
@@ -1956,17 +1932,20 @@ void chapter_7() {
     char string_4[maxWordLen];
     minScanf(string_3, &int_1, &doub_1, &ch_1, string_4);
     printf("Result of minScanf(): integer = %d, float = %f, string = %s, char = %c.\n", int_1, doub_1, string_4, ch_1);
-    // Task 5. Something with stream...
-    char string_5[MAXLENGTH] = "", operandStr[MAXLENGTH] = "";
+    // Task 5. Something with stream, refactor later.
+    const int maxLength = 256;
+    char string_5[maxLength], operandStr[maxLength];
+    string_5[0] = 0;
+    operandStr[0] = 0;
     char symTable[] = "0123456789+-/*";
     int operandSize = 0;
     double operand;
     printf("Enter operands to calculate, as it was task in chapter 4. Type 'ok' to calculate.\n");
-    while (strnCmp(operandStr, "ok", MAXLENGTH) != 0) {
+    while (strnCmp(operandStr, "ok", maxLength) != 0) {
         scanf("%s", operandStr);
-        if (strnCmp(operandStr, "ok", MAXLENGTH) != 0) {
-            strnCat(string_5, operandStr, MAXLENGTH);
-            strnCat(string_5, " ", MAXLENGTH);
+        if (strnCmp(operandStr, "ok", maxLength) != 0) {
+            strnCat(string_5, operandStr, maxLength);
+            strnCat(string_5, " ", maxLength);
         }
         // printf("operand = %s\n", operandStr);
     }
@@ -2007,9 +1986,9 @@ void chapter_7() {
     // Task 6.
     FILE* file_1 = fopen("labs_0x00/files/chapter-7-1.txt", "r");
     FILE* file_2 = fopen("labs_0x00/files/chapter-7-2.txt", "r");
-    char line_1[MAXLENGTH], line_2[MAXLENGTH];
-    while (fgets(line_1, MAXLENGTH, file_1) != NULL && fgets(line_2, MAXLENGTH, file_2) != NULL)
-        if (strnCmp(line_1, line_2, MAXLENGTH) != 0) {
+    char line_1[maxLength], line_2[maxLength];
+    while (fgets(line_1, maxLength, file_1) != NULL && fgets(line_2, maxLength, file_2) != NULL)
+        if (strnCmp(line_1, line_2, maxLength) != 0) {
             printf("Different lines in files:\n%s%s", line_1, line_2);
             break;
         }
@@ -2019,12 +1998,13 @@ void chapter_7() {
     const char *fileNames[] = { "labs_0x00/files/chapter-7-1.txt", "labs_0x00/files/chapter-7-2.txt" };
     int filesCount = sizeof(fileNames)/sizeof(char*);
     FILE* txtFile;
-    char txtLine[MAXLENGTH], toFind[MAXLENGTH] = "ine";
+    // Fix 256 as number.
+    char txtLine[maxLength], toFind[256] = "ine";
     printf("All lines in files, contain %s substring.\n", toFind);
     for (int i = 0; i < filesCount; i++) {
         printf("All lines in file '%s':\n", fileNames[i]);
         txtFile = fopen(fileNames[i], "r");
-            while (fgets(txtLine, MAXLENGTH, txtFile) != NULL) {
+            while (fgets(txtLine, maxLength, txtFile) != NULL) {
                 if (strIndex(txtLine, toFind) != -1)
                     printf("Substring founded: ");
                 printf("%s",txtLine);
@@ -2113,6 +2093,10 @@ FILE_8* fOpen(const char *name, char *mode) {
             */
     // printf("Create with _iob = %ld\n", (long)fp);
 
+
+/*
+ *
+ *
     if (fp > _iob + OPEN_MAX)
         return NULL;
     if (*mode == 'w')
@@ -2522,6 +2506,8 @@ void chapter_8() {
 
 #endif  // UNIX_DISABLE
 
+*/
+
 void labs_0x00() {
-    chapter_7();
+    chapter_1();
 }

@@ -2,6 +2,7 @@
 #define LABS_0x03_H
 
 #include <iostream>
+#include <vector>
 
 void labs_0x03();
 
