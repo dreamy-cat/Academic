@@ -355,12 +355,202 @@ void chapter_1()
     fclose(main);
 }
 
+int myatoi(char s[])
+{
+    int i, n = 0;
+    for (i = 0; s[i] >= '0' && s[i] <= '9'; ++i)
+        n = n * 10 + (s[i] - '0');
+    return n;
+}
+
+int lower(int c)
+{
+    return (c >= 'A' && c <= 'Z') ? (c + ('a' - 'A')) : c;
+}
+
+int htoi(char s[])
+{
+    int n = 0;
+    for (int i = 0; s[i] != '\0'; ++i) {
+        char c = lower(s[i]);
+        if (c >= '0' && c <= '9')
+            n = n * 16 + (c - '0');
+        else if (c >= 'a' && c <= 'f')
+            n = n * 16 + (c - 'a' + 10);
+    }
+    return n;
+}
+
+void squeeze(char s1[], char s2[])
+{
+    int i, j, k;
+    for (i = 0, j = 0; s1[i] != '\0'; ++i) {
+        k = 0;
+        while (s2[k] != '\0' && s2[k] != s1[i])
+            ++k;
+        if (s2[k] == '\0')
+            s1[j++] = s1[i];
+    }
+    s1[j] = '\0';
+}
+
+int any(char s1[], char s2[])
+{
+    for (int i = 0; s1[i] != '\0'; ++i) {
+        int j = 0;
+        while (s2[j] != '\0' && s2[j] != s1[i])
+            ++j;
+        if (s1[i] == s2[j])
+            return i;
+    }
+    return -1;
+}
+
+unsigned char getbits(unsigned char x, int p, int n)
+{
+    return (x >> (p + 1 + n)) & ~(0xFF << n);
+}
+
+void printbinary(unsigned char byte, const char message[])
+{
+    char binary[CHAR_BIT + 1];
+    const int tabSize = 8;
+    for (int i = 0; i < CHAR_BIT; ++i)
+        if ((0x01 << i) & byte)
+            binary[CHAR_BIT - (i + 1)] = '1';
+        else
+            binary[CHAR_BIT - (i + 1)] = '0';
+    binary[CHAR_BIT] = '\0';
+    int i = 0;
+    while (message[i] != '\0')
+        ++i;
+    if (i <= tabSize)
+        printf("%s\t\t%d\t%s\n", message, byte, binary);
+    else
+        printf("%s\t%d\t%s\n", message, byte, binary);
+}
+
+int bitcount(unsigned char x)
+{
+    int b;
+    for (b = 0; x > 0; ++b)
+        x &= (x - 1);
+    return b;
+}
+
+void chapter_2()
+{
+    printf("Chapter 2.\n");
+    printf("\nAll basic types and parameters.\n");
+    printf("Type:\t\tBits[calc]:\tMin:\t\tMax:\n");
+    int bits = 0;
+    for (char c = 1; c > 0; ++bits)
+        c = c * 2;
+    printf("Signed char\t%d[%d]\t\t%d\t\t%d\n", CHAR_BIT, bits, CHAR_MIN, CHAR_MAX);
+    bits = 0;
+    for (unsigned char c = 1; c > 0; ++bits)
+        c = c * 2;
+    printf("Unsigned char\t%d[%d]\t\t%d\t\t%d\n", CHAR_BIT, bits, 0, UCHAR_MAX);
+    bits = 0;
+    for (short int i = 1; i > 0; ++bits)
+        i = i * 2;
+    printf("Signed short\t%d[%d]\t\t%d\t\t%d\n", bits, bits, SHRT_MIN, SHRT_MAX);
+    bits = 0;
+    for (unsigned short int i = 1; i > 0; ++bits)
+        i = i * 2;
+    printf("Unsigned short\t%d[%d]\t\t%d\t\t%d\n", bits, bits, 0, USHRT_MAX);
+    printf("Signed int\t%d[%d]\t\t%d\t%d\n", sizeof(int) * CHAR_BIT, 31, INT_MIN, INT_MAX);
+    printf("Unsigned int\t%d[%d]\t\t%d\t\t%lu\n", sizeof(int) * CHAR_BIT, 32, 0, UINT_MAX);
+    printf("Signed long\t%d[%d]\t\t%d\t%d\n", sizeof(long) * CHAR_BIT, 31, LONG_MIN, LONG_MAX);
+    printf("Unsigned long\t%d[%d]\t\t%d\t\t%lu\n", sizeof(long) * CHAR_BIT, 32, 0, ULONG_MAX);
+    printf("\nFloating:\tBits:\tDigits:\tMant:\tMinExp:\tMaxExp:\tMin:\tMax:\n");
+    printf("Float\t\t%d\t%d\t%d\t%d\t%d\t%2.2g%2.2g\n",
+           sizeof(float) * CHAR_BIT, FLT_DIG, FLT_MANT_DIG, FLT_MIN_EXP, FLT_MAX_EXP, FLT_MIN, FLT_MAX);
+    printf("Double\t\t%d\t%d\t%d\t%d\t%d\t%2.2g%2.2g\n",
+           sizeof(double) * CHAR_BIT, DBL_DIG, DBL_MANT_DIG, DBL_MIN_EXP, DBL_MAX_EXP, DBL_MIN, DBL_MAX);
+    printf("Long double\t%d\t%d\t%d\t%d\t%d\t%2.2g%2.2g\n",
+           sizeof(long double) * CHAR_BIT, LDBL_DIG, LDBL_MANT_DIG, LDBL_MIN_EXP, LDBL_MAX_EXP, LDBL_MIN, LDBL_MAX);
+    enum colors { red, green, blue };
+    printf("\nEnumeration example. Red %d, green %d and blue %d.\n", red, green, blue);
+    char c, line[MAXLINE];
+    const int limit = 5;
+    printf("\nEnter simple string, limit %d chars.\n", limit);
+    for (int i = 0, c = ' '; c != '\0'; ++i) {
+        c = getchar();
+        if (c == '\n')
+            c = '\0';
+        else if (i == limit)
+            c = '\0';
+        else if (c == EOF)
+            c = '\0';
+        line[i] = c;
+    }
+    printf("String was '%s'.\n", line);
+    char numstr[] = "15";
+    printf("\nString '%s' to intger %d.\n", numstr, myatoi(numstr));
+    int left = 3, right = 5;
+    printf("Values of simple logic operators 'if (%d < %d), integer %d, if (%d == 0), integer %d'.\n",
+           left, right, (left > right), right, (right == 0));
+    char hexstr[] = "0x1F";
+    printf("\nString '%s' to integer %d.\n", hexstr, htoi(hexstr));
+    char str1[] = "abc def eg", str2[] = "eg";
+    printf("\nDelete extra chars from string '%s'.\n", str1);
+    squeeze(str1, str2);
+    printf("String without chars '%s', '%s'.\n", str2, str1);
+    char str3[] = "e ";
+    printf("\nFinding any char of '%s', in string '%s'.\n", str3, str1);
+    int pos = any(str1, str3);
+    if (pos != -1)
+        printf("Index of first char %d.\n", pos);
+    else
+        printf("No chars was found.\n");
+    unsigned char x = 171, y = 173;
+    int n = 4, p = 3;
+    printf("\nCopy N %d lower bits from Y %d to X %d to P %d index.\n", n, y, x, p);
+    printf("Step:\t\tValue:\tBinary:\n");
+    unsigned char mask = 0xFF >> (CHAR_BIT - n);
+    printbinary(mask, "Mask for Y");
+    printbinary(y, "Y");
+    y = y & mask;
+    printbinary(y, "Y and Mask");
+    y = y << p;
+    printbinary(y, "Y roll left");
+    printbinary(x, "X");
+    mask = ~((0xFF >> (CHAR_BIT - n)) << p);
+    printbinary(mask, "Mask for X");
+    x = x & mask;
+    printbinary(x, "X and mask");
+    x = x | y;
+    printbinary(x, "X or Y");
+    printf("\nInvert N %d bits in X %d from P %d index.\n", n, x, p);
+    printf("Step:\t\tValue:\tBinary:\n");
+    printbinary(x, "X");
+    mask = (0xFF >> (CHAR_BIT - n)) << p;
+    printbinary(mask, "Mask for X");
+    x = x ^ mask;
+    printbinary(x, "X xor mask");
+    printf("\nCycle roll to the right N %d bits from X %d.\n", n, x);
+    printf("Step:\t\tValue:\tBinary:\n");
+    printbinary(x, "X");
+    mask = (0xFF >> (CHAR_BIT - n));
+    printbinary(mask, "Mask for X");
+    unsigned char tail = x & mask;
+    printbinary(tail, "Tail for X");
+    x = x >> n;
+    printbinary(x, "X roll right");
+    x = x | (tail << (CHAR_BIT - n));
+    printbinary(x, "X or tail");
+    printf("\nBit counter in X %d, %d.\n", x, bitcount(x));
+    char str4[] = "A bc hd D EG";
+    printf("\nOriginal string '%s', ", str4);
+    for (int i = 0; str4[i] != '\0'; ++i)
+        str4[i] = lower(str4[i]);
+    printf("with lower chars '%s'.\n", str4);
+}
+
 
 /*
  *
- *
- *
-
 
 int getLine(char line[], FILE* stream, int limit)
 {
@@ -2509,5 +2699,5 @@ void chapter_8() {
 */
 
 void labs_0x00() {
-    chapter_1();
+    chapter_2();
 }
