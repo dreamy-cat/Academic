@@ -548,36 +548,27 @@ void chapter_2()
     printf("with lower chars '%s'.\n", str4);
 }
 
-
-/*
- *
-
-int getLine(char line[], FILE* stream, int limit)
+int binsearch(int x, int v[], int n)
 {
-    char c;
-    int i;
-    for (i = 0; i < limit-1 && (c = getc(stream)) != EOF && c != '\n'; ++i)
-        line[i] = c;
-    if (c == '\n') {
-        line[i] = c;
-        ++i;
-    }
-    line[i] = '\0';
-    return i;
-}
-
-int int_binSearch(int x, int v[], int n) {
-    int low = 0, high = n-1, mid = (low+high)/2;
+    int low = 0, high = n - 1;
+    int mid = (low + high) / 2;
     while (low <= high && v[mid] != x) {
-        if (x < v[mid]) high = mid -1; else low = mid + 1;
+        if (x < v[mid])
+            high = mid - 1;
+        else
+            low = mid + 1;
         mid = (low + high) / 2;
     }
-    if (low <= high) return mid; else return -1;
+    if (v[mid] == x)
+        return mid;
+    else
+        return -1;
 }
 
-void escape(char s[], char t[]) {
+void escape(char s[], char t[])
+{
     int j = 0;
-    for (int i = 0; t[i] != '\0'; i++)
+    for (int i = 0; t[i] != '\0'; ++i) {
         switch (t[i]) {
         case '\t':
             s[j++] = '\\';
@@ -591,143 +582,170 @@ void escape(char s[], char t[]) {
             s[j++] = t[i];
             break;
         }
+    }
     s[j] = '\0';
 }
 
-void toText(char s[], char t[]) {
+void unescape(char s[], char t[])
+{
     int j = 0;
-    for (int i = 0; t[i] != '\0'; i++)
-        switch (t[i]) {
-        case '\\':
+    for (int i = 0; t[i] != '\0'; ++i)
+        if (t[i] == '\\' && t[i + 1] != '\0')
             switch (t[i+1]) {
             case 't':
                 s[j++] = '\t';
-                i++;
+                ++i;
                 break;
             case 'n':
                 s[j++] = '\n';
-                i++;
-                break;
+                ++i;
             default:
-                s[j++] = t[i];
+                break;
             }
-            break;
-        default:
+        else
             s[j++] = t[i];
-        }
     s[j] = '\0';
 }
 
-void expand(char s1[], char s2[]) {
-    int j = 0, k = 0;
-    const char intervals[6] = { 'a', 'z', 'A', 'Z', '0', '9' };
-    for (int i = 0; s1[i] != '\0'; i++) {
-        for (k = 0; !(s1[i] >= intervals[k*2] && s1[i] <= intervals[k*2+1]) && k < 3; k++);
-        if (k != 3 && s1[i+1] != '\0' && s1[i+2] != '\0') {
-            int startSeq = i;
-            while  (s1[i+1] == '-' && s1[i+2] >= intervals[k*2] && s1[i+2] <= intervals[k*2+1]) {
-                i += 2;
-            }
-            for (char c = s1[startSeq]; c <= s1[i]; c++) s2[j++] = c;
-        } else s2[j++] = s1[i];
-    }
-    s2[j++] = '\0';
+int myatois(char s[])
+{
+    int i = 0, n, sign = (s[i] == '-') ? -1 : 1;
+    if (s[i] == '+' || s[i] == '-')
+        ++i;
+    for (n = 0; (s[i] >= '0' && s[i] <= '9'); ++i)
+        n = 10 * n + (s[i] - '0');
+    return sign * n;
 }
 
-void my_itoa(unsigned char n, int sign, char s[]) {
-    int i = 0;
-    while (n) {
-        s[i++] = n % 10 + '0';
-        n = n / 10;
+int myisalpha(int c)
+{
+    return (lower(c) >= 'a' && lower(c) <= 'z');
+}
+
+int myisdigit(int c)
+{
+    return (c >= '0' && c <= '9');
+}
+
+void expand(char s1[], char s2[])
+{
+    int j = 0;
+    for (int i = 0; s1[i] != '\0'; ++i) {
+        char c = s1[i], c1 = s1[i + 1], c2 = s1[i + 2];
+        if (c1 == '-' && c2 >= c && (myisalpha(c) && myisalpha(c2) || myisdigit(c) && myisdigit(c2))) {
+            c1 = c;
+            while (c < c2)
+                s2[j++] = s1[i] + (c++ - c1);
+            ++i;
+        } else
+            s2[j++] = s1[i];
     }
-    if (i == 0) s[i++] = '0';
-    if (sign < 0) s[i++] = '-';
-    for (int j = 0; j < i / 2; j++) {
-        char c = s[j];
-        s[j] = s[i-1-j];
-        s[i-1-j] = c;
-    }
+    s2[j] = '\0';
+}
+
+void myitoa(int n, char s[])
+{
+    int i = 0, sign = (n < 0) ? -1 : 1;
+    do {
+        s[i++] = (n % 10) * sign + '0';
+    } while ((n /= 10) * sign > 0);
+    if (sign == -1)
+        s[i++] = '-';
     s[i] = '\0';
+    reverse(s);
 }
 
-void itob(unsigned char n, char s[], unsigned char b) {
-    if (b > 16) return;
-    const char characters[] = "0123456789ABCDEF";
-    int i = 0;
-    while (n) {
-        s[i++] = characters[n % b];
-        n = n / b;
-    }
-    if (i == 0) s[i++] = '0';
-    for (int j = 0; j < i / 2; j++) {
-        char c = s[j];
-        s[j] = s[i-1-j];
-        s[i-1-j] = c;
-    }
+void itob(int n, char s[], int b)
+{
+    if (b < 2 && b > 16)
+        return;
+    char digits[] = "0123456789ABCDEF";
+    int i = 0, sign = (n < 0) ? -1 : 1;
+    do {
+        s[i++] = digits[(n * sign) % b];
+    } while ((n /= b) * sign > 0);
+    if (sign == -1)
+        s[i++] = '-';
     s[i] = '\0';
+    reverse(s);
 }
 
-void my_itoa_2 (unsigned char n, char s[], unsigned char field) {
-    int i = 0;
-    while (n) {
-        s[i++] = n % 10 + '0';
-        n = n / 10;
-    }
-    if (i == 0) s[i++] = '0';
-    for (int j = i; j < field; j++)
-        s[i++] = ' ';
-    for (int j = 0; j < i / 2; j++) {
-        char c = s[j];
-        s[j] = s[i-1-j];
-        s[i-1-j] = c;
-    }
-    s[i] = '\0';
+void myitoafield(int n, char s[], int f)
+{
+    int i = f - 1, sign = (n < 0) ? -1 : 1;
+    if (f < 1 + (sign == -1))
+        return;
+    do {
+        s[i--] = (n % 10) * sign + '0';
+    } while ((n /= 10) * sign > 0 &&  i >= (sign == -1));
+    if (sign < 0)
+        s[i--] = '-';
+    while (i >= 0)
+        s[i--] = ' ';
+    s[f] = '\0';
 }
 
-void chapter_3() {
-    printf("Chapter's 3 tasks.\n");
-    // Task 1. May be not right...
-    const int arraySize = 5;
-    int array_1[arraySize];
-    printf("Array of int: ");
-    for (int i = 0; i < arraySize; i++) {
-        array_1[i] = i;
-        printf("%d ", array_1[i]);
-    }
-    printf("\nFind position of element = 1: %d\n", binSearch(1, array_1, arraySize));
-    // Task 2.
-    FILE* textFile = fopen("labs_0x00/files/chapter-3.txt", "r");
-    const int maxLineSize = 128;
-    char text[maxLineSize], line_1[maxLineSize], line_2[maxLineSize];
-    int lineSize;
-    printf("File 'chapter-3.txt' with special symbols, as is: \n");
-    while ((lineSize = getLine(text, textFile, maxLineSize))) {
-        escape(line_1, text);
-        printf("%s\n", line_1);
-        toText(line_2, line_1);
-        printf("Original text: %s", line_2);
-    }
-    fclose(textFile);
-    // Task 3.
-    // Fix later with copy.
-    char line_31[] = "a-e0-3 -a-c-e-- ok.c-a", line_32[maxLineSize];
-    expand(line_31, line_32);
-    printf("Expand line %s to %s\n", line_31, line_32);
-    // Task 4.
-    char line_4[maxLineSize];
-    my_itoa(128, -1, line_4);
-    printf("Iteger -128 to string = %s\n", line_4);
-    // Task 5.
-    char line_5_1[maxLineSize], line_5_2[maxLineSize], line_5_3[maxLineSize];
-    itob(15, line_5_1, 10);
-    itob(15, line_5_2, 2);
-    itob(15, line_5_3, 16);
-    printf("Integer 15 in binary, decimal and hex : %s %s %s\n", line_5_1, line_5_2, line_5_3);
-    // Task 6.
-    char line6_1[maxLineSize];
-    itoa(15, line6_1, 4);
-    printf("Integer 15 and field = 4:%s\n", line6_1);
+void chapter_3()
+{
+    printf("Chapter 3.\n");
+    int v[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    printf("\nBinary search in V[0..9], value %d, position %d.\n", 7, binsearch(7, v, 10));
+    printf("Binary search in V[0..9], value %d, position %d.\n", 0, binsearch(0, v, 10));
+    printf("Binary search in V[0..9], value %d, position %d.\n", 9, binsearch(9, v, 10));
+    char s1[] = "\t abc \t\tdef\ngh\t\n", s2[MAXLINE], s3[MAXLINE];
+    printf("\nString with all espace sequences '%s'.\n", s1);
+    escape(s2, s1);
+    printf("String with all escape sequences '%s'.\n", s2);
+    unescape(s3, s2);
+    printf("String after unescape sequences '%s'.\n", s3);
+    char s4[] = "53";
+    printf("\nSigned atoi function string %s, to integer %d.\n", s4, myatois(s4));
+    char s5[] = "-- f-d b-b A-D a-c-f -pre post- 3-7 1-3-5 --";
+    printf("\nExpanding string '%s'.\n", s5);
+    expand(s5, s2);
+    printf("Expanded string '%s'.\n", s2);
+    int i1 = INT_MIN;
+    myitoa(i1, s2);
+    printf("\nInteger %d to string '%s'.\n", i1, s2);
+    int i2 = -173;
+    itob(i2, s2, 10);
+    printf("\nInteger %d, in decimal '%s'.\n", i2, s2);
+    itob(i2, s2, 2);
+    printf("Integer %d, in binary '%s'.\n", i2, s2);
+    itob(i2, s2, 8);
+    printf("Integer %d, in oct '%s'.\n", i2, s2);
+    itob(i2, s2, 16);
+    printf("Integer %d, in hex '%s'.\n", i2, s2);
+    int i3 = -235;
+    myitoafield(i3, s2, 8);
+    printf("\nInteger %d to string '%s', field %d.\n", i3, s2, 8);
+    myitoafield(i3, s2, 4);
+    printf("Integer %d to string '%s', field %d.\n", i3, s2, 4);
+    char s6[] = "3 tabs and 2 spaces in tail \t\t \t";
+    printf("\nString with extra tail '%s'.\n", s6);
+    int i;
+    for (i = length(s6) - 1; i >= 0; --i)
+        if (s6[i] != '\t' && s6[i] != ' ' && s6[i] != '\n')
+            break;
+    s6[++i] = '\0';
+    printf("String without extra tail '%s'.\n", s6);
+    printf("\nTesting operator 'goto'.\n");
+    int i4 = 5;
+    if (i4 == 7)
+        goto label1;
+    printf("Operand before 'goto' operator.\n");
+label1:
+    printf("Operand after 'goto' operator, label 'label1'.\n");
 }
+
+
+
+
+
+
+
+
+/*
 
 int strIndex(char s[], char t[]) {
     int i, j, p = -1;
@@ -2699,5 +2717,5 @@ void chapter_8() {
 */
 
 void labs_0x00() {
-    chapter_2();
+    chapter_3();
 }
