@@ -53,7 +53,8 @@ void Class_5_6_1::Class_5_6_2::Class_5_6_3::display() {
 
 void Class_5_8::showMap() {
     cout << "Address of this [Class_5_8] and members: ";
-    cout << (long)this << " " << (long)&this->a << " " << (long)&this->b << " " << (long)&this->c << endl;
+// FIX
+    // cout << (long)this << " " << (long)&this->a << " " << (long)&this->b << " " << (long)&this->c << endl;
 }
 
 Stack_5::Stack_5(int maxSz) {

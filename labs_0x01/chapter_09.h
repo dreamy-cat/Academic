@@ -22,7 +22,8 @@ public:
     Class_9_6() : i(0) {}
     int f() const { return g() + 1; }
     int g() const { return i; }
-    int t () { std::cout << (long)this; }
+    // FIX!
+    int t () { std::cout << (long long)this; }
 private:
     int i;
 };

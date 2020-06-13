@@ -5,8 +5,9 @@
 #include "labs_0x04/labs_0x04.hpp"
 #include "labs_0x05/labs_0x05.hpp"
 #include "labs_0x06/labs_0x06.hpp"
+#include "labs_0x07/labs_0x07.c"
 
 int main(int argc, char** argv)
 {
-    labs_0x00();
+    labs_0x07();
 }

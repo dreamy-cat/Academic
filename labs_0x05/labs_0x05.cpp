@@ -331,7 +331,7 @@ void Labs_0x05::chapter_06()
     unique_ptr<char> ptr9(ptr8);
     *ptr8 = 'a';
     *ptr9 = 'b';
-    assert( ptr8 == ptr9);
+    assert(ptr8 == ptr9);
     char* ptr10 = ptr9.release();
     unique_ptr<char> ptr11(new char);
     *ptr11 = 'c';
@@ -536,5 +536,7 @@ void Labs_0x05::chapter_10()
 void labs_0x05()
 {
     cout << "Starting Labs_0x05.\n";
-    Labs_0x05::chapter_01();
+    TerminalHacked(4,8);
+    // Labs_0x05::chapter_01();
+
 }

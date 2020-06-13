@@ -1,8 +1,8 @@
 #ifndef LABS_05_CHAPTER_10_H
 #define LABS_05_CHAPTER_10_H
 
-#include <iostream>
 #include <map>
+#include <iostream>
 #include <cassert>
 #include <typeinfo>
 #include <string>

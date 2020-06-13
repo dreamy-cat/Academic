@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 2.8)
 # Enable to see code generated.
 #set(CMAKE_CXX_FLAGS "-Wa,-alh")
 set(CMAKE_CXX_FLAGS "-Wall")
+#set(CMAKE_CXX_FLAGS "-O3")
 
 set(CMAKE_CXX_FLAGS "-std=c++14")
 
@@ -15,6 +16,7 @@ aux_source_directory(./labs_0x03 SRC_LIST)
 aux_source_directory(./labs_0x04 SRC_LIST)
 aux_source_directory(./labs_0x05 SRC_LIST)
 aux_source_directory(./labs_0x06 SRC_LIST)
+aux_source_directory(./labs_0x07 SRC_LIST)
 
 add_executable(${PROJECT_NAME} ${SRC_LIST})
 

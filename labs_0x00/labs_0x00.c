@@ -355,12 +355,19 @@ void chapter_1()
     fclose(main);
 }
 
-int myatoi(char s[])
+int myisdigit(int c);
+
+int my_atoi(char s[])
 {
-    int i, n = 0;
-    for (i = 0; s[i] >= '0' && s[i] <= '9'; ++i)
-        n = n * 10 + (s[i] - '0');
-    return n;
+    int i = 0, n = 0;
+    while (s[i] != '-' && s[i] != '+' && !myisdigit(s[i]))
+        i++;
+    int sign = (s[i] == '-') ? -1 : 1;
+    if (s[i] == '-' || s[i] == '+')
+        i++;
+    while (s[i] >= '0' && s[i] <= '9')
+        n = n * 10 + (s[i++] - '0');
+    return (n * sign);
 }
 
 int lower(int c)
@@ -472,7 +479,7 @@ void chapter_2()
            sizeof(long double) * CHAR_BIT, LDBL_DIG, LDBL_MANT_DIG, LDBL_MIN_EXP, LDBL_MAX_EXP, LDBL_MIN, LDBL_MAX);
     enum colors { red, green, blue };
     printf("\nEnumeration example. Red %d, green %d and blue %d.\n", red, green, blue);
-    char c, line[MAXLINE];
+    char line[MAXLINE];
     const int limit = 5;
     printf("\nEnter simple string, limit %d chars.\n", limit);
     for (int i = 0, c = ' '; c != '\0'; ++i) {
@@ -487,7 +494,7 @@ void chapter_2()
     }
     printf("String was '%s'.\n", line);
     char numstr[] = "15";
-    printf("\nString '%s' to intger %d.\n", numstr, myatoi(numstr));
+    printf("\nString '%s' to intger %d.\n", numstr, my_atoi(numstr));
     int left = 3, right = 5;
     printf("Values of simple logic operators 'if (%d < %d), integer %d, if (%d == 0), integer %d'.\n",
            left, right, (left > right), right, (right == 0));
@@ -657,7 +664,7 @@ void myitoa(int n, char s[])
 
 void itob(int n, char s[], int b)
 {
-    if (b < 2 && b > 16)
+    if (b < 2 || b > 16)
         return;
     char digits[] = "0123456789ABCDEF";
     int i = 0, sign = (n < 0) ? -1 : 1;
@@ -738,6 +745,293 @@ label1:
     printf("Operand after 'goto' operator, label 'label1'.\n");
 }
 
+int str_index(char source[], char search[]);
+
+int str_index(char src[], char str[])
+{
+    int i, j, k;
+    for (i = 0; src[i] != '\0'; ++i) {
+        for (j = i, k = 0; str[k] != '\0' && str[k] == src[j]; j++, k++)
+            ;
+        if (k > 0 && str[k] == '\0')
+            return i;
+    }
+    return -1;
+}
+
+double my_atof(char s[])
+{
+    double value, power, base = 10;
+    int i, sign;
+    for (i = 0; s[i] != '\0' && !myisdigit(s[i]) && s[i] != '+' && s[i] != '-'; i++)
+        ;
+    sign = (s[i] == '-') ? -1 : 1;
+    if (s[i] == '+' || s[i] == '-')
+        i++;
+    for (value = 0.0; myisdigit(s[i]); ++i)
+        value = base * value + (s[i] - '0');
+    if (s[i] == '.')
+        i++;
+    for (power = 1.0; myisdigit(s[i]); i++) {
+        value = base * value + (s[i] - '0');
+        power *= base;
+    }
+    if (lower(s[i]) == 'e' && (s[i+1] == '-' || s[i+1] == '+')) {
+        double exp = 0.0, multiplier;
+        multiplier = (s[i+1] == '+') ? base : (1.0 / base);
+        i += 2;
+        while (myisdigit(s[i]))
+            exp = exp * base + (s[i++] - '0');
+        while (exp > 0) {
+            power /= multiplier;
+            exp -= 1.0;
+        }
+    }
+    return sign * value / power;
+}
+
+static int stack_calc[MAXLINE];
+static int sp_calc = 0;
+
+void push_calc(int i)
+{
+    if (sp_calc < MAXLINE)
+        stack_calc[sp_calc++] = i;
+    else
+        printf("Stack is full, no more push.\n");
+}
+
+int pop_calc()
+{
+    if (sp_calc > 0)
+        return stack_calc[--sp_calc];
+    else {
+        printf("No values in stack.");
+        return -1;
+    }
+}
+
+void chapter_4()
+{
+    printf("Chapter 4.\n");
+    /*
+    char line[MAXLINE], search[] = "ab";
+    int i1 = 0;
+    printf("Enter strings with possible substring '%s' or empty to exit.\n", search);
+    while (getline(line, MAXLINE) > 0)
+        if (str_index(line, search) >= 0) {
+            printf("String with '%s' substring - %s.\n", search, line);
+            ++i1;
+        } else
+            printf("String does not contains substring '%s'.\n", search);
+    printf("All findings %d.\n", i1);
+    printf("\nConvert strings to double.\n");
+    char num1[] = "0.0", num2[] = "-0.15", num3[] = "+100.0";
+    char num4[] = "10.5e+2", num5[] = "-5.1E-1";
+    printf("%s\t%0.3f\n", num1, my_atof(num1));
+    printf("%s\t%0.3f\n", num2, my_atof(num2));
+    printf("%s\t%0.3f\n", num3, my_atof(num3));
+    printf("%s\t%0.3f\n", num4, my_atof(num4));
+    printf("%s\t%0.3f\n", num5, my_atof(num5));
+    */
+
+    printf("Calculator with reverse polish notation.\n");
+    printf("Empty string for exit: ");
+    char s[MAXLINE], n[MAXLINE];
+    while ((getline(s, MAXLINE)) != 0) {
+        int i, j, r_op;
+        printf("Index:\tStack:\tOperator:\n");
+        for (i = 0; s[i] != '\0'; i++) {
+            printf("\n%d\t", i);
+            for (j = 0; j < sp_calc; j++)
+                printf("%d ", stack_calc[j]);
+            switch (s[i]) {
+            case '+':
+                printf("\t+");
+                push_calc(pop_calc() + pop_calc());
+                break;
+            case '-':
+                printf("\t-");
+                r_op = pop_calc();
+                push_calc(pop_calc() - r_op);
+                break;
+            case '*':
+                printf("\t*");
+                push_calc(pop_calc() * pop_calc());
+                break;
+            case '/':
+                printf("\t/");
+                r_op = pop_calc();
+                push_calc(pop_calc() / r_op);
+                break;
+            default:
+                for (j = 0; myisdigit(s[i]); n[j++] = s[i++]);
+                if (j > 0) {
+                    n[j] = '\0';
+                    int d = my_atoi(n);
+                    push_calc(d);
+                    printf("[%d]", d);
+                    break;
+                }
+            }
+        }
+        printf("\nResult: %d", pop_calc());
+    }
+}
+
+unsigned int is_factorial_mult(unsigned int n)
+{
+    if (n <= 1)
+        return 1;
+    unsigned int d = 1, s = 1;
+    while (s < n) {
+        d++;
+        s = s * d;
+        printf("Number %u and factorial %u.\n", s, d);
+    }
+    if(s == n)
+        return d;
+    return 0;
+}
+
+unsigned int is_factorial_cycles(unsigned int n)
+{
+    unsigned int m = 2;
+    while (n > 1 &&  n % m == 0) {
+        n /= m++;
+        printf("Number %u and delimeter %u.\n", n, m);
+    }
+    if (n == 1)
+        return --m;
+    return 0;
+}
+
+unsigned int is_factorial_recursion(unsigned int n, unsigned int m)
+{
+    if (n == 1)
+        return --m;
+    if (n % m != 0)
+        return 0;
+    n = n / m;
+    m++;
+    printf("Number %u and delimiter %u.\n", n, m);
+    return is_factorial_recursion(n, m);
+}
+
+void questions()
+{
+    /*rerum: Написать программу, которая осуществляет считывание введенных данных,
+     * определяет их тип и сохраняет в виде массива данных. Результатом работы программы
+     * является вывод на экран размера массива и объем памяти занимаемый им.
+     * Требования: Программа должна иметь примитивное «меню». После вывода результата,
+     * программа должна передоложить повторный ввод пользователю.
+     * Данные должны храниться в виде динамического массива.
+     * ЗАПРЕЩЕНА ЗАПИСЬ В НЕЗАРЕЗЕРВИРОВАННЫЕ УЧАСТКИ ПАМЯТИ!
+     *  Для второй, дополнение: Правила формирования входной последовательности
+     * Последовательность символов разделенных символом «пробел».
+     * По первой последовательности символов определяется тип данных в последующих.
+     * В случае не соответствия определенного типа выводится сообщение об ошибке введенных данных,
+     *  при возможности, данные преобразуются и программа продолжает своё выполнение.
+*/
+
+    char s[MAXLINE], word[MAXLINE];
+    void* data[MAXLINE];
+    int data_size = 0, memory = 0;
+    enum data_type { Void, Char, Int, Double } types[MAXLINE];
+    const char* type_names[] = { "Void", "Char", "Int", "Double" };
+    printf("Save char, int and double to dynamic memory, maximum %d objects.\n", MAXLINE);
+    printf("Maximum length string %d and empty to exit.\n", MAXLINE);
+    printf("Size of types char %d, integer %d and double %d bytes.\n", sizeof(char), sizeof(int), sizeof(double));
+    int i, j, k, l;
+    while ((l = getline(s, MAXLINE)) != 0 && data_size < MAXLINE) {
+        // Source "3.0 -5.3 3.1 text 123 82..."
+        printf("Source length[%d]: %s\n", l, s);
+        printf("Word:\tType:\tData:\tMemory:\n");
+        for (i = 0; i < l; i += j + 1) {
+            for (j = 0; s[i + j] != '\0' && s[i + j] != ' ' && s[i + j] != '\t'; ++j)
+                word[j] = s[i + j];
+            word[j] = '\0';
+            // Word "-32.25"
+            enum data_type wtype = Void;
+            for (k = 0; k < j && wtype != Char && data_size < MAXLINE; ++k) {
+                if ((k == 0 && j > 1) && (word[k] == '-' || word[k] == '+'))
+                    k++;
+                if (word[k] == '.' && wtype == Int)
+                    wtype = Double;
+                else if (myisdigit(word[k]) && wtype == Void)
+                    wtype = Int;
+                else if (!myisdigit(word[k]))
+                    wtype = Char;
+            }
+            double d_write, d_verify;
+            int i_write, i_verify;
+            unsigned int word_len;
+            switch (wtype) {
+            case Double:
+                d_write = my_atof(word);
+                data[data_size] = malloc(sizeof(double));
+                memory += sizeof(double);
+                memcpy(data[data_size], &d_write, sizeof(double));
+                d_verify = *((double*)data[data_size]);
+                printf("%s\t%s\t%3.3f\t%d\n", word, type_names[wtype], d_verify, sizeof(double));
+                types[data_size++] = wtype;
+                break;
+            case Int:
+                i_write = my_atoi(word);
+                data[data_size] = malloc(sizeof(int));
+                memory += sizeof(int);
+                memcpy(data[data_size], &i, sizeof(int));
+                i_verify = *((int*)data[data_size]);
+                printf("%s\t%s\t%d\t%d\n", word, type_names[wtype], i_verify, sizeof(int));
+                types[data_size++] = wtype;
+                break;
+            case Char:
+                word_len = (unsigned int)length(word) + 1;
+                data[data_size] = malloc(sizeof(char) * word_len);
+                memory += word_len;
+                memcpy(data[data_size], &word, word_len);
+                // char* sr = (char*)(data[data_size]);
+                printf("%s\t%s\t%s\t%d\n", word, type_names[wtype], (char*)(data[data_size]), word_len);
+                types[data_size++] = wtype;
+                break;
+            default:
+                printf("'%s'\t%s\tIndex = %d\n", word, type_names[wtype], i);
+            }
+        }
+        printf("Dynamic array has %d objects and use %d bytes memory.\n\n", data_size, memory);
+    }
+
+    /*
+
+    rerum: Написать программу, которая проверят является ли введенное значение факториалом,
+    если это так, то вывести факториалом какого числа. Программа должна иметь примитивное «меню».
+    Пользователю должно быть предложено: Нахождение факториала рекурсивным методом.
+    Нахождение факториала не рекурсивным методом. Выход из программы.
+    После вывода результата перед завершение программа должна передоложить повторный ввод пользователю.
+
+    */
+
+    printf("Unsinged integer is %u bytes and maxiumum value is %u.\n", sizeof(unsigned int), UINT_MAX);
+//    char s[MAXLINE];
+    printf("Enter number that can factorial of any number in [0..12], empty string to exit.\n");
+    while (getline(s, MAXLINE)) {
+        unsigned int n = (unsigned int)my_atoi(s);
+        if (n > 1 && n <= 479001600) {
+            printf("Finding factorial of N = %u, using multiplier.\n", n);
+            printf("N = %u is factorial of %u.\n", n, is_factorial_mult(n));
+            printf("Finding factorial of N = %u, using delemiter.\n", n);
+            printf("N = %u is factorial of %u.\n", n, is_factorial_cycles(n));
+            printf("Finding factorial of N = %u, using recursion.\n", n);
+            printf("N = %u is factorial of %u.\n", n, is_factorial_recursion(n, 1));
+        } else
+            printf("Factorial is 1.\n");
+    }
+}
+
+void questions_2()
+{
+
+}
 
 
 
@@ -2717,5 +3011,5 @@ void chapter_8() {
 */
 
 void labs_0x00() {
-    chapter_3();
+    chapter_2();
 }

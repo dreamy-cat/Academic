@@ -104,7 +104,7 @@ void function_12_12(double d) {
 Class_12_13::Class_12_13(int *ii) : i(ii) {}
 
 void Class_12_13::print() {
-    cout << "Class_12_13 integer = " << *i << ", address : " << (long)i << endl;
+    cout << "Class_12_13 integer = " << *i << ", address : " << (long long)i << endl;
 }
 
 Class_12_13& Class_12_13::operator=(const Class_12_13& rv) {
