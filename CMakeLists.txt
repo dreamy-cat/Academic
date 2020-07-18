@@ -4,7 +4,8 @@ cmake_minimum_required(VERSION 2.8)
 # Enable to see code generated.
 #set(CMAKE_CXX_FLAGS "-Wa,-alh")
 set(CMAKE_CXX_FLAGS "-Wall")
-#set(CMAKE_CXX_FLAGS "-O3")
+set(CMAKE_C_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS "-O0")
 
 set(CMAKE_CXX_FLAGS "-std=c++14")
 
