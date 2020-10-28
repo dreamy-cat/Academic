@@ -188,7 +188,7 @@ void Labs_0x01::chapter_03 () {
     for (int i = 0; i < 3; i++) function_3_7();
     // Task 10. Undefined reference, if 'fs' loacate in other file.
     extern int fs;
-    cout << "Static int = " << fs << endl;
+    cout << "Static int = " << Labs_0x01::fs << endl;
     // Tasks 11-13.
     double p1, p2;
     cout << "Double arguments 1 & 2:\n";
@@ -690,7 +690,7 @@ void Labs_0x01::chapter_08() {
     cout << "Task's 6 string : " << string6 << endl;
     // Task 7.
     extern const int int7;
-    cout << "External constant integer : " << int7 << endl;
+    cout << "External constant integer : " << Labs_0x01::int7 << endl;
     // Task 8. Increment of read-only location.
     const long lm1[3] = {1, 2, 3};
     const long* lmPtr1 = &lm1[0];
