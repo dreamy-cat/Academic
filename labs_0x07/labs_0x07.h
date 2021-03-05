@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <limits.h>
+#include <float.h>
 
 // Global defines using in all parts of book.
 
