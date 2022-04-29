@@ -17,7 +17,6 @@ aux_source_directory(./labs_0x03 SRC_LIST)
 aux_source_directory(./labs_0x04 SRC_LIST)
 aux_source_directory(./labs_0x05 SRC_LIST)
 aux_source_directory(./labs_0x06 SRC_LIST)
-aux_source_directory(./labs_0x07 SRC_LIST)
 
 add_executable(${PROJECT_NAME} ${SRC_LIST})
 

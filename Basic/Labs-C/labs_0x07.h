@@ -1,3 +1,5 @@
+/*
+
 #ifndef LABS_0x07_H
 #define LABS_0x07_H
 
@@ -58,3 +60,5 @@ void part_6(void);
 void part_10(void);
 
 #endif
+*/
+

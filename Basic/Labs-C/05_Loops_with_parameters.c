@@ -1,4 +1,8 @@
-#include "labs_0x07.h"
+#include <stdio.h>
+#include <math.h>
+#include <limits.h>
+#include <stdlib.h>
+
 #include "library.h"
 
 void print_binary_byte(unsigned char byte)

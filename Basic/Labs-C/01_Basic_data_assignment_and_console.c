@@ -1,4 +1,5 @@
-#include "labs_0x07.h"
+#include <stdio.h>
+#include <math.h>
 
 void part_1()
 {
