@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-int main(int argc, char* argv[])
+void theory_13(void)
 {
     printf("Chapter 13. File Input/Output.\n");
     // Для перенаправления вывода мы можем исползовать символ >.
@@ -55,12 +55,12 @@ int main(int argc, char* argv[])
     while ((c = getc(src)) != EOF) {
         offset = ftell(src);
         printf("Char readed from file '%c' and code %d, offset %d and counter %d.\n", c, c, offset, counter);
-        if (!is_number && (c >= '0' && c <= '9' || c == '-' || c == '+')) { // read number to string.
+        if (!is_number && ((c >= '0' && c <= '9') || c == '-' || c == '+')) { // read number to string.
             is_number = 1;
             num_len = 0;
             printf("Number founded at %d position.\n", counter);
         }
-        if (is_number && !(c >= '0' && c <= '9' || c == '-' || c == '+')) {
+        if (is_number && !((c >= '0' && c <= '9') || c == '-' || c == '+')) {
             is_number = 0;
             printf("Number ended at %d position.\n", counter);
             if (num_len) {
@@ -155,6 +155,4 @@ int main(int argc, char* argv[])
     fflush(dst);
     if (fclose(dst) != 0)
             printf("Something goes wrong with destination file.\n");    // Buffer.
-
-    return 0;
 }
