@@ -48,12 +48,10 @@ void part_6(void);
 
 void part_10(void);
 
-
-
 int main()
 {
-    // part_1();
-    part_4();
+    part_1();
+    // part_4();
 
     // theory_05();
 
@@ -61,7 +59,3 @@ int main()
 
     // extra_tasks();
 }
-
-
-
-
