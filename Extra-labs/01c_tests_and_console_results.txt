@@ -1,0 +1,131 @@
+﻿Simple dictionary with CString-Data as key-value, using dynamic memory.
+
+Compare pairs of float arrays and data.
+Float array A(1.1, 1.2); B(1.1, 1.2)), memory size is 8.
+New pair (0061FE74) created, key at (001815E8) size 1 and value at (001815F8).
+New pair (0061FE7C) created, key at (00181608) size 1 and value at (00181618).
+Comparing data in pairs 'A' at (0061FE74) and 'B' at (0061FE7C), type 'float' and memory size 8, iterations: 2, result is 0.
+Compare array with floatings: 0.
+Destroy pair at (0061FE74), free key and value memory.
+Destroy pair at (0061FE7C), free key and value memory.
+
+Compare pairs of structures 'color' with various field size[short, char, int].
+Structure color size is 8 with offsets for red: 0, green: 2 and blue: 4. Array size 16.
+New pair (0061FE74) created, key at (001815E8) size 1 and value at (001815F8).
+New pair (0061FE7C) created, key at (00181610) size 1 and value at (00181620).
+Comparing data in pairs 'A' at (0061FE74) and 'B' at (0061FE7C), type 'data' and memory size 16, iterations: 12, result is 1.
+Result of compare is 1.
+Destroy pair at (0061FE74), free key and value memory.
+Destroy pair at (0061FE7C), free key and value memory.
+
+Create and destroy dictionary and try add to add 2 copy elements and one unique, using one pair.
+Structure of dictionary size 20 bytes, key and value pair is 8 bytes.
+Dictionary initialization header at address (0061FEBC).
+New pair (0061FE94) created, key at (001815E8) size 1 and value at (001815F8).
+Print dictionary at (0061FEBC), data at (00000000), sizes at (00000000) or types at 00000000 may be NULL.
+Key 'A' is not founded at any address in dictionary.
+Key 'A' is new or dictionary is empty.
+Memory (re)allocating successfully, new address of pairs: (00181608), sizes: (00181618) and types: (00181628).
+New pair (00181608) created, key at (00181638) size 1 and value at (00181648).
+New pair successfully added. Key 'A', type 'byte' with size 1 bytes.
+
+Dictionary elements 1, memory size 1.
+Address:	Key:	Type:		Size:	Value and memory dump:
+00181608	'A'	byte		1	'a' 0x61 
+
+Key 'A' is founded in pair at (00181608) address, index 0.
+The key 'A' is already in dictioanary.
+
+Dictionary elements 1, memory size 1.
+Address:	Key:	Type:		Size:	Value and memory dump:
+00181608	'A'	byte		1	'a' 0x61 
+
+Destroy pair at (0061FE94), free key and value memory.
+
+Create new key, add to dictioanry and delete key, copy must be in dictionary.
+New pair (0061FE94) created, key at (001815E8) size 1 and value at (001815F8).
+Key 'B' is not founded at any address in dictionary.
+Key 'B' is new or dictionary is empty.
+Memory (re)allocating successfully, new address of pairs: (00181658), sizes: (00181618) and types: (00181628).
+New pair (00181660) created, key at (00181608) size 1 and value at (00181670).
+New pair successfully added. Key 'B', type 'word' with size 2 bytes.
+Destroy pair at (0061FE94), free key and value memory.
+
+Dictionary elements 2, memory size 3.
+Address:	Key:	Type:		Size:	Value and memory dump:
+00181658	'A'	byte		1	'a' 0x61 
+00181660	'B'	word		2	4096 0x0 0x10 
+
+Destroy dictionary with elements, memory must be free.
+Destroy dictionary with 2 elements, pairs addresses:
+Destroy pair at (00181660), free key and value memory.
+Destroy pair at (00181658), free key and value memory.
+Print dictionary at (0061FEBC), data at (00000000), sizes at (00000000) or types at 00000000 may be NULL.
+
+Add 2 elements to dictionary, then try sub non existing element.
+
+New pair (0061FE94) created, key at (001815E8) size 1 and value at (001815F8).
+Key 'B' is not founded at any address in dictionary.
+Key 'B' is new or dictionary is empty.
+Memory (re)allocating successfully, new address of pairs: (00181608), sizes: (00181618) and types: (00181628).
+New pair (00181608) created, key at (00181638) size 1 and value at (00181648).
+New pair successfully added. Key 'B', type 'float' with size 4 bytes.
+
+Dictionary elements 1, memory size 4.
+Address:	Key:	Type:		Size:	Value and memory dump:
+00181608	'B'	float		4	0.12 0x5b 0xd3 0xfc 0x3d 
+
+Destroy pair at (0061FE94), free key and value memory.
+New pair (0061FE94) created, key at (001815E8) size 1 and value at (001815F8).
+Key 'C' is not founded at any address in dictionary.
+Key 'C' is new or dictionary is empty.
+Memory (re)allocating successfully, new address of pairs: (00181658), sizes: (00181618) and types: (00181628).
+New pair (00181660) created, key at (00181608) size 1 and value at (00181670).
+New pair successfully added. Key 'C', type 'text' with size 4 bytes.
+
+Dictionary elements 2, memory size 8.
+Address:	Key:	Type:		Size:	Value and memory dump:
+00181658	'B'	float		4	0.12 0x5b 0xd3 0xfc 0x3d 
+00181660	'C'	text		4	'abc' 0x61 0x62 0x63 0x0 
+
+Destroy pair at (0061FE94), free key and value memory.
+New pair (0061FE94) created, key at (001815E8) size 1 and value at (001815F8).
+Key 'A' is not founded at any address in dictionary.
+Warning, key 'A' not founded, or dictionary is empty.
+
+Dictionary elements 2, memory size 8.
+Address:	Key:	Type:		Size:	Value and memory dump:
+00181658	'B'	float		4	0.12 0x5b 0xd3 0xfc 0x3d 
+00181660	'C'	text		4	'abc' 0x61 0x62 0x63 0x0 
+
+Destroy pair at (0061FE94), free key and value memory.
+
+Sub from dictioanary first two elements and destroy empty with function.
+
+New pair (0061FE94) created, key at (001815E8) size 1 and value at (001815F8).
+Key 'B' is founded in pair at (00181658) address, index 0.
+Key 'B' is founded in dictionary at index 0, clear pair.
+Destroy pair at (00181658), free key and value memory.
+Copy last element with key 'C' of dictionary to removed at 00181658.
+Copy pair key-value success. New key at (00181638), value at (00181648), data copied.
+Destroy pair at (00181660), free key and value memory.
+Data reallocating succefully, data at (00181658), sizes at (00181618) and types at (00181628).
+
+Dictionary elements 1, memory size 4.
+Address:	Key:	Type:		Size:	Value and memory dump:
+00181658	'C'	text		4	'abc' 0x61 0x62 0x63 0x0 
+
+Destroy pair at (0061FE94), free key and value memory.
+New pair (0061FE94) created, key at (001815E8) size 1 and value at (001815F8).
+Key 'C' is founded in pair at (00181658) address, index 0.
+Key 'C' is founded in dictionary at index 0, clear pair.
+Destroy pair at (00181658), free key and value memory.
+Just clear last pair with key '(null)', nothing to copy in data.
+Pair was last in dictionary, clear all data dictionary and free memory.
+Dictionary is already empty, or some addresses is NULL.
+
+Dictionary elements 0, memory size 0.
+Address:	Key:	Type:		Size:	Value and memory dump:
+
+Destroy pair at (0061FE94), free key and value memory.
+Dictionary is already empty, or some addresses is NULL.
