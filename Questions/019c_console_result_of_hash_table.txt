@@ -1,0 +1,83 @@
+﻿Questions 19. Add keys to hash table, variant 3.
+Hash function is H(key) = key mod M, M = 31, 9 keys to insert.
+Inserting values to empty hash table.
+
+Hash H(5) = 5, searching for collision in table.
+Hash in table:	Hash:	Chain size:	Chain:
+Collision not founded in table, first free record is 0.
+Add new hash 5 to table for key 5 and data size 1, at index 0.
+
+Hash H(82) = 20, searching for collision in table.
+Hash in table:	Hash:	Chain size:	Chain:
+0:		5	1		5 
+Collision not founded in table, first free record is 1.
+Add new hash 20 to table for key 82 and data size 1, at index 1.
+
+Hash H(19) = 19, searching for collision in table.
+Hash in table:	Hash:	Chain size:	Chain:
+0:		5	1		5 
+1:		20	1		82 
+Collision not founded in table, first free record is 2.
+Add new hash 19 to table for key 19 and data size 1, at index 2.
+
+Hash H(51) = 20, searching for collision in table.
+Hash in table:	Hash:	Chain size:	Chain:
+0:		5	1		5 
+1:		20	1		82 
+Collision founded at 1 record, index data 1 and chain size is 1.
+Update chain in table. Record 1, data size 2, hash 20 and keys chain: 51 82 
+
+Hash H(20) = 20, searching for collision in table.
+Hash in table:	Hash:	Chain size:	Chain:
+0:		5	1		5 
+1:		20	2		51 82 
+Collision founded at 1 record, index data 1 and chain size is 2.
+Update chain in table. Record 1, data size 3, hash 20 and keys chain: 20 51 82 
+
+Hash H(33) = 2, searching for collision in table.
+Hash in table:	Hash:	Chain size:	Chain:
+0:		5	1		5 
+1:		20	3		20 51 82 
+2:		19	1		19 
+Collision not founded in table, first free record is 3.
+Add new hash 2 to table for key 33 and data size 1, at index 5.
+
+Hash H(12) = 12, searching for collision in table.
+Hash in table:	Hash:	Chain size:	Chain:
+0:		5	1		5 
+1:		20	3		20 51 82 
+2:		19	1		19 
+3:		2	1		33 
+Collision not founded in table, first free record is 4.
+Add new hash 12 to table for key 12 and data size 1, at index 6.
+
+Hash H(107) = 14, searching for collision in table.
+Hash in table:	Hash:	Chain size:	Chain:
+0:		5	1		5 
+1:		20	3		20 51 82 
+2:		19	1		19 
+3:		2	1		33 
+4:		12	1		12 
+Collision not founded in table, first free record is 5.
+Add new hash 14 to table for key 107 and data size 1, at index 7.
+
+Hash H(10) = 10, searching for collision in table.
+Hash in table:	Hash:	Chain size:	Chain:
+0:		5	1		5 
+1:		20	3		20 51 82 
+2:		19	1		19 
+3:		2	1		33 
+4:		12	1		12 
+5:		14	1		107 
+Collision not founded in table, first free record is 6.
+Add new hash 10 to table for key 10 and data size 1, at index 8.
+
+Hash table result with chains, size 7.
+N:	Hash:	Keys:	Data index:	Chain:
+0:	5	1	0		5 
+1:	20	3	1		20 51 82 
+2:	19	1	4		19 
+3:	2	1	5		33 
+4:	12	1	6		12 
+5:	14	1	7		107 
+6:	10	1	8		10 
