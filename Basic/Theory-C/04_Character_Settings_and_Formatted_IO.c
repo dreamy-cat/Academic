@@ -1,18 +1,19 @@
 ﻿#include <stdio.h>
 #include <limits.h>
 
-// Все теоретические части, которые были рассмотрены на вещаниях.
-// Учебник - Прата(6-ое издание), КиР, стандарт языка и немного видео материалов.
-// Для демонстрации использовался GCC 8.1.0, 32-bit, QtCreator.
+// 4-ая глава. Символьные строки и форматированный ввод-вывод.
+
+// Одна константа для препроцессора для демонстрации.
+#define STRING_MAX 256
 
 void theory_04(void)
 {
     printf("Theory and examples for stream, chapter 4.\n");
     printf("Strings of chars and string format.\n");
     // Небольшое встпуление и создание переменных. Строка как последовательность символов.
-    char string[256] = "This is text string.";
+    char string[STRING_MAX] = "This is text string.";
     printf("String: '%s'.\n", string);
-    // Массив типа чар, нулевой символ и размерность. Посмотрим по адресам и кодам АСКИИ.
+    // Строка это массив символов, нулевой символ и размерность. Посмотрим по адресам и кодам АСКИИ.
     printf("Size of string: %d.\n", sizeof(string));
     printf("Address:\tCode:\tChar:\n");
     for (int i = 0;  i < 25/* string[i] != '\0' */; ++i)
@@ -35,7 +36,9 @@ void theory_04(void)
     printf("Signed integer: %d, hex: 0x%X, double: %.2f, exponent: %.2e.\n", -3, 12, 2.5, 3.5);
     // printf("Specs for %d and %d.\n", 5);     // Неопределенные данные при выводе. Знак % при выводе.
     // Модификаторы спецификаторов для функции вывода, между спецификатором и знаком %. %z - для sizeof.
-    printf("Sign: %+-d, field: %5d, precision %.3g, short: %hu, unsigned char: %hhu, unsigned long: %llu.\n", +3, 7, 2.5, 50000, UCHAR_MAX, ULLONG_MAX);
+    unsigned short int sh = 50000;
+    unsigned char c2 = 250;
+    printf("Sign: %+-d, field: %5d, precision %.3g, short: %hu, unsigned char: %hhu, unsigned long: %llu.\n", +3, 7, 2.5, sh, c2, ULLONG_MAX);
     float f1 = 7.5;     // Немного про форматирование здесь же отметить. Быть осторожным с округлением.
     printf("Float and double: %.2f.\n", f1);    // (double)f1
     // Флаги функции вывода. Не забыть про ведущий пробел.
@@ -47,7 +50,7 @@ void theory_04(void)
     printf("String with right align: '%20.5s'.\n", s);
     printf("String with left align: '%-20.5s'.\n", s);
     // Спецификатор преобразования работает из данных в представление, спецификатор не всегда может быть однозначен относительно данных.
-    // Знаковое и беззнаковое представление чисел. Предупреждение. Поразрядное дополнение до двух. Почему?
+    // Знаковое и беззнаковое представление чисел. Предупреждение. Поразрядное дополнение до двух. Усечение данных. Почему?
     short int i1 = 49152;       // Не всегда срабатывает отбрасывание знака.
     printf("Short int with sign %hd, unsgined char %hu, sizeof type %d.\n", i1, i1, sizeof(short int));
     unsigned int i2 = 0xFE14A5B1;
@@ -68,7 +71,7 @@ void theory_04(void)
             "second line, parameter %d.\n",
            i1);
     // Функция scanf. В целом всё тоже самое. Спецификаторы и модификаторы все в силе.
-    char buffer[256];
+    char buffer[STRING_MAX];
     printf("Enter integer, float, char and string: ");
     double d1;      // %f - спецификатор по умолчанию ожидает float.
     r = scanf("%hd %lf %c %s", &i1, &d1, &c1, buffer);

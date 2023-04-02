@@ -1,8 +1,8 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <math.h>
 
-void part_1(void)
-{
+void labs_01(void)
+{   // Везде использовать double.
     printf("Chapter's 1 tasks.\n\n");
     printf("1.1. Pi number with 2 digits after point: %.2f\n", acos(-1.0));
     int i1 = 1, i2 = 13, i3 = 49;
