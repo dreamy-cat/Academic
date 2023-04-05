@@ -20,7 +20,7 @@ void labs_12(void);     //  Двумерные массивы.
 int main()
 {
     printf("Laboratory for basic tasks in C programming language.\n");
-    labs_02();
+    labs_03();
 
     // daniil_version_bool_calc();
     // list_of_schools();   // move to questions.
