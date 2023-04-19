@@ -1,0 +1,177 @@
+﻿Laboratory 3. Rational numbers and operators.
+
+Integer size is 4 bytes and integer minimum -2147483648 and maximum 2147483647.
+Object of 'Rational' size is 8 and data:
+Offset: Size:   Comment:
++0      4       Numerator for rational with sign.
++4      4       Denominator for rational unsigned.
+
+Address table, of compare functions:
+Name:           Addr:
+Is equal        004023F0
+Is more         00402580
+Is less         00402730
+
+Create objects include one incorrect, copy and move to other object.
+Create object from parameters, 1/3, at (0061FD88).
+Denominator is 0, creating default rational 1/1, at (0061FD90).
+Error creating rational object, address is NULL.
+Copy rational from (0061FD88) source 1/3 to (0061FD98) destination 1/3
+Move pointers to rational objects, from (0061FD80) to (0061FD84).
+After moving rational from (0061FD88) to (0061FD88), using print function: 1/3
+
+Getting and setting parameters for rational and check is correct.
+Set rational to 1/2, using functions set/get and one incorrect.
+Error, can't set denominator. Addresses or parameter is NULL or 0.
+Reading result of rational: 1/2, is correct rational 1.
+
+Converting functions rationals and normalize.
+Simple guess 0.33000 as closest rational, parameters limit is 10, closest 1/3.
+Converting from double to rational, result is 1: 1/3
+Simple guess 0.00000 as closest rational, parameters limit is 10, parameters not founded, set to default 1/1.
+Trying to convert from string 'abc de---+++1_gh 2  / abc_def 4__8gh' to rational, format 'numerator/denominator'.
+Sign is -1, starting index 7.
+Numerator steps: ' ' ' ' 2 ' ' 'h' 'g' '_' 12 '+' '+' '+' '-' '-'
+Denominator steps: 'h' 'g' 8 '_' '_' 48 ' ' 'f' 'e' 'd' '_' 'c' 'b' 'a' ' '
+Converting from string result 1: -12/48
+Trying to convert from string '-2147483648/2' to rational, format 'numerator/denominator'.
+Sign is -1, starting index 1.
+Numerator steps: 8 48 648 3648 83648 483648 7483648 47483648 147483648 2147483648
+Warning overflow, numerator is more than integer max or less than intger min.
+Denominator steps: 2
+Normalize rational -2147483648/2, GCD is 2, normalized -1073741824/1.
+Normalize rational, result 1: -1073741824/1
+Rational for normalize is incorrect, at (00000000).
+Convert to string, length 13: '-1073741824/1'.
+Rational to string incorrect or destination string address is NULL.
+
+All arithmetic operations and inc/dec.
+
+Check overflow with maximum -2147483648 and 2147483647 minimum integers.
+Add 0/2 + 2147483647/1.
+Copy rational from (0061FD98) source 2147483647/1 to (0061FD48) destination 2147483647/1
+Converting pair to common denominator: (0/2) : (2147483647/1). LCM: 2.
+Result of add: -2/2.
+
+Add -2147483648/2 + -1/1.
+Copy rational from (0061FD98) source -1/1 to (0061FD48) destination -1/1
+Converting pair to common denominator: (-2147483648/2) : (-1/1). LCM: 2.
+Warning, adding cause integer overflow in result.
+Result of add: 2147483646/2.
+
+Add -2147483647/2 + 2147483647/1.
+Copy rational from (0061FD98) source 2147483647/1 to (0061FD48) destination 2147483647/1
+Converting pair to common denominator: (-2147483647/2) : (2147483647/1). LCM: 2.
+Warning, adding cause integer overflow in result.
+Result of add: 2147483647/2.
+
+Add 2147483647/2 + 1/1.
+Copy rational from (0061FD98) source 1/1 to (0061FD48) destination 1/1
+Converting pair to common denominator: (2147483647/2) : (1/1). LCM: 2.
+Warning, adding cause integer overflow in result.
+Result of add: -2147483647/2.
+
+Check other arithmetic functions, using 1/2 and 1/3 to check.
+
+Decrease:
+Numerator berfore decrease -2147483647, after decrease -2147483648.
+
+Increase:
+Numerator berfore increase -2147483648, after increase -2147483647.
+
+Simple guess 0.50000 as closest rational, parameters limit is 10, closest 1/2.
+Simple guess 0.33000 as closest rational, parameters limit is 10, closest 1/3.
+
+Subtraction:
+Sub 1/2 - 1/3 using add function.
+Copy rational from (0061FD90) source 1/3 to (0061FD58) destination 1/3
+Set rational at 0061FD58, 1/3 to negative -1/3.
+Add 1/2 + -1/3.
+Copy rational from (0061FD58) source -1/3 to (0061FD08) destination -1/3
+Converting pair to common denominator: (1/2) : (-1/3). LCM: 6.
+Result of add: 1/6.
+Sub result: 1/6.
+Create object from parameters, 2147483647/1, at (0061FD88).
+Create object from parameters, -1/1, at (0061FD98).
+
+Multiply without overflow:
+Multiply 2147483647/1 * -1/1 = (2147483647 * -1) / (1 * 1).
+Result of multiply: -2147483647/1.
+Create object from parameters, -2147483648/1, at (0061FD88).
+
+Multiply without overflow:
+Multiply -2147483648/1 * -1/1 = (-2147483648 * -1) / (1 * 1).
+Warning, multiply cause integer overflow in result.
+Result of multiply: -2147483648/1.
+
+Divide correct:
+Create object from parameters, 5/6, at (0061FD88).
+Create object from parameters, 1/3, at (0061FD90).
+Divide 5/6 / 1/3, using inverse and multiply function.
+Copy rational from (0061FD90) source 1/3 to (0061FD58) destination 1/3
+Inverse rational object at 0061FD58, 1/3 to 3/1.
+Multiply 5/6 * 3/1 = (5 * 3) / (6 * 1).
+Result of multiply: 15/6.
+Result of divide: 15/6.
+Create object from parameters, 5/6, at (0061FD98).
+
+Modulus:
+Modulus 5/6 mod 1/3, using div, mul and sub.
+Copy rational from (0061FD90) source 1/3 to (0061FD38) destination 1/3
+Copy rational from (0061FD98) source 5/6 to (0061FD40) destination 5/6
+Divide 5/6 / 1/3, using inverse and multiply function.
+Copy rational from (0061FD38) source 1/3 to (0061FCF8) destination 1/3
+Inverse rational object at 0061FCF8, 1/3 to 3/1.
+Multiply 5/6 * 3/1 = (5 * 3) / (6 * 1).
+Result of multiply: 15/6.
+Result of divide: 15/6.
+Integer divider for rational is 2.
+Create object from parameters, 2/1, at (0061FD48).
+Multiply 2/1 * 1/3 = (2 * 1) / (1 * 3).
+Result of multiply: 2/3.
+Sub 5/6 - 2/3 using add function.
+Copy rational from (0061FD48) source 2/3 to (0061FCF8) destination 2/3
+Set rational at 0061FCF8, 2/3 to negative -2/3.
+Add 5/6 + -2/3.
+Copy rational from (0061FCF8) source -2/3 to (0061FCA8) destination -2/3
+Converting pair to common denominator: (5/6) : (-2/3). LCM: 6.
+Result of add: 1/6.
+Sub result: 1/6.
+Modulus result: 1/6.
+
+To power:
+Rational 1/3 to power 2, using multiply and reverse.
+Copy rational from (0061FD90) source 1/3 to (0061FD48) destination 1/3
+
+Multiply counter for power: 1.
+Multiply 1/3 * 1/3 = (1 * 1) / (3 * 3).
+Result of multiply: 1/9.
+
+Multiply counter for power: 0.
+Multiply 1/9 * 1/3 = (1 * 1) / (9 * 3).
+Result of multiply: 1/27.
+Result of power: 1/27.
+
+Compare functions.
+Check if (15/6 == 1/27).
+Copy rational from (0061FD88) source 15/6 to (0061FD50) destination 15/6
+Copy rational from (0061FD90) source 1/27 to (0061FD58) destination 1/27
+Converting pair to common denominator: (15/6) : (1/27). LCM: 54.
+With common denominator (135/54 == 2/54) is not equal.
+Check if (15/6 > 1/27).
+Copy rational from (0061FD88) source 15/6 to (0061FD50) destination 15/6
+Copy rational from (0061FD90) source 1/27 to (0061FD58) destination 1/27
+Converting pair to common denominator: (15/6) : (1/27). LCM: 54.
+With common denominator (135/54 > 2/54) is more.
+Check if (15/6 < 1/27).
+Copy rational from (0061FD88) source 15/6 to (0061FD50) destination 15/6
+Copy rational from (0061FD90) source 1/27 to (0061FD58) destination 1/27
+Converting pair to common denominator: (15/6) : (1/27). LCM: 54.
+With common denominator (135/54 < 2/54) is not less.
+
+Calling functions using compare.
+Check if (15/6 == 1/27).
+Copy rational from (0061FD88) source 15/6 to (0061FD50) destination 15/6
+Copy rational from (0061FD90) source 1/27 to (0061FD58) destination 1/27
+Converting pair to common denominator: (15/6) : (1/27). LCM: 54.
+With common denominator (135/54 == 2/54) is not equal.
