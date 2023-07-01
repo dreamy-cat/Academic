@@ -1,13 +1,13 @@
 ﻿#ifndef LIBRARY_H
 #define LIBRARY_H
 
-// Global defines using in all chapters of book.
+// Глобальные макросы для всех глав.
 
 #define STRING_MAX 256
 #define OBJECTS_MAX 256
-#define TAB 8
+#define TAB_SIZE 8
 
-// Библиотечные функции, которые были написаны нами в процессе и использовались для всех частей теории и практики.
+// Библиотечные функции, которые были написаны в процессе и использовались для всех частей практики.
 
 double a_power_n(double a, int n);
 

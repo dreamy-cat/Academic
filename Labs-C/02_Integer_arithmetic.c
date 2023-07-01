@@ -1,8 +1,6 @@
 ﻿#include <stdio.h>
 #include <math.h>
 
-#include "library.h"
-
 void labs_02(void)
 {   // Глава 2. Целочисленная арифметика.
     printf("Part 2. Integer Arithmetic.\n");                                    // Простейшие задачи.

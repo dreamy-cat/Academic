@@ -1,7 +1,10 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <math.h>
 
-void part_4()
+// Глава 4. Условный оператор.
+// Переработать полностью с учетом комменатариев.
+
+void labs_04(void)
 {
     printf("Chapter's 4 tasks.\n\n");
     double d1  = 5, d2, d3, d4;

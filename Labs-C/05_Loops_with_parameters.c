@@ -1,9 +1,12 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <math.h>
 #include <limits.h>
 #include <stdlib.h>
 
-#include "library.h"
+// #include "library.h"
+
+// Глава 5. Оператор цика с параметром.
+// Вынести функции в библиотеку.
 
 void print_binary_byte(unsigned char byte)
 {
@@ -131,7 +134,7 @@ void calculate_expr_1(void)
     printf("\n");
 }
 
-void part_5()
+void labs_05(void)
 {
     printf("Chapter's 5 tasks.\n\n");
     int a1 = 10;

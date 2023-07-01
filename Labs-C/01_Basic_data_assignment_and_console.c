@@ -2,7 +2,7 @@
 #include <math.h>
 
 void labs_01(void)
-{   // Везде использовать double.
+{   // Глава 1. Ввод и вывод числовых данных. Оператор присваивания.
     printf("Chapter's 1 tasks.\n\n");
     printf("1.1. Pi number with 2 digits after point: %.2f\n", acos(-1.0));
     int i1 = 1, i2 = 13, i3 = 49;
