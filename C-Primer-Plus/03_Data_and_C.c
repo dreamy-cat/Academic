@@ -2,7 +2,7 @@
 #include <limits.h>
 #include <float.h>
 
-void theory_03(void)
+void part_03(void)
 {
     // Теоретическое вещание по типам данных, возможна демонстрация ассемблера.
     // Демонстрационная программа на языке, с таблицей данных. Также несколько ссылок на Вики. Вспомнить про ввода-вывод.
@@ -34,20 +34,20 @@ void theory_03(void)
     printf("Type:\t\tSize:\tBits:\tMin:\t\tMax:\n");
     // Про целочисленные. Табличка по развитию стандартов и ключевые слова в нем. Про байты, биты размерности и слова.
     // Кинуть ссылку на канал Computerphile, "Where did Bytes Come From?". https://youtu.be/ixJCo0cyAuA
-    unsigned int s_int_size = sizeof(long), s_int_bits = sizeof(int) * __CHAR_BIT__;
+    unsigned int s_int_size = sizeof(long), s_int_bits = sizeof(int) * CHAR_BIT;
     int s_int_min_ = INT_MIN, s_int_max = INT_MAX;
     printf("INT:\t\t%u\t%u:\t%d\t%u\n", s_int_size, s_int_bits, s_int_min_, s_int_max);
-    unsigned int u_int_size = sizeof(unsigned int), u_int_bits = sizeof(unsigned int) * __CHAR_BIT__;
+    unsigned int u_int_size = sizeof(unsigned int), u_int_bits = sizeof(unsigned int) * CHAR_BIT;
     unsigned int u_int_min_ = 0, u_int_max = UINT_MAX;
     printf("UNSIGNED INT:\t%u\t%u:\t%u\t\t%u\n", u_int_size, u_int_bits, u_int_min_, u_int_max);
-    unsigned short int s_sh_int_size = sizeof(int), s_sh_int_bits = sizeof(int) * __CHAR_BIT__;
+    unsigned short int s_sh_int_size = sizeof(int), s_sh_int_bits = sizeof(int) * CHAR_BIT;
     short int s_sh_int_min_ = SHRT_MIN, s_sh_int_max = SHRT_MAX;
     printf("INT:\t\t%u\t%u:\t%d\t%u\n", s_sh_int_size, s_sh_int_bits, s_sh_int_min_, s_sh_int_max);
-    unsigned int s_l_int_size = sizeof(long long int), s_l_int_bits = sizeof(long int) * __CHAR_BIT__;
-    long long int s_l_int_min_ = LONG_LONG_MIN, s_l_int_max = INT_MAX;
+    unsigned int s_l_int_size = sizeof(long long int), s_l_int_bits = sizeof(long int) * CHAR_BIT;
+    long long int s_l_int_min_ =  LLONG_MIN, s_l_int_max = INT_MAX;
     printf("INT:\t\t%u\t%u:\t%lld\t%llu\n", s_l_int_size, s_l_int_bits, s_l_int_min_, s_l_int_max);
     // Тип long double, float.h
-    unsigned int l_double_size = __SIZEOF_LONG_DOUBLE__, l_double_bits = sizeof(int) * __CHAR_BIT__;
+    unsigned int l_double_size =  sizeof(long double), l_double_bits = sizeof(int) * CHAR_BIT;
     long double l_double_min_ = LDBL_MIN, l_double_max = LDBL_MAX;
     printf("LONG DOUBLE:\t\t%u\t%u:\t%.Le\t%.Le\n", l_double_size, l_double_bits, l_double_min_, l_double_max);
     // О представлениях целогого числа и чесел с плавающей точкой.
@@ -61,8 +61,8 @@ void theory_03(void)
     for (unsigned int i = 0; i < sizeof(data); ++i) {
         byte = (unsigned char*)(&data) + i;
         printf("\n[+%d]:\t%2X\t", i, *byte);
-        for (int j = 0; j < __CHAR_BIT__; ++j) {    // просто порядок битов.
-            unsigned char bit = ((*byte << j) & 0x80) >> (__CHAR_BIT__ - 1);
+        for (int j = 0; j < CHAR_BIT; ++j) {    // просто порядок битов.
+            unsigned char bit = ((*byte << j) & 0x80) >> (CHAR_BIT - 1);
             printf("%d", bit);
         }
     }
@@ -74,16 +74,16 @@ void theory_03(void)
     const int bt_sign = 31, bt_exp = 30, bt_fract = 22;     // float
     printf("\n\nFloat value %.2f as data, size %d.\n", (double)f_data, sizeof(f_data));
     printf("Bits:\t\tBinary(H-L):");
-    for (int i = f_size - 1, bt = f_size * __CHAR_BIT__ - 1; i >= 0; --i) {     // bt = 31
+    for (int i = f_size - 1, bt = f_size * CHAR_BIT - 1; i >= 0; --i) {     // bt = 31
         byte = (unsigned char*)(&f_data) + i;
-        for (int j = 0; j < __CHAR_BIT__; ++j, --bt) {       // порядок может быть обратным
+        for (int j = 0; j < CHAR_BIT; ++j, --bt) {       // порядок может быть обратным
             if (bt == bt_sign)
                 printf("\nSign[%d]:\t\t", bt);
             else if (bt == bt_exp)
                 printf("\nExponent[%d..%d]\t", bt_exp, bt_fract + 1);
             else if (bt == bt_fract)
                 printf("\nFraction[%d..0]:\t", bt_fract);
-            unsigned char bit = ((*byte << j) & 0x80) >> (__CHAR_BIT__ - 1);
+            unsigned char bit = ((*byte << j) & 0x80) >> (CHAR_BIT - 1);
             printf("%d", bit);
         }
     }

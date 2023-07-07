@@ -2,7 +2,12 @@
 #include <limits.h>
 
 // Глава 5. Операции, выражения и операторы.
-// Вопросы по ходу кода, повторяем с учетом предыдущих глав.
+
+void part_05_add(short int h, unsigned char c)
+{   // Дополнительная функиця для отслеживания преобразования параметров.
+    printf("Short integer size %u bytes, value %hd.\n", sizeof(h), h);
+    printf("Unsigned char size %u bytes, value '%c'.\n\n", sizeof(c), c);
+}
 
 void part_05(void)
 {
@@ -95,30 +100,73 @@ void part_05(void)
     printf("Example: seconds %d is %d minutes and modulus result is %d seconds.\n", a, b, c);
     printf("Negative modulus: %d mod %d = %d.\n", -7, -3, -7 % 3);
     // Операции инкремента и декремента. Аналог +1 или команды ассемблера inc, dec.
-    //
     a = 0;
     printf("\nIncrement and decrement using prefix and postfix variants A = %d.\n", a);
-    b = ++a;
-    printf("Prefix increment B = ++A, B = %d, after A = %d.\n", b, a);
+    c = a; b = ++a;
+    printf("Prefix increment before A = %d. B = ++A, B = %d, after A = %d.\n", c, b, a);
     b = a++;
-    printf("Postfix increment B = A++, B = %d, after A = %d.\n", b, a);
-    b = --a;
-    printf("Prefix decrement B = --A, B = %d, after A = %d.\n", b, a);
-    b = a--;
-    printf("Postfix decrement B = A--, B = %d, after A = %d.\n", b, a);
+    printf("Postfix increment before A = %d, B = A++, B = %d, after A = %d.\n", c, b, a);
+    c = a; b = --a;
+    printf("Prefix decrement before A = %d, B = --A, B = %d, after A = %d.\n", c, b, a);
+    c = a; b = a--;
+    printf("Postfix decrement before A = %d, B = A--, B = %d, after A = %d.\n", c, b, a);
     // Цикл и операции инкремента и декремента, идиома.
     a = 5; b = -5;
     printf("\nOperator while and increment and decrement, start A = %d, B = %d.\n", a, b);
-    printf("A:\tB:\t++A * 2:\tB--");
-    /*
-    while (a != b) {
+    printf("A:\tB:\t--A * 2:\tB++ * 3:\n");
+    while (a != b) {                                        // Отдельная строка с неопределенностью порядка.
+        // printf("%d\t%d\t%d\t\t%d\n", a, b, --a * 2, b++ * 3);
+        printf("%d\t%d", a, b);
+        printf("\t%d\t\t%d\n", --a * 2, b++ * 3);
     }
-    */
-    //
-}   // 113, 8770.
-
-
-
-
-
-
+    // Приоритеты операций. Таблица в КР, дополнительно с.66.
+    printf("\nOperators priority:\n");
+    printf("Expression: --A + B++ * 5 = --%d + %d++ * 5 = ", a, b);
+    // c = --a + (b + 2)++ * 5;
+    // c = --a + b++ * (5 + b);
+    c = --a + b++ * 5;
+    // printf("%d + %d * 5 = %d.\n", a, b, c);                 // Вопрос о результате.
+    printf("%d + %d * 5 = %d.\n", a, b - 1, c);
+    /* Веселый дополнительный вопрос.
+    a = 0; b = 0;
+    printf("B = A++ + A++ = %d++ + %d++ = ", a, a);
+    b = a++ + a++;
+    printf("%d.\n", b);*/
+    // Выражения и операторы.
+    // Вопрос: что такое выражение.
+    printf("\nOperators and expressions:\n");
+    a = 1;
+    c = (a < (b = 2)) * 5;
+    printf("Expression: (A < (B = 2)) * 5 = (%d < ([B] = %d)) * 5 = %d.\n", a, b, c);
+    // Вопрос: что такое оператор? Точка с запятой и пустой оператор.
+    8;                                                      // Допустимое выражение но с предупреждением.
+    // Рассмотреть несколько примеров выше: объявление, присваивание, цикл, вызов функции и возврата.
+    // Повторение: Кратко что-такое каждый из операторов.
+    // Побочные эффекты и точки следования.
+    // Побочный эффект, по смыслу "выхлоп". Точка следование - конкретное состояние автомата(Лучше Вики).
+    a = 5;                                                  // После - точка следования, без ветвлений.
+    b = a + 2;                                              // Побочный эффект, выхлоп - присвоение переменным, а основное - вычисление выражения.
+    // Вопрос: полное выражение, понятие. Завершенное, до следующего оператора.
+    while (b < a)
+        printf("Full operator upper, this line never executed.\n");
+    // Составной оператор. Вопрос уже был, так что для повторения.
+    // Обратить внимание на блоки и отступы.
+    // Преобразования типов. Общие правила и операция приведения.
+    printf("\nType conversion:\n");
+    short int i = 32767;                                    // Автоматически в int, но вопрос по компилятору.
+    unsigned char j = 255;                                  // Усечение идет по битовым полям.
+    // (short int) можно убрать и будет предупреждение.
+    printf("Short int + unsigned char = %d + %u = integer %d, short %hd.\n", i, j, i + j, (short int)(i + j));
+    j = i + 1;                                              // Преобразование к более высокому типу и приведение к левостороннему.
+    printf("Short int + 1= %d + 1 = integer %d(%d), unsigned char %hhu.\n", i, i + 1, SHRT_MAX, j);
+    j = (unsigned char)((short int)a + (unsigned char)b);   // Явное преобразование, без предупреждений.
+    // Еще немного про аргументы для функции.
+    printf("Unsigned char after conversion: %hhu.\n", j);
+    // Повтоение: формальный и фактический аргумент или параметр функции.
+    printf("\nCalling function, parameters conversion:\n");
+    part_05_add(USHRT_MAX, 'A');                            // Предупреждение, приведение вниз первого и нормальный второй аргумент.
+    part_05_add('a', UCHAR_MAX + 'B');                      // Вверх и приведение вниз второго аргумента.
+    part_05_add(SHRT_MAX, 'C');                             // Нормальный вызов, без превединия.
+    // Про стандарт и void.
+    // Повторение, с учетом резюме. По стандарту КР, float и double.
+}

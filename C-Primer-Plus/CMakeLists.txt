@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(Theory-C LANGUAGES C)
+project(C-Primer-Plus LANGUAGES C)
 
-set(CMAKE_C_FLAGS "-Wall -Wextra -O0")
+#GCC compiler flags and settings.
+#set(CMAKE_C_FLAGS "-Wall -Wextra -O0")
+
+#MS compiler flags and settings.
+set(CMAKE_C_FLAGS "-O0 -Wall -wd4710")
 aux_source_directory(. SOURCES)
-aux_source_directory(./Extra SOURCES)
-add_executable(Theory-C ${SOURCES})
+add_executable(C-Primer-Plus ${SOURCES})

@@ -93,7 +93,7 @@ void labs_03(void)
     a = 1; b = 1; c = !(a && b);
     printf("A = %d, B = %d. Not (%d and %d) = %d.\n", a, b, a, b, c);
     printf("\n3.17. B) (B or not A) and not B for all combinations A and B.\n");
-    a = 0; b = 0;                                                               // Аналогичное задание, немного сложнее.
+    a = 0; b = 0;                                           // Аналогичное задание, немного сложнее.
     c = (b || !a) && !b;
     printf("A = %d, B = %d. (%d or not %d) and not %d = %d.\n", a, b, b, a, b, c);
     a = 0; b = 1;
@@ -105,11 +105,11 @@ void labs_03(void)
     a = 1; b = 1;
     c = (b || !a) && !b;
     printf("A = %d, B = %d. (%d or not %d) and not %d = %d.\n", a, b, b, a, b, c);
-    a = 1; b = 0;
+    a = 1; b = 0;                                           // Дополнительное задание, чуть более сложное.
     c = 0; d = !(a && b) && (!a || !c);
-    printf("\n3.25. A) not (A and B) and (not A or not C) = "                   // Дополнительное задание, чуть более сложное.
+    printf("\n3.25. A) not (A and B) and (not A or not C) = "                   
         "not (%d and %d) and (not %d or not %d) = %d.\n", a, b, a, c, d);
-    printf("\n3.27. Only true logical statement.\n");                           // Только истинные логические выражения.
+    printf("\n3.27. Only true logical statement.\n");       // Только истинные логические выражения.
     a = 3; b = 4;
     c = (a > 2) && (b > 3);
     printf("A) (A > 2) and (B > 3) = (%d > 2) and (%d > 3) = %d.\n", a, b, c);
@@ -119,7 +119,7 @@ void labs_03(void)
     a = 3;
     b = !(a > 0 && a < 5);
     printf("J) not (A > 0 and A < 5) = not (%d > 0 and %d < 5) = %d.\n", a, a, b);
-    printf("\n3.29 True logic statements.\n");                                  // В этом задании условия частично текстом и сразу вывод.
+    printf("\n3.29 True logic statements.\n");              // В этом задании условия частично текстом и сразу вывод.
     a = 3; b = 5;
     c = (a % 2 == 1) && (b % 2 == 1);
     printf("A) Every number is odd. (%d mod 2 == 1) and (%d mod 2 == 1) = %d.\n", a, b, c);
@@ -142,7 +142,7 @@ void labs_03(void)
     printf("E) Any of three numbers is more than 100. "
         "(%d > 100) or (%d > 100) or (%d > 100) = %d.\n", a, b, c, d);
     a = 6;
-    printf("\n3.30. Number is %d.\n", a);                                       // Простое, с учетом остатка от деления.
+    printf("\n3.30. Number is %d.\n", a);                   // Простое, с учетом остатка от деления.
     b = (a % 2 == 0) || (a % 3 == 0);
     printf("A) Number is divided by 2 or 3. (%d mod 2 == ) or (%d mod 3 == 0) = %d.\n", a, a, b);
     a = 10;
@@ -150,7 +150,7 @@ void labs_03(void)
     printf("B) Number is not divided by 3 and last digit is zero. "
         "!(%d mod 3 == 0) and (%d mod 10 == 0) = %d.\n", a, a, b);
     printf("3.32. See figures at book. Using rounded integers instead of floating point parameters.\n");
-    a = -4; b = 2;                                                              // Рисунки в книге, крайние значения включаются в условия.
+    a = -4; b = 2;                                          // Рисунки в книге, крайние значения включаются в условия.
     c = (a <= -2) && (b >= 1);
     printf("A) Coordinates [%d,%d]. Point at: (%d <= -2) and (%d >= 1) = %d.\n", a, b, a, b, c);
     a = 5; b = -1;

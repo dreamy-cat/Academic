@@ -696,6 +696,27 @@ int to_string(struct rational* src, char* dst)
     return i;                                               // Возвращаем актуальную длину.
 }
 
+int input(struct rational* r, char* dst)
+{   // Ввод рационального числа с клавиатуры. Все лишние символы игнорируются.
+    if (r == NULL || dst == NULL) {                         // Проверка на допустимость адресов.
+        printf("Error input, addresses of rational or string is NULL.\n");
+        return 0;
+    }
+    const unsigned int pars = 2;                            // Количество параметров в дроби.
+    unsigned int i = 0, j = 0, c;
+    printf("Enter rational as 'num/den' format: ");
+    while ((c = getchar()) != '\n' && j < pars) {           // Вводим по символу.
+        if (i == 0 && (c == '-' || c == '+'))               // Знак только в самом начале.
+            dst[i++] = c;
+        if ((c >= '0' && c <= '9') || c == '/')
+            dst[i++] = c;
+        if (c == '/')                                       // Следующий параметр.
+            j++;
+    }
+    dst[i] = '\0';
+    return from_string(r, dst);                             // Вызываем преобразование из строки.
+}
+
 int main()
 {
     printf("Laboratory 3. Rational numbers and operators.\n\n");
@@ -798,5 +819,10 @@ int main()
     printf("\nCalling functions using compare.\n");
     int(*cmp_ptr)(struct rational*, struct rational*) = &is_equal;
     compare(ptr1, ptr2, cmp_ptr);
+    // 6. Тестирование ввода исполняем последним, его удобней закоментировать.
+    printf("\nTrying to input rational, all incorrect characters ignored.\n");
+    r = input(ptr3, txt);
+    printf("Result of input %d, text '%s' and rational ", r, txt);
+    print(ptr3, 1);
     return 0;
 }
