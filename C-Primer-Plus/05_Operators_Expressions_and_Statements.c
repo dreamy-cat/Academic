@@ -100,6 +100,7 @@ void part_05(void)
     printf("Example: seconds %d is %d minutes and modulus result is %d seconds.\n", a, b, c);
     printf("Negative modulus: %d mod %d = %d.\n", -7, -3, -7 % 3);
     // Операции инкремента и декремента. Аналог +1 или команды ассемблера inc, dec.
+    // Вопрос: кратко что делают и какие формы бывают.
     a = 0;
     printf("\nIncrement and decrement using prefix and postfix variants A = %d.\n", a);
     c = a; b = ++a;

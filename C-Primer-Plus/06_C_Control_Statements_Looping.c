@@ -16,7 +16,7 @@ void part_06(void)
 	// Повторение: что такое цикл, оператор while и сложный опреатор по предыдущей главе?
 	int a, b, c;
 	a = 0; b = 3;
-	printf("Simple loop using operator 'while':\n");		
+	printf("Simple loop using operator 'while':\n");
 	while (a++ < 5) {										// Идиома с присвоением или изменением выражения на месте.
 		printf("A: %d\tB: %d\tSum: %d\n", a, b, a + b);		// Попробовать сделать цикл бесконечным.
 		b += a;												// Быстрый вопрос о типе цикла: предусловие или постусловие.
@@ -29,7 +29,7 @@ void part_06(void)
 	a = 'A';
 	while (a != 'F')										// Символы также допустимы для сравнения, т.к. фактически это целое число с кодом.
 		printf("%c", a++);
-	printf("\n\nCompare floating points numbers, error using 'while (f != g):\n");
+	printf("\n\nCompare floating point numbers, error using 'while (f != g)':\n");
 	double f = 1.0, g = 1.3;  						        // Не использовать оператор равняется для чисел с плавающей точкой, только меньше или больше некоторой окрестности.
 	while (f != g && f < 1.5) {
 		printf("Floating point numbers (%.3f == %.3f).\n", f, g);
@@ -43,14 +43,14 @@ void part_06(void)
 		printf("%d ", a--);
 	// Разобран пример scanf в цикле, быть осторожным и лучше подстраховаться.
 	// Повторение: в чем разница сравнение двойное равно '==' и присвоение одинарное равно '='?
-	bool e = true;											// Дополнительно, булевый тип, возможно удобная совместимость с С++.
-	printf("\n\nBoolean type from <stdbool.h>: E = true = %d.\n", e);
+	bool e = true, b_data[5];								// Дополнительно, булевый тип, возможно удобная совместимость с С++.
+	printf("\n\nBoolean type from <stdbool.h>: E = true = %d, size %d and array[5] %u bytes.\n", e, sizeof(e), sizeof(b_data));
 	// Приоритеты операций отношений. Вспомнить табличку и правило, что они находятся почти в самом низу приоритета перед присвоением.
 	// Повторение: что такое бинарные и унарные операторы?
 	c = (a + b / 2) + (a >= 5) - (b != 0) * (!(a > 0));		// Дополнительно определить порядок действий.
 	// Неопределенные циклы со счетчиком. Здесь немного странноватые рассуждения, но как есть, главное это параметр(ы) цикла.
 	printf("\nUndefined loops and loops with defined counters.\n");
-    srand(c);		   										// Не забыть в стандартной бибилиотеке, параметр просто для чтения можно и без него.
+	srand(c);		   										// Не забыть в стандартной бибилиотеке, параметр просто для чтения можно и без него.
 	a = rand() % 5;
 	printf("\nUndefined 'while' using random from start %d: ", a);
 	while (a--)												// Сравнение по-умолчанию. "До тех пор, пока не ноль.".
@@ -66,9 +66,12 @@ void part_06(void)
 	// Дополнительные операторы присваивания. Можно вопросом.
 	printf("\nExtra assign operators '+=', '-=', '*=', '/=', '%%=':\nA:\tOperator:\tB:\tResult:\n");
 	a = 7; b = 3;
-    printf("%d\t+=\t\t%d\t%d\n", a, b, a += b);             // Опасная последовательность.
-	printf("%d\t*=\t\t%d\t%d\n", a, b, a *= b);
-	printf("%d\t%%=\t\t%d\t%d\n", a, b, a %= b);
+	c = a; a += b;											// Если сделать частью вывода, то не работает, причем в МС компиляторе даже без предупреждения.
+    printf("%d\t+=\t\t%d\t%d\n", c, b, a);             
+	c = a; a *= b;											// Cохраним предыдущее значение.
+	printf("%d\t*=\t\t%d\t%d\n", c, b, a);
+	c = a; a %= b;
+	printf("%d\t%%=\t\t%d\t%d\n", c, b, a);
 	// Операция запятая. Рассмотреть дополнительно, рекомендация - использовать только в надежных случаях.
 	printf("\nOperator 'for' and comma in init, parameter and sum: ");
 	for (int i = 0, j = 0; i < 5; j += i, ++i)			    // Запятая гарантирует порядок слева-направо, поменяем порядок.
@@ -77,7 +80,7 @@ void part_06(void)
 	printf("\n\nLoop with post check 'do {...} while ();': ");
 	a = 0; b = 1;
 	do {													// Или можно проверять просто переменные если делать через while () {}.
-		printf("%d:%d ", a, b);
+		printf("%d:%d:%x ", a, b, b);							// Посмотреть оформление.
 		a++;
 		b <<= 0x01;											// Битовое смещение для разнообразия.
 	} while (b < 0x100);									// Схему посмотреть дополнительно.
@@ -95,12 +98,12 @@ void part_06(void)
 	// Введение в массивы.
 	// Вопрос: понимание что такое и как это представлено в памяти по индексу или смещению.
 	int data[5] = { 1, 3, 5, 7, 9 };						// Сразу с инициализацией привести пример.
-	printf("\n\nSimple arrays of data, integer for example, data[index]: ");
+	printf("\n\nSimple arrays of data, integers for example, data[index]: ");
 	for (int i = 0; i < 5; ++i)								// Озвучить пример с вводом через строку.
 		printf("%d[%d] ", data[i], i);
 	char text[10] = "Hello!";								// Массив может быть символов или строка.
-	printf("String as array of chars: '%s'.\n", text);
-	printf("Sizes of array of integer are %u and chars %u.\n", sizeof(data), sizeof(text));
+	printf("\n\nString as array of chars: '%s'.\n", text);
+	printf("Sizes of arrays of integer are %u and chars %u bytes.\n", sizeof(data), sizeof(text));
 	// Анализ программы и пример тестирования функции. Драйвер.
 	// Повторение: определение или объявление функции bits_max?
 	printf("\nTesting loops with function bits_max:\nBits:\tMax:\n");
@@ -110,11 +113,12 @@ void part_06(void)
 
 unsigned short bits_max(unsigned short bits)
 {	// Возвращаем максимальное количество комбинаций, представленное с помомщью bits бит(максимум 16).
-	if (bits == 0) {										// Проверка на нуль.
+	if (bits == 0) {										// Проверка на нуль, вариант с условным оператором.
 		printf("Bits has zero value, max not exist, returnin 0.\n");
 		return 0;
 	}
 	unsigned short r = 1;									// Один бит точно есть.
+	// unsigned short r = (bits > 0);	Опасный код, 
 	for (int i = 0; i < bits && i < 16; ++i)
 		r <<= 0x01;
 	return r;												// Возвращаем рузльтат. Короткое целое использовано для разнообразия.
