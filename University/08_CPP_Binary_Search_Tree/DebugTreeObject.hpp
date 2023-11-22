@@ -1,6 +1,8 @@
 ﻿#include <iostream>
 
-class DebugTreeObject {                                         // Дополнительный отладочный оъект для класса дерева.
+// Дополнительный отладочный оъект для класса дерева и перегрузка функций преобразования в текст.
+
+class DebugTreeObject {
 public:
     DebugTreeObject() {
         obj = '.';

@@ -9,7 +9,8 @@
 // Блокировка многопоточности происходит относительно всего дерева на чтение/запись.
 // Исключения только по памяти, классы "итератора" и "узла" вложенны.
 
-template<typename T>                                            // Основной класс дерева.
+// Основной класс дерева шаблон по типу, узел создаем по динамической памяти, а объект копированем значения.
+template<typename T>
 class BinarySearchTree {
 public:
     class Node;
@@ -235,7 +236,7 @@ public:
     short size() const {
         return dataSize;
     }
-    // Удаление элемента дерева.
+    // Удаление элемента дерева, используем вспомогательную функцию замены узла дерева.
     short sub(const T& obj) noexcept {
         if (isWriteLock)
             std::cout << "Can't sub from tree, because other thread is reading.\n";
@@ -343,20 +344,24 @@ public:
     // Вложенный класс узла данных для дерева. Удобней создавать объекты или удалять их из динамической памяти.
     class Node {
     public:
+        // Конструктор, предыдущий элемент может существовать или это условный корень.
         explicit Node(const T& obj, Node* prev = nullptr) {
             std::cout << "Node constructor set object to " << obj <<
                          ", size " << sizeof(T) << " and all pointers to nullptr.\n";
             object = obj; previous = prev; left = right = nullptr;
         }
-        Node(const Node& rv) {                                  // Оператор присвоения должен быть определен.
+        // Копирующий конструктор создает объект, оператор присвоения должен быть определен.
+        Node(const Node& rv) {
             std::cout << "Copy constructor for node with object " << rv << ".\n";
             object = rv.object; previous = rv.previous; left = rv.left; right = rv.right;
         }
+        // Деструктор заполняет параметры указателей, объект удаляется автоматически при освобождении памяти.
         ~Node() {
             std::cout << "Node destructor object " << object << ", set all pointers to nullptr.\n";
             previous = left = right = nullptr;
         }
-        const T& getData() const {                              // Стандартные методы чтения/записи параметров.
+        // Стандартные методы чтения параметров узла и его указателей, отдельно чуть удобнее.
+        const T& getData() const {
             return object;
         }
         Node* getLeft() const {
@@ -368,6 +373,7 @@ public:
         Node* getRight() const {
             return right;
         }
+        // Стандартные методы записи параметров узла и его указателей, отдельно чуть удобнее.
         void setData(const T& obj) {                            // Вывод требовался для отладки, не обязательно.
             object = obj;
             std::cout << "Set node object to new [" << object << "].\n";
@@ -447,7 +453,7 @@ public:
     // Перегруженный оператор добавления элемента, аналогичен обычному методу.
     friend void operator<<(BinarySearchTree<T>& tree, const T& object) {
         std::cout << "Add node using overloading operator '<<'.\n";
-        tree.addNode(object);
+        tree.add(object);
     }
     // Перегруженный оператор добавления дерева, аналогичен обычному методу.
     friend void operator<<(BinarySearchTree<T>& dst, const BinarySearchTree<T>& src) {
