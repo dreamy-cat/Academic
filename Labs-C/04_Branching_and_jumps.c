@@ -278,7 +278,7 @@ void labs_04(void)
         printf("\n4.41. F(X) = SIN(X), if (0.2 <= X <= 0.9), else F(X) = 1. F(X) = F(%.2f) = %.2f.\n", e, sin(e));
     else
         printf("\n4.41. F(X) = SIN(X), if (0.2 <= X <= 0.9), else F(X) = 1. F(X) = F(%.2f) = %.2f.\n", e, 1.0);
-    a = 3.0; b = 4.0; c = 5.0;
+    a = 3; b = 4; c = 5;
     printf("\n4.42. Is inequality correct:\n");
     if (b > a && b < c)
         printf("A) Yes inequality correct, %d < %d < %d.\n", a, b, c);
@@ -289,7 +289,7 @@ void labs_04(void)
     else
         printf("B) No inequality is not correct, %d > %d > %d.\n", b, a, c);
     a = 7; b = 12;                                          // Предусмотреть все варианты.
-    if (a % b == 0 && b % a == 0)
+    if (a % b == 0 || b % a == 0)
         printf("\n4.43. A and B divived in any order: %d / %d = %d, remainder %d.\n", a, b, a / b, a % b);
     else if (a % b == 0)
         printf("\n4.43. A divided by B: %d / %d = %d, remainder %d.\n", a, b, a / b, a % b);
@@ -298,7 +298,7 @@ void labs_04(void)
     else
         printf("\n4.43. A and B can't divided in any order without remainder: A mod B = %d mod %d = %d.\n", a, b, a % b);
     a = 8; b = 3; c = 2; d = 4;
-    if (a % b == c || a % b == d)
+    if (a % b == c || b % a == d || a % b == d || b % a == d)
         printf("\n4.44 Yes, number %d modulus %d is %d, equal %d or %d.\n", a, b, a % b, c, d);
     else
         printf("\n4.44 No, number %d modulus %d is %d, not equal %d or %d.\n", a, b, a % b, c, d);
@@ -309,8 +309,8 @@ void labs_04(void)
         printf("\n4.45 In numbers: %d - %d - %d no pairs founded.\n", a, b, c);
     a = 5; b = 5; c = 5;
     if (a == b && a == c && b == c)
-        printf("\n4.46-47. Triangle with sides (%d, %d, %d) is equilateral.\n", a,b ,c);
-    else if ((a == b && a == c) || (b == c && b == a) || (c == a && c == b))
+        printf("\n4.46-47. Triangle with sides (%d, %d, %d) is equilateral.\n", a, b ,c);
+    else if (a == b || a == c || b == c)
         printf("\n4.46-47. Triangle with sides (%d, %d, %d) is isosceles.\n", a, b, c);
     else
         printf("\n4.46-47. Triangle with sides (%d, %d, %d) is triangle.\n", a, b, c);
@@ -342,11 +342,11 @@ void labs_04(void)
         printf("\n4.60. No, source number %d does not contain digit(s) 3, 6 or 9.\n", b);
     a = 3553; b = base * base * base; c = base * base;      // 4-ех значное число и делитель для старшего разряда.
     if ((a / b == a % base) && (a / c % base == a / base % base))
-        printf("\n4.61. Number %d is polynomial.\n", a);
+        printf("\n4.61. Number %d is polyndrome.\n", a);
     else
-        printf("\n4.61. Number %d is not polynomial.\n", a);
+        printf("\n4.61. Number %d is not polyndrome.\n", a);
     a = 1224;                                               // Все цифры должны быть уникальны.
-    printf("\n4.63. Digits in number %d: ", a);
+    printf("\n4.63. Digits in number %d: ", a); // fxix
     b = a / (base * base) % base;                           // Сотни.
     c = a / base % base;                                    // Десятки.
     d = a % base;                                           // Единицы.
@@ -386,7 +386,7 @@ void labs_04(void)
     else
         printf("Largest area of is YZ, total %d dominoes.\n", area_yz);
     const int days_per_week = 7, work_days = 5;             // С константами.
-    a = 12; b = (a - 1) % days_per_week;                    // 
+    a = 12; b = (a - 1) % days_per_week;                    
     printf("\n4.67. Day of year %d starts from 1-st january, monday. ", a);
     if (b < work_days)
         printf("It's a working day, %d.\n", b + 1);
@@ -421,7 +421,7 @@ void labs_04(void)
         printf("B) No, none of rectangles contains each other.\n");
     // r_x1 = 5; r_y1 = 5; r_x2 = 1; r_y2 = 1; r_sx2 = 4; r_sy2 = 4;
     int is_rx = 0, is_ry = 0;                               // Вспомогательные флаги и тестовые параметры, второй ниже и левее первого.
-    if (r_x1 <= r_x2) {
+    if (r_x1 <= r_x2) { // ???
         if (r_x1 + r_sx1 >= r_x2)
             is_rx = 1;
     } else {                                                // Внимательнее со скобками.
@@ -439,160 +439,158 @@ void labs_04(void)
         printf("V) Yes, rectangles has common area.\n");
     else
         printf("V) No, rectangles has no common area.\n");
-
-    
-    return;
-}   // 444, 28317. 
-
-/*
-
-    d1 = 3.2; d2 = 4.1;
-    if (d1 >= d2)
-        printf("\n4.70. A) First number %.2f more than second %.2f.\n", d1, d2);
-    if (d1 >= d2)
-        printf("\n4.70. A) First number %.2f less than second %.2f.\n", d1, d2);
+    // Неполный и вложенные условные операторы.
+    f = 3.2; g = 3.21;
+    if (f >= g)
+        printf("\n4.70.\nA) First number %.2f is more or equal than second %.2f.\n", f, g);
+    if (f < g)
+        printf("\n4.70.\nA) First number %.2f is less than second %.2f.\n", f, g);
     if (d1 >= d2)   // Likely error in book, or using goto. :)
-        printf("\n4.70. B) First number %.2f more than second %.2f.\n", d1, d2);
+        printf("B) First number %.2f more than second %.2f.\n", f, g);
     else
-        printf("\n4.70. B) First number %.2f less than second %.2f.\n", d1, d2);
-    d1 = 2.4; d2 = 3.2; d3 = 4.0;
-    if (d1 >= d2 && d1 >= d3)
-        printf("\n4.72. A) First number %.2f is more than others %.2f and %.2f.\n", d1, d2, d3);
-    if (d2 >= d1 && d2 >= d3)
-        printf("\n4.72. A) Second number %.2f is more than other %.2f and %.2f.\n", d2, d1, d3);
-    if (d3 >= d1 && d3 >= d2)
-        printf("\n4.72. A) Third number %.2f is more than other %.2f and %.2f.\n", d3, d1, d2);
-    if (d1 <= d2 && d1 <= d3)
-        printf("B) First number is %.2f is less than others %.2f and %.2f.\n", d1, d2, d3);
-    if (d2 <= d1 && d2 <= d3)
-        printf("B) Second number is %.2f is less than others %.2f and %.2f.\n", d2, d1, d3);
-    if (d3 <= d1 && d3 <= d1)
-        printf("B) Third number is %.2f is less than others %.2f and %.2f.\n", d3, d1, d2);
-    d1 = -5.5;
-    printf("\n4.74. Absolute value of %.2f is ", d1);
-    if (d1 < 0)
-        d1 *= -1;
-    printf("%.2f.\n", d1);
-    d1 = -4.5; d2 = 2.3;
-    printf("\n4.76. Numbers %.2f and %.2f, ", d1, d2);
-    if (fabs(d1) > d2) {
-        d1 /= 2.0;
-        printf("first absolute is more than second, half of first number is %.2f.\n", d1);
+        printf("B) First number %.2f less than second %.2f.\n", f, g);
+    f = 2.4; g = 3.2; h = 4.0;
+    if (f >= g && f >= h)
+        printf("\n4.72.\nA) First number %.2f is more than others %.2f and %.2f.\n", f, g, h);
+    if (g >= f && g >= h)
+        printf("\n4.72.\nA) Second number %.2f is more than other %.2f and %.2f.\n", g, f, h);
+    if (h >= f && h >= g)
+        printf("\n4.72.\nA) Third number %.2f is more than other %.2f and %.2f.\n", h, f, g);
+    if (f <= g && f <= h)
+        printf("B) First number is %.2f is less than others %.2f and %.2f.\n", f, g, h);
+    if (g <= f && g <= h)
+        printf("B) Second number is %.2f is less than others %.2f and %.2f.\n", g, f, h);
+    if (h <= f && h <= g)
+        printf("B) Third number is %.2f is less than others %.2f and %.2f.\n", h, f, g);
+    f = -5.5;
+    printf("\n4.74. Absolute value of %.2f is ", f);
+    if (f < 0)
+        f *= -1.0;
+    printf("%.2f.\n", f);
+    // 4.75 попробовать GCC.
+    e = -3.4; f = +2.5;
+    printf("\n4.75. Source numbers %.2f and %.2f.\n", e, f);
+    if (e < 0)
+        e *= -1.0;
+    if (f < 0)
+        f *= -1.0;
+    g = (e + f) / 2.0; h = sqrt(e * f);
+    printf("A) Absolute half sum of numbers (%.2f + %.2f) / 2.0 = %.2f.\n", e, f, g);
+    printf("B) Square root of multiply numbers SQRT(%.2f * %.2f) = %.2f.\n", e, f, h);   
+    f = -2.3; g = 1.5;
+    printf("\n4.76-4.77. Source numbers %.2f and %.2f.\n", f, g);
+    if (fabs(f) > fabs(g)) {
+        printf("First absolute number %.2f is more than %.2f, ", f, g);
+        f /= 2.0;
+        printf(" make half of first %.2f.\n", f);
     } else
-        printf("first absolute is less than second, nothing to do.\n");
-    int e[3] = {3, -2, 5};
-    printf("\n4.78-80. All elements in vector E[Index]: ");
-    for (int i = 0; i < 3; ++i) {
-        printf("%d", e[i]);
-        if (e[i] % 2 == 0)
-            printf(" is even");
-        if (e[i] > 0)
-            printf(" positive, in power 2 is %d", e[i] * e[i]);
-        if (e[i] >= 1 && e[i] <= 3)
-            printf(" in range [1..3]");
-        if (e[i] >= 0 && e[i] <= 5)
-            printf(" in range [0..5]");
-        printf(". ");
-    }
-    a1 = -1;
-    if (a1 < -1)
-        printf("\n\n4.85. Function Y(X) = -1, if X < -1, X if X > -1, 1 if X = -1 = Y(%d) = %d.\n", a1, -1);
-    else if (a1 > -1)
-        printf("\n\n4.85. Function Y(X) = -1, if X < -1, X if X > -1, 1 if X = -1 = Y(%d) = %d.\n", a1, a1);
+        printf("First absolute number %.2f is less than %.2f, first number as is.\n", f, g);
+    if (f < sqrt(g)) {
+        printf("First number %.2f is less than square root second %.2f ", f, sqrt(g));
+        g *= 5.0;
+        printf("multiply second to 5.0 = %.2f.\n", g);
+    } else
+        printf("First number %.2f is more than square root second %.2f, second remain unchanged.\n", f, sqrt(f));
+    f = 1.5;
+    printf("\n4.78-4.80. Source number %.2f:\n", f);
+    if ((int)f % 2 == 0)
+        printf("4.78. Integer part of number is even.\n");
     else
-        printf("\n\n4.85. Function Y(X) = -1, if X < -1, X if X > -1, 1 if X = -1 = Y(%d) = %d.\n", a1, 1);
-    a1 = 1;
-    if (a1 <= 0)
-        printf("\n4.87. Function F(X) = 0, if X <= 0, X if 0 <= X <= 1, X^2 if other = F(%d) = %d.\n", a1, 0);
-    else if (a1 > 0 && a1 <= 1)
-        printf("\n4.87. Function F(X) = 0, if X <= 0, X if 0 <= X <= 1, X^2 if other = F(%d) = %d.\n", a1, a1);
+        printf("4.78. Integer part of number is odd.\n");
+    if (f > 0) {
+        f = pow(f, 2.0);
+        printf("4.79. The number is more than zero, to power 2 is %.2f.\n", f);
+    } else
+        printf("4.79. The number is less than zero, remain number as is %.2f\n", f);
+    if (f > 1.6 && f < 3.8)
+        printf("4.80. The number in range (1.6, 3.8).\n");
     else
-        printf("\n4.87. Function F(X) = 0, if X <= 0, X if 0 <= X <= 1, X^2 if other = F(%d) = %d.\n", a1, a1 * a1);
+        printf("4.80. The number not in range (1.6, 3.8).\n");
+    a = 5; b = 7; c = -5; d = 9;
+    printf("\n4.81-4.84. Source number %d, %d, %d and %d:\n", a, b, c, d);
+    int r = (a < 0) + (b < 0) + (c < 0) + (d < 0);
+    printf("4.81. Negative numbers total: %d.\n", r);
+    r = (a % 2 == 0) + (b % 2 == 0) + (c % 2 == 0) + (d % 2 == 0);
+    printf("4.82. Even numbers total: %d.\n", r);
+    r = (a > 5) * a + (b > 5) * b + (c > 5) * c + (d > 5) * d;
+    printf("4.83. Sum of all numbers more than 5: %d.\n", r);
+    r = (a % 3 == 0) * a + (b % 3 == 0) * b + (c % 3 == 0) * c + (d % 3 == 0) * d;
+    printf("4.84. Sum of all numbers divided by 3: %d.\n", r);
+    a = -1;
+    if (a < -1)
+        printf("\n4.85. Function Y(X) = -1, if X < -1, X if X > -1, 1 if X = -1 = Y(%d) = %d.\n", a, -1);
+    else if (a > -1)
+        printf("\n4.85. Function Y(X) = -1, if X < -1, X if X > -1, 1 if X = -1 = Y(%d) = %d.\n", a, a);
+    else
+        printf("\n4.85. Function Y(X) = -1, if X < -1, X if X > -1, 1 if X = -1 = Y(%d) = %d.\n", a, 1);
+    a = 1;
+    if (a <= 0)
+        printf("\n4.87. Function F(X) = 0, if X <= 0, X if 0 <= X <= 1, X^2 if other = F(%d) = %d.\n", a, 0);
+    else if (a > 0 && a <= 1)
+        printf("\n4.87. Function F(X) = 0, if X <= 0, X if 0 <= X <= 1, X^2 if other = F(%d) = %d.\n", a, a);
+    else
+        printf("\n4.87. Function F(X) = 0, if X <= 0, X if 0 <= X <= 1, X^2 if other = F(%d) = %d.\n", a, a * a);
     printf("\n4.89. Function F(KX) = KX, if K < X, K + X, if K >= X. K(X) = X^2, if SIN(X) < 0, ABS(X) if SIN(X) >= 0.\n");
-    d1 = 5.0; d2 = 4.5;
-    if (sin(d2) < 0) {
-        d1 = d2 * d2;
-        printf("\tSIN(%.2f) negative, K pararameter is %.2f.\n", d2, d1);
+    e = pi / 6.0;
+    if (sin(e) < 0) {
+        g = e * e;
+        printf("SIN(%.2f) negative, K pararameter to power 2 is %.2f.\n", e, g);
     } else {
-        d1 = fabs(d2);
-        printf("\tSIN(%.2f) positive or zero, K pararameter is %.2f.\n", d2, d1);
+        g = fabs(e);
+        printf("SIN(%.2f) positive or zero, K pararameter to abs is %.2f.\n", e, g);
     }
-    if (d1 < d2)
-        printf("\tK = %.2f, is less than X = %.2f, F(X) = K * X = %.2f * %.2f = %.2f.\n", d1, d2, d1, d2, d1 * d2);
+    if (g < e) {
+        f = g * e;
+        printf("K = %.2f, is less than X = %.2f, F(X) = K * X = %.2f * %.2f = %.2f.\n", g, e, g, e, f);
+    } else {
+        f = g + e;
+        printf("K = %.2f, is more or equal than X = %.2f, F(X) = K + X = %.2f + %.2f = %.2f.\n", g, e, g, e, f);
+    }
+    e = -3; f = 0.5; g = 1.5;                               // Все три переменные Х, см рисунок в книге.
+    if (e < -1)
+        printf("\n4.91 A) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", e, 0.0);
+    else if (e >= -1 && e <= 1)
+        printf("\n4.91 A) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", e, e);
     else
-        printf("\tK = %.2f, is more or equal than X = %.2f, F(X) = K + X = %.2f + %.2f = %.2f.\n", d1, d2, d1, d2, d1 + d2);
-    d1 = -3; d2 = 0.5; d3 = 1.5;
-    if (d1 < -1)
-        printf("\n4.91 A) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", d1, 0.0);
-    else if (d1 >= -1 &&  d1 <= 1)
-        printf("\n4.91 A) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", d1, d1);
+        printf("\n4.91 A) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", e, 1.0);
+    if (f < -1)
+        printf("4.91 B) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", f, 1.0);
+    else if (f >= -1 && f <= 1)
+        printf("4.91 B) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", f, -1.0 * f);
     else
-        printf("\n4.91 A) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", d1, 1.0);
-    if (d2 < -1)
-        printf("4.91 B) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", d2, 1.0);
-    else if (d2 >= -1 && d2 <= 1)
-        printf("4.91 B) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", d2, -1.0 * d2);
+        printf("4.91 B) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", f, -1.0);
+    if (g < -1)
+        printf("4.91 V) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", g, 1.0);
+    else if (g >= -1 && g <= 1)
+        printf("4.91 V) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", g, 0.5 + fabs(g));
     else
-        printf("4.91 B) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", d2, -1.0 * d2);
-    if (d3 < -1)
-        printf("4.91 C) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", d3, 1.0);
-    else if (d3 >= -1 && d3 <= 1)
-        printf("4.91 C) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", d3, 0.5 + d3);
+        printf("4.91 V) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", g, 1.0);
+    a = 1; b = 0; c = 1; d = 3;                             // Количество очков заданно по переменным.
+    if (a == d)
+        printf("\n4.94. Score at football match is %d, it's victory.\n", a);
+    else if (a == c)
+        printf("\n4.94. Score at football match is %d, it's even.\n", a);
+    else if (a == b)
+        printf("\n4.94. Score at football match is %d, it's lose.\n", a);
+    a = 70; b = 60; c = 64; d = 69;                         // Параметры интервалов веса.    
+    if (a <= b)
+        printf("\n4.95. Weight is %d less than %d, it's light weight.\n", a, b);
+    else if (a > b && a <= c)
+        printf("\n4.95. Weight is %d is more than %d and less than %d, it's first half-medium weight.\n", a, b, c);
+    else if (a > c && a <= d)
+        printf("\n4.95. Weight is %d is more than %d and less than %d, it's second half-medium weight.\n", a, c, d);
     else
-        printf("4.91 C) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", d3, 1.0);
-    a1 = 1;
-    if (a1 == 3)
-        printf("\n4.94. Score at football match is %d, it's victory.\n", a1);
-    else if (a1 == 1)
-        printf("\n4.94. Score at football match is %d, it's even.\n", a1);
-    else
-        printf("\n4.94. Score at football match is %d, it's lose.\n", a1);
-    d1 = 1.0; d2 = 3.0; d3 = 1; d4 = 0.01;
-    printf("\n4.96. A * X^2 + B * X + C = 0. %.1f * X^2 + %.1f * X + %.1f.\n", d1, d2, d3);
-    d5 = (d2 * d2) - 4 * d1 * d3;
-    if (fabs(d5) <= d4) {
-        double x = -1 * d2 / 2 * d1;
-        printf("Discriminant = %.2f, result = %.2f.\n", d5, x);
-    } else if (d5 > d4) {
-        double x1 = (-1 * d2 + d5) / (2 * d1), x2 = (-1 * d2 - d5) / (2 * d1);
-        printf("Discriminant = %.2f, first result = %.2f, second result = %.2f.\n", d5, x1, x2);
-    } else
-        printf("Discriminant = %.2f, less than zero, no results.\n", d5);
-    d1 = 5.0; d2 = 3.5; d3 = -2.1; d4 = 0.0; d5 = 0.0;
-    printf("\n4.98. Values %.2f, %.2f, %.2f, ", d1, d2, d3);
-    if (d1 >= d2 && d1 >= d3)
-        printf("maximum is %.2f, ", d1);
-    else if (d2 >= d1 && d2 >= d3)
-        printf("maximum is %.2f, ", d2);
-    else
-        printf("maximum is %.2f, ", d3);
-    if (d1 < d2 && d1 < d3)
-        printf("minimum is %.2f.\n", d1);
-    else if (d2 < d1 && d2 < d3)
-        printf("minimum is %.2f.\n", d2);
-    else
-        printf("minimum is %.2f.\n", d1);
-    d1 = 1.5; d2 = 2.5; d3 = 3.1;
-    printf("\n4.100. Values %.2f, %.2f, %.2f. ", d1, d2, d3);
-    if (d1 >= d2 && d1 >= d3)
-        printf("%.2f and %.2f less than %.2f, multiply is %.2f.\n", d2, d3, d1, d2 * d3);
-    else if (d2 >= d1 && d2 >= d3)
-        printf("%.2f and %.2f less than %.2f, multiply is %.2f.\n", d1, d3, d2, d1 * d3);
-    else
-        printf("%.2f and %.2f less than %.2f, multiply is %.2f.\n", d1, d2, d3, d1 * d2);
-    a1 = -3; a2 = 5;
-    printf("\n4.102. One quarter of 2D dimension, coordinates X = %d, Y = %d, ", a1, a2);
-    if (a1 >= 0 && a2 >= 0)
-        printf("first quarter.\n");
-    else if (a1 >= 0 && a2 <= 0)
-        printf("second quarter.\n");
-    else if (a1 <= 0 &&  a2 <= 0)
-        printf("third quarter.\n");
-    else
-        printf("fourth quarter.\n");
-    a1 = 3; a2 = 10;
-    printf("\n4.100. Card indexes %d for suit and %d for value is '", a1, a2);
-    switch (a2) {
+        printf("\n4.95. Weight %d is more than any parameter of weights.\n", a);
+    a = 5; b = 3; c = 7; d = a;                             // Через дополнительную переменную.
+    if (b > d)
+        d = b;
+    if (c > d)
+        d = c;
+    printf("\n4.103. A) Maximum value from (%d, %d, %d) is %d.\n", a, b, c, d);
+    // Оператор варианта или выбора.
+    a = 11; b = 3;
+    printf("\n4.110. Card indexes %d for suit and %d for value is '", a, b);
+    switch (a) {
     case 6:
         printf("Six of ");
         break;
@@ -623,7 +621,7 @@ void labs_04(void)
     default:
         printf("Error, index value must be in [6..14] range. ");
     }
-    switch (a1) {
+    switch (b) {
     case 1:
         printf("Pikes'.\n");
         break;
@@ -639,538 +637,110 @@ void labs_04(void)
     default:
         printf("Error, index of suit must be in [1..4] range.'\n");
     }
-    a1 = 4; a2 = 3;
-    printf("\n4.111. A) If K = %d, day and 1-st january is monday, then K-day is ", a1);
-    switch ((a1 - 1) % 7) {
-    case 0:
-        printf("monday.\n");
-        break;
-    case 1:
-        printf("tuesday.\n");
-        break;
-    case 2:
-        printf("wednesday.\n");
-        break;
-    case 3:
-        printf("thursday.\n");
-        break;
-    case 4:
-        printf("friday.\n");
-        break;
-    case 5:
-        printf("saturday.\n");
-        break;
-    case 6:
-        printf("sunday.\n");
-        break;
-    default:
-        printf("something goes very wrong, parameter must be in [0..6] range.\n");
-    }
-    printf("\n4.111. B) IF K = %d, day and 1-st january is %d-day, then K-day is ", a1, a2);
-    switch ((a1 + a2 - 1) % 7) {
-    case 0:
-        printf("monday.\n");
-        break;
-    case 1:
-        printf("tuesday.\n");
-        break;
-    case 2:
-        printf("wednesday.\n");
-        break;
-    case 3:
-        printf("thursday.\n");
-        break;
-    case 4:
-        printf("friday.\n");
-        break;
-    case 5:
-        printf("saturday.\n");
-        break;
-    case 6:
-        printf("sunday.\n");
-        break;
-    default:
-        printf("something goes very wrong, parameter must be in [0..6] range.\n");
-    }
-    a1 = 3; a2 = 4; a3 = 5; b1 = 8; b2 = 9;
-    int n1 = a3 * 100 + a2 * 10 + a1, n2 = b2 * 10 + b1;
-    int n3 = n1 + n2;
-    int m1 = a1 + b1;
-    int m2 = (a2 + b2) + (m1 / 10);
-    int m3 = a3 + m2 / 10;
-    int r = m3 + m2 % 10 + m1 % 10;
-    printf("\n4.118. Summ of digits for AAA + BB = NNN, %d%d%d + %d%d = %d, = %d.\n",a3, a2 ,a1, b2, b1, n3, r);
-    int v1 = 2, v2 = 3, h1 = 3, h2 = 4;
-    r = (v1 == v2) || (h1 == h2);
-    printf("\n4.119a. Rook at [%d,%d] is dangerous for pawn at [%d,%d] = %d.\n",v1, h1 ,v2 ,h2, r);
-    r = abs(v1 - v2) == abs(h1 - h2);
-    printf("\n4.119b. Bishop at [%d,%d] is dangerous for pawn at [%d,%d] = %d.\n", v1, h1, v2, h2, r);
-    r = (abs(v1 - v2) == 1) && (abs(h1 - h2) == 1);
-    printf("\n4.119c. King at [%d,%d] can move to [%d,%d] = %d.\n", v1, h1, v2, h2, r);
-    d1 = 3.0; d2 = 4.0; d3 = 5.0;
-    double delta = 0.001;
-    if ((d1 / d3) - 1 < delta)
-            printf("\n4.124a. Triangle with catets %.2f,%.2f and hyp %.2f is rectangular.\n", d1, d2, d3);
-    else
-        if (d1 / d3 < 1.0 && d2 / d3 < 1.0)
-            printf("\n4.124a. Triangle with sizes (%.2f,%.2f,%.2f) is oxygon.\n", d1, d2, d3);
-    else
-            printf("\n4.124a. Triangle with sizes (%.2f,%.2f,%.2f) is obtuse.\n", d1, d2, d3);
-    printf("\n4.125. Age and names form: ");
-    for (int n = 1; n < 30; ++n)
-        if (n % 10 == 1 && n != 11)
-            printf("%d god, ", n);
-    else if (n % 10 > 1 && n % 10 < 5 && !(n >= 10 && n <= 20))
-            printf("%d goda, ", n);
-    else
-            printf("%d let, ", n);
-    printf("\n");
-    n1 = 25;
-    n2 = n1 / 12;
-    n3 = n1 % 12;
-
-    printf("\n4.128. Age in months %d, it's %d years and %d months.\n", n1, n2, n3);
-    a1 = 10; b1 = 30; a2 = 12; b2 = 15; n1 = 12; m1 = 0;
-    printf("\n4.132. Train arrived at %2d:%2d and departs at %2d:%2d, passanger time %2d:%2d, ", a1, b1, a2, b2, n1, m1);
-    if ((n1 == a1 && m1 >= b1) || (n1 == a2 && m1 <= b2)) {
-        printf("in minutes, yes, train at platform.\n");
-    } else if (n1 > a1 && n1 < a2)
-        printf("in hours, yes, train at platform.\n");
-    else
-        printf("no train at platform.\n");
-    enum Months { January = 1, February, March, April, May, June, July, August, September, October, November, December };
-    const int months_in_year = 12;
-    const int days_in_month[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-    int y = 2020, m = 2, d = 28, y_prev = 0, m_prev = 0, d_prev = 0, y_next = 0, m_next = 0, d_next = 0;
-    printf("\n4.134. Year %d, month %d and day %d. ", y, m, d);
-    int diff;
-    if (y % 4 == 0 && (y % 100 != 0 || y % 400 == 0)) {
-        printf("Leap year, using delta = 1.\n");
-        diff = 1;
+    // Можно еще попробовать 4.115, но потребуется разобраться c календарями.
+    // Задачи повышенной сложности, для продвинутого уровня решить обязательно. Обычный - попробовать по возможности.
+    int a1, a2, a3, b1, b2, n1, n2, n3, m1, m2, m3;
+    a1 = 5; a2 = 3; b1 = 7;
+    if (b1 > a1) {
+        n1 = 10 + a1 - b1;
+        n2 = a2 - 1;
     } else {
-        printf("Not a leap year, using delta = 0.\n");
-        diff = 0;
+        n1 = a1 - b1;
+        n2 = a2;
     }
-    // Better IF expression, using 'days' array, "if (d < days_in_month[m]))...". Using 'days' only for consts.
-    d_prev = d - 1; d_next = d + 1;     // Better in if-else statesments, but default (else) here.
-    m_prev = m_next = m;                // If not changing, then as current date.
-    y_prev = y_next = y;
-    if (d == 1) {
-        if (m == March)
-            d_prev = days_in_month[February] + diff;
-        else if ((m == May || m == July || m == October || m == December))
-            d_prev = days_in_month[April]; // Or any other 30 day, or better constant with name.
-        else
-            d_prev = days_in_month[March];    // 31 day.
-        // Only if January, then first expression divided will be 1, second will 0. Or just use IF. ;)
-        printf("Day was 1, switch to previos month.\n");
-        m_prev = ((months_in_year - (m - 1)) / months_in_year) * months_in_year + (m - 1);
-        if (m == 1) {
-            printf("Month was January, switch to previous year.\n");
-            y_prev = y - 1;
-            if (y_prev == 0) {
-                printf("Changing year scale to BC.\n");
-                y_prev = - 1;
-            }
-        }
-    } else {    // One IF possible, other way.
-        int l1 = (m == February && d == days_in_month[February] + diff);
-        int l2 = ((m == April || m == June || m == September || m == November) && d == days_in_month[April]);
-        int l3 = (d == days_in_month[January]); // Any of 31-day month.
-        if (l1 || l2 || l3) {
-            d_next = 1;
-            // (++(m - 1)) % 12 + 1. Next month index, and increment after modulus, as months starts from 1 = January.
-            printf("Day was last in month, switch to next.\n");
-            m_next = (m % months_in_year) + 1;
-            if (m == 12) {
-                printf("Month was december, switch to next year.\n");
-                y_next = y + 1;
-                if (y_next == 0) {
-                    printf("Changing year scale to AD.\n");
-                    y_next = 1;
-                }
-            }
-        }
-    }
-    printf("\nPrevious date year %d ", abs(y_prev));
-    if (y_prev > 0)
-        printf("A.D., ");
-    else
-        printf("B.C., ");
-    printf("month %d, day %d.\n", m_prev, d_prev);
-    printf("Next date year %d ", abs(y_next));
-    if (y_next > 0)
-        printf("A.D., ");
-    else
-        printf("B.C., ");
-    printf("month %d, day %d.\n", m_next, d_next);
-
-    n1 = 18;
-    printf("\n4.135. Semaphore lighting scheme G-Y-R = 3-1-2 minutes, at %d minute color is ", n1);
-    n2 = n1 % (3 + 1 + 2);
-    if (n2 >= 4)
-        printf("red.\n");
-    else if (n2 >= 3)
-        printf("yellow.\n");
-    else
-        printf("green.\n");
-    a1 = 5;
-    printf("\n4.140. Sequence 1-2..-9..10-11-..-99..100-101-...-110 the element %d is ", a1);
-    if (a1 > 1 && a1 < 10)
-        r = a1;
-    else if (a1 >= 10 && a1 <= 187) {
-        if (a1 % 2 == 0)
-            r = (a1-10) / 20 + 1;
-        else
-            r = ((a1 - 10) % 20) / 2;
-    } else if (a1 >= 188 &&  a1 <= 222) {
-        a1 = a1 - 188;
-        if (a1 % 3 == 0)
-            r = 1;
-        else if (a1 % 3 == 1)
-            r = a1 / 30;
-        else
-            r = a1 / 3;
-    }
-    printf("%d.\n", a1);
-    */
-
-/*
-
-void task_4_120(void)
-{   // Задание на шахматы, классика по правилам, после объединить с четвертой главой в основном репозитории.
-    // Все позиции по умолчанию верны относительно размеров доски и положительны.
-    int a = 2, b = 2;   // Расположение первой фигуры.
-    int c = 5, d = 6;   // Расположение второй фигуры.
-    int e = 2, f = 6;   // Позиция хода первой фигуры.
-    printf("Classic chess, positions of figures as vertical and horizontal.\n");
-    printf("b) Moving Rook from %d:%d to %d:%d, threat from Queen at %d:%d.\n", a, b, e, f, c, d);
-    if ((a == e) || (b == f)) {
+    m1 = n2 * 10 + n1;
+    printf("\n4.116. Sub of digits AA - B = NN, %d%d - %d = %d, as digits %d-%d.\n", a2, a1, b1, m1, n2, n1);
+    a1 = 3, a2 = 4, a3 = 5, b1 = 8, b2 = 9;
+    n1 = a3 * 100 + a2 * 10 + a1;
+    n2 = b2 * 10 + b1;
+    n3 = n1 + n2;
+    m1 = a1 + b1;
+    m2 = (a2 + b2) + (m1 / 10);
+    m3 = (a3 + m2 / 10) % 10;
+    m1 %= 10; m2 %= 10;
+    printf("\n4.118. Summ of digits for AAA + BB = NNN, %d%d%d + %d%d = %d, as digits = %d-%d-%d.\n",
+        a3, a2, a1, b2, b1, n3, m3, m2, m1);
+    // Задание на классические шахматы по правилам, дополнительно можно посмотреть в Вики правила.
+    // Все позиции по умолчанию верны относительно размеров доски и положительны. Проверки можно пропустить.
+    int v1 = 2, v2 = 3, v3, h1 = 3, h2 = 4, h3;
+    r = (v1 == v2) || (h1 == h2);
+    printf("\n4.119.\nA) Rook at %d,%d is dangerous for pawn at %d,%d = %d.\n", v1, h1, v2, h2, r);
+    r = abs(v1 - v2) == abs(h1 - h2);
+    printf("B) Bishop at %d,%d is dangerous for pawn at %d,%d = %d.\n", v1, h1, v2, h2, r);
+    r = (abs(v1 - v2) == 1) && (abs(h1 - h2) == 1);
+    printf("V) King at %d,%d can move to %d,%d = %d.\n", v1, h1, v2, h2, r);
+    v1 = 2; h1 = 2; v2 = 5; h2 = 6; v3 = 2; h3 = 6;         // Расположение первой, второй и третьей фигуры.
+    printf("\n4.120. Classic chess, positions of figures as vertical and horizontal.\n");
+    printf("B) Moving Rook from %d:%d to %d:%d, threat from Queen at %d:%d.\n", v1, h1, v2, h2, v3, h3);
+    if ((v1 == v3) || (h1 == h3)) {
         printf("Move Rook is correct and ");
-        if ((c == e) || (d == f) || (abs(c - e) == abs(d - f)))
+        if ((v2 == v3) || (h2 == h3) || (abs(v2 - v3) == abs(h2 - h3)))
             printf("under threat of Queen.\n");
         else
             printf("it's safe from Queen.\n");
     } else
         printf("Move Rook is incorrect.\n");
-    a = 2; b = 2; c = 7; d = 7; e = 5; f = 5;
-    printf("z) Moving Queen from %d:%d to %d:%d, threat from Bishop at %d:%d.\n", a, b, e, f, c, d);
-    if ((abs(a - e) == abs(b - f)) || ((a == e) || (b == f))) {
+    v1 = 2; h1 = 2; v2 = 7; h2 = 7; v3 = 5; h3 = 5;
+    printf("Z) Moving Queen from %d:%d to %d:%d, threat from Bishop at %d:%d.\n", v1, h1, v2, h2, v3, h3);
+    if ((abs(v1 - v3) == abs(h1 - h3)) || ((v1 == v3) || (h1 == h3))) {
         printf("Move Queen is correct and ");
-        if ((abs(c - e) == abs(d - f)))
+        if ((abs(v2 - v3) == abs(h2 - h3)))
             printf("under threat of Bishop.\n");
         else
             printf("it's safe from Bishop.\n");
     } else
         printf("Move Queen is incorrect.\n");
-    a = 3; b = 3; c = 6; d = 7; e = 4; f = 5;
-    printf("k) Moving Knight from %d:%d to %d:%d, threat from Rook at %d:%d.\n", a, b, e, f, c, d);
-    if ((abs(a - e) == 1 && abs(b - f) == 2) || (abs(a - e) == 2 && abs(b - f)) == 1) {
+    v1 = 3; b = 3; c = 6; d = 7; e = 4; f = 5;
+    printf("K) Moving Knight from %d:%d to %d:%d, threat from Rook at %d:%d.\n", v1, h1, v2, h2, v3, h3);
+    if ((abs(v1 - v3) == 1 && abs(h1 - h3) == 2) || (abs(v1 - v3) == 2 && abs(h2 - h3)) == 1) {
         printf("Move Knight is correct and ");
-        if (c == e  || d == f)
+        if (v2 == v3 || h2 == h3)
             printf("under threat of Rook.\n");
         else
             printf("it's safe from Rook.\n");
     } else
         printf("Move Knight is incorrect.\n");
-    a = 3; b = 3; c = 6; d = 5; e = 5; f = 5;
-    printf("u) Moving King from %d:%d to %d:%d, threat from Knight at %d:%d.\n", a, b, e, f, c, d);
-    if (abs(a - e) <= 1 && abs(b - f) <= 1) {
+    v1 = 3; h1 = 3; v2 = 6; h2 = 5; v3 = 5; h3 = 5;
+    printf("U) Moving King from %d:%d to %d:%d, threat from Knight at %d:%d.\n", v1, h1, v2, h2, v3, h3);
+    if ((abs(v1 - v3) <= 1 && abs(h1 - h3) <= 1) && !(v1 == v3 && h1 == h3)) {
         printf("Move King is correct and ");
-        if ((abs(c - e) == 1 && abs(d - f) == 2) || (abs(c - e) == 2 && abs(d - f)) == 1)
+        if ((abs(v2 - v3) == 1 && abs(h2 - h3) == 2) || (abs(v2 - v3) == 2 && abs(h2 - h3)) == 1)
             printf("under threat of Knight.\n");
         else
             printf("it's safe from Knight.\n");
     } else
         printf("Move King is incorrect.\n");
-}
-
-void part_4(void)
-{
-    d1 = 3.2; d2 = 4.1;
-    if (d1 >= d2)
-        printf("\n4.70. A) First number %.2f more than second %.2f.\n", d1, d2);
-    if (d1 <= d2)
-        printf("\n4.70. A) First number %.2f less than second %.2f.\n", d1, d2);
-    if (d1 >= d2)   // Likely error in book, or using goto. :) Using printf.
-        printf("\n4.70. B) First number %.2f more than second %.2f.\n", d1, d2);
-    else
-        printf("\n4.70. B) First number %.2f less than second %.2f.\n", d1, d2);
-    d1 = 2.4; d2 = 3.2; d3 = 4.0;
-    if (d1 >= d2 && d1 >= d3)
-        printf("\n4.72. A) First number %.2f is more than others %.2f and %.2f.\n", d1, d2, d3);
-    if (d2 >= d1 && d2 >= d3)
-        printf("\n4.72. A) Second number %.2f is more than other %.2f and %.2f.\n", d2, d1, d3);
-    if (d3 >= d1 && d3 >= d2)
-        printf("\n4.72. A) Third number %.2f is more than other %.2f and %.2f.\n", d3, d1, d2);
-    if (d1 <= d2 && d1 <= d3)
-        printf("B) First number is %.2f is less than others %.2f and %.2f.\n", d1, d2, d3);
-    if (d2 <= d1 && d2 <= d3)
-        printf("B) Second number is %.2f is less than others %.2f and %.2f.\n", d2, d1, d3);
-    if (d3 <= d1 && d3 <= d1)
-        printf("B) Third number is %.2f is less than others %.2f and %.2f.\n", d3, d1, d2);
-    d1 = -5.5;
-    printf("\n4.74. Absolute value of %.2f is ", d1);
-    if (d1 < 0)
-        d1 *= -1;
-    printf("%.2f.\n", d1);
-    d1 = -4.5; d2 = 2.3;
-    printf("\n4.76. Numbers %.2f and %.2f, ", d1, d2);
-    if (fabs(d1) > d2) {
-        d1 /= 2.0;
-        printf("first absolute is more than second, half of first number is %.2f.\n", d1);
+    e = 3.0; f = 4.0; g = 5.0; h = 0.1;                     // Стороны треугольника и точность определения нуля.
+    printf("\n4.122-4.124. Possible triangle sides: %.2f, %.2f and %.2f. Epsilon %.2f.\n", e, f, g, h);
+    if ((e + f) > g && (f + g) > e && (e + g) > f) {
+        printf("Triangle is exist, all sums of every 2 sides is more than other.\n");
     } else
-        printf("first absolute is less than second, nothing to do.\n");
-    int e[3] = {3, -2, 5};
-    printf("\n4.78-80. All elements in vector E[Index]: ");
-    for (int i = 0; i < 3; ++i) {
-        printf("%d", e[i]);
-        if (e[i] % 2 == 0)
-            printf(" is even");
-        if (e[i] > 0)
-            printf(" positive, in power 2 is %d", e[i] * e[i]);
-        if (e[i] >= 1 && e[i] <= 3)
-            printf(" in range [1..3]");
-        if (e[i] >= 0 && e[i] <= 5)
-            printf(" in range [0..5]");
-        printf(". ");
-    }
-    a1 = -1;
-    if (a1 < -1)
-        printf("\n\n4.85. Function Y(X) = -1, if X < -1, X if X > -1, 1 if X = -1 = Y(%d) = %d.\n", a1, -1);
-    else if (a1 > -1)
-        printf("\n\n4.85. Function Y(X) = -1, if X < -1, X if X > -1, 1 if X = -1 = Y(%d) = %d.\n", a1, a1);
+        printf("Triangle with this sides not exist, sum of every 2 sides is less than other.\n");
+    if (e == f && e == g)
+        printf("Triangle is equilateral all sides is equal.\n");
+    else if (e == f || e == g || f == g)
+        printf("Triangle is isosceles, pair of sides are equal.\n");
     else
-        printf("\n\n4.85. Function Y(X) = -1, if X < -1, X if X > -1, 1 if X = -1 = Y(%d) = %d.\n", a1, 1);
-    a1 = 1;
-    if (a1 <= 0)
-        printf("\n4.87. Function F(X) = 0, if X <= 0, X if 0 <= X <= 1, X^2 if other = F(%d) = %d.\n", a1, 0);
-    else if (a1 > 0 && a1 <= 1)
-        printf("\n4.87. Function F(X) = 0, if X <= 0, X if 0 <= X <= 1, X^2 if other = F(%d) = %d.\n", a1, a1);
-    else
-        printf("\n4.87. Function F(X) = 0, if X <= 0, X if 0 <= X <= 1, X^2 if other = F(%d) = %d.\n", a1, a1 * a1);
-    printf("\n4.89. Function F(KX) = KX, if K < X, K + X, if K >= X. K(X) = X^2, if SIN(X) < 0, ABS(X) if SIN(X) >= 0.\n");
-    d1 = 5.0; d2 = 4.5;
-    if (sin(d2) < 0) {
-        d1 = d2 * d2;
-        printf("\tSIN(%.2f) negative, K pararameter is %.2f.\n", d2, d1);
-    } else {
-        d1 = fabs(d2);
-        printf("\tSIN(%.2f) positive or zero, K pararameter is %.2f.\n", d2, d1);
-    }
-    if (d1 < d2)
-        printf("\tK = %.2f, is less than X = %.2f, F(X) = K * X = %.2f * %.2f = %.2f.\n", d1, d2, d1, d2, d1 * d2);
-    else
-        printf("\tK = %.2f, is more or equal than X = %.2f, F(X) = K + X = %.2f + %.2f = %.2f.\n", d1, d2, d1, d2, d1 + d2);
-    d1 = -3; d2 = 0.5; d3 = 1.5;
-    if (d1 < -1)
-        printf("\n4.91 A) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", d1, 0.0);
-    else if (d1 >= -1 &&  d1 <= 1)
-        printf("\n4.91 A) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", d1, d1);
-    else
-        printf("\n4.91 A) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", d1, 1.0);
-    if (d2 < -1)
-        printf("4.91 B) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", d2, 1.0);
-    else if (d2 >= -1 && d2 <= 1)
-        printf("4.91 B) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", d2, -1.0 * d2);
-    else
-        printf("4.91 B) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", d2, -1.0 * d2);
-    if (d3 < -1)
-        printf("4.91 C) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", d3, 1.0);
-    else if (d3 >= -1 && d3 <= 1)
-        printf("4.91 C) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", d3, 0.5 + d3);
-    else
-        printf("4.91 C) See figure function in book. Y(X) = Y(%.2f) = %.2f.\n", d3, 1.0);
-    a1 = 1;
-    if (a1 == 3)
-        printf("\n4.94. Score at football match is %d, it's victory.\n", a1);
-    else if (a1 == 1)
-        printf("\n4.94. Score at football match is %d, it's even.\n", a1);
-    else
-        printf("\n4.94. Score at football match is %d, it's lose.\n", a1);
-    d1 = 1.0; d2 = 3.0; d3 = 1; d4 = 0.01;
-    printf("\n4.96. A * X^2 + B * X + C = 0. %.1f * X^2 + %.1f * X + %.1f.\n", d1, d2, d3);
-    d5 = (d2 * d2) - 4 * d1 * d3;
-    if (fabs(d5) <= d4) {
-        double x = -1 * d2 / 2 * d1;
-        printf("Discriminant = %.2f, result = %.2f.\n", d5, x);
-    } else if (d5 > d4) {
-        double x1 = (-1 * d2 + d5) / (2 * d1), x2 = (-1 * d2 - d5) / (2 * d1);
-        printf("Discriminant = %.2f, first result = %.2f, second result = %.2f.\n", d5, x1, x2);
-    } else
-        printf("Discriminant = %.2f, less than zero, no results.\n", d5);
-    d1 = 5.0; d2 = 3.5; d3 = -2.1; d4 = 0.0; d5 = 0.0;
-    printf("\n4.98. Values %.2f, %.2f, %.2f, ", d1, d2, d3);
-    if (d1 >= d2 && d1 >= d3)
-        printf("maximum is %.2f, ", d1);
-    else if (d2 >= d1 && d2 >= d3)
-        printf("maximum is %.2f, ", d2);
-    else
-        printf("maximum is %.2f, ", d3);
-    if (d1 < d2 && d1 < d3)
-        printf("minimum is %.2f.\n", d1);
-    else if (d2 < d1 && d2 < d3)
-        printf("minimum is %.2f.\n", d2);
-    else
-        printf("minimum is %.2f.\n", d1);
-    d1 = 1.5; d2 = 2.5; d3 = 3.1;
-    printf("\n4.100. Values %.2f, %.2f, %.2f. ", d1, d2, d3);
-    if (d1 >= d2 && d1 >= d3)
-        printf("%.2f and %.2f less than %.2f, multiply is %.2f.\n", d2, d3, d1, d2 * d3);
-    else if (d2 >= d1 && d2 >= d3)
-        printf("%.2f and %.2f less than %.2f, multiply is %.2f.\n", d1, d3, d2, d1 * d3);
-    else
-        printf("%.2f and %.2f less than %.2f, multiply is %.2f.\n", d1, d2, d3, d1 * d2);
-    a1 = -3; a2 = 5;
-    printf("\n4.102. One quarter of 2D dimension, coordinates X = %d, Y = %d, ", a1, a2);
-    if (a1 >= 0 && a2 >= 0)
-        printf("first quarter.\n");
-    else if (a1 >= 0 && a2 <= 0)
-        printf("second quarter.\n");
-    else if (a1 <= 0 &&  a2 <= 0)
-        printf("third quarter.\n");
-    else
-        printf("fourth quarter.\n");
-    a1 = 3; a2 = 10;
-    printf("\n4.100. Card indexes %d for suit and %d for value is '", a1, a2);
-    switch (a2) {
-    case 6:
-        printf("Six of ");
-        break;
-    case 7:
-        printf("Seven of ");
-        break;
-    case 8:
-        printf("Eight of ");
-        break;
-    case 9:
-        printf("Nine of ");
-        break;
-    case 10:
-        printf("Ten of ");
-        break;
-    case 11:
-        printf("Jack of ");
-        break;
-    case 12:
-        printf("Queen of ");
-        break;
-    case 13:
-        printf("King of ");
-        break;
-    case 14:
-        printf("Ace of ");
-        break;
-    default:
-        printf("Error, index value must be in [6..14] range. ");
-    }
-    switch (a1) {
-    case 1:
-        printf("Pikes'.\n");
-        break;
-    case 2:
-        printf("Clovers'.\n");
-        break;
-    case 3:
-        printf("Tiles'.\n");
-        break;
-    case 4:
-        printf("Hearts'.\n");
-        break;
-    default:
-        printf("Error, index of suit must be in [1..4] range.'\n");
-    }
-    a1 = 4; a2 = 3;
-    printf("\n4.111. A) If K = %d, day and 1-st january is monday, then K-day is ", a1);
-    switch ((a1 - 1) % 7) {
-    case 0:
-        printf("monday.\n");
-        break;
-    case 1:
-        printf("tuesday.\n");
-        break;
-    case 2:
-        printf("wednesday.\n");
-        break;
-    case 3:
-        printf("thursday.\n");
-        break;
-    case 4:
-        printf("friday.\n");
-        break;
-    case 5:
-        printf("saturday.\n");
-        break;
-    case 6:
-        printf("sunday.\n");
-        break;
-    default:
-        printf("something goes very wrong, parameter must be in [0..6] range.\n");
-    }
-    printf("\n4.111. B) IF K = %d, day and 1-st january is %d-day, then K-day is ", a1, a2);
-    switch ((a1 + a2 - 1) % 7) {
-    case 0:
-        printf("monday.\n");
-        break;
-    case 1:
-        printf("tuesday.\n");
-        break;
-    case 2:
-        printf("wednesday.\n");
-        break;
-    case 3:
-        printf("thursday.\n");
-        break;
-    case 4:
-        printf("friday.\n");
-        break;
-    case 5:
-        printf("saturday.\n");
-        break;
-    case 6:
-        printf("sunday.\n");
-        break;
-    default:
-        printf("something goes very wrong, parameter must be in [0..6] range.\n");
-    }
-    a1 = 3; a2 = 4; a3 = 5; b1 = 8; b2 = 9;
-    int n1 = a3 * 100 + a2 * 10 + a1, n2 = b2 * 10 + b1;
-    int n3 = n1 + n2;
-    int m1 = a1 + b1;
-    int m2 = (a2 + b2) + (m1 / 10);
-    int m3 = a3 + m2 / 10;
-    int r = m3 + m2 % 10 + m1 % 10;
-    printf("\n4.118. Summ of digits for AAA + BB = NNN, %d%d%d + %d%d = %d, = %d.\n",a3, a2 ,a1, b2, b1, n3, r);
-    int v1 = 2, v2 = 3, h1 = 3, h2 = 4;
-    r = (v1 == v2) || (h1 == h2);
-    printf("\n4.119a. Rook at [%d,%d] is dangerous for pawn at [%d,%d] = %d.\n",v1, h1 ,v2 ,h2, r);
-    r = abs(v1 - v2) == abs(h1 - h2);
-    printf("\n4.119b. Bishop at [%d,%d] is dangerous for pawn at [%d,%d] = %d.\n", v1, h1, v2, h2, r);
-    r = (abs(v1 - v2) == 1) && (abs(h1 - h2) == 1);
-    printf("\n4.119c. King at [%d,%d] can move to [%d,%d] = %d.\n", v1, h1, v2, h2, r);
-    d1 = 3.0; d2 = 4.0; d3 = 5.0;
-    double delta = 0.001;
-    if ((d1 / d3) - 1 < delta)
-            printf("\n4.124a. Triangle with catets %.2f,%.2f and hyp %.2f is rectangular.\n", d1, d2, d3);
-    else
-        if (d1 / d3 < 1.0 && d2 / d3 < 1.0)
-            printf("\n4.124a. Triangle with sizes (%.2f,%.2f,%.2f) is oxygon.\n", d1, d2, d3);
-    else
-            printf("\n4.124a. Triangle with sizes (%.2f,%.2f,%.2f) is obtuse.\n", d1, d2, d3);
+        printf("Trianlge is scalene all sides are different in size.\n");
+    // Использовать теорему Пифагора или через свойства, по желанию, не забыть про эпсилон.
+    double g1 = pow(e, 2.0), g2 = pow(f, 2.0), g3 = pow(g, 2.0); h = 0.01;
+    if (h1 + h2 - h3 < h || h1 + h3 - h2 < h || h2 + h3 - h1 < h) 
+        printf("\nTriangle is rectangular, powers of 2 are: %.2f, %.2f, %.2f and epsilon %.2f.\n", g1, g2, g3, h);
+    else if (e > f - g && f > e - g && g > f - e)
+            printf("Triangle has all acute angles, it's oxygon.\n");
+        else
+            printf("Triangle has at least one wide angle, it's obtuse.\n");
     printf("\n4.125. Age and names form: ");
-    for (int n = 1; n < 30; ++n)
-        if (n % 10 == 1 && n != 11)
-            printf("%d god, ", n);
-    else if (n % 10 > 1 && n % 10 < 5 && !(n >= 10 && n <= 20))
-            printf("%d goda, ", n);
-    else
-            printf("%d let, ", n);
-    printf("\n");
-    n1 = 25;
-    n2 = n1 / 12;
-    n3 = n1 % 12;
-    printf("\n4.128. Age in months %d, it's %d years and %d months.\n", n1, n2, n3);
-    a1 = 10; b1 = 30; a2 = 12; b2 = 15; n1 = 12; m1 = 0;
+    a = 11; b = 22; c = 31;
+    if (a % 10 >= 5 || a % 10 == 0 || (a >= 10 && a <= 20))
+        printf("%d let, ", a);
+    if (b % 10 > 1 && b % 10 <= 4)
+        printf("%d goda, ", b);
+    if (c % 10 == 1)
+        printf("%d god.\n", c);
+    a = 25; a1 = a / 12; a2 = a % 12;
+    printf("\n4.128. Age in months %d, it's %d years and %d months.\n", a, a1, a2);
+    a1 = 10; b1 = 30; a2 = 12; b2 = 15; n1 = 12; m1 = 0;        // Данные по-умолчанию считаются допустимыми.
     printf("\n4.132. Train arrived at %2d:%2d and departs at %2d:%2d, passanger time %2d:%2d, ", a1, b1, a2, b2, n1, m1);
     if ((n1 == a1 && m1 >= b1) || (n1 == a2 && m1 <= b2)) {
         printf("in minutes, yes, train at platform.\n");
@@ -1178,6 +748,7 @@ void part_4(void)
         printf("in hours, yes, train at platform.\n");
     else
         printf("no train at platform.\n");
+    // Дополнительная задача, если расширенная версия делать или оставить на последующие главы.
     enum Months { January = 1, February, March, April, May, June, July, August, September, October, November, December };
     const int months_in_year = 12;
     const int days_in_month[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -1210,10 +781,11 @@ void part_4(void)
             y_prev = y - 1;
             if (y_prev == 0) {
                 printf("Changing year scale to BC.\n");
-                y_prev = - 1;
+                y_prev = -1;
             }
         }
-    } else {    // One IF possible, other way.
+    }
+    else {    // One IF possible, other way.
         int l1 = (m == February && d == days_in_month[February] + diff);
         int l2 = ((m == April || m == June || m == September || m == November) && d == days_in_month[April]);
         int l3 = (d == days_in_month[January]); // Any of 31-day month.
@@ -1244,35 +816,44 @@ void part_4(void)
     else
         printf("B.C., ");
     printf("month %d, day %d.\n", m_next, d_next);
-
-    n1 = 18;
-    printf("\n4.135. Semaphore lighting scheme G-Y-R = 3-1-2 minutes, at %d minute color is ", n1);
-    n2 = n1 % (3 + 1 + 2);
-    if (n2 >= 4)
+    a = 18;
+    printf("\n4.135. Semaphore lighting scheme G-Y-R = 3-1-2 minutes, at %d minute color is ", a);
+    b = a % (3 + 1 + 2);
+    if (b >= 4)
         printf("red.\n");
-    else if (n2 >= 3)
+    else if (b >= 3)
         printf("yellow.\n");
     else
         printf("green.\n");
-    a1 = 5;
-    printf("\n4.140. Sequence 1-2..-9..10-11-..-99..100-101-...-110 the element %d is ", a1);
-    if (a1 > 1 && a1 < 10)
-        r = a1;
-    else if (a1 >= 10 && a1 <= 187) {
-        if (a1 % 2 == 0)
-            r = (a1-10) / 20 + 1;
+    a = 5;
+    printf("\n4.140. Sequence 1-2..-9..10-11-..-99..100-101-...-110 the element %d is ", a);
+    if (a > 1 && a < 10)
+        r = a;
+    else if (a >= 10 && a <= 187) {
+        if (a % 2 == 0)
+            r = (a - 10) / 20 + 1;
         else
-            r = ((a1 - 10) % 20) / 2;
-    } else if (a1 >= 188 &&  a1 <= 222) {
-        a1 = a1 - 188;
-        if (a1 % 3 == 0)
+            r = ((a - 10) % 20) / 2;
+    } else if (a >= 188 && a <= 222) {
+        a = a - 188;
+        if (a % 3 == 0)
             r = 1;
-        else if (a1 % 3 == 1)
-            r = a1 / 30;
+        else if (a % 3 == 1)
+            r = a / 30;
         else
-            r = a1 / 3;
+            r = a / 3;
     }
-    printf("%d.\n", a1);
+    printf("%d.\n", a);
+    a = 1; b = 2;
+    printf("4.141. Sum of flat's numbers, start with %d and limit %d, ");
+    if (a == b) {
+        if (a % 2 == 1)
+            printf("is even.\n");
+        else
+            printf("is odd.\n");
+    } else if ((b - a) % 2 == 1)
+        printf("is even.\n");
+    else
+        printf("is odd.\n");
+    return;
 }
-
-*/

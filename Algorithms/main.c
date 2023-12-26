@@ -1,11 +1,9 @@
-#include "labs_0x03.hpp"
-#include "chapter_01.hpp"
+﻿#include <stdio.h>
 
-using namespace std;
-using namespace Labs_0x03;
-
-void Labs_0x03::chapter_01()
+int main()
 {
+    // Переделать на Си. ;)
+    /*
     cout << "Labs_0x03, chapter's 1 tasks.\n";
     vector<int> v1 = { 0, 2, 1, 4, 2, 5, 3, 6, 0, 4, 6, 0, 1, 3 };
     cout << "Basic connectivity tasks, source vector: ";
@@ -27,9 +25,6 @@ void Labs_0x03::chapter_01()
     vector<int> v3(maxSize);
     for (size_t i = 0; i < v2.size(); i++) {
     }
-}
-
-void labs_0x03()
-{
-    Labs_0x03::chapter_01();
+*/
+    return 0;
 }
