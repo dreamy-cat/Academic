@@ -151,76 +151,85 @@ const char* debug_setups_info[] = {
 // Данные в порядке заполнения всех параметров программы для тестов, можно и по тексту.
 // Формат: память, глобальное время и часы, устройство, первая и последняя дата загрузки,
 const struct debug_setup debug_setups_data[] = {                // Отладочный сценарий A.
-    {   .memory = 0x10000, .avaraged_hours = 0, .devices = 4, .fields = 1,
-        .g_chart = ch_points, .is_feels_like = 0, .like_cold = 0.0, .like_hot = 25.0,
-        .dev_active = { 0, 1, 2, 3 }, .fields_active = { w_temperature },
-        .t_first = {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00 },
-        .t_last =  {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 17, .tm_min = 00, .tm_sec = 00 },
-        .dev_load_t = { {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 17, .tm_min = 00, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 30, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 18, .tm_min = 23, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 14, .tm_min = 00, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 16, .tm_min = 00, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 01, .tm_sec = 00},
-                      },
-    },                                                          // Отладочный сценарий B.
-    {   .memory = 0x10000, .avaraged_hours = 1, .devices = 3, .fields = 1, .g_chart = ch_points,
-        .is_feels_like = 0, .like_cold = 18.5, .like_hot = 20.0,
-        .dev_active = { 0, 1, 4 }, .fields_active = { w_temperature },
-        .t_first = {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00 },
-        .t_last =  {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 21, .tm_min = 00, .tm_sec = 00 },
-        .dev_load_t = { {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 17, .tm_min = 00, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 21, .tm_min = 00, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 16, .tm_min = 00, .tm_sec = 00},
-                      }
-    },                                                          // Отладочный сценарий C.
-    {   .memory = 0x10000, .avaraged_hours = 0, .devices = 2, .fields = 1,
-        .g_chart = ch_columns, .is_feels_like = 0, .like_cold = 18.5, .like_hot = 20.0,
-        .dev_active = { 1, 0 }, .fields_active = { w_humidity },
-        .t_first = {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00 },
-        .t_last =  {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 23, .tm_min = 59, .tm_sec = 59 },
-        .dev_load_t = { {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 17, .tm_min = 00, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 23, .tm_min = 59, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 16, .tm_min = 00, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 18, .tm_min = 00, .tm_sec = 00},
-                      }
-    },                                                          // Отладочный сценарий D.
-    {   .memory = 0x8000, .avaraged_hours = 0, .devices = 1, .fields = 1,
-        .g_chart = ch_gradient, .is_feels_like = 1, .like_cold = 18.5, .like_hot = 20.0,
-        .dev_active = { 1 }, .fields_active = { w_feels_like },
-        .t_first = {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00 },
-        .t_last =  {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 21, .tm_min = 00, .tm_sec = 00 },
-        .dev_load_t = { {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 20, .tm_min = 49, .tm_sec = 00},
-                      }
-    },                                                          // Отладочный сценарий E.
-    {   .memory = 0x20000, .avaraged_hours = 6, .devices = 1, .fields = 1,
-        .g_chart = ch_lines, .is_feels_like = 0, .like_cold = 18.5, .like_hot = 20.0,
-        .dev_active = { 4 }, .fields_active = { w_temperature },
-        .t_first = {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00 },
-        .t_last =  {.tm_year = 123, .tm_mon = 1, .tm_mday = 22, .tm_hour = 14, .tm_min = 59, .tm_sec = 59 },
-        .dev_load_t = { {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 22, .tm_hour = 14, .tm_min = 59, .tm_sec = 59},
+{   .memory = 0x10000, .avaraged_hours = 0, .devices = 4, .fields = 1,
+    .g_chart = ch_points, .is_feels_like = 0, .like_cold = 0.0, .like_hot = 25.0,
+    .dev_active = { 0, 1, 2, 3 }, .fields_active = { w_temperature },
+    .t_first = {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00 },
+    .t_last =  {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 17, .tm_min = 00, .tm_sec = 00 },
+    .dev_load_t = { {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 17, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 30, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 18, .tm_min = 23, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 14, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 16, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 01, .tm_sec = 00},
+                  },
+},                                                          // Отладочный сценарий B.
+{   .memory = 0x10000, .avaraged_hours = 1, .devices = 3, .fields = 1, .g_chart = ch_points,
+    .is_feels_like = 0, .like_cold = 18.5, .like_hot = 20.0,
+    .dev_active = { 0, 1, 4 }, .fields_active = { w_temperature },
+    .t_first = {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00 },
+    .t_last =  {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 21, .tm_min = 00, .tm_sec = 00 },
+    .dev_load_t = { {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 17, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 21, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 16, .tm_min = 00, .tm_sec = 00},
                   }
-    },                                                          // Отладочный сценарий F.
-    {   .memory = 0x400, .avaraged_hours = 0, .devices = 3, .fields = 1, .g_chart = ch_points,
-        .is_feels_like = 0, .like_cold = 18.5, .like_hot = 20.0,
-        .dev_active = { 0, 2, 3 }, .fields_active = { w_temperature },
-        .t_first = {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00 },
-        .t_last =  {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 21, .tm_min = 00, .tm_sec = 00 },
-        .dev_load_t = { {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 19, .tm_min = 00, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 17, .tm_min = 00, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 18, .tm_min = 00, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00},
-                        {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 16, .tm_min = 00, .tm_sec = 00},
+},                                                          // Отладочный сценарий C.
+{   .memory = 0x10000, .avaraged_hours = 0, .devices = 2, .fields = 1,
+    .g_chart = ch_columns, .is_feels_like = 0, .like_cold = 18.5, .like_hot = 20.0,
+    .dev_active = { 1, 0 }, .fields_active = { w_humidity },
+    .t_first = {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00 },
+    .t_last =  {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 23, .tm_min = 59, .tm_sec = 59 },
+    .dev_load_t = { {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 17, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 23, .tm_min = 59, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 16, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 18, .tm_min = 00, .tm_sec = 00},
                   }
-    }
+},                                                          // Отладочный сценарий D.
+{   .memory = 0x8000, .avaraged_hours = 0, .devices = 1, .fields = 1,
+    .g_chart = ch_gradient, .is_feels_like = 1, .like_cold = 18.5, .like_hot = 20.0,
+    .dev_active = { 1 }, .fields_active = { w_feels_like },
+    .t_first = {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00 },
+    .t_last =  {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 21, .tm_min = 00, .tm_sec = 00 },
+    .dev_load_t = { {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 20, .tm_min = 49, .tm_sec = 00},
+                  }
+},                                                          // Отладочный сценарий E.
+{   .memory = 0x20000, .avaraged_hours = 6, .devices = 1, .fields = 1,
+    .g_chart = ch_lines, .is_feels_like = 0, .like_cold = 18.5, .like_hot = 20.0,
+    .dev_active = { 4 }, .fields_active = { w_temperature },
+    .t_first = {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00 },
+    .t_last =  {.tm_year = 123, .tm_mon = 1, .tm_mday = 22, .tm_hour = 14, .tm_min = 59, .tm_sec = 59 },
+    .dev_load_t = { {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 22, .tm_hour = 14, .tm_min = 59, .tm_sec = 59},
+                  }
+},                                                          // Отладочный сценарий F.
+{   .memory = 0x400, .avaraged_hours = 0, .devices = 3, .fields = 1, .g_chart = ch_points,
+    .is_feels_like = 0, .like_cold = 18.5, .like_hot = 20.0,
+    .dev_active = { 0, 2, 3 }, .fields_active = { w_temperature },
+    .t_first = {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00 },
+    .t_last =  {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 21, .tm_min = 00, .tm_sec = 00 },
+    .dev_load_t = { {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 19, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 17, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 18, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 15, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 1, .tm_mday = 21, .tm_hour = 16, .tm_min = 00, .tm_sec = 00},
+                  }
+},                                                          // Отладочный вариант G.
+{   .memory = 0x4000, .avaraged_hours = 0, .devices = 1, .fields = 1, .g_chart = ch_points,
+    .is_feels_like = 0, .like_cold = 18.5, .like_hot = 20.0,
+    .dev_active = { 3, }, .fields_active = { w_temperature },
+    .t_first = {.tm_year = 123, .tm_mon = 11, .tm_mday = 05, .tm_hour = 17, .tm_min = 00, .tm_sec = 00 },
+    .t_last =  {.tm_year = 123, .tm_mon = 11, .tm_mday = 05, .tm_hour = 18, .tm_min = 59, .tm_sec = 41 },
+    .dev_load_t = { {.tm_year = 123, .tm_mon = 11, .tm_mday = 05, .tm_hour = 17, .tm_min = 00, .tm_sec = 00},
+                    {.tm_year = 123, .tm_mon = 11, .tm_mday = 05, .tm_hour = 18, .tm_min = 59, .tm_sec = 41},
+                  }
+}
 };
 
 //  Глобальные данные для программы.
@@ -460,7 +469,7 @@ unsigned int print_field_chart(unsigned int field, enum chart_type type)
                 (!is_field_floating(field) && abs(max_d_val - min_d_val) < 2)) {
             printf("Minimum and maximum values are equal, cant' draw chart.\n");
             return 0;
-        }           
+        }
     }
     // Рисуем основание графика и подставляем интервалы времени и парамтров.
     float y_f_step = (float)(fabs(max_f_val - min_f_val) / (float)y_all_steps);
@@ -627,7 +636,7 @@ unsigned int print_field_chart(unsigned int field, enum chart_type type)
             x_pos_l += (step_x * (double)steps);                // Следующая позиция с округлением математически.
             points++;
         }
-       printf("Drawning records %u, and virtual points, lines or columns %u.\n\n", range_size, points);
+        printf("Drawning records %u, and virtual points, lines or columns %u.\n\n", range_size, points);
     }
     return points;
 }
@@ -1013,7 +1022,7 @@ void system_information(void)
     const int lines[12][4] = { {0, 0, 127, 0}, {127, 31, 0, 31}, {127, 0, 127, 31}, {0, 31, 0, 0},
                                {127, 31, 0, 0}, {127, 0, 0, 31}, {63, 2, 63, 12}, {64, 19, 64, 29},
                                {2, 8, 47, 15}, {2, 23, 47, 17}, {125, 8, 80, 15 }, {125, 23, 80, 17}
-                            };
+                             };
     printf("\nSystem inforamtion and screen test.\n");
     printf("Sizeof char %u, short %u, int %u and long long %u bytes. Address width %u bits.\n",
            sizeof(char), sizeof(short), sizeof(int), sizeof(long long), sizeof(void*) * CHAR_BIT);
@@ -1228,7 +1237,7 @@ void exec_debug_setup(char setup)
         dev = devices_active[i];
         load_csv_data(file_names[dev], dev, &first, &last);
         devices_timestamp[i * 2] = first;
-        last = devices_timestamp[i * 2 + 1] = last;          
+        last = devices_timestamp[i * 2 + 1] = last;
     }
     fields_sel_size = debug_setups_data[si].fields;
     for (i = 0; i < fields_sel_size; i++)
@@ -1392,7 +1401,7 @@ int main(int argc, char* argv[])
                         if (print_field_chart(fields_selected[field], global_chart) > 0)
                             print_screen();                     // Все выбранные поля и глобальная настройка графика.
                 } else
-                   printf("\nNo active fields selected, nothing to draw, select fields in main menu.\n");
+                    printf("\nNo active fields selected, nothing to draw, select fields in main menu.\n");
                 break;
             } case '8': {                                       // Вычисление температуры ощущения для всех устройств.
                 update_feels_like_temp();
