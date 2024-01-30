@@ -16,19 +16,23 @@ void labs_09(void);                     //  Строки символов.
 void labs_10(void);                     //  Функции и процедуры.
 void labs_11(void);                     //  Одномерные массивы.
 void labs_12(void);                     //  Двумерные массивы.
+void labs_13(void);                     //  Структуры данных и массивы.
+void labs_14(void);                     //  Файлы, текст и структуры.
+void labs_15(void);                     //  Дополнительная глава с практикой.
 
 void olymp(void);                       // Дополнительные олимпиадные задания, возможно после вынести отдельно.
 void gfx(const char[], int, int);       // Построение графики в .BMP файл(ы), без подключения дополнительных библиотек.
+void Den_code_review(void);
 
 int main(void)
 {
-    printf("Laboratory for basic tasks in C programming language.\n\n");
-    // gfx("scr_dst.bmp", 1280, 640);
+    printf("Laboratory for basic tasks in C programming language.\n");
+    printf("Compile using x86, or 32-bits GCC or MSVS tools.\n\n");
     labs_04();
-
+    //Den_code_review();
     // olymp();
 
-    // daniil_version_bool_calc();
+    // gfx("scr_dst.bmp", 1280, 640);   // Later updated from Danya.
+
     // list_of_schools();   // move to questions.
-    // extra_tasks();
 }

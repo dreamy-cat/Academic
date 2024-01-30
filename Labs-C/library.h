@@ -1,7 +1,7 @@
 ﻿#ifndef LIBRARY_H
 #define LIBRARY_H
 
-// Глобальные макросы для всех глав.
+// Глобальные макросы для всех глав условные константы.
 
 #define STRING_MAX 256
 #define OBJECTS_MAX 256

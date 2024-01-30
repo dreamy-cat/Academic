@@ -1,5 +1,6 @@
-﻿project(Labs-C)
-cmake_minimum_required(VERSION 3.5)
+﻿cmake_minimum_required(VERSION 3.5)
+
+project(Labs-C)
 
 # Enable to see code generated, using GCC.
 # set(CMAKE_C_FLAGS "-Wall -Wextra")

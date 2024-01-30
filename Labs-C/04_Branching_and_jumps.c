@@ -467,9 +467,8 @@ void labs_04(void)
     if (f < 0)
         f *= -1.0;
     printf("%.2f.\n", f);
-    // 4.75 попробовать GCC.
-    e = -3.4; f = +2.5;
-    printf("\n4.75. Source numbers %.2f and %.2f.\n", e, f);
+    e = -3.4; f = +2.5;                                     // Или с дополнительными переменными,
+    printf("\n4.75. Source numbers %.2f and %.2f.\n", e, f);// быть внимательней.
     if (e < 0)
         e *= -1.0;
     if (f < 0)
@@ -702,6 +701,7 @@ void labs_04(void)
         printf("Move Knight is incorrect.\n");
     v1 = 3; h1 = 3; v2 = 6; h2 = 5; v3 = 5; h3 = 5;
     printf("U) Moving King from %d:%d to %d:%d, threat from Knight at %d:%d.\n", v1, h1, v2, h2, v3, h3);
+    // Или через сложение.
     if ((abs(v1 - v3) <= 1 && abs(h1 - h3) <= 1) && !(v1 == v3 && h1 == h3)) {
         printf("Move King is correct and ");
         if ((abs(v2 - v3) == 1 && abs(h2 - h3) == 2) || (abs(v2 - v3) == 2 && abs(h2 - h3)) == 1)
@@ -710,22 +710,24 @@ void labs_04(void)
             printf("it's safe from Knight.\n");
     } else
         printf("Move King is incorrect.\n");
-    e = 3.0; f = 4.0; g = 5.0; h = 0.1;                     // Стороны треугольника и точность определения нуля.
+    e = 4.0; f = 5.0; g = 3.0;                              // Стороны треугольника и точность определения нуля.
+    double eps = 0.1;
     printf("\n4.122-4.124. Possible triangle sides: %.2f, %.2f and %.2f. Epsilon %.2f.\n", e, f, g, h);
     if ((e + f) > g && (f + g) > e && (e + g) > f) {
         printf("Triangle is exist, all sums of every 2 sides is more than other.\n");
+        // insert tasks.
     } else
-        printf("Triangle with this sides not exist, sum of every 2 sides is less than other.\n");
+        printf("Triangle with these sides not exist, sum of every 2 sides is less than other.\n");
     if (e == f && e == g)
         printf("Triangle is equilateral all sides is equal.\n");
     else if (e == f || e == g || f == g)
         printf("Triangle is isosceles, pair of sides are equal.\n");
     else
         printf("Trianlge is scalene all sides are different in size.\n");
-    // Использовать теорему Пифагора или через свойства, по желанию, не забыть про эпсилон.
-    double g1 = pow(e, 2.0), g2 = pow(f, 2.0), g3 = pow(g, 2.0); h = 0.01;
-    if (h1 + h2 - h3 < h || h1 + h3 - h2 < h || h2 + h3 - h1 < h) 
-        printf("\nTriangle is rectangular, powers of 2 are: %.2f, %.2f, %.2f and epsilon %.2f.\n", g1, g2, g3, h);
+    // Использовать теорему Пифагора или через свойства, по выбора, учёт окрестности точки по желанию.
+    double g1 = pow(e, 2.0), g2 = pow(f, 2.0), g3 = pow(g, 2.0);
+    if (g1 + g2 - g3 == 0 || g1 + g3 - g2 == 0 || g2 + g3 - g1 == 0) 
+        printf("\nTriangle is rectangular, powers of 2 are: %.2f, %.2f, %.2f.\n", g1, g2, g3);
     else if (e > f - g && f > e - g && g > f - e)
             printf("Triangle has all acute angles, it's oxygon.\n");
         else
@@ -742,7 +744,7 @@ void labs_04(void)
     printf("\n4.128. Age in months %d, it's %d years and %d months.\n", a, a1, a2);
     a1 = 10; b1 = 30; a2 = 12; b2 = 15; n1 = 12; m1 = 0;        // Данные по-умолчанию считаются допустимыми.
     printf("\n4.132. Train arrived at %2d:%2d and departs at %2d:%2d, passanger time %2d:%2d, ", a1, b1, a2, b2, n1, m1);
-    if ((n1 == a1 && m1 >= b1) || (n1 == a2 && m1 <= b2)) {
+    if ((n1 == a1 && m1 >= b1) || (n1 == a2 && m1 <= b2)) { // Check! :)
         printf("in minutes, yes, train at platform.\n");
     } else if (n1 > a1 && n1 < a2)
         printf("in hours, yes, train at platform.\n");
@@ -750,61 +752,59 @@ void labs_04(void)
         printf("no train at platform.\n");
     // Дополнительная задача, если расширенная версия делать или оставить на последующие главы.
     enum Months { January = 1, February, March, April, May, June, July, August, September, October, November, December };
-    const int months_in_year = 12;
+    const int months_per_year = 12;
     const int days_in_month[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-    int y = 2020, m = 2, d = 28, y_prev = 0, m_prev = 0, d_prev = 0, y_next = 0, m_next = 0, d_next = 0;
-    printf("\n4.134. Year %d, month %d and day %d. ", y, m, d);
-    int diff;
-    if (y % 4 == 0 && (y % 100 != 0 || y % 400 == 0)) {
-        printf("Leap year, using delta = 1.\n");
-        diff = 1;
+    int year = 2020, month = 2, day = 28, y_prev = 0, m_prev = 0, d_prev = 0, y_next = 0, m_next = 0, d_next = 0, leap;
+    printf("\n4.134. Year %d, month %d and day %d. ", year, month, day);
+    if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) {
+        printf("Leap year, using delta +1 in february.\n");
+        leap = +1;
     } else {
-        printf("Not a leap year, using delta = 0.\n");
-        diff = 0;
+        printf("Not a leap year, using delta 0 in february.\n");
+        leap = 0;
     }
     // Better IF expression, using 'days' array, "if (d < days_in_month[m]))...". Using 'days' only for consts.
-    d_prev = d - 1; d_next = d + 1;     // Better in if-else statesments, but default (else) here.
-    m_prev = m_next = m;                // If not changing, then as current date.
-    y_prev = y_next = y;
-    if (d == 1) {
-        if (m == March)
-            d_prev = days_in_month[February] + diff;
-        else if ((m == May || m == July || m == October || m == December))
+    d_prev = day - 1; d_next = day + 1;     // Better in if-else statesments, but default (else) here.
+    m_prev = m_next = month;                // If not changing, then as current date.
+    y_prev = y_next = year;
+    if (day == 1) {
+        if (month == March)
+            d_prev = days_in_month[February] + leap;
+        else if ((month == May || month == July || month == October || month == December))
             d_prev = days_in_month[April]; // Or any other 30 day, or better constant with name.
         else
             d_prev = days_in_month[March];    // 31 day.
         // Only if January, then first expression divided will be 1, second will 0. Or just use IF. ;)
         printf("Day was 1, switch to previos month.\n");
-        m_prev = ((months_in_year - (m - 1)) / months_in_year) * months_in_year + (m - 1);
-        if (m == 1) {
+        m_prev = ((months_per_year - (month - 1)) / months_per_year) * months_per_year + (month - 1);
+        if (month == January) {
             printf("Month was January, switch to previous year.\n");
-            y_prev = y - 1;
+            y_prev = year - 1;
             if (y_prev == 0) {
-                printf("Changing year scale to BC.\n");
+                printf("Changing year scale to B.C.\n");
                 y_prev = -1;
             }
         }
-    }
-    else {    // One IF possible, other way.
-        int l1 = (m == February && d == days_in_month[February] + diff);
-        int l2 = ((m == April || m == June || m == September || m == November) && d == days_in_month[April]);
-        int l3 = (d == days_in_month[January]); // Any of 31-day month.
+    } else {    // One IF possible, other way.
+        int l1 = (month == February && day == days_in_month[February] + leap);
+        int l2 = ((month == April || month == June || month == September || month == November) && day == days_in_month[April]);
+        int l3 = (day == days_in_month[January]); // Any of 31-day month.
         if (l1 || l2 || l3) {
             d_next = 1;
             // (++(m - 1)) % 12 + 1. Next month index, and increment after modulus, as months starts from 1 = January.
             printf("Day was last in month, switch to next.\n");
-            m_next = (m % months_in_year) + 1;
-            if (m == 12) {
+            m_next = (month % months_per_year) + 1;
+            if (month == December) {
                 printf("Month was december, switch to next year.\n");
-                y_next = y + 1;
+                y_next = year + 1;
                 if (y_next == 0) {
-                    printf("Changing year scale to AD.\n");
+                    printf("Changing year scale to A.D.\n");
                     y_next = 1;
                 }
             }
         }
     }
-    printf("\nPrevious date year %d ", abs(y_prev));
+    printf("Previous date year %d ", abs(y_prev));
     if (y_prev > 0)
         printf("A.D., ");
     else
@@ -825,6 +825,13 @@ void labs_04(void)
         printf("yellow.\n");
     else
         printf("green.\n");
+    a = 79;                                                 // Можно использовать вывод через цикл или на бумаге.
+    printf("\n4.137. Sequence 10-11-12-...-98-99, all two-digits numbers, element %d is ", a);
+    if (a % 2 == 0) 
+        b = ((a - 1) % (2 * 10)) / 2;                       // Или использовать дополнительные условия.
+    else 
+        b = a / (2 * 10) + 1;
+    printf("%d.\n", b);
     a = 5;
     printf("\n4.140. Sequence 1-2..-9..10-11-..-99..100-101-...-110 the element %d is ", a);
     if (a > 1 && a < 10)
@@ -843,16 +850,11 @@ void labs_04(void)
         else
             r = a / 3;
     }
-    printf("%d.\n", a);
-    a = 1; b = 2;
-    printf("4.141. Sum of flat's numbers, start with %d and limit %d, ");
-    if (a == b) {
-        if (a % 2 == 1)
-            printf("is even.\n");
-        else
-            printf("is odd.\n");
-    } else if ((b - a) % 2 == 1)
-        printf("is even.\n");
+    printf("%d.\n", a);                                     // 2-3-4-5-6-7:   e-o-o-e-e-o-o-e.
+    a = 4; b = 8;                                           // 1-2-3-4-5-6-7: o-o-e-e-o-o-e-e.
+    printf("\n4.141. Sum of flat's numbers, start from %d and limit %d, ", a, b);
+    if ((a % 2 == 1 && (b - a) % 4 >= 2) || (a % 2 == 0 && ((b - a + 1) % 4 <= 1)))
+        printf("is even.\n");                               // Или в несколько условий.
     else
         printf("is odd.\n");
     return;
