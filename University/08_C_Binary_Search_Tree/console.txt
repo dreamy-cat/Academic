@@ -1,0 +1,559 @@
+16-bits Binary Search Tree and various objects, using dynamic memory.
+Size of char 1, short 2, int 4 and double 8 bytes, address widh 32 bits.
+Memory limit 32768 bytes and 32767 maximum indexes for all nodes and data.
+
+Structure 'Binary Trree' size 12 bytes and data:
+Offset:	Size:	Min:	Max:		Comment:
+0	2	0	32768		Size of tree in nodes(leafs);
+2	2	0	32768		Size of tree in bytes, only data counts;
+4	1	'data'	'float'		Supported type nodes;
+5	1	0	255		Size of every object in tree in bytes;
+8	4	0	ffffffff	Address of 'Node' structure as root of tree.
+
+Structure 'Node' size 16 bytes and data:
+Offset:	Size:	Comment:
+0	4	address of object, null if not exist;
+4	4	address of previous node, null if not exist;
+8	4	address of left node, null if not exist;
+12	4	address of right node, null if not exist.
+
+
+Testing functions for 'Node' structure or nodes(leafs) in tree.
+
+
+Conversion from structure 'Node' to string all object types and node correctness.
+
+Create node (00771600) from data (0063FE71) to object (00771618) and size 3 bytes.
+Source node type 'data' size 3 bytes and value in hex 001EFF.
+Create node (00771628) from data (0040856A) to object (00773288) and size 11 bytes.
+Source node type 'text' size 11 bytes and value in text 'Binary Tree'.
+Create node (007732A0) from data (0063FE6E) to object (007732B8) and size 2 bytes.
+Source node type 'word' size 2 bytes and value in word 5.
+Create node (007732C8) from data (0063FE74) to object (007732E0) and size 4 bytes.
+Source node type 'float' size 4 bytes and value in float 3.20.
+
+Testing copy nodes and compare with various types.
+Results may be 0 - equal, 1 - is more, -1 - is less.
+Create node (007732F0) from data (00773288) to object (00773308) and size 11 bytes.
+Copy data node from (00773288) to node (007732F0), data (00773308) and size 11.
+Copy node with text to empty node, result 'Binary Tree'.
+Result of comapare texts 0.
+Trying to copy obect to already exist node, prevent memory leak.
+Error copy nodes, destination (0063FE90) or source (007732C8) are null or destination exist.
+Destroy node (007732F0) with object (00773308), size 11 bytes.
+Create node (007732F0) from data (007732E0) to object (00773308) and size 4 bytes.
+Copy data node from (007732E0) to node (007732F0), data (00773308) and size 4.
+Result of compare floats (3.20) and (3.21) with epsiolon (0.01) is 0.
+
+Testing moving nodes and compare for check.
+Destroy node (007732F0) with object (00773308), size 4 bytes.
+Moving node from (007732A0) to (007732A0) object (007732B8), reset source.
+Check word object after moving '5', cleared source address (00000000).
+
+
+Testing print tree with nodes and basic search.
+
+
+Create tree. Add nodes to empty text tree, just chars size 12.
+
+Create empty tree and add 10 source objects of 'text'.
+
+Create node (007732F0) from data (0063FE9D) to object (00773308) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'F' at (007732F0).
+Tree is empty, nearest node is root, moving new leaf to root.
+Moving node from (007732F0) to (007732F0) object (00773308), reset source.
+
+Create node (00773318) from data (0063FE9E) to object (00773330) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'B' at (00773318).
+Nearest node at (007732F0), object data 'F', compare flag -1, add to left.
+
+Create node (00773340) from data (0063FE9F) to object (00773358) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'A' at (00773340).
+Nearest node at (00773318), object data 'B', compare flag -1, add to left.
+
+Create node (00773368) from data (0063FEA0) to object (00773380) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'D' at (00773368).
+Nearest node at (00773318), object data 'B', compare flag 1, add to right.
+
+Create node (00773390) from data (0063FEA1) to object (007733A8) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'C' at (00773390).
+Nearest node at (00773368), object data 'D', compare flag -1, add to left.
+
+Create node (007733B8) from data (0063FEA2) to object (007733D0) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'E' at (007733B8).
+Nearest node at (00773368), object data 'D', compare flag 1, add to right.
+
+Create node (007733E0) from data (0063FEA3) to object (007733F8) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'I' at (007733E0).
+Nearest node at (007732F0), object data 'F', compare flag 1, add to right.
+
+Create node (00773408) from data (0063FEA4) to object (00773420) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'G' at (00773408).
+Nearest node at (007733E0), object data 'I', compare flag -1, add to left.
+
+Create node (00773430) from data (0063FEA5) to object (00773448) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'H' at (00773430).
+Nearest node at (00773408), object data 'G', compare flag 1, add to right.
+
+Create node (00773458) from data (0063FEA6) to object (00773470) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'J' at (00773458).
+Nearest node at (007733E0), object data 'I', compare flag 1, add to right.
+
+Print tree at (0063FEA8), size 10, memory 10 bytes. Type 'text' size 1 bytes, 128 console width.
+................................................................F...............................................................
+................................B...............................................................I...............................
+................A...............................D...............................G...............................J...............
+........................................C...............E...............................H.......................................
+
+
+Traverse tree using different types of search.
+
+
+Traverse tree at (0063FEA8), type 'data', size 10 and type 'node-left-right or 'pre-order''.
+Pop leaf at (007732F0), object [F].
+Push right leaf at (007733E0), object [I], stack size 1.
+Push left leaf at (00773318), object [B], stack size 2.
+Pop leaf at (00773318), object [B].
+Push right leaf at (00773368), object [D], stack size 2.
+Push left leaf at (00773340), object [A], stack size 3.
+Pop leaf at (00773340), object [A].
+Pop leaf at (00773368), object [D].
+Push right leaf at (007733B8), object [E], stack size 2.
+Push left leaf at (00773390), object [C], stack size 3.
+Pop leaf at (00773390), object [C].
+Pop leaf at (007733B8), object [E].
+Pop leaf at (007733E0), object [I].
+Push right leaf at (00773458), object [J], stack size 1.
+Push left leaf at (00773408), object [G], stack size 2.
+Pop leaf at (00773408), object [G].
+Push right leaf at (00773430), object [H], stack size 2.
+Pop leaf at (00773430), object [H].
+Pop leaf at (00773458), object [J].
+
+All nodes in tree A, search type 'left-node-right or 'in-order'': F B A D C E I G H J 
+
+Traverse tree at (0063FEA8), type 'text', size 10 and type 'left-node-right or 'in-order''.
+Push left leaf at (00773318), object [B], stack size 2.
+Push left leaf at (00773340), object [A], stack size 3.
+Pop leaf at (00773340), object [A].
+Pop leaf at (00773318), object [B].
+Push right leaf at (00773368), object [D], stack size 2.
+Push left leaf at (00773390), object [C], stack size 3.
+Pop leaf at (00773390), object [C].
+Pop leaf at (00773368), object [D].
+Push right leaf at (007733B8), object [E], stack size 2.
+Pop leaf at (007733B8), object [E].
+Pop leaf at (007732F0), object [F].
+Push right leaf at (007733E0), object [I], stack size 1.
+Push left leaf at (00773408), object [G], stack size 2.
+Pop leaf at (00773408), object [G].
+Push right leaf at (00773430), object [H], stack size 2.
+Pop leaf at (00773430), object [H].
+Pop leaf at (007733E0), object [I].
+Push right leaf at (00773458), object [J], stack size 1.
+Pop leaf at (00773458), object [J].
+
+All nodes in tree A, search type 'left-node-right or 'in-order'': A B C D E F G H I J 
+
+
+Copy all nodes tree, creating new object and compare, free memory 32738.
+
+
+Copy tree from (0063FEA8) to (0063FEB4), size 10 and allocate 10 bytes new memory from free 32738 bytes.
+
+Traverse tree at (0063FEA8), type 'data', size 10 and type 'node-left-right or 'pre-order''.
+Pop leaf at (007732F0), object [F].
+Push right leaf at (007733E0), object [I], stack size 1.
+Push left leaf at (00773318), object [B], stack size 2.
+Pop leaf at (00773318), object [B].
+Push right leaf at (00773368), object [D], stack size 2.
+Push left leaf at (00773340), object [A], stack size 3.
+Pop leaf at (00773340), object [A].
+Pop leaf at (00773368), object [D].
+Push right leaf at (007733B8), object [E], stack size 2.
+Push left leaf at (00773390), object [C], stack size 3.
+Pop leaf at (00773390), object [C].
+Pop leaf at (007733B8), object [E].
+Pop leaf at (007733E0), object [I].
+Push right leaf at (00773458), object [J], stack size 1.
+Push left leaf at (00773408), object [G], stack size 2.
+Pop leaf at (00773408), object [G].
+Push right leaf at (00773430), object [H], stack size 2.
+Pop leaf at (00773430), object [H].
+Pop leaf at (00773458), object [J].
+
+Add all nodes as is to new tree, check size 10.
+
+Create node (00773480) from data (00773308) to object (007704B0) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'F' at (00773480).
+Tree is empty, nearest node is root, moving new leaf to root.
+Moving node from (00773480) to (00773480) object (007704B0), reset source.
+Create node (007704C0) from data (00773330) to object (007704D8) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'B' at (007704C0).
+Nearest node at (00773480), object data 'F', compare flag -1, add to left.
+Create node (007765B8) from data (00773358) to object (00776A48) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'A' at (007765B8).
+Nearest node at (007704C0), object data 'B', compare flag -1, add to left.
+Create node (007764B0) from data (00773380) to object (00776B88) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'D' at (007764B0).
+Nearest node at (007704C0), object data 'B', compare flag 1, add to right.
+Create node (007763F0) from data (007733A8) to object (00776B18) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'C' at (007763F0).
+Nearest node at (007764B0), object data 'D', compare flag -1, add to left.
+Create node (00776498) from data (007733D0) to object (00776A18) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'E' at (00776498).
+Nearest node at (007764B0), object data 'D', compare flag 1, add to right.
+Create node (007764C8) from data (007733F8) to object (00776B78) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'I' at (007764C8).
+Nearest node at (00773480), object data 'F', compare flag 1, add to right.
+Create node (00776558) from data (00773420) to object (00776AC8) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'G' at (00776558).
+Nearest node at (007764C8), object data 'I', compare flag -1, add to left.
+Create node (00776588) from data (00773448) to object (00776A28) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'H' at (00776588).
+Nearest node at (00776558), object data 'G', compare flag 1, add to right.
+Create node (007764E0) from data (00773470) to object (00776B38) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'J' at (007764E0).
+Nearest node at (007764C8), object data 'I', compare flag 1, add to right.
+
+Memory check after copy, memory used 40 and free 32728 bytes.
+
+Print tree at (0063FEB4), size 10, memory 10 bytes. Type 'text' size 1 bytes, 128 console width.
+................................................................F...............................................................
+................................B...............................................................I...............................
+................A...............................D...............................G...............................J...............
+........................................C...............E...............................H.......................................
+
+
+Compare trees (0063FEA8) and (0063FEB4), sizes 10, node type 'text' and size 1 bytes, is order 1.
+
+Traverse tree at (0063FEA8), type 'data', size 10 and type 'node-left-right or 'pre-order''.
+Pop leaf at (007732F0), object [F].
+Push right leaf at (007733E0), object [I], stack size 1.
+Push left leaf at (00773318), object [B], stack size 2.
+Pop leaf at (00773318), object [B].
+Push right leaf at (00773368), object [D], stack size 2.
+Push left leaf at (00773340), object [A], stack size 3.
+Pop leaf at (00773340), object [A].
+Pop leaf at (00773368), object [D].
+Push right leaf at (007733B8), object [E], stack size 2.
+Push left leaf at (00773390), object [C], stack size 3.
+Pop leaf at (00773390), object [C].
+Pop leaf at (007733B8), object [E].
+Pop leaf at (007733E0), object [I].
+Push right leaf at (00773458), object [J], stack size 1.
+Push left leaf at (00773408), object [G], stack size 2.
+Pop leaf at (00773408), object [G].
+Push right leaf at (00773430), object [H], stack size 2.
+Pop leaf at (00773430), object [H].
+Pop leaf at (00773458), object [J].
+Traverse tree at (0063FEB4), type 'data', size 10 and type 'node-left-right or 'pre-order''.
+Pop leaf at (00773480), object [F].
+Push right leaf at (007764C8), object [I], stack size 1.
+Push left leaf at (007704C0), object [B], stack size 2.
+Pop leaf at (007704C0), object [B].
+Push right leaf at (007764B0), object [D], stack size 2.
+Push left leaf at (007765B8), object [A], stack size 3.
+Pop leaf at (007765B8), object [A].
+Pop leaf at (007764B0), object [D].
+Push right leaf at (00776498), object [E], stack size 2.
+Push left leaf at (007763F0), object [C], stack size 3.
+Pop leaf at (007763F0), object [C].
+Pop leaf at (00776498), object [E].
+Pop leaf at (007764C8), object [I].
+Push right leaf at (007764E0), object [J], stack size 1.
+Push left leaf at (00776558), object [G], stack size 2.
+Pop leaf at (00776558), object [G].
+Push right leaf at (00776588), object [H], stack size 2.
+Pop leaf at (00776588), object [H].
+Pop leaf at (007764E0), object [J].
+
+Pair of nodes: 'F':'F' 'B':'B' 'A':'A' 'D':'D' 'C':'C' 'E':'E' 'I':'I' 'G':'G' 'H':'H' 'J':'J' 
+
+Yes, trees (0063FEA8) and (0063FEB4) are equal and also with order flag.
+
+Trying to move to existing tree, preventing memory leak.
+
+Error moving tree, source addresses (0063FE7C, 0063FEB4) or destination (0063FE78, 0063FEA8) incorrect, or destination is not empty, possible memory leak.
+
+Destroy copy of tree and free nodes, memory used 40 bytes.
+
+Tree has 10 objects as nodes, free memory 10 for all nodes and set parameters to 0.
+Traverse tree at (0063FEA8), type 'data', size 10 and type 'node-left-right or 'pre-order''.
+Pop leaf at (007732F0), object [F].
+Push right leaf at (007733E0), object [I], stack size 1.
+Push left leaf at (00773318), object [B], stack size 2.
+Pop leaf at (00773318), object [B].
+Push right leaf at (00773368), object [D], stack size 2.
+Push left leaf at (00773340), object [A], stack size 3.
+Pop leaf at (00773340), object [A].
+Pop leaf at (00773368), object [D].
+Push right leaf at (007733B8), object [E], stack size 2.
+Push left leaf at (00773390), object [C], stack size 3.
+Pop leaf at (00773390), object [C].
+Pop leaf at (007733B8), object [E].
+Pop leaf at (007733E0), object [I].
+Push right leaf at (00773458), object [J], stack size 1.
+Push left leaf at (00773408), object [G], stack size 2.
+Pop leaf at (00773408), object [G].
+Push right leaf at (00773430), object [H], stack size 2.
+Pop leaf at (00773430), object [H].
+Pop leaf at (00773458), object [J].
+Destroy node (007732F0) with object (00773308), size 1 bytes.
+Destroy node (00773318) with object (00773330), size 1 bytes.
+Destroy node (00773340) with object (00773358), size 1 bytes.
+Destroy node (00773368) with object (00773380), size 1 bytes.
+Destroy node (00773390) with object (007733A8), size 1 bytes.
+Destroy node (007733B8) with object (007733D0), size 1 bytes.
+Destroy node (007733E0) with object (007733F8), size 1 bytes.
+Destroy node (00773408) with object (00773420), size 1 bytes.
+Destroy node (00773430) with object (00773448), size 1 bytes.
+Destroy node (00773458) with object (00773470), size 1 bytes.
+
+Memory check after destroy, memory used 30 and free 32738 bytes.
+
+
+Moving tree from previous copy to first source and print all nodes.
+
+
+Memory check after move, memory used 30 and free 32738 bytes.
+Print tree at (0063FEB4), size 10, memory 10 bytes. Type 'text' size 1 bytes, 128 console width.
+................................................................F...............................................................
+................................B...............................................................I...............................
+................A...............................D...............................G...............................J...............
+........................................C...............E...............................H.......................................
+
+Sub node [F] from tree size 10.
+Node with object founded in tree, define case of tree subtraction.
+Both derived nodes are exists, from right derived -> left-derived is exist, replace deleted by this node.
+Destination is root, new object (00776558) set as root.
+Destroy node (00773480) with object (007704B0), size 1 bytes.
+Print tree at (0063FEB4), size 9, memory 9 bytes. Type 'text' size 1 bytes, 128 console width.
+................................................................G...............................................................
+................................B...............................................................I...............................
+................A...............................D...............................H...............................J...............
+........................................C...............E.......................................................................
+
+Sub node [C] from tree size 9.
+Node with object founded in tree, define case of tree subtraction.
+Both derived nodes are null, so just delete node and free memory.
+Destroy node (007763F0) with object (00776B18), size 1 bytes.
+Print tree at (0063FEB4), size 8, memory 8 bytes. Type 'text' size 1 bytes, 128 console width.
+................................................................G...............................................................
+................................B...............................................................I...............................
+................A...............................D...............................H...............................J...............
+........................................................E.......................................................................
+
+Sub node [B] from tree size 8.
+Node with object founded in tree, define case of tree subtraction.
+Both derived nodes are exists, from right derived -> left-derived not exist, just replace deleted node by right.
+Destroy node (007704C0) with object (007704D8), size 1 bytes.
+Print tree at (0063FEB4), size 7, memory 7 bytes. Type 'text' size 1 bytes, 128 console width.
+................................................................G...............................................................
+................................D...............................................................I...............................
+................A...............................E...............................H...............................J...............
+
+Sub node [H] from tree size 7.
+Node with object founded in tree, define case of tree subtraction.
+Both derived nodes are null, so just delete node and free memory.
+Destroy node (00776588) with object (00776A28), size 1 bytes.
+Print tree at (0063FEB4), size 6, memory 6 bytes. Type 'text' size 1 bytes, 128 console width.
+................................................................G...............................................................
+................................D...............................................................I...............................
+................A...............................E...............................................................J...............
+
+Sub node [A] from tree size 6.
+Node with object founded in tree, define case of tree subtraction.
+Both derived nodes are null, so just delete node and free memory.
+Destroy node (007765B8) with object (00776A48), size 1 bytes.
+Print tree at (0063FEB4), size 5, memory 5 bytes. Type 'text' size 1 bytes, 128 console width.
+................................................................G...............................................................
+................................D...............................................................I...............................
+................................................E...............................................................J...............
+
+Sub node [D] from tree size 5.
+Node with object founded in tree, define case of tree subtraction.
+Only right derived node is exist, moving it upper to deleted node.
+Destroy node (007764B0) with object (00776B88), size 1 bytes.
+Print tree at (0063FEB4), size 4, memory 4 bytes. Type 'text' size 1 bytes, 128 console width.
+................................................................G...............................................................
+................................E...............................................................I...............................
+................................................................................................................J...............
+
+Sub node [I] from tree size 4.
+Node with object founded in tree, define case of tree subtraction.
+Only right derived node is exist, moving it upper to deleted node.
+Destroy node (007764C8) with object (00776B78), size 1 bytes.
+Print tree at (0063FEB4), size 3, memory 3 bytes. Type 'text' size 1 bytes, 128 console width.
+................................................................G...............................................................
+................................E...............................................................J...............................
+
+Tree has 3 objects as nodes, free memory 3 for all nodes and set parameters to 0.
+Traverse tree at (0063FEB4), type 'data', size 3 and type 'node-left-right or 'pre-order''.
+Pop leaf at (00776558), object [G].
+Push right leaf at (007764E0), object [J], stack size 1.
+Push left leaf at (00776498), object [E], stack size 2.
+Pop leaf at (00776498), object [E].
+Pop leaf at (007764E0), object [J].
+Destroy node (00776558) with object (00776AC8), size 1 bytes.
+Destroy node (00776498) with object (00776A18), size 1 bytes.
+Destroy node (007764E0) with object (00776B38), size 1 bytes.
+
+Memory check after destroy, memory used 20 and free 32748 bytes.
+
+
+Create unbalance tree and balance it.
+
+
+Create empty tree and add 7 source objects of 'text'.
+
+Create node (00776420) from data (0063FE95) to object (00776A78) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'A' at (00776420).
+Tree is empty, nearest node is root, moving new leaf to root.
+Moving node from (00776420) to (00776420) object (00776A78), reset source.
+
+Create node (00776480) from data (0063FE96) to object (00776A08) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'B' at (00776480).
+Nearest node at (00776420), object data 'A', compare flag 1, add to right.
+
+Create node (00776510) from data (0063FE97) to object (00776A38) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'C' at (00776510).
+Nearest node at (00776480), object data 'B', compare flag 1, add to right.
+
+Create node (00776588) from data (0063FE98) to object (00776BB8) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'D' at (00776588).
+Nearest node at (00776510), object data 'C', compare flag 1, add to right.
+
+Create node (00776558) from data (0063FE99) to object (007769F8) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'E' at (00776558).
+Nearest node at (00776588), object data 'D', compare flag 1, add to right.
+
+Create node (007764E0) from data (0063FE9A) to object (00776B08) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'F' at (007764E0).
+Nearest node at (00776558), object data 'E', compare flag 1, add to right.
+
+Create node (00776498) from data (0063FE9B) to object (00776B18) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'G' at (00776498).
+Nearest node at (007764E0), object data 'F', compare flag 1, add to right.
+
+Print tree at (0063FEA8), size 7, memory 7 bytes. Type 'text' size 1 bytes, 128 console width.
+................................................................A...............................................................
+................................................................................................B...............................
+................................................................................................................C...............
+........................................................................................................................D.......
+............................................................................................................................E...
+..............................................................................................................................F.
+...............................................................................................................................G
+
+
+Balance tree using simple traverse and linear search elements.
+Traverse tree at (0063FEA8), type 'data', size 7 and type 'node-left-right or 'pre-order''.
+Pop leaf at (00776420), object [A].
+Push right leaf at (00776480), object [B], stack size 1.
+Pop leaf at (00776480), object [B].
+Push right leaf at (00776510), object [C], stack size 1.
+Pop leaf at (00776510), object [C].
+Push right leaf at (00776588), object [D], stack size 1.
+Pop leaf at (00776588), object [D].
+Push right leaf at (00776558), object [E], stack size 1.
+Pop leaf at (00776558), object [E].
+Push right leaf at (007764E0), object [F], stack size 1.
+Pop leaf at (007764E0), object [F].
+Push right leaf at (00776498), object [G], stack size 1.
+Pop leaf at (00776498), object [G].
+Medium node in tree 'D', index 3.
+Create node (00776570) from data (00776BB8) to object (00776A58) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'D' at (00776570).
+Tree is empty, nearest node is root, moving new leaf to root.
+Moving node from (00776570) to (00776570) object (00776A58), reset source.
+Medium node in tree 'C', index 2.
+Create node (00776468) from data (00776A38) to object (00776AE8) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'C' at (00776468).
+Nearest node at (00776570), object data 'D', compare flag -1, add to left.
+Medium node in tree 'E', index 2.
+Create node (007764B0) from data (007769F8) to object (00776A48) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'E' at (007764B0).
+Nearest node at (00776570), object data 'D', compare flag 1, add to right.
+Medium node in tree 'B', index 1.
+Create node (00776408) from data (00776A08) to object (00776AC8) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'B' at (00776408).
+Nearest node at (00776468), object data 'C', compare flag -1, add to left.
+Medium node in tree 'F', index 1.
+Create node (00776438) from data (00776B08) to object (00776A18) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'F' at (00776438).
+Nearest node at (007764B0), object data 'E', compare flag 1, add to right.
+Medium node in tree 'A', index 0.
+Create node (00776540) from data (00776A78) to object (00776B28) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'A' at (00776540).
+Nearest node at (00776408), object data 'B', compare flag -1, add to left.
+Medium node in tree 'G', index 0.
+Create node (00776528) from data (00776B18) to object (00776A68) and size 1 bytes.
+Add object of type 'text', size 1 to tree and data 'G' at (00776528).
+Nearest node at (00776438), object data 'F', compare flag 1, add to right.
+Print tree at (0063FEB4), size 7, memory 7 bytes. Type 'text' size 1 bytes, 128 console width.
+................................................................D...............................................................
+................................C...............................................................E...............................
+................B...............................................................................................F...............
+........A...............................................................................................................G.......
+
+
+Clear all trees, nodes and free dynamic memory.
+
+
+Tree has 7 objects as nodes, free memory 7 for all nodes and set parameters to 0.
+Traverse tree at (0063FEA8), type 'data', size 7 and type 'node-left-right or 'pre-order''.
+Pop leaf at (00776420), object [A].
+Push right leaf at (00776480), object [B], stack size 1.
+Pop leaf at (00776480), object [B].
+Push right leaf at (00776510), object [C], stack size 1.
+Pop leaf at (00776510), object [C].
+Push right leaf at (00776588), object [D], stack size 1.
+Pop leaf at (00776588), object [D].
+Push right leaf at (00776558), object [E], stack size 1.
+Pop leaf at (00776558), object [E].
+Push right leaf at (007764E0), object [F], stack size 1.
+Pop leaf at (007764E0), object [F].
+Push right leaf at (00776498), object [G], stack size 1.
+Pop leaf at (00776498), object [G].
+Destroy node (00776420) with object (00776A78), size 1 bytes.
+Destroy node (00776480) with object (00776A08), size 1 bytes.
+Destroy node (00776510) with object (00776A38), size 1 bytes.
+Destroy node (00776588) with object (00776BB8), size 1 bytes.
+Destroy node (00776558) with object (007769F8), size 1 bytes.
+Destroy node (007764E0) with object (00776B08), size 1 bytes.
+Destroy node (00776498) with object (00776B18), size 1 bytes.
+
+Memory check after destroy, memory used 27 and free 32741 bytes.
+
+Tree has 7 objects as nodes, free memory 7 for all nodes and set parameters to 0.
+Traverse tree at (0063FEB4), type 'data', size 7 and type 'node-left-right or 'pre-order''.
+Pop leaf at (00776570), object [D].
+Push right leaf at (007764B0), object [E], stack size 1.
+Push left leaf at (00776468), object [C], stack size 2.
+Pop leaf at (00776468), object [C].
+Push left leaf at (00776408), object [B], stack size 2.
+Pop leaf at (00776408), object [B].
+Push left leaf at (00776540), object [A], stack size 2.
+Pop leaf at (00776540), object [A].
+Pop leaf at (007764B0), object [E].
+Push right leaf at (00776438), object [F], stack size 1.
+Pop leaf at (00776438), object [F].
+Push right leaf at (00776528), object [G], stack size 1.
+Pop leaf at (00776528), object [G].
+Destroy node (00776570) with object (00776A58), size 1 bytes.
+Destroy node (00776468) with object (00776AE8), size 1 bytes.
+Destroy node (00776408) with object (00776AC8), size 1 bytes.
+Destroy node (00776540) with object (00776B28), size 1 bytes.
+Destroy node (007764B0) with object (00776A48), size 1 bytes.
+Destroy node (00776438) with object (00776A18), size 1 bytes.
+Destroy node (00776528) with object (00776A68), size 1 bytes.
+
+Memory check after destroy, memory used 20 and free 32748 bytes.
+
+Destroy node (00771600) with object (00771618), size 3 bytes.
+Destroy node (00771628) with object (00773288), size 11 bytes.
+Error destroy node, destination (0063FE88) or node (00000000) incorrect.
+Destroy node (007732C8) with object (007732E0), size 4 bytes.
+Destroy node (007732A0) with object (007732B8), size 2 bytes.
+
+Check memory used before exit 0, free memory 32768 bytes.
