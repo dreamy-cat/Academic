@@ -1,6 +1,12 @@
 ﻿#include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <math.h>
+
+// Дополнительная задача "Очередь" со структурами, после изучения массива.
+// Реализовать абстрактную очередь со структурами, используя для размещения в памяти статичный массив байт заданного размера.
+// Каждую функцию протестировать, придумав по одному тесту с учетом отказа кода и его устойчивости. Весь вывод в консоль сделать подробным в каждой функции, все параметры.
+// Примерные данные и структура аналогичны стеку. Формат очереди, от большего к меньшему или наоборот - по желанию.
 
 /*
 
@@ -202,7 +208,7 @@ int stack_push(struct stack_object* info, void* data)
     sp -= sizeof(struct stack_object);
 
 */
-    /*
+/*
     struct stack_object object;
     object.type = info->type, object.type_size = info->type_size;
     */
@@ -279,9 +285,7 @@ void stack_and_structures(void)
     unsigned char dword[sizeof(int)] = { 4, 3, 2, 1 };  // 16777216 + 131072 + 768 + 4 = 16909060
     stack_push(&value, &data);
 
-
 /*
-
     stack_print();
     value.type = stack_word;
     value.type_size = sizeof(short);
@@ -289,10 +293,154 @@ void stack_and_structures(void)
     stack_push(&value, &word);
     stack_print();
   */
-  
+
 // }
 
-void labs_15(void)
-{  
+double line_size(double x1, double y1, double x2, double y2)
+{   // Вычисление длины прямой с минимальной проверкой.
+    if (x1 == NAN || y1 == NAN || x2 == NAN || y2 == NAN) {
+        printf("Some of point coordinates is incorrect, return NAN.\n");
+        return NAN;
+    }
+    return sqrt(pow(x1 - x2, 2.0) + pow(y1 - y2, 2.0));
+}
 
+int reverse_value(int value)
+{   // Вычисление и возврат обратного числа по цифрам.
+    const int base = 10;
+    int result = 0, order = 1, val = value;
+    while (val > 0) {
+        val /= base;
+        order *= base;
+    }
+    while (value > 0) {
+        order /= base;
+        result += (value % base) * order;
+        value /= base;
+    }
+    return result;
+}
+
+void tasks_school(void)
+{   // Лабораторные для школы, возможно планировались для Паскаля.
+    // 1. Даны координаты двух точек, вычислить длину отрезка между ними и с использованием функции.
+    double x1 = 1.2, x2 = 3.6, y1 = 5.8, y2 = 3.4, length;
+    length = line_size(x1, x2, y1, y2);
+    printf("Points coordinates (%.2f, %.2f) and (%.2f, %.2f). Length of line is %.2f.\n", x1, y1, x2, y2, length);
+    // 2. Ввод цифр в прямом порядке и вывод их в обратном формально без использования массива.
+    printf("\nEnter integers separated by space or tab, any char for exit: ");
+    int right = 80, field = 5, value;
+    for (int i = 0, j; scanf("%d", &value) != 0 && i < right / field; ++i) {
+        printf("\rIntegers in reverse: ");
+        for (j = 0; j < right - i * field; ++j)
+            printf(" ");
+        printf("%5d", value);
+    }
+    printf("All integers was written without arrays, but with std buffers.\n");
+    // 3. Вывод числа по цифрам, обратного к введенному или заданному.
+    value = 12345;
+    printf("\nReverse of value %d is %d.\n", value, reverse_value(value));
+    // 4. Поиск комбинаций для чисел, через обычный перебор или рекурсию.
+    const unsigned int txt_size = 0x100, bits_max = 10;         // Максимальное количество бит, от комбинаций.
+    // Макрос для лучшей совместимости с компилятором от МС, или можно использовать константу.
+#define TEXT_MAX 0x100
+    char txt[TEXT_MAX];
+    int limit = 14, programs = 0, is_all = 0;                   // Флаг вывода всех вариантов.
+    value = 4; field = 8;
+    printf("\nCalculator (0) - increase, (1) - shift left bits, start %d and limit %d.\n",
+           value, limit);
+    printf("All programs and result of combinations:\n");
+    for (int prog_len = 1, prog = 0; prog_len <= bits_max; ++prog_len) {
+        for (int i = 0, prog_val, offs; i < (0x01 << prog_len); ++i, ++prog) {
+            prog_val = value;
+            for (int j = 0; j < prog_len; ++j) {
+                offs = j * field;
+                switch ((prog >> j) & 0x01) {
+                case 0:
+                    sprintf_s(&txt[offs], txt_size - offs, "%03d(+1) ", prog_val);
+                    prog_val++;
+                    break;
+                case 1:
+                    sprintf_s(&txt[offs], txt_size - offs, "%03d(*2) ", prog_val);
+                    prog_val *= 2;
+                    break;
+                default:
+                    printf("Something goes wrong with bit and mask...\n");
+                }
+            }
+            offs = prog_len * field;
+            sprintf_s(&txt[offs], txt_size - offs, "= %d", prog_val);
+            if (prog_val == limit) {
+                programs++;
+                printf("%s, yes, program is equal to limit %d;\n", txt, limit);
+            } else
+                if (is_all)
+                    printf("%s, no, program is not equal limit %d;\n", txt, limit);
+        }
+    }
+    printf("Total programs equal to %d is %d.\n", limit, programs);
+}
+
+void num_conver(char num_src[], char num_dst[], unsigned int from, unsigned int to)
+{   // Перевод числа из одной системы счисления в другую и простой вывод.
+    const unsigned int max_order = 0x19;
+    const char tab_digit[] = "0123456789ABCDEFGHIJKLMNO";   // 25 max.
+    if (num_src == NULL || from == 0 || from > max_order || to == 0 || to > max_order) {
+        printf("Error num_src conversion, incorrect string or orders.\n");
+        return;
+    }
+    printf("\nConversion num_src '%s' from base %u to base %u.\n", num_src, from, to);
+    int len = 0, i;
+    while (num_src[len] != '\0')
+        len++;
+    if (len == 0)
+        return;
+    printf("num_src as base 10, decimal: ");
+    unsigned int num = 0, order = 1;
+    while (--len >= 0) {
+        for (i = 0; i < max_order && num_src[len] != tab_digit[i]; ++i)
+            ;
+        printf("%c*%u ", tab_digit[i], order);
+        num += i * order;
+        order *= from;
+    }
+    printf("- num_src is %u, order %u.\n", num, order);
+    printf("num_src as base %u: ", to);
+    len = 0;
+    while (num > 0) {
+        int digit = num % to;
+        num_dst[len++] = tab_digit[digit];
+        printf("'%c' ", tab_digit[digit]);
+        num /= to;
+    }
+    num_dst[len] = '\0';
+    for (i = 0; i < len / 2; ++i) {
+        char d = num_dst[i];
+        num_dst[i] = num_dst[len - i - 1];
+        num_dst[len - i - 1] = d;
+    }
+    printf("Result of base %u: '%s'.\n", to, num_dst);
+}
+
+void labs_15(void)
+{   // Дополнительные задания или просто код вызова.
+    printf("Extra tasks, some theory or small code review.\n\n");
+    // tasks_school();
+#define TXT_MAX 0x100
+    char dst[TXT_MAX];
+    char n0[] = "FFFF";
+    num_conver(n0, dst, 16, 2);
+    //
+    char n1[] = "345";
+    for (int i = 6; i <= 9; ++i)
+        num_conver(n1, dst, i, 10);
+    //
+    char n2[] = "194";
+    num_conver(n2, dst, 10, 3);
+    num_conver(n2, dst, 10, 6);
+    //
+    num_conver("1230", dst, 7, 10);
+    num_conver("124", dst, 7, 10);
+    num_conver("600", dst, 7, 10);
+    num_conver("530", dst, 7, 10);
 }

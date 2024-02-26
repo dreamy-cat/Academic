@@ -27,8 +27,8 @@ void Den_code_review(void);
 int main(void)
 {
     printf("Laboratory for basic tasks in C programming language.\n");
-    printf("Compile using x86, or 32-bits GCC or MSVS tools.\n\n");
-    labs_04();
+    printf("Compile using x86, 32-bits GCC or MSVS tools.\n\n");
+    labs_15();
     //Den_code_review();
     // olymp();
 
