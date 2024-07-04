@@ -1,9 +1,16 @@
-#ifndef L_02_CHAPTER_04_H
-#define L_02_CHAPTER_04_H
+﻿#ifndef CHAPTER_20_H
+#define CHAPTER_20_H
 
-#include <iostream>
 #include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <vector>
+#include <cmath>
 #include <cstdlib>
+#include <cstring>
+#include <ctime>
 
 std::ostream& newMan(std::ostream& os);
 

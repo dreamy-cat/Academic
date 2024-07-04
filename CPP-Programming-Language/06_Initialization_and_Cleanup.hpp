@@ -1,6 +1,7 @@
-#ifndef CHAPTER_06_H
-#define CHAPTER_06_H
+﻿#ifndef PART_06
+#define PART_06
 
+#include <iostream>
 #include <vector>
 #include <string>
 

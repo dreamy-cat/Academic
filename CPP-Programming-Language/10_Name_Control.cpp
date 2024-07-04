@@ -1,4 +1,4 @@
-#include "chapter_10.h"
+﻿#include "10_Name_Control.hpp"
 
 using namespace std;
 
@@ -86,11 +86,15 @@ void Labs_0x01::Class_10_11::print () {
     cout << "Class_10_11 int i = " << i << endl;
 }
 
+// underfined ref
+
+/*
 namespace Labs_0x01 {
 
 Class_10_11 cl10_1(3);
 
 }
+*/
 
 // Undefined reference
 // static Class_10_11 cl10_1(3);
@@ -204,3 +208,119 @@ void Class_10_29_2::printArray() {
 
 Class_10_31 Class_10_31::inst(7);
 
+void chapter_10() {
+    cout << "Chapter's 10 tasks.\n";
+    // Task 1.
+    int arrayInt[5] = { 1, 2, 3, 4, -1 };
+    function_10_1(arrayInt);
+    cout << "Integer array with static address : ";
+    for (int i = 0; i < 5; i++) cout << function_10_1() << " ";
+    cout << endl;
+    // Task 2. Classic.
+    cout << "Fibonacci sequence : ";
+    for (int i = 0; i < 12; i++) cout << numberFibbonaci() << " ";
+    cout << endl << "After reset sequence : ";
+    numberFibbonaci(true);
+    for (int i = 0; i < 12; i++) cout << numberFibbonaci() << " ";
+    cout << endl;
+    // Task 3.
+    Class_10_3 class3(5);
+    class3.print();
+    // Task 4-6.
+    cout << "Counter of static Class_10_4.\n";
+    for (int i = 0; i < 3; i++) function_10_4();
+    Class_10_4 class4;
+    function_10_5(&class4);
+    Class_10_5* class5 = new Class_10_5(&class4);
+    delete class5;
+    // Task 7. Same as previous.
+    // Task 8. Correct, static objects was created in order by name of functions in _10.cpp file.
+    cout << "Task 8. Class_10_8.\n";
+    Class_10_8 cl8('a');
+    function_10_8_1();
+    function_10_8_2();
+    // Task 9. Udefined refecrence, as expected. May be not correct.
+    //extern ofstream stream9;
+    //stream9 << "Tasks9, test.\n";
+    // Task 10. Worked, but it's not convinient in current project.
+    // Task 11-12. See chapter_10.cpp. Rethink task.
+    // fix and recheck, namespace.
+    // extern Labs_0x01::Class_10_11 cl10_1;
+    // cl10_1.print();
+    // Task 13.
+    function_10_13();
+    // Task 14.
+    volatile Class_10_14 cl14;
+    cl14.isr();
+    // Passing 'volatile Class_10_14' as 'this' argument of 'char Class_10_14::read(int) const' discards qualifiers
+    // cl14.read(0);
+    // Task 15.
+    int i15_1 = 0;
+    register int i15_2 = 1;
+    cout << "Auto and register integers : " << i15_1 << " " << i15_2 << endl;
+    // Task 16.
+    namespace nm16 = NameSpace_16_2;
+    using namespace nm16;
+    nm16::function_16_1();
+    nm16::function_16_2();
+    function_16_3();
+    function_16_4();
+    // Task 17-18.
+    function_10_17();
+    function_10_18();
+    // Task 19.
+    NameSpace_10_19::Class_10_19 cl19;
+    function_10_19();
+    // Task 20. May not correct...
+    arithmetic();
+    // Task 21.
+/*
+    using namespace NameSpace_10_20_2;
+    Integer a(3);
+    a.setSign(positive);
+    cout << "NameSpace_10_20_2, get sign from Integer without operator '::' : " << a.getSign() << endl;
+    NameSpace_10_20_2::a.setSign(negative);
+
+    cout << "NameSpace_10_20_2, get sign from Integer with operator '::' : " << NameSpace_10_20_2::a.getSign() << endl;
+*/
+    // Task 22-23. If in global, no difference.
+    using namespace NameSpace_10_22_1;
+    // using namespace NameSpace_10_22_2;
+    // Reference to 'Class_10_22' is ambiguous.
+    Class_10_22 class22_1;
+    NameSpace_10_22_2::Class_10_22 class22_2;
+    // Task 24. Ok, but not as expected.
+    using namespace NameSpace_10_24_3;
+    Class_10_24_1 cl24_1;
+    Class_10_24_2 cl24_2;
+    Class_10_24_6 cl24_6;
+    // Task 25.
+    Class_10_25 cl25("Test string 25.");
+    cl25.print();
+    // Task 26.
+    Class_10_26 cl26;
+    cl26.print();
+    // Task 27.
+    Class_10_27_2 cl27;
+    cl27.function_1();
+    // Task 28. Too short.
+    // Task 29. Constructor using string.
+    Class_10_29_2 cl29;
+    cl29.printArray();
+    // Task 30.
+    struct Structure_30 {
+        Structure_30() : i(0) {}
+        int i;
+    };
+    Structure_30 struc30[3];
+    cout << "Array of Structure_30 : ";
+    for (int i = 0; i < 3; i++) cout << struc30[i].i << " ";
+    cout << endl;
+    // Task 31.
+    Class_10_31* ptr31 = Class_10_31::instance();
+    cout << "Value from Class_10_31, singletone : " << ptr31->value() << endl;
+    // Task 32-35. Rethink
+    Mirror_32 cl32_1;
+    Mirror_32 cl32_2(&cl32_1);
+    cout << "Address of calling cl32_2 : " << (long)cl32_2.test() << endl;
+}

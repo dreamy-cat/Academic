@@ -1,6 +1,10 @@
-#ifndef CHAPTER_03_H
-#define CHAPTER_03_H
+﻿#ifndef PART_03
+#define PART_03
 
+// Глава 3. Заголовочный файл.
+
+#include <iostream>
+#include <fstream>
 #include <string>
 #include <cstdlib>
 

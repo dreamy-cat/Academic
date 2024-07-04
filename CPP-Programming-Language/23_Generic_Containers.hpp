@@ -1,14 +1,20 @@
-#ifndef L_02_CHAPTER_07_H
-#define L_02_CHAPTER_07_H
+﻿#ifndef CHAPTER_23_H
+#define CHAPTER_23_H
 
-#include <iostream>
-#include <iomanip>
 #include <algorithm>
+#include <iomanip>
+#include <iostream>
+#include <iterator>
+#include <fstream>
 #include <list>
+#include <map>
+#include <queue>
+#include <set>
+#include <sstream>
 #include <stack>
-#include <vector>
-#include <valarray>
 #include <typeinfo>
+#include <valarray>
+#include <vector>
 
 class Noisy {
 public:
@@ -33,49 +39,49 @@ void function_7_2(T v) {
 
 void function_7_2(std::list<Noisy> v);
 
-class Shape {
+class Shape_2 {
 public:
     virtual void draw() = 0;
     void altDraw();
-    virtual ~Shape();
+    virtual ~Shape_2();
 };
 
-class Circle : public Shape {
+class Circle_2 : public Shape_2 {
 public:
-    Circle();
+    Circle_2();
     void draw();
-    ~Circle();
+    ~Circle_2();
     int radius;
 };
 
-class Triangle : public Shape {
+class Triangle_2 : public Shape_2 {
 public:
-    Triangle();
-    ~Triangle();
+    Triangle_2();
+    ~Triangle_2();
     void draw();
     int line;
 };
 
-class Square : public Shape {
+class Square_2 : public Shape_2 {
 public:
-    Square();
+    Square_2();
     void draw();
-    ~Square();
+    ~Square_2();
     int perimeter;
 };
 
-class Rectangle : public Shape {
+class Rectangle_2 : public Shape_2 {
 public:
-    Rectangle();
+    Rectangle_2();
     void draw();
-    ~Rectangle();
+    ~Rectangle_2();
 };
 
 // Couple functions, using in chapter 8.
 
-bool greaterRadius(const Circle* lv, const Circle* rv);
+bool greaterRadius(const Circle_2* lv, const Circle_2* rv);
 
-bool greaterPerimeter(const Square* lv, const Square* rv);
+bool greaterPerimeter(const Square_2* lv, const Square_2* rv);
 
 void printStack(std::stack<int>& s, std::string name);
 

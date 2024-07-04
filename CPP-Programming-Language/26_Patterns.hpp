@@ -1,5 +1,5 @@
-#ifndef L_02_CHAPTER_10_H
-#define L_02_CHAPTER_10_H
+﻿#ifndef CHAPTER_26
+#define CHAPTER_26
 
 #include <iostream>
 #include <fstream>
@@ -26,28 +26,28 @@ private:
     Singleton(const Singleton&);
 };
 
-class Class_10_2 {
+class Class_10_B {
 public:
     static std::string readFile();
     static std::string file;
     static std::fstream text;
 private:
-    static Class_10_2 reader;
-    Class_10_2();
-    Class_10_2(const Class_10_2&);
-    Class_10_2& operator=(Class_10_2&);
+    static Class_10_B reader;
+    Class_10_B();
+    Class_10_B(const Class_10_B&);
+    Class_10_B& operator=(Class_10_B&);
 };
 
-class Class_10_3 {
+class Class_10_C {
 public:
     static void init(int lim);
-    static bool create(Class_10_3* newObject);
+    static bool create(Class_10_C* newObject);
 private:
-    static std::vector<Class_10_3*> objects;
+    static std::vector<Class_10_C*> objects;
     static int counter, limit;
-    Class_10_3();
-    Class_10_3(const Class_10_3&);
-    Class_10_3& operator=(Class_10_3&);
+    Class_10_C();
+    Class_10_C(const Class_10_C&);
+    Class_10_C& operator=(Class_10_C&);
 };
 
 class StateRotation {
@@ -189,32 +189,32 @@ public:
     void searchWords();
 };
 
-class Class_10_8 {
+class Class_10_8_0 {
 public:
     virtual bool function() = 0;
 };
 
-class Class_10_8_1 : public Class_10_8 {
+class Class_10_8_A : public Class_10_8_0 {
 public:
     bool function();
 };
 
-class Class_10_8_2 : public Class_10_8 {
+class Class_10_8_B : public Class_10_8_0 {
 public:
     bool function();
 };
 
-class Class_10_8_3 : public Class_10_8 {
+class Class_10_8_C : public Class_10_8_0 {
 public:
     bool function();
 };
 
-class Class_10_8_4 {
+class Class_10_8_D {
 private:
     int state;
-    std::vector<Class_10_8*> base;
+    std::vector<Class_10_8_0*> base;
 public:
-    Class_10_8_4(std::vector<Class_10_8*> iBase);
+    Class_10_8_D(std::vector<Class_10_8_0*> iBase);
     void function();
 };
 
@@ -493,7 +493,7 @@ private:
 
 class Observer;
 
-class Object {
+class Object_A {
 private:
     bool changed;
     std::set<Observer*> observers;
@@ -505,12 +505,12 @@ public:
     virtual int count();
     virtual bool hasChanged();
     virtual void notify();
-    virtual ~Object();
+    virtual ~Object_A();
 };
 
 class Observer {
 public:
-    virtual void update(Object* obj);
+    virtual void update(Object_A* obj);
     virtual ~Observer();
 };
 

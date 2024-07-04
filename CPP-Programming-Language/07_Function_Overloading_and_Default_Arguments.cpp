@@ -1,8 +1,4 @@
-#include <fstream>
-#include <iostream>
-#include <cstring>
-
-#include "chapter_07.h"
+﻿#include "07_Function_Overloading_and_Default_Arguments.hpp"
 
 using namespace std;
 
@@ -231,4 +227,73 @@ void* StashMem::fectch(int index) {
 
 int StashMem::count() {
     return next;
+}
+
+void chapter_07() {
+    cout << "Chapter's 7 tasks.\n";
+    // Task 1.
+    Text class1("labs_0x01/files/chapter-07.txt");
+    cout << "File chapter-07.txt : " << "\n" << class1.txt;
+    // Task 2.
+    Message class2("Initial string.");
+    class2.print();
+    class2.print("With string. ");
+    // Task 3. Intresting...
+    // Task 4. May be not right
+    Class_7_4 class4;
+    class4.f();
+    class4.f(1);
+    class4.f(1,2);
+    class4.f(1,2,3);
+    // Task 5.
+    function_7_5(1, 2);
+    // Task 6.
+    Stash7 stashOfInt(sizeof(int));
+    Stash7 stashOfChar(sizeof(char), 8);
+    for (int i = 0; i < 16; i++) {
+        stashOfInt.add((void*)&i);
+        char c = 'a' + i;
+        stashOfChar.add((void*)&c);
+    }
+    cout << "Stash of int : ";
+    for (int i = 0; i < stashOfInt.count(); i++) cout << *((int*)stashOfInt.fectch(i)) << " ";
+    cout << "\nStash of char : ";
+    for (int i = 0; i < stashOfChar.count(); i++) cout << *((char*)stashOfChar.fectch(i)) << " ";
+    cout << endl;
+    // Task 7.
+    string strings_1[] = {"one", "two", "three"};
+    Stack7 r(strings_1, 3);
+    cout << "Pop strings values : ";
+    for (int i = 0; i < 3; i++) cout << r.pop() << " ";
+    cout << endl;
+    // Task 8.
+    SuperVar sv[3] = { SuperVar(char('a')), SuperVar(int(1)), SuperVar(float(3.0)) };
+    for (int i = 0; i < 3; i++) sv[i].print((SuperVar::vartype)i);
+    // Task 9.
+    string s1 = "First test string.", s2 = "Add string.", s3 = "Using default constructor.";
+    String_9 s_91(s1.data());
+    s_91.print(cout);
+    s_91.concat(const_cast<char*>(s2.data()));
+    s_91.print(cout);
+    String_9 s_92;
+    s_92.print(cout);
+    s_92.concat(const_cast<char*>(s3.data()));
+    s_92.print(cout);
+    // Task 10.
+    StashMem stashMemOfInt(sizeof(int));
+    StashMem stashMemOfChar(sizeof(char), 8);
+    for (int i = 0; i < 16; i++) {
+        stashMemOfInt.add((void*)&i);
+        char c = 'a' + i;
+        stashMemOfChar.add((void*)&c);
+    }
+    cout << "StashMem class. Integers : ";
+    for (int i = 0; i < stashMemOfInt.count(); i++) cout << *((int*)stashMemOfInt.fectch(i)) << " ";
+    cout << "\nStashMem class. Chars : ";
+    for (int i = 0; i < stashMemOfChar.count(); i++) cout << *((char*)stashMemOfChar.fectch(i)) << " ";
+    cout << endl;
+    // Task 11.
+    Mem mem1(5);
+    cout << "Mem class pointer moved : " << mem1.moved() << ". ";
+    cout << "And after second call : " << mem1.moved() << endl;
 }

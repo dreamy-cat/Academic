@@ -1,7 +1,10 @@
-#ifndef L_02_CHAPTER_03_H
-#define L_02_CHAPTER_03_H
+﻿#ifndef PART_19
+#define PART_19
 
+#include <iostream>
 #include <string>
+#include <vector>
+#include <fstream>
 
 std::string reverseString(const std::string& s);
 

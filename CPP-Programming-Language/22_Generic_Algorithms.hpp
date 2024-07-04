@@ -1,16 +1,21 @@
-#ifndef L_02_CHAPTER_06_H
-#define L_02_CHAPTER_06_H
+﻿#ifndef PART_22
+#define PART_22
 
-#include <ctime>
+
 #include <list>
 #include <vector>
 #include <iostream>
-#include <cstring>
+#include <fstream>
+#include <cmath>
+#include <ctime>
 #include <cstdlib>
+#include <cstring>
+#include <map>
 #include <set>
 #include <iterator>
 #include <algorithm>
 #include <functional>
+#include <numeric>
 
 clock_t function_6_1();
 
@@ -210,19 +215,16 @@ _OutputIterator for_each_alt(_InputIterator __first_1, _InputIterator __last_1, 
     return __result;
 }
 
-template<class T>
-class Matrix {
+template<class T> class Matrix_A {
 public:
-    explicit Matrix(const int rows, const int columns, int gen = 0) {
+    explicit Matrix_A(const int rows, const int columns, int gen = 0) {
         data.resize(rows);
         for (int i = 0; i < data.size(); i++) {
             data[i].resize(columns);
             std::fill_n(data[i].begin(), columns, gen++);
         }
-
     }
-
-    Matrix& operator=(const Matrix& rValue) {
+    Matrix_A& operator=(const Matrix_A& rValue) {
         if (data.empty() || rValue.data.empty() || rValue.data.size() != data.size() || rValue.data[0].size() != data[0].size())
             return *this;
         for (int i = 0; i < data.size(); i++)
@@ -230,23 +232,21 @@ public:
                 data[i][j] = rValue.data[i][j];
         return *this;
     }
-
-    const Matrix operator+(const Matrix& rValue) {
+    const Matrix_A operator+(const Matrix_A& rValue) {
         if (data.empty() || rValue.data.empty() || rValue.data.size() != data.size() || rValue.data[0].size() != data[0].size())
             return *this;
-        Matrix result(data.size(), data[0].size());
+        Matrix_A result(data.size(), data[0].size());
         for (int i = 0; i < data.size(); i++)
             for (int j = 0; j < rValue.data.size(); j++)
                 result.data[i][j] = data[i][j] + rValue.data[i][j];
         return result;
     }
-
-    const Matrix operator*(const Matrix& rValue) {
+    const Matrix_A operator*(const Matrix_A& rValue) {
         if (data.empty() || rValue.data.empty() || rValue.data.size() != data[0].size()) {
-            std::cout << "Matrix sizes mismatch.\n";
+            std::cout << "Matrix_A sizes mismatch.\n";
             return *this;
         }
-        Matrix result(data.size(), rValue.data[0].size());
+        Matrix_A result(data.size(), rValue.data[0].size());
         for (int i = 0; i < data.size(); i++)
             for (int j = 0; j < rValue.data[0].size(); j++) {
                 T element = 0;
@@ -256,17 +256,16 @@ public:
             }
         return result;
     }
-
-    const Matrix operator*(const std::vector<T>& rValue) {
+    const Matrix_A operator*(const std::vector<T>& rValue) {
         if (data.empty() || rValue.empty() || rValue.size() != data[0].size())
             return *this;
-        Matrix rOperand(data[0].size(), 1), result(data.size(), 1);
+        Matrix_A rOperand(data[0].size(), 1), result(data.size(), 1);
         for (int i = 0; i < data.size(); i++)
             rOperand.data[i][0] = rValue[i];
         result = (*this) * (rOperand);
         return result;
     }
-    friend std::ostream& operator<<(std::ostream& os, const Matrix<T>& value) {
+    friend std::ostream& operator<<(std::ostream& os, const Matrix_A<T>& value) {
         for (int i = 0; i < value.data.size(); i++) {
             for (int j = 0; j < value.data[i].size(); j++)
                 std::cout << value.data[i][j] << " ";
@@ -277,8 +276,6 @@ public:
 private:
     std::vector<std::vector<T> > data;
 };
-
-
 
 template<typename T>
 void function_6_2() {

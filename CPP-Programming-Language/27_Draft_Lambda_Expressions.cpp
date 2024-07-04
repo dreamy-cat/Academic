@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <functional>
 #include <vector>
 #include <algorithm>
@@ -44,6 +44,8 @@ using namespace std;
  * В пятницу к нему идти снова. (envy)
  *
  **/
+
+/*
 
 class Functor {                                             // Класс функтора с перегруженным оператором вызова: "operator()".
 public:
@@ -110,9 +112,12 @@ void between(int a, int b, int c, std::function<bool(int,int)> cmp)
         cout << "No, value is far left.\n";
 }
 
-int main()
+*/
+
+void chapter_27()
 {
     cout << "Quick functional examples.\n\n";
+    /*
     // Лямбда выражение. Замыкание и захват переменных по значению.
     std::function<bool(int,int)> more = [](int lv, int rv) {
         cout << "In lambda, left " << lv << " more than right " << rv << ": " << (lv > rv) << endl;
@@ -125,6 +130,8 @@ int main()
     between(1, 5, 7, more);
     cout << endl;
     between(1, 5, 0, more);
+    */
+
     /*
 C:/SDK/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++/bits/std_function.h:687:       return _M_invoker(_M_functor, std::forward<_ArgTypes>(__args)...);
    lea	eax, [ebp-64]	 # tmp130,
@@ -142,12 +149,14 @@ C:/SDK/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++/bits/std_
    */
 
     // Замыкание без объявления.
+    /*
     std::vector<int> data({ 1, 2, 3, 4, 5 });
     cout << "\nVectors using lambda expression without declaration:\n";
     for (auto e = data.begin(); e != data.end(); ++e)
         cout << *e << " ";
     cout << endl;
     sort(data.begin(), data.end(), [](int a, int b) { return a > b; });
+    /*
     /*
  # C:/SDK/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++/bits/stl_algo.h:1968: 	  std::__introsort_loop(__first, __last,
     mov	esi, DWORD PTR [ebp-76]	 # _157, %sfp
@@ -161,13 +170,17 @@ C:/SDK/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++/bits/std_
     mov	eax, esi	 #, _157
     call	__ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEENS0_5__ops15_Iter_comp_iterIZ4mainEUliiE0_EEEvT_SB_T0_.isra.66	 #
     */
+
+    /*
     for (auto e = data.begin(); e != data.end(); ++e)
         cout << *e << " ";
     cout << "\n\n";
-
+    */
     // Без захвата переменных.
+    /*
     std::function<int(void)> rnd = [](void) { return rand(); };
     cout << "Lambda expression without args, random: " << rnd() << "\n\n";
+    */
     /*
  # C:\Users\Alexander\Documents\Projects\Questions-CPP\main.cpp:65:     cout << "Lambda expression without args, random: " << rnd() << "\n\n";
     mov	DWORD PTR [esp], eax	 #, _72
@@ -179,10 +192,12 @@ C:/SDK/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++/bits/std_
     call	__ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc	 #    */
 
     // Указатель на функцию в стиле Си на лямбду.
+    /*
     typedef void(*lambda_c)(void);
     lambda_c ptr = [](void) { cout << "Calling C-like pointer lambda function.\n"; };
     (*ptr)();
     std::cout << endl;
+    */
 /*
 # C:\Users\Alexander\Documents\Projects\Questions-CPP\main.cpp:68:     lambda_c ptr = [](void) { cout << "Calling C-like pointer lambda function.\n"; };
    mov	DWORD PTR [esp+4], OFFSET FLAT:LC16	 #,
@@ -193,9 +208,10 @@ C:/SDK/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++/bits/std_
    call	__ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_	 #
 */
     // Автоматическое выведение типа из захваченного аргумента по ссылке.
-    char object = 'A';
-    auto autoTypeLambda = [&]()->auto&& { return object; };
-    cout << "Auto type deduction from object, char is " << autoTypeLambda() << "\n\n";
+    // char object = 'A';
+    // Update C++14.
+    // auto autoTypeLambda = [&]()->auto&& { return object; };
+    // cout << "Auto type deduction from object, char is " << autoTypeLambda() << "\n\n";
     /*
 # C:/SDK/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++/ostream:509:     { return __ostream_insert(__out, &__c, 1); }
    lea	eax, [ebp-69]	 # tmp160,
@@ -207,9 +223,10 @@ C:/SDK/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++/bits/std_
    */
 
     // Обобщенный вариант.
-    short word = 7;
-    auto tempTypeLambda = []<typename T>(T object) { cout << "Type " << object << "\n\n"; };
-    tempTypeLambda(word);
+    // short word = 7;
+    // Update standard.
+    // auto tempTypeLambda = []<typename T>(T object) { cout << "Type " << object << "\n\n"; };
+    // tempTypeLambda(word);
     /* # C:\Users\Alexander\Documents\Projects\Questions-CPP\main.cpp:77:     auto tempTypeLambda = []<typename T>(T object) { cout << "Type " << object << "\n\n"; };
     mov	DWORD PTR [esp], 7	 #,
     mov	ecx, OFFSET FLAT:__ZSt4cout	 #,
@@ -221,6 +238,7 @@ C:/SDK/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++/bits/std_
      * */
 
     // Объект функтора c перегузкой оператора вызова.
+    /*
     cout << "Trying functor object with overloading operator().\n";
     Functor fObj;
     auto ptrA = fObj.operator()('A');                       // Вызов перегруженного оператора оба варианта вызова равнозначны.
@@ -239,5 +257,5 @@ C:/SDK/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++/bits/std_
     convA('D');                                             // Проверяем.
     convB(3);
     cout << endl;
-    return 0;
+    */
 }

@@ -1,10 +1,11 @@
-#ifndef CHAPTER_15_H
+﻿#ifndef CHAPTER_15_H
 #define CHAPTER_15_H
 
 #include <iostream>
 #include <vector>
 #include <string>
 #include <typeinfo>
+#include <ctime>
 
 class Shape_1 {
 public:

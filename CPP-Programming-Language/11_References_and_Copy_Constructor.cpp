@@ -1,4 +1,4 @@
-#include "chapter_11.h"
+﻿#include "11_References_and_Copy_Constructor.hpp"
 
 using namespace std;
 
@@ -469,4 +469,134 @@ void Class_11_27::function_2() {
 
 void Class_11_27::function_3() {
     cout << "Class_11_27, function_3." << endl;
+}
+
+void chapter_11 () {
+    cout << "Chapter's 11 tasks.\n";
+    // Task 1. Not possible to using C compiler.
+    int* intPtr1;
+    char* charPtr1;
+    void* voidPtr1 = charPtr1;
+    // Invalid conversation from 'void*' to 'int*'
+    // intPtr1 = voidPtr1;
+    // Task 2.
+    int int2 = 0;
+    int& r = int2;
+    cout << "Integer reference = " << r << endl;
+    r++;
+    cout << "Integer reference = " << r << endl;
+    // Task 3.
+    // a. ref3 declared as reference but not initialized
+    int int3 = 3;
+    int& ref3 = int3;
+    // Worked but
+    cout << "Task's 3 reference = " << ref3 << endl;
+    ref3 = int2;
+    cout << "Task's 3 reference = " << ref3 << endl;
+    // Only values.
+    ref3 = 0;
+    // Task 4.
+    int int4 = 4;
+    cout << "Task's 4 integer = " << int4 << ", after calling function_11_4 integer = ";
+    function_11_4(int4);
+    cout << int4 << endl;
+    // Task 5.
+    Class_11_5 cl5;
+    const Class_11_5* cl5Addr = &cl5;
+    // Task 6.
+    int ar1[3] = {1, 2, 3};
+    int* element = &ar1[0];
+    function_11_6(element);
+    cout << "Function_11_6 has called, result : " << *element << endl;
+    // Task 7.
+    int int7_1 = 1, int7_2 = 2;
+    int* ar7[2] = {&int7_1, &int7_2};
+    int** elem7 = &ar7[0];
+    function_11_7(elem7);
+    cout << "Function_11_7 has called, result : " << **elem7 << endl;
+    // Task 8. Positive.
+    char c8 = 'a';
+    char& cRef = c8;
+    cout << "Task's 8 char = " << cRef;
+    function_11_8(cRef);
+    cout << ", after function_11_8 = " << cRef << endl;
+    // Task 9. see .h and .cpp files.
+    // Tasks 10-13. Bonus. See .cpp file.
+    char c11 = 'a';
+    int i11 = 10;
+    float f11 = 0;
+    double d11 = 0;
+    function_11_11(c11, i11, f11, d11);
+    Structure_13 st13;
+    st13 = function_11_13(st13);
+    // Task 14.
+    function_11_14(3);
+    // Task 15.
+    Class_11_15_2 cl15;
+    cl15.s = 3;
+    cl15.clP.t = 5;
+    function_11_15(1, cl15);
+    // Task 16. Try again
+    Class_11_16 cl16;
+    function_11_16_1(cl16);
+    Class_11_16 cl16_2 = function_11_16_2();
+    cl16_2.str = "new 2";
+    // Task 17.
+    Class_11_17 cl17(3);
+    function_11_17(cl17);
+    // Task 18.
+    Class_11_18 cl18;
+    function_11_18(cl18);
+    // Task 19.
+    Class_11_19_2 cl19;
+    cl19.function_1(cl19);
+    // Task 20.
+    // ivalid initialization of non-const reference of type 'Class_11_20&' from an rvalue 'Class_11_20'.
+    function_11_20_2(function_11_20_1());
+    // Task 21.
+    Class_11_21 cl21;
+    // 'Class_11_21::Class_11_21(const Class_11_21&)' is private
+    // function_11_21(cl21);
+    // Task 22. Not clear...
+    // Task 23. Copy constructor instead of constructor overload.
+    String_11 str23("Class String_11 string.");
+    str23.print(std::cout);
+    str23.concat(" And let's test a copy constructor.");
+    str23.print(std::cout);
+    function_11_23_1(str23);
+    Mem_11 mem23(16);
+    function_11_23_2(mem23);
+    // Task 24.
+    Class_11_24 cl24(3);
+    Class_11_24* clPtr = &cl24;
+    double Class_11_24::*clDouble = &Class_11_24::d;
+    void (Class_11_24::*printPtr)() = &Class_11_24::print;
+    cout << "Double from Class_11_24. Call as object = " << cl24.*clDouble << endl;
+    cout << "Double from Class_11_24. Call as pointer = " << clPtr->*clDouble << endl;
+    cout << "Calling function print(), Class_11_24." << endl;
+    (clPtr->*printPtr)();
+    // Task 25.
+    int ar25[3] = {1, 2, 3};
+    Class_11_25 cl25(ar25);
+    int (Class_11_25::*intPtr)[3] = &Class_11_25::ar;
+    cout << "Elements of array in Class_11_25 : ";
+    for (int i = 0; i < 3; i++) {
+        cout << (cl25.*intPtr)[i] << " ";
+    }
+    cout << endl;
+    // Task 26.
+    Class_11_26 cl26;
+    int (Class_11_26::*f1Ptr)(float) const = &Class_11_26::f;
+    int (Class_11_26::*f2Ptr)(bool) const = &Class_11_26::f;
+    cout << "Return of function f(float) from Class_11_26 : " << (cl26.*f1Ptr)(float(1.0)) << endl;
+    cout << "Return of function f(bool) from Class_11_26 : " << (cl26.*f2Ptr)(bool(true)) << endl;
+    // Task 27-28.
+    Class_11_27 cl27;
+    void (Class_11_27::*funcPtr)() = &Class_11_27::function_1;
+    cl27.add(funcPtr);
+    funcPtr = &Class_11_27::function_2;
+    cl27.add(funcPtr);
+    funcPtr = &Class_11_27::function_3;
+    cl27.add(funcPtr);
+    cl27.run();
 }

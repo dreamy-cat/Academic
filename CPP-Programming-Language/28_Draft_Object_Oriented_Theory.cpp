@@ -92,6 +92,7 @@ private:
     int value;
 };
 
+/*
 class LightGreen : public Green   // private
 {   // Светло зеленый цвет с композицей. Дополнительные конструкторы и операторы упущены.
 public:
@@ -147,10 +148,13 @@ protected:
     // Red r, Green g;
 };
 
-int main()
+*/
+
+void chapter_28()
 {
     cout << "Object Oriented Theory, set part and update rep.\n\n";
     // Динамические объекты и перегрузка операторов new(), delete(), создание объекта.
+    /*
     cout << "Create object of class Bright, using overloading operator 'new'.\n";
     Bright* obj = new Bright(5);
     obj->set(3);
@@ -172,5 +176,5 @@ int main()
     Color* basePtr = &lGreen;
     basePtr->paint();
     Green* ptr = &yellow;
-    return 0;
+    */
 }

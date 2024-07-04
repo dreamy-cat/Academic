@@ -1,4 +1,4 @@
-#include "chapter_10.h"
+﻿#include "26_Patterns.hpp"
 
 using namespace std;
 
@@ -24,11 +24,11 @@ Singleton::Singleton(int x, bool quietly) {
     if (!quietly) cout << "Singleton::Singleton(" << i << ")" << endl;
 }
 
-string Class_10_2::file;
+string Class_10_B::file;
 
-Class_10_2 Class_10_2::reader;
+Class_10_B Class_10_B::reader;
 
-string Class_10_2::readFile() {
+string Class_10_B::readFile() {
     fstream textFile;
     textFile.open(file.data(), ios::in);
     string result;
@@ -36,35 +36,35 @@ string Class_10_2::readFile() {
     textFile.close();
     return result;
 }
+// check file.
+Class_10_B::Class_10_B() { file = "files/chapter-10-1.txt"; }
 
-Class_10_2::Class_10_2() { file = "labs_0x02/files/chapter-10-1.txt"; }
+vector<Class_10_C*> Class_10_C::objects;
 
-vector<Class_10_3*> Class_10_3::objects;
+int Class_10_C::counter;
 
-int Class_10_3::counter;
+int Class_10_C::limit;
 
-int Class_10_3::limit;
-
-void Class_10_3::init(int lim) {
+void Class_10_C::init(int lim) {
     counter = 0;
     limit = lim;
 }
 
-bool Class_10_3::create(Class_10_3 *newObject) {
+bool Class_10_C::create(Class_10_C *newObject) {
     if (counter < limit) {
-        cout << "Counter of Class_10_3, less than limit. Creating object..." << endl;
+        cout << "Counter of Class_10_C, less than limit. Creating object..." << endl;
         counter++;
-        objects.push_back(new Class_10_3);
+        objects.push_back(new Class_10_C);
         newObject = objects[objects.size()-1];
         return true;
     } else {
-        cout << "Counter of Class_10_3, is reached it's limit, returninig..." << endl;
+        cout << "Counter of Class_10_C, is reached it's limit, returninig..." << endl;
         return false;
     }
 }
 
-Class_10_3::Class_10_3() {
-    cout << "Class_10_3::Class_10_3(), counter = " << counter << endl;
+Class_10_C::Class_10_C() {
+    cout << "Class_10_C::Class_10_C(), counter = " << counter << endl;
 }
 
 void StateRotation::Object::responce() { cout << "StateRotation::Object::responce()" << endl; }
@@ -75,7 +75,8 @@ void StateRotation::Material::responce() { cout << "StateRotation::Material::res
 
 StateRotation::StateRotation() : iteration(0), limit(3) {
     cout << "StateRotation::StateRotation()" << endl;
-    state = new Object;
+    // fix
+    // state = new Object_A;
 }
 
 void StateRotation::function() {
@@ -87,7 +88,8 @@ void StateRotation::action() {
     if (++iteration >= limit) iteration = 0;
     switch (iteration) {
     case 0:
-        state = new Object;
+        // fix
+        // state = new Object_A;
         break;
     case 1:
         state = new Tool;
@@ -184,27 +186,27 @@ void Class_10_7::toUpperCase() { base.toUpperCase(); }
 
 void Class_10_7::searchWords()  { base.searchWords(); }
 
-bool Class_10_8_1::function() {
+bool Class_10_8_A::function() {
     cout << "Class_10_8_1::function()" << endl;
     return false;
 }
 
-bool Class_10_8_2::function() {
+bool Class_10_8_B::function() {
     cout << "Class_10_8_2::function()" << endl;
     return false;
 }
 
-bool Class_10_8_3::function() {
+bool Class_10_8_C::function() {
     cout << "Class_10_8_3::function()" << endl;
     return true;
 }
 
-Class_10_8_4::Class_10_8_4(vector<Class_10_8*> iBase) {
+Class_10_8_D::Class_10_8_D(vector<Class_10_8_0*> iBase) {
     base = iBase;
     state = 0;
 }
 
-void Class_10_8_4::function() {
+void Class_10_8_D::function() {
     cout << "Class_10_8_4::function(), state: " << state << endl;
     base[state++]->function();
     if (state == base.size()) state = 0;
@@ -481,19 +483,19 @@ void WordsToMap::getWords() {
 
 Observer::~Observer() { cout << "Observer::~Observer()" << endl; }
 
-void Object::setState(bool change) { changed = change; }
+void Object_A::setState(bool change) { changed = change; }
 
-void Object::addObserver(Observer& obs) { observers.insert(&obs); }
+void Object_A::addObserver(Observer& obs) { observers.insert(&obs); }
 
-void Object::deleteObserver(Observer& obs) { observers.erase(&obs); }
+void Object_A::deleteObserver(Observer& obs) { observers.erase(&obs); }
 
-void Object::clearObservers() { observers.clear(); }
+void Object_A::clearObservers() { observers.clear(); }
 
-int Object::count() { return observers.size(); }
+int Object_A::count() { return observers.size(); }
 
-bool Object::hasChanged() { return changed; }
+bool Object_A::hasChanged() { return changed; }
 
-void Object::notify() {
+void Object_A::notify() {
     if ( !changed ) return;
     setState(false);
     std::set<Observer*>::iterator it;
@@ -501,9 +503,9 @@ void Object::notify() {
         (*it)->update(this);
 }
 
-void Observer::update(Object* obj) { cout << "Observer::update()" << endl; }
+void Observer::update(Object_A* obj) { cout << "Observer::update()" << endl; }
 
-Object::~Object() {}
+Object_A::~Object_A() {}
 
 void Class_17::function_1() { cout << "Class_17::function_1()" << endl; }
 
@@ -626,3 +628,207 @@ void VisitDog::visit(Place_2 *pl) { cout << "Dog at place_2" << endl; }
 void VisitDog::visit(Place_3 *pl) { cout << "Dog at place_3" << endl; }
 
 void VisitDog::visit(Place_4 *pl) { cout << "Dog at place_4" << endl; }
+
+void chapter_26() {
+    /*
+    cout << "Chapter's 10 tasks.\n";
+    // Task 1. No, method instance() not required.
+    Singleton::setValue(5);
+    cout << "Singleton::getValue() = " << Singleton::getValue() << endl;
+    // Task 2. Simplify...
+    cout << "Result of Class_10_2::reader():\n" << Class_10_2::readFile();
+    // Task 3.
+    cout << "Creating 3 objects of Class_10_3, limit 3.\n";
+    Class_10_3::init(3);
+    Class_10_3* lastObj;
+    for (int i = 0; i < 5; i++) Class_10_3::create(lastObj);
+    // Task 4. Think about namespaces for classes. Undefined behaviour, but works.
+    StateRotation rotate;
+    for (int i = 0; i < 5; i++) {
+        rotate.function();
+        rotate.action();
+    }
+    // Task 5. Iterator delete elements from the stack.
+    Stack_10<std::string> stack;
+    stack.push(new string("first"));
+    cout << "Stack<string> elements: " << *stack.peek() << " ";
+    stack.push(new string("second"));
+    cout << *stack.peek() << " ";
+    stack.push(new string("third"));
+    cout << *stack.peek() << endl;
+    StackAdapter<string> stackA(stack);
+    StackAdapter<string>::iterator it_1(stackA);
+    cout << "All iterators in StackAdapter:\n";
+    while ( it_1 != stackA.end() ) cout << it_1++;
+    stack.push(new string("first"));
+    stack.push(new string("second"));
+    stack.push(new string("third"));
+    cout << "All elements and algorithm 'for_each':\n";
+    for_each(stackA.begin(), stackA.end(), function_10_5);
+    // Tasks 6-7. Ok, uncomment later for not mess with files.
+    string files("labs_0x02/files/chapter-10-1.txt");
+    vector<string> fileNames;
+    cout << "Source text files:\n";
+    for (int i = 1; i <= 3; i++) {
+        files[files.find("-", 0) + 4] = char('0' + i);
+        fileNames.push_back(files);
+        cout << fileNames[fileNames.size()-1] << endl;
+    }
+    Class_10_6_1 cl_1(fileNames);
+    Class_10_6_2 cl_2(fileNames);
+    // class_1.toUpperCase();
+    // cl_2.searchWords();
+    Class_10_7 cl_3(cl_1), cl_4(cl_2);
+    // cl_3.toUpperCase();
+    // cl_4.searchWords();
+    // Tasks 8-9.
+    vector<Class_10_8*> vector_1;
+    vector_1.push_back(new Class_10_8_1);
+    vector_1.push_back(new Class_10_8_2);
+    vector_1.push_back(new Class_10_8_3);
+    Class_10_8_4 cl_5(vector_1);
+    for (int i = 0; i < 5; i++) cl_5.function();
+    // Tasks 10-11.
+    vector<ShapeF1*> vector_2;
+    const char* classNames[] = { "Thin circle", "Bold square", "Thin square", "Bold triangle", "Bold circle" };
+    try {
+        for (int i = 0; i < sizeof(classNames) / sizeof (char*); i++)
+            vector_2.push_back( ShapeF1::factory(classNames[i]) );
+    } catch (ShapeF1::Error err) {
+        cout << err.what() << endl;
+    }
+    for (int i = 0; i < vector_2.size(); i++) {
+        vector_2[i]->draw();
+        vector_2[i]->erase();
+        delete ( vector_2[i] );
+    }
+    vector<ShapeF2*> vector_3;
+    cout << "Polymorphic factory:\n";
+    try {
+        for (int i = 0; i < sizeof(classNames) / sizeof(char*); i++) {
+            if ( i % 2 ) vector_3.push_back(FactoryShapeF2::factory(classNames[i], false)); else
+                vector_3.push_back(FactoryShapeF2::factory(classNames[i], true));
+        }
+    } catch ( FactoryShapeF2::Error e ) {
+        cout << e.what() << endl;
+    }
+    for (int i = 0; i < vector_3.size(); i++) {
+        vector_3[i]->draw();
+        vector_3[i]->erase();
+        delete vector_3[i];
+    }
+    // Task 12. Undefined behaviour, becuase of abscense of destructor in base class;
+    cout << "Abstract factory with WorkSet class:\n";
+    WorkSet set_1(new Worker_1_Wood), set_2(new Worker_2_Brick), set_3(new Worker_3_Steel);
+    set_1.play();
+    set_2.play();
+    set_3.play();
+    // Task 13. Strange and dangerous architecture, but works...
+    // Task 14. Think later, because of old method is still using.
+    vector<ShapeV*> vector_4;
+    const char* shapeNames[] = { "Circle", "Square", "Square" };
+    cout << "Virtual construction in ShapeV:\n";
+    try {
+        for (int i = 0; i < sizeof(shapeNames) / sizeof(char*); i++) {
+            if ( i % 2 ) vector_4.push_back(new ShapeV(shapeNames[i])); else
+                vector_4.push_back(new ShapeV(shapeNames[i]));
+        }
+    } catch ( ShapeV::Error e ) {
+        cout << e.what() << endl;
+    }
+    for (int i = 0; i < vector_4.size(); i++) delete vector_4[i];
+    // Task 15.
+    WordsToSet wordsSet("labs_0x02/files/chapter-10-2.txt");
+    WordsToMap wordsMap("labs_0x02/files/chapter-10-2.txt");
+    cout << "Result of WordsToSet::analyze(): " << wordsSet.analyze() << endl;
+    cout << "Result of WordsToMap::analyze(): " << wordsMap.analyze() << endl;
+    wordsSet.getWords();
+    wordsMap.getWords();
+    // Task 16.
+    Object object;
+    vector<Observer*> vector_5;
+    for (int i = 0; i < 5; i++) {
+        vector_5.push_back(new Observer);
+        // if ( i % 2 ) vector_5[vector_5.size()-1]->setState(true);
+        object.addObserver(*vector_5[vector_5.size()-1]);
+    }
+    cout << "Object has " << object.count() << " observers. Notify all observers:\n";
+    object.setState(true);
+    object.notify();
+    // Task 17. Not found original source code.
+    Class_17 cl;
+    cl.function_1();
+    cl.function_2();
+    // Task 18.
+    vector<Item*> vector_6(10), vector_7(10);
+    Item::createMap();
+    cout << "Generating two vectors of Item, sizes =  " << vector_6.size() << " and " << vector_7.size() << ", generating...\n";
+    generate(vector_6.begin(), vector_6.end(), ItemGen());
+    generate(vector_7.begin(), vector_7.end(), ItemGen());
+    for (int i = 0; i < 10; i++) {
+        cout << vector_6.at(i) << " ";
+        cout << vector_7.at(i) << " ";
+        cout << typeid(vector_6[i]).name() << endl;
+    }
+    cout << "Result of compteting with this object:\n";
+    transform(vector_6.begin(), vector_6.end(), vector_7.begin(), ostream_iterator<gameResult>(cout, "\n"), Compete());
+    // Task 19-20. Too many lines, just a few...
+    vector<Character*> vector_8, vector_9;
+    cout << "All characters in both vectors<Character*>: ";
+    srand(0);
+    for (int i = 0; i < 10; i++) {
+        Character* chr;
+        switch ( rand() % 3 ) {
+        case 0:
+            chr = new Troll;
+            break;
+        case 1:
+            chr = new Dwarf;
+            break;
+        case 2:
+            chr = new Elf;
+            break;
+        default:
+            cout << "Something goes wrong..." << endl;
+            break;
+        }
+        chr->setItem(rand() % 2);
+        chr->print();
+        if ( i % 2 ) vector_8.push_back(chr); else vector_9.push_back(chr);
+        cout << " ";
+    }
+    cout << endl;
+    for (int i = 0; i < 5; i++) vector_8[i]->interact(vector_9[i]);
+    // Tasks 21-23. Last task, too many.
+    vector<Place_0*> vector_10;
+    for (int i = 0; i < 10; i++)
+        switch ( rand() % 4 ) {
+        case 0:
+            vector_10.push_back(new Place_1);
+            break;
+        case 1:
+            vector_10.push_back(new Place_2);
+            break;
+        case 2:
+            vector_10.push_back(new Place_3);
+            break;
+        case 3:
+            vector_10.push_back(new Place_4);
+            break;
+        default:
+            cout << "Something goes wrong..." << endl;
+        }
+    VisitString stringV;
+    vector<Place_0*>::iterator it_2;
+    for (it_2 = vector_10.begin(); it_2 != vector_10.end(); it_2++) {
+        (*it_2)->accept(stringV);
+        cout << string(stringV) << endl;
+    }
+    VisitCat visitor_1;
+    VisitDog visitor_2;
+    for (it_2 = vector_10.begin(); it_2 != vector_10.end(); it_2++) {
+        (*it_2)->accept(visitor_1);
+        (*it_2)->accept(visitor_2);
+    }
+    */
+}

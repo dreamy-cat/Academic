@@ -1,4 +1,4 @@
-#include "chapter_13.h"
+﻿#include "13_Dynamic_Object_Creation.hpp"
 
 using namespace std;
 
@@ -183,4 +183,113 @@ MemoryChecker::MemoryChecker() {}
 
 MemoryChecker::~MemoryChecker() {
     cout << "Widget_13::storage size = " << Widget_13::storage.size() << endl;
+}
+
+void chapter_13() {
+    cout << "Chapter's 13 tasks.\n";
+    // Task 1.
+    Counted cl1_1, cl1_2;
+    cl1_1.function_1();
+    cl1_2.function_1();
+    // Task 2.
+    Counted* clPtr2_1 = new Counted;
+    Counted* clPtr2_2 = new Counted[3];
+    delete []clPtr2_2;
+    delete clPtr2_1;
+    // Task 3. Not good example, count() method doesn't work.
+    PStash cl3;
+    cl3.add((void*)&cl1_1);
+    cl3.add((void*)&cl1_2);
+    cl3.remove(1);
+    cl3.remove(0);
+    // Tasks 4-5.
+    vector<Counted*> vec4;
+    for (int i = 0; i < 3; i++) vec4.push_back(new Counted);
+    cout << "Objects of Counted in vector.\n";
+    for (int i = 0; i < 3; i++) {
+        cout << (long)vec4[i] << ": ";
+        vec4[i]->function_1();
+    }
+    for (int i = 0; i < 3; i++) delete vec4[i];
+    // Task 6.
+    PStash cl6;
+    cl6.add((void*) new Counted);
+    cl6.add((void*) new Counted);
+    cout << "Counted objects from PSTash.\n";
+    for (int i = 0; i < 2; i++) {
+        Counted* ptr = (Counted*)cl6[i];
+        ptr->function_1();
+    }
+    cl6.remove(1);
+    cl6.remove(0);
+    // Task 7. fix!
+    /*
+    Stack st7;
+    st7.initialize();
+    cout << "Task 7 with Stack structure from chapter 4, doubles : ";
+    for (int i = 0; i < 3; i++) st7.push(new double(i));
+    for (int i = 0; i < 3; i++) cout << *st7.pop() << " ";
+    cout << endl;
+    */
+    // Tasks 8-9.
+    Counted* ar8 = new Counted[3];
+    // invalid pointer
+    // delete ar8;
+    delete []ar8;
+    Counted* ptr9 = new Counted;
+    void* ptr9_1 = (void*)ptr9;
+    // deleting 'void*' is undefined
+    // delete ptr9_1;
+    delete ptr9;
+    // Task 10. Bonus.
+    // Task 11.
+    Class_13_11* cl13_1 = new Class_13_11;
+    Class_13_11* cl13_2 = new Class_13_11[3];
+    delete cl13_1;
+    delete []cl13_2;
+    // Task 12. Faster x4. Multiplier was decreased x10.
+    time_t time;
+    tm local;
+    time = std::time(NULL);
+    local = *std::localtime(&time);
+    int startTimer = local.tm_sec;
+    cout << "Starting second : " << startTimer;
+    for (int i = 0; i < 10000; i++) for (int j = 0; j < 1000; j++) {
+        Framis_13* framis_ptr = ::new Framis_13;
+        ::delete framis_ptr;
+    }
+    time = std::time(NULL);
+    local = *std::localtime(&time);
+    int finishTimer = local.tm_sec;
+    cout << ", after calling standart operators new & delete : " << finishTimer << endl;
+    cout << "After calling Framis operators: ";
+    for (int i = 0; i < 10000; i++) for (int j = 0; j < 1000; j++) {
+        Framis_13* framis_ptr = new Framis_13;
+        delete framis_ptr;
+    }
+    time = std::time(NULL);
+    local = *std::localtime(&time);
+    finishTimer = local.tm_sec;
+    cout << finishTimer << endl;
+    // Task 13. Bonus.
+    // Task 14.
+    char s14_1[8], s14_2[8];
+    sprintf(s14_1, "%d", __LINE__);
+    sprintf(s14_2, "%d", __LINE__);
+    Class_13_14* cl14_1 = new(string(s14_1)) Class_13_14;
+    Class_13_14* cl14_2 = new(string(s14_2)) Class_13_14;
+    cout << "Class_13_14, storage : ";
+    for (int i = 0; i < Class_13_14::storage.size(); i++)
+        cout << Class_13_14::storage[i] << " ";
+    cout << endl;
+    // Task 15.
+    MemoryChecker mChecker;
+    Widget_13* cl15_1 = new Widget_13;
+    Widget_13* cl15_2 = new Widget_13[2];
+    cout << "Widget_13 pointers : " << (long)cl15_1 << " " << (long)&cl15_2[0] << " " << (long)&cl15_2[1] << endl;
+    cout << "Widget_13, storage : ";
+    for (int i = 0; i < 3; i++) cout << (long)Widget_13::storage[i] << " ";
+    cout << endl;
+    delete []cl15_2;
+    delete cl15_1;
 }

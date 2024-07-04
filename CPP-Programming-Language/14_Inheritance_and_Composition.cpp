@@ -1,4 +1,4 @@
-#include "chapter_14.h"
+﻿#include "14_Inheritance_and_Composition.hpp"
 
 using namespace std;
 
@@ -583,4 +583,137 @@ void* Class_14_29::operator new (size_t sz) {
 void Class_14_29::operator delete (void* p) {
     cout << "Class_14_29 operator delete. p = " << (unsigned long)p << endl;
     ::delete (Class_14_29*)p;
+}
+
+
+void chapter_14() {
+    cout << "Chapter's 14 tasks.\n";
+    // Task 1.
+    Car_14 cl1(1);
+    // Task 2.
+    Class_14_2_3 cl2;
+    // Task 3.
+    Class_14_3_3 cl3;
+    // Task 4-5.
+    Combined_D cl4(3);
+    // Task 6.
+    Derived_6_3 cl6(1);
+    // Task 7-8.
+    string s7 = "Task7";
+    Derived_7_1 cl7_1;
+    int i7 = cl7_1.f();
+    Derived_7_2 cl7_2;
+    // no matching for call to 'Derived_7_2::f(std::string&'
+    // cl7_2.f(s7);
+    Derived_7_3 cl7_3;
+    // note: candidate expects 0 arguments, 1 provided
+    // i7 = cl7_3.f();
+    Derived_7_4 cl7_4;
+    i7 = cl7_4.f(1);
+    cl7_1.h(1);
+    // Task 9. invalid conversation. Task not clear.
+    StringStack cl9;
+    void* ptr = (void*)&s7;
+    cl9.push_back(&s7);
+    // cl9.push_back(ptr);
+    // Task 10 see in .h, .cpp file.
+    // Task 11.
+    PStash_14_1 cl11;
+    PStash_14_2 cl11_2;
+    cout << "Testing task 11.\n";
+    for (int i = 0; i < 3; i++) {
+        cl11.add(new Asteroid);
+        cl11_2.add(new Asteroid);
+    }
+    for (int i = 0; i < 3; i++) {
+        cl11.remove(i);
+        cl11_2.remove(i);
+    }
+    // Task 12.
+    cout << "Testing task 12 with vector.\n";
+    PStash_14_3 cl12_1;
+    PStash_14_4 cl12_2;
+    for (int i = 0; i < 3; i++) {
+        cl12_1.add(new Asteroid);
+        cl12_2.add(new Asteroid);
+    }
+    // Task 13.
+    cout << "Task 13.\n";
+    Chess cl13_1;
+    Chess cl13_2(cl13_1);
+//    Chess cl13_3(1);
+    cl13_1 = cl13_2;
+    function_14_13(cl13_1);
+    Game::Other cl13_sub;
+//    cl13_1 = cl13_sub;
+    Checkers cl13_4, cl13_5(cl13_4);
+    cl13_4 = cl13_5;
+    // Task 14.
+    BuisnessTraveler cl14_1("one"), cl14_2("two");
+    cl14_1 = cl14_2;
+    function_14_14(cl14_1);
+    // Task 15.
+    cout << "Static functions.\n";
+    Class_14_15_2::function_1();
+    Class_14_15_2::function_2();
+    // Task 16.
+    FName cl16("labs_0x01/files/chapter-14.txt");
+    cl16.open(cl16.name().c_str());
+    cout << "Task 16, file name : " << cl16.name() << endl;
+    string str16;
+    getline(cl16, str16, '\0');
+    cout << "String from file: " << str16 << endl;
+    cl16.close();
+    // Task 17
+    Class_14_17_1 cl17_1(1);
+    Class_14_17_2 cl17_2(2);
+    // 'Class_14_17' is an inaccessible base of 'Class_14_17_1'
+    // function_14_17(cl17_1);
+    // function_14_17(cl17_2);
+    // Task 18-19.
+    Derived_18 cl18(1);
+    cout << "Derived_18, readvalue = " << cl18.readvalue() << endl;
+    // 'int Base_18::value(int) const' is inaccessible
+    // cl18.value(3);
+    // Task 20. 'class SpaceShip' has no member named 'land'
+    Shuttle cl20;
+    SpaceShip* ptrS = &cl20;
+    // ptrS->land();
+    // Task 21-22.
+    Wind_14 cl21_1;
+    function_14_21(cl21_1);
+    // Task 23-24.
+    Child_14 cl23_1(3);
+    cout << "Operator << test : " << cl23_1;
+    Child_14 cl23_2 = cl23_1;
+    Toy_14 cl23_3(1);
+    Toy_14 cl23_4 = cl23_3;
+    cl23_4 = cl23_3;
+    // Task 25.
+    StringStack_14 cl25;
+    string str25_1 = "string 1";
+    string str25_2 = "string 2";
+    cl25.push(&str25_1);
+    cl25.push(&str25_2);
+    cout << "StringStack contains : " << *cl25.peek(0) << " " << *cl25.pop() << endl;
+    // Task 26. Not possible for reference.
+    vector<Rock*> vec_26;
+    Rock cl26_1, cl26_2;
+    vec_26.reserve(2);
+    vec_26.push_back(&cl26_1);
+    vec_26.push_back(&cl26_2);
+    // Task 27. Rethink...
+    Subject cl27_1;
+    Proxy cl27_2(&cl27_1);
+    cl27_2.f();
+    // Task 28. Not clear... Maybe fixed size in original example was wrong.
+    Widget_14* ptr28_1 = new Widget_14;
+    Widget_14* ptr28_2 = new Widget_14[2];
+    delete ptr28_1;
+    delete []ptr28_2;
+    Class_14_28* cl28_1 = new Class_14_28;
+    delete cl28_1;
+    // Task 29.
+    Class_14_29* cl29 = new Class_14_29;
+    delete cl29;
 }

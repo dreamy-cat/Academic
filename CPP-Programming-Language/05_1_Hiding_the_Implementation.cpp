@@ -1,4 +1,4 @@
-#include "chapter_05_1.h"
+﻿#include "05_1_Hiding_the_Implementation.hpp"
 
 StackImp_1::StackImp_1 (int maxSz) {
     maxSize = maxSz;

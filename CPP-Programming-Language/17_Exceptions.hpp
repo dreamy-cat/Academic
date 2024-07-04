@@ -1,5 +1,5 @@
-#ifndef L_02_CHAPTER_01_H
-#define L_02 CHAPTER_01_H
+﻿#ifndef PART_17
+#define PART_17
 
 #include <iostream>
 #include <errno.h>
@@ -20,13 +20,13 @@ public:
         Class_1(const char* s) : str(s) {}
         const char* str;
     };
-    void function_1() throw(Class_1);
+    // void function_1() throw(Class_1); fix
 };
 
-class PStash_1 {
+class PStash_A {
 public:
-    PStash_1();
-    ~PStash_1();
+    PStash_A();
+    ~PStash_A();
     int add(void *element);
     void* operator[](int index) const;
     void* remove(int index);
@@ -55,7 +55,7 @@ public:
 
 class Class_1_9 : public std::exception {};
 
-void function_01_9(int index) throw(char, int, bool, Class_1_9);
+// void function_01_9(int index) throw(char, int, bool, Class_1_9);
 
 void unexpectedHandler();
 

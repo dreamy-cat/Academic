@@ -1,8 +1,9 @@
-#ifndef CHAPTER_08_H
+﻿#ifndef CHAPTER_08_H
 #define CHAPTER_08_H
 
 #include <iostream>
 #include <cstdlib>
+#include <ctime>
 #include "memory.h"
 
 

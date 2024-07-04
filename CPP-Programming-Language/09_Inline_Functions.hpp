@@ -1,7 +1,8 @@
-#ifndef CHAPTER_09_H
+﻿#ifndef CHAPTER_09_H
 #define CHAPTER_09_H
 
 #include <iostream>
+#include <ctime>
 #include "memory.h"
 
 // Chapter 10, task 10.

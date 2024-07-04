@@ -1,4 +1,4 @@
-#include "chapter_12.h"
+﻿#include "12_Operator_Overloading.hpp"
 
 using namespace std;
 
@@ -858,6 +858,232 @@ void function_32() {
     d3 = d1 - d2;
     d3 = d1 * d2;
     d3 = d1 / d2;
+}
+
+void chapter_12() {
+    cout << "Chapter's 12 tasks.\n";
+    // Task 1. no 'operator++(int) declared for postfix '++'
+    Class_12_1 cl1;
+    ++cl1;
+    cl1++;
+    // Task 2-8. Prefix never used as right value.
+    Class_12_2 cl2_1(3), cl2_2(5), cl2_3(2);
+    cout << "Integers of Class_12_2 : " << endl;
+    cout << cl2_1; //.print(std::cout);
+    cout << cl2_2;
+    cout << "Operator '+' result, integer : ";
+    cl2_1 = cl2_1 + cl2_2;
+    cout << cl2_1;
+    cout << "Expression 'a + b - c' = ";
+    cl2_1 = cl2_1 + cl2_3 - cl2_2;
+    cout << cl2_1;
+    cout << "Class_12_2, prefix operator ++ : ";
+    ++cl2_1;
+    cout << cl2_1;
+    cl2_3 = cl2_1++;
+    cout << "Class_12_2, third object (c) = a++ : ";
+    cout << cl2_3;
+    cout << "Class_12_2, first object after postfix operator '++' = ";
+    cout << cl2_1;
+    cout << "Class_12_2, operator (-) for first object = ";
+    cl2_1 = -cl2_1;
+    cout << cl2_1;
+    // Task 9-10.
+    Class_12_9 cl9('a');
+    cout << cl9;
+    cin >> cl9;
+    cout << cl9;
+    cl9++;
+    cl9--;
+    // Task 11-12.
+    Number_12 cl11_1(1), cl11_2(2), cl11_3(3);
+    cout << "Class Number_12 (a+b) : " << cl11_1 + cl11_2;
+    cout << "Class Number_12 (c-b) : " << cl11_3 - cl11_2;
+    cout << "Class Number_12 (a*b*c) : " << cl11_1*cl11_2*cl11_3;
+    function_12_12(cl11_1);
+    // Task 13.
+    int ar13[] = { 1, 2 };
+    Class_12_13 cl13_1(&ar13[0]), cl13_2(&ar13[1]);
+    cl13_1.print();
+    cl13_2.print();
+    cl13_1 = cl13_2;
+    cout << "Objects after operator= : ";
+    cl13_1.print();
+    // Task 14-17. Public operator and copy constructor, not private.
+    // Rethink about optimization.
+    Bird_12 cl14_1(1), cl14_2(2), cl14_3(4);
+    cout << cl14_1 << cl14_2;
+    cl14_1 = cl14_2;
+    cout << "Class Bird_12 object after operator= : " << cl14_1;
+    cout << "Bird_12 object 1 + Bird_12 object 2 = " << cl14_1 + cl14_2;
+    cout << "Bird_12 object 2 - Bird_12 object 1 = " << cl14_2 - cl14_1;
+    cout << "Bird_12 object 3 * Bird_12 object 2 = " << cl14_3 * cl14_2;
+    cout << "Bird_12 object 3 / Bird_12 object 2 = " << cl14_3 / cl14_2;
+    BirdHouse_12 cl15_1(cl14_1, cl14_2, cl14_3, 1);
+    BirdHouse_12 cl15_2(cl14_2, cl14_3, cl14_3, 2);
+    BirdHouse_12 cl15_3(cl14_1, cl14_1, cl14_1, 3);
+    cl15_3 = cl15_2 = cl15_1;
+    cout << cl15_1 << cl15_2 << cl15_3;
+    BirdHouse_12 cl15_4(cl14_1, cl14_1, cl14_1, 4);
+    BirdHouse_12 cl15_5(cl14_1, cl14_1, cl14_1, 5);
+    cout << "BirdHouse object 4 + BirdHouse object 5 : \n" << cl15_4 << cl15_5;
+    cout << "Result of operator+ for objects above :\n" << cl15_4 + cl15_5;
+    cout << "Result of operator- for objects above :\n" << cl15_4 - cl15_5;
+    cout << "Result of operator* for objects above :\n" << cl15_4 * cl15_5;
+    cout << "Result of operator/ for objects above :\n" << cl15_4 / cl15_5;
+    // Task 18.
+    Obj_18 objects[3];
+    ObjContainer_18_1 cont18;
+    for (int i = 0; i < 3; i++) cont18.add(&objects[i]);
+    SmartPointer_18_1 it(cont18);
+    do {
+        it->f();
+        it->g();
+    } while (it++);
+    cout << "Decreasing iterator.\n";
+    while (it--) {
+        it->f();
+        it->g();
+    }
+    cout << "Nested smart pointer :\n";
+    ObjContainer_18_2 cont18_2;
+    for (int i = 0; i < 3; i++) cont18_2.add(&objects[i]);
+    ObjContainer_18_2::SmartPointer_18_2 it2 = cont18_2.begin();
+    do {
+        it2->f();
+        it2->g();
+    } while (it2++);
+    cout << "Decreasing iterator.\n";
+    while (it2--) {
+        it2->f();
+        it2->g();
+    }
+    // Task 19. conversation from 'int' to non-scalar type 'Class_12_19_2' requested
+    Class_12_19_2 cl19_1;
+    Class_12_19_1 cl19_2;
+    cl19_1 = cl19_2;
+    // Task 20. see chapter_12.cpp
+    // Task 21. May be not correct.
+    Class_12_21 cl21_1("Class_12_21 string."), cl21_2;
+    cout << "Class_12_21 string = " << cl21_1.s;
+    cl21_1 = cl21_2;
+    cout << " after operator= : " << cl21_1.s << endl;
+    // Task 22. If new object doesn't create, then application crash, while trying to free memory.
+    DogHouse_12_1 dh1(new Dog_12_1("Dog-1"), "Dog's-1 house");
+    cout << dh1 << endl;
+    DogHouse_12_1 dh2 = dh1;
+    cout << dh2 << endl;
+    dh2.getDog()->rename("Dog-1-rename");
+    dh2.rename("Dog-1's house-rename");
+    cout << dh2 << endl;
+    dh1 = dh2;
+    cout << "After operator= : " << dh1 << endl;
+    // Task 23.
+    cout << "Task 23.\n";
+    DogHouse_12_2 dh2_1(Dog_12_2::make("Fido"), "FidoHouse"), dh2_2(Dog_12_2::make("Spot"), "SpotHouse");
+    cout << "Entering copy-construction.\n";
+    DogHouse_12_2 dh2_3(dh2_1);
+    cout << "After copy-constructing bobs.\n";
+    cout << "fidos: " << dh2_1 << endl;
+    cout << "spots: " << dh2_2 << endl;
+    cout << "bobs: " << dh2_3 << endl;
+    cout << "Entering spots = fidos.\n";
+    dh2_2 = dh2_1;
+    cout << "After spots = fidos.\n";
+    cout << "spots: " << dh2_2 << endl;
+    cout << "Entering self assigment.\n";
+    dh2_3 = dh2_3;
+    cout << "After self-assigment.\n";
+    cout << "bobs: " << dh2_3 << endl;
+    // Task 24.
+    Class_12_24_1 cl24_1("String-24-1"), cl24_2("String-24-2");
+    Class_12_24_2 cl24_3("String-24-3"), cl24_4("String-24-4");
+    cl24_2 = cl24_1;
+    cout << "Class_12_24_1 object 2, string = " << cl24_2.s << endl;
+    cl24_4 = cl24_3;
+    cout << cl24_4;
+    // Task 25.
+    Integer_12 cl25_1(1), cl25_2(2), cl25_3;
+    cout << "Trying all operators...\n";
+    cl25_1 = +cl25_1;
+    cl25_1 = -cl25_1;
+    cl25_1 = ~cl25_1;
+    cl25_1 = !cl25_1;
+    cl25_1 = *(&cl25_1);
+    ++cl25_1;
+    cl25_1++;
+    --cl25_1;
+    cl25_1--;
+    cl25_3 = cl25_1 + cl25_2;
+    cl25_3 = cl25_1 - cl25_2;
+    cl25_3 = cl25_1 * cl25_2;
+    cl25_3 = cl25_1 / cl25_2;
+    cl25_3 = cl25_1 % cl25_2;
+    cl25_3 = cl25_1 ^ cl25_2;
+    cl25_3 = cl25_1 & cl25_2;
+    cl25_3 = cl25_1 | cl25_2;
+    cl25_3 = cl25_1 << cl25_2;
+    cl25_3 = cl25_1 >> cl25_2;
+    cl25_3 += cl25_2;
+    cl25_3 -= cl25_2;
+    cl25_3 *= cl25_2;
+    cl25_3 /= cl25_2;
+    cl25_3 %= cl25_2;
+    cl25_3 ^= cl25_2;
+    cl25_3 &= cl25_2;
+    cl25_3 |= cl25_2;
+    cl25_3 >>= cl25_2;
+    cl25_3 <<= cl25_2;
+    bool r25;
+    r25 = (cl25_1 == cl25_2);
+    r25 = (cl25_1 != cl25_2);
+    r25 = (cl25_1 > cl25_2);
+    r25 = (cl25_1 < cl25_2);
+    r25 = (cl25_1 >= cl25_2);
+    r25 = (cl25_1 <= cl25_2);
+    r25 = (cl25_1 && cl25_2);
+    r25 = (cl25_1 || cl25_2);
+    // Task 26.
+    cout << "Task 26.\n";
+    Dog_26 d26;
+    Dog_26::pmf ptr = &Dog_26::run;
+    cout << (d26->*ptr)(1) << endl;
+    ptr = &Dog_26::eat;
+    cout << (d26->*ptr)(1) << endl;
+    ptr = &Dog_26::sleep;
+    cout << (d26->*ptr)(1) << endl;
+    void (Dog_26::*ptv)() const;
+    ptv = &Dog_26::function_1;
+    (d26->*ptv)();
+    ptv = &Dog_26::function_2;
+    (d26->*ptv)();
+    // Task 27. Rethink.
+    cout << "Task_27.\n";
+    Obj_27::fPtr ptr27 = &Obj_27::function_1;
+    Obj_27 obj27_1(1, ptr27);
+    ObjContainer_27 cont27;
+    cont27.add(&obj27_1);
+    (cont27->*ptr27)();
+    ptr27 = &Obj_27::function_2;
+    (cont27->*ptr27)();
+    // Task 28.
+    Orange_12 cl28;
+    cout << "Task 28. Function called.\n";
+    function_12_28(cl28);
+    // Task 29.
+    Number_12_1 n1(1), n2(3);
+    cout << "Nmber_12_1 reflexivity test." << endl;
+    n1 * n2;
+    n1 * 1;
+    3 * n2;
+    // Task 30.
+    Class_12_30_1 cl31_1(1);
+    Class_12_30_2 cl31_2(2);
+    cl31_1 + cl31_2;
+    cl31_2 + cl31_1;
+    // Task 31. call of overloaded 'function_31(Apple_12_1&)' is ambigious
+    Apple_12_1 cl31;
+    // function_31(cl31);
 }
 
 /* Code...

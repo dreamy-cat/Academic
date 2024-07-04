@@ -1,11 +1,12 @@
-#ifndef CHAPTER_16_H
-#define CHAPTER_16_H
+﻿#ifndef PART_16
+#define PART_16
 
-#include "memory.h"
 #include <iostream>
 #include <vector>
 #include <set>
 #include <stack>
+
+#include "memory.h"
 
 class Object {};
 

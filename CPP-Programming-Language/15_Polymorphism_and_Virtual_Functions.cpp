@@ -1,4 +1,4 @@
-#include "chapter_15.h"
+﻿#include "15_Polymorphism_and_Virtual_Functions.hpp"
 
 using namespace std;
 
@@ -497,4 +497,182 @@ int Dog_15_36_1::FunctionObject_15::operator()(int i) const {
 Dog_15_36_1::FunctionObject_15 Dog_15_36_1::operator->*(Pointer pmf) {
     cout << "FunctionObject_15::operator->*" << endl;
     return FunctionObject_15(this, pmf);
+}
+
+void chapter_15() {
+    cout << "Chapter's 15 tasks.\n";
+    // Task 1-3. With reference works fine.
+    Shape_1* ar1[] = { new Circle_1, new Square_1, new Triangle_1 };
+    for (int i = 0; i < 3; i++) ar1[i]->draw();
+    // cannot declare variable 'cl1' to be of abstract type 'Shape_1'
+    // Shape_1 cl1;
+    function_15_1(*ar1[0]);
+    // Task 4.
+    Class_15_B* ptr4 = new Class_15_C(4);
+    ptr4->f();
+    // Task 5.
+    Instrument_5* ptr5 = new Wind_5;
+    function_15_5(*ptr5);
+    // Task 6-10.
+    Rodent* ar6[] = { new Mouse, new Gerbil, new Hamster };
+    vector<Rodent*> vec6;
+    vec6.push_back(new Mouse);
+    vec6.push_back(new Gerbil);
+    vec6.push_back(new Hamster);
+    for (int i = 0; i < vec6.size(); i++) {
+        ar6[i]->run();
+        vec6[i]->eat();
+        delete vec6[i];
+    }
+    Rodent* ptr6 = new BlueHamster;
+    ptr6->run();
+    ptr6->eat();
+    // Task 11.
+    Tower cl11(3);
+    cl11.open();
+    cl11.close();
+    // Task 12.
+    vector<Plant*> greenhouse;
+    for (int i = 0; i < 2; i++) {
+        greenhouse.push_back(new Cactus);
+        greenhouse.push_back(new Flower);
+        greenhouse[i*2]->seat();
+        greenhouse[i*2+1]->fertilize();
+    }
+    // Task 13-14.
+    Pet* ptr13 = new Dog("Ralph");
+    cout << ptr13->speak() << endl;
+    cout << ptr13->name() << endl;
+    // Task 15.
+    Class_15_14_1* ptr15 = new Class_15_14_1;
+    ptr15->function_2();
+    // Task 16-17.
+    Base_15* ptr16 = new Derived_15_2;
+    delete ptr16;
+    // Task 18.
+    Derived_15_18 cl16;
+    cout << "Sizeof Derived_18 = " << sizeof(cl16) << ". ";
+    function_15_18(cl16);
+    // Task 19. see in .cpp file.
+    // Task 20. With x100 multiplier, virtual calls - 43 seconds, usual - 35.
+    Class_15_20* ptr20 = new Class_15_20_1;
+    time_t time;
+    tm local;
+    time = std::time(NULL);
+    local = *std::localtime(&time);
+    int startTimer = local.tm_sec;
+    cout << "Starting second of call's virtual function_1(): " << startTimer;
+    for (int i = 0; i < 10000; i++) for (int j = 0; j < 10000; j++) ptr20->function_1();
+    time = std::time(NULL);
+    local = *std::localtime(&time);
+    int finishTimer = local.tm_sec;
+    cout << ", after calling virtual function_1() : " << finishTimer << endl;
+    cout << "Seconds after calling function_2(): ";
+    for (int i = 0; i < 10000; i++) for (int j = 0; j < 10000; j++) ptr20->function_2();
+    time = std::time(NULL);
+    local = *std::localtime(&time);
+    finishTimer = local.tm_sec;
+    cout << finishTimer << endl;
+    // Task 21.
+    Base_15_21* ptrs21[] = { new Derived_15_21_1, new Derived_15_21_2 };
+    for (int i = 0; i < 2; i++) {
+        ptrs21[i]->function();
+        delete ptrs21[i];
+    }
+    // Task 22. Yes, with Class::. If remove method, then calling only methods from the base class.
+    Class_15_22_1* ptr22 = new Class_15_22_1;
+    char c22 = 'a';
+    int i22 = 3;
+    float f22 = 1.0;
+    ptr22->function(c22);
+    ptr22->function(i22);
+    ptr22->function(f22);
+    Class_15_22* ptr22_1 = (Class_15_22*)ptr22;
+    ptr22_1->function(c22);
+    ptr22_1->function(f22);
+    ptr22_1->function(i22);
+    // Task 23. May be another path. Not clear.
+    Bird_15 bird;
+    Cat_15 cat;
+    Pet_15* ptr23[] = { &bird, &cat };
+    for (int i = 0; i < 2; i++) {
+        cout << ptr23[i]->type() << " eats "
+             << ptr23[i]->eats(true).foodType() << endl;
+    }
+    Cat_15::CatFood_15& ptr23_1 = cat.eats(true);
+    Bird_15::BirdFood_15& ptr23_2 = dynamic_cast<Bird_15::BirdFood_15&>(bird.eats(true));
+    // Task 24. Hard to find in assembly output.
+    Dog_15_24 cl24;
+    Pet_15_24* ptr24_1 = &cl24;
+    Pet_15_24& ptr24_2 = cl24;
+    Pet_15_24 cl24_1;
+    cout << "Pointer 1: " << ptr24_1->speak() << endl;
+    cout << "Pointer 2: " << ptr24_2.speak() << endl;
+    cout << "Object 3: " << cl24_1.speak() << endl;
+    // Task 25. Strange task, but works fine in both cases.
+    Base_15_25* ptrs25[] = { new Derived_15_25_1, new Derived_15_25_2 };
+    Base_15_25& ref25_1 = ptrs25[0]->clone();
+    Base_15_25& ref25_2 = ptrs25[1]->clone();
+    ref25_1.print();
+    ref25_2.print();
+    // Task 26.
+    Stack_15 st26;
+    for (int i = 0; i < 3; i++) st26.push(new Class_15_26_1(i));
+    for (int i = 0; i < 3; i++) {
+        Class_15_26_1* element = (Class_15_26_1*)st26.pop();
+        cout << "Pop Class_15_26_1 with index from base class = "
+             << element->i << endl;
+        delete element;
+    }
+    // Task 27.
+    Math* maths[] = { new Matrix, new Vector, new Scalar, new Tensor };
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++) {
+            Math& m1 = *maths[i];
+            Math& m2 = *maths[j];
+            m1 * m2;
+        }
+    // Task 28-29. Because of default constructor, find assembly code too hard.
+    Class_15_28_1 cl28;
+    // Task 30.
+    Class_15_30_1 cl31;
+    function_15_30(cl31);
+    // Task 31. See task 20 above.
+    // Task 32.
+    Class_15_32_3 cl32;
+    Class_15_32_1 cl32_1;
+    Class_15_32_2 cl32_2;
+    cout << "Sizeof empty Class_15_32_3 = " << sizeof(cl32) << endl;
+    cout << "Sizeof empty Class_15_32_1 = " << sizeof(cl32_1) << endl;
+    cout << "Sizeof empty Class_15_32_2 = " << sizeof(cl32_2) << endl;
+    // Task 33.
+    Class_15_33 cl33;
+    unsigned char* ptr33 = (unsigned char*)&cl33;
+    cout << "Memory map for Class_15_33: ";
+    for (int i = 0; i < sizeof(cl33); i++)
+        cout << (int)*(ptr33+i) << " ";
+    cout << endl;
+    // Task 34. Works fine.
+    Instrument_34* ptrs34[] = { new Wind_34, new Percussion_34, new Stringed_34, new Brass_34, new Woodwind_34 };
+    dynamic_cast<Wind_34*>(ptrs34[0])->play(0);
+    dynamic_cast<Percussion_34*>(ptrs34[1])->play(0);
+    dynamic_cast<Stringed_34*>(ptrs34[2])->play(0);
+    dynamic_cast<Brass_34*>(ptrs34[3])->play(0);
+    dynamic_cast<Woodwind_34*>(ptrs34[4])->play(0);
+    // Task 35.
+    Circle_15 circle1;
+    Square_15 square1;
+    Shape_15* ptr35_1 = &square1;
+    Circle_15* cptr = 0;
+    Square_15* sptr = 0;
+    if (ptr35_1->whatAmI() == Shape_15::Circle) cptr = static_cast<Circle_15*>(ptr35_1);
+    if (ptr35_1->whatAmI() == Shape_15::Square) sptr = static_cast<Square_15*>(ptr35_1);
+    if (cptr != 0) cout << "Circle_15 found." << endl;
+    if (sptr != 0) cout << "Square_15 found." << endl;
+    // invalid static_cast from type 'Shape_15*' to type 'Other_15*'
+    // Other_15* optr = static_cast<Other_15*>(ptr35_1);
+    // Task 36. Works, but think later.
+    Dog_15_36* cl36 = new Dog_15_36_1;
+    Dog_15_36::Pointer ptrs36[] = { &Dog_15_36::run, &Dog_15_36::eat, &Dog_15_36::sleep };
+    for (int i = 0; i < 3; i++) cout << (cl36->*ptrs36[i])(i) << endl;
 }

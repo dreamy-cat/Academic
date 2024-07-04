@@ -1,8 +1,10 @@
-#ifndef CHAPTER_05_H
-#define CHAPTER_05_H
+﻿#ifndef PART_05
+#define PART_05
 
+#include <iostream>
 #include <string>
-#include "chapter_05_1.h"
+
+#include "05_1_Hiding_the_Implementation.hpp"
 
 class Class_5_1 {
 public:

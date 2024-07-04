@@ -1,10 +1,11 @@
-#ifndef CHAPTER_13_H
+﻿#ifndef CHAPTER_13_H
 #define CHAPTER_13_H
 
 #include <iostream>
 #include <cstring>
 #include <vector>
 #include <string>
+#include <ctime>
 #include "stdlib.h"
 
 class Counted {

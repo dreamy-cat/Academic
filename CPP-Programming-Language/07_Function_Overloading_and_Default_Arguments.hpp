@@ -1,9 +1,11 @@
-#ifndef CHAPTER_07_H
+﻿#ifndef CHAPTER_07_H
 #define CHAPTER_07_H
 
 #include <string>
 #include <vector>
 #include <iostream>
+#include <fstream>
+#include <cstring>
 
 #define TASK_8
 

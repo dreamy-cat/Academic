@@ -1,4 +1,4 @@
-#include "chapter_02.h"
+﻿#include "18_Standard_Library.hpp"
 
 using namespace TestKit;
 using namespace std;
@@ -105,6 +105,9 @@ const ostream* Kit::getStream() const { return os; }
 
 void Kit::setStream(ostream* osPtr) { os = osPtr; }
 
+// fix
+
+/*
 void Kit::addTest(Test* t) throw (KitError) {
     if (t == NULL) throw KitError("Test has a NULL pointer."); else
         if (os && !getStream()) t->setStream(os);
@@ -118,6 +121,7 @@ void Kit::addKit(const Kit& k) {
         addTest(k.tests[i]);
     }
 }
+*/
 
 void Kit::run() {
     reset();
@@ -351,4 +355,42 @@ void TestSearch::run() {
         if (binSearch(i) != -1) founded++; else notFounded++;
     }
     cout << "\nFounded: " << founded << ", not founded: " << notFounded << endl;
+}
+
+void chapter_18() {
+    cout << "Chapter's 2 tasks.\n";
+    // Task 1.
+
+    // recheck namespaces.
+
+    /*
+    vector<int> vector_1;
+    for (int i = 0; i < 3; i++) vector_1.push_back(i);
+    TestKit::Kit kit("Vector");
+    kit.addTest(new TestKit::VectorTest);
+    try {
+        kit.run();
+    } catch (out_of_range) {
+        cout << "Exception, vector out of range." << endl;
+    }
+    kit.report();
+    // Task 2-4.
+    TestKit::Kit kit_2("Rational");
+    try {
+        kit_2.addTest(new TestKit::RationalTest);
+        kit_2.run();
+        kit_2.report();
+    } catch (invalid_argument s) {
+        cout << "Exception: " << s.what() << endl;
+    }
+    // Task 5.
+    TestKit::Kit kit_3("BinSearch");
+    try {
+        kit_3.addTest(new TestKit::TestSearch);
+        kit_3.run();
+        kit_3.report();
+    } catch (out_of_range m) {
+        cout << "Exception: " << m.what() << endl;
+    }
+    */
 }
