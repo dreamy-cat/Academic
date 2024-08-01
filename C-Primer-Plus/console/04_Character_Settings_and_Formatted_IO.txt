@@ -1,0 +1,51 @@
+﻿C Programming Language.
+Based on Stephen Prata 'C Primer Plus' Sixth Edition.
+
+Part 4. Strings of chars and input/output format.
+
+Source string: 'Strings in C!'.
+Size of string: 256 bytes and length 13 chars.
+Address:        Code:   Char:
+16709752:       83      'S'
+16709753:       116     't'
+16709754:       114     'r'
+16709755:       105     'i'
+16709756:       110     'n'
+16709757:       103     'g'
+16709758:       115     's'
+16709759:       32      ' '
+16709760:       105     'i'
+16709761:       110     'n'
+16709762:       32      ' '
+16709763:       67      'C'
+16709764:       33      '!'
+16709765:       0       ''
+Size of constants char 'a' is 1, size of string 'a' is 2 bytes.
+Bits in one char 8.
+Signed integer: -3, hex: 0xC, double: 2.50, exponent: 3.50e+00.
+Sign: +3, field:     7, precision 2.5, short: 50000, unsigned char: 255, unsigned long: 18446744073709551615.
+Float and double: 7.50.
+Left align: '15  ', with plus ' +5', hex with prefix '0X1C', with zeros '-07'.
+String more than filed: 'Strings in C!'.
+Field more than string: '       Strings in C!'.
+String with right align: '               Strin'.
+String with left align: 'Strin               '.
+Short int with sign -16384, unsgined char 49152, sizeof type 2 bytes.
+Unsigned integer: FE14A5B1, unsigned short: A5B1, unsigned char: B1 in hex.
+Float -1048.58 as unsigned int 3758096384.
+Unsigned int 4262766001 as double 2.51026e-306.
+Float -1048.58, integer -16384.
+Function printf() return 32.
+First line string,
+second line, parameter -16384.
+Input words as string, use CTRL+Z or CTRL+D and enter to exit.
+abc de
+Input parameters 1, string 'abc' length 3.
+Input parameters 1, string 'de' length 2.
+^Z
+
+Enter integer, float, char and string: 5 3.5 C TEXT
+Scanf returns 4 and parameters: int 5, float 3.50, char 'C' and string 'TEXT'.
+Enter two digits with '-' separator: 7-3
+Integers with '-' sep: 7 and 3.
+Double with parameters of width %8.3:    3.500.
