@@ -27,6 +27,6 @@ void part_15(void);     // Манипулирование битами.
 int main(void)
 {   // Основная функция для определения параметров платформы и вызова частей по главам.
     printf("C Programming Language.\nBased on Stephen Prata 'C Primer Plus' Sixth Edition.\n\n");
-    part_04();
+    part_05();
     return 0;
 }

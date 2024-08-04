@@ -1,0 +1,84 @@
+﻿C Programming Language.
+Based on Stephen Prata 'C Primer Plus' Sixth Edition.
+
+Part 5. Operators, Expressions and Statements.
+
+Using while with single line operator: 2 1 0
+
+Using while with block of operators:
+3:      1 + 2 = 3
+2:      2 + 3 = 5
+1:      3 + 4 = 7
+
+Define MULTIPLIER 5 and constant factors 15.
+
+Assign operator '=', A = 4, B = 5, C = A = 4.
+
+Assign using many '=': A = B = C = 7, result A = 7, B = 7 and C = 7.
+
+Simple arithmetic operators with integers:
+A + B + 1 = 7 + 3 + 1 = 11.
+A - B - 1 = 7 - 3 - 1 = 3.
+A * (B + 1) = 7 * (3 + 1) = 28.
+A / (B - 1) = 7 / (3 - 1) = 3.
+Unary operator minus, A = 7 and -A = -7.
+
+Bits:   M = 2 ^ N:
+1       2
+2       4
+3       8
+4       16
+5       32
+6       64
+7       128
+8       256
+9       512
+10      1024
+
+Divide floating point 2.500 / 0.500 = 5.00.
+Divide floating point 2.500 and integer 7 = 0.357.
+
+Operators priorites: -A * 3 + B * 2 * (3 + (C + 1)) = -3 * 3 + 5 * 2 * (3 + (-1 + 1)) = 21.
+
+Sizeof of maximum size_t type is 4294967295.
+Size of size_t with this compiler is 4 bytes.
+Size of unsigned integer using compiler is 4 bytes.
+
+Operator modulus '%'.
+Example: seconds 75 is 1 minutes and modulus result is 15 seconds.
+Negative modulus: -7 mod -3 = -1.
+
+Increment and decrement using prefix and postfix variants A = 0.
+Prefix increment before A = 0. B = ++A, B = 1, after A = 1.
+Postfix increment before A = 0, B = A++, B = 1, after A = 2.
+Prefix decrement before A = 2, B = --A, B = 1, after A = 1.
+Postfix decrement before A = 1, B = A--, B = 1, after A = 0.
+
+Operator while and increment and decrement, start A = 5, B = -5.
+A:      B:      --A * 2:        B++ * 3:
+5       -5      8               -15
+4       -4      6               -12
+3       -3      4               -9
+2       -2      2               -6
+1       -1      0               -3
+
+Operators priority:
+Expression: --A + B++ * 5 = --0 + 0++ * 5 = -1 + 0 * 5 = -1.
+
+Operators and expressions:
+Expression: (A < (B = 2)) * 5 = (1 < ([B] = 2)) * 5 = 5.
+
+Type conversion:
+Short int + unsigned char = 32767 + 255 = integer 33022, short -32514.
+Short int + 1= 32767 + 1 = integer 32768(32767), unsigned char 0.
+Unsigned char after conversion: 12.
+
+Calling function, parameters conversion:
+Short integer size 2 bytes, value -1.
+Unsigned char size 1 bytes, value 'A'.
+
+Short integer size 2 bytes, value 97.
+Unsigned char size 1 bytes, value 'A'.
+
+Short integer size 2 bytes, value 32767.
+Unsigned char size 1 bytes, value 'C'.

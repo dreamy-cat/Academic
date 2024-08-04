@@ -3,19 +3,23 @@
 
 // Глава 5. Операции, выражения и операторы.
 
+// Объявление функции, не обязательно, но прототип, для компилятора.
+void part_05_add(short int h, unsigned char c);
+
 void part_05_add(short int h, unsigned char c)
-{   // Дополнительная функиця для отслеживания преобразования параметров.
+{   // Дополнительная функция для отслеживания преобразования аргументов, определение.
     printf("Short integer size %u bytes, value %hd.\n", sizeof(h), h);
     printf("Unsigned char size %u bytes, value '%c'.\n\n", sizeof(c), c);
 }
 
 void part_05(void)
 {
-    // Данные были в предущих главах. Основные арифметические операции, операторы отношения и последовательность действий алгоритмически.
-    // Простые циклы через while, для выполнения повторяющихся операций. Одна из операций фактически это условие и переход в ассемблере.
-    printf("C Programming Language. Part 5. Operators, Expressions and Statements.\n\n");
+    // Основные арифметические операции, операторы отношения и последовательность действий.
+    // Вопрос. Простые циклы через while, для выполнения повторяющихся операций. 
+    // Одна из операций фактически это сравнение(флаги) и переход в ассемблере.
+    printf("Part 5. Operators, Expressions and Statements.\n\n");
     // Циклы, использование оператора while, блок и составной оператор.
-    // Повторение: что такое оператор(составной), функция и из чего состоит программа на Си(схема 53).
+    // Вопрос: что такое оператор(составной), функция и из чего состоит программа на Си(схема 53).
     int a, b, c, d;                                         // Объявление через запятую.
     a = 3;
     printf("Using while with single line operator: ");
@@ -34,29 +38,28 @@ void part_05(void)
 #define MULTIPLIER 5
     const int const_factors = 3 * MULTIPLIER;
     printf("\nDefine MULTIPLIER %d and constant factors %d.\n", MULTIPLIER, const_factors);
-    // Фундаментальные и арифметические операции (операторы).
-    // Вопрос: смысл оператора присваивания.
+    // Вопрос: фундаментальные и арифметические операции и смысл оператора присваивания и пример.
     c = a;                                                  // Отметить команду move.
     printf("\nAssign operator '=', A = %d, B = %d, C = A = %d.\n", a, b, c);
-    // Правостороннее значение и левосторонее значение. Можно кратко.
-    // Вопрос: объект данных, и вспомнить архтектуру.
-    // Цитата из стандарта 21:An lvalue is an expression (with an object type other than void) that potentially designates an object;
+    // Правостороннее значение и модифицируемое левосторонее значение. Можно кратко.
+    // Вопрос: объект данных, память и вспомнить архтектуру.
+    // Standard 23:An lvalue is an expression (with an object type other than void) that potentially designates an object;
     // if an lvalue does not designate an object when it is evaluated, the behavior is undefined.
     // Дополнительно: The name "lvalue" comes originally from the assignment expression E1 = E2, in which the left operand E1 is required to
     // be a (modifiable) lvalue. It is perhaps better considered as representing an object "locator value".
     // Левосторонее значение, имя или выражения идентифицируещего конкретный объект в памяти.
-    // What is sometimes called "rvalue" is in this document described as the "value of an expression"
+    // What is sometimes called "rvalue" is in this document described as the "value of an expression".
     // Правосторонее значение - имя или выражение, которые могут быть присвоены модифицириуемым левосторонним значениям, но таковыми могут не являтся.
     a = 15;                                                 // a - левосторонний объект который указывается на переменную.
     const int e = 7;                                        // e - правосторонний объект, который может быть применен только в правой части.
-    // Вопрос: что такое операнды и порядок исполнения.
+    // Вопрос: что такое операнды, их виды и порядок исполнения.
     a = b = c = e;                                          // Присваивание цепочкой.
     printf("\nAssign using many '=': A = B = C = %d, result A = %d, B = %d and C = %d.\n", e, a, b, c);
     // Арифметика. Операции стандартные, но требуется учитывать размерности и унарные.
     printf("\nSimple arithmetic operators with integers:\n");
     a = 7; b = 3;                                           // Временно создаваемый объект.
     c = a + b + 1;
-    printf("A + B + 1 = %d + %d + 1 = %d.\n", a, b, c);
+    printf("A + B + 1 = %d + %d + 1 = %d.\n", a, b, c);     // Арифметические операции.
     c = a - b - 1;
     printf("A - B - 1 = %d - %d - 1 = %d.\n", a, b, c);
     c = a * (b + 1) ;
@@ -64,20 +67,20 @@ void part_05(void)
     c = a / (b - 1);
     printf("A / (B - 1) = %d / (%d - 1) = %d.\n", a, b, c);
     // Вопрос: бинарные и унарные операторы.
-    c = -a;
+    c = -a;                                                     // Плюс также допустим.
     printf("Unary operator minus, A = %d and -A = %d.\n", a, c);
-    printf("\nBits:\tM = 2 ^ N:\n");                        // Таблица степеней 2, в цикле и экмпонента.
+    printf("\nBits:\tM = 2 ^ N:\n");                            // Таблица значений степеней 2 в цикле, экспонента.
     a = 1; b = 2;
     while (a <= 10) {
         printf("%d\t%d\n", a, b);
-        b = b * 2;
+        b = b * 2;                                              // Или можно битовый сдвиг влево "<<".
         a = a + 1;
     }
     // Кратко про правила деления целых чисел и чисел с плавайющей точкой.
     double f = 2.5, g = 0.5, h;
     h = f / g;
     printf("\nDivide floating point %.3f / %.3f = %.2f.\n", f, g, h);
-    // Повторение: размерности типов и преобразование автоматически.
+    // Повторение: размерности типов и преобразование автоматически. Усечение в направлении нуля.
     h = f / (double)e;
     printf("Divide floating point %.3f and integer %d = %.3f.\n", f, e, h);
     // Приоритеты операций. Сначала: (), унарные +-, бинарные */, +- бинарные и =.
@@ -87,10 +90,9 @@ void part_05(void)
     a = 3; b = 5; c = -1;
     d = -a * 3 + b * 2 * (3 + (c + 1));
     printf("\nOperators priorites: -A * 3 + B * 2 * (3 + (C + 1)) = -%d * 3 + %d * 2 * (3 + (%d + 1)) = %d.\n", a, b, c, d);
-    // Операция sizeof и тип size_t, заглянуть в определение.
-    // Доп. вопрос: размерности типов, откуда.
+    // Операция sizeof и тип size_t, заглянуть в определение и дополнительный вопрос о размерности типов.
     size_t max = UINT_MAX;                                  // Допустимо без скобок если это объект, или со скобками - если тип.
-    printf("\nSizeof of maximum size_t type is %u.\n", max);
+    printf("\nSizeof of maximum size_t type is %lu.\n", max);
     printf("Size of size_t with this compiler is %u bytes.\n", sizeof max);
     printf("Size of unsigned integer using compiler is %u bytes.\n", sizeof(unsigned int));
     // Операция деления по модулю %.
@@ -111,7 +113,7 @@ void part_05(void)
     printf("Prefix decrement before A = %d, B = --A, B = %d, after A = %d.\n", c, b, a);
     c = a; b = a--;
     printf("Postfix decrement before A = %d, B = A--, B = %d, after A = %d.\n", c, b, a);
-    // Цикл и операции инкремента и декремента, идиома.
+    // Цикл и операции инкремента и декремента, устойчивые конструкции.
     a = 5; b = -5;
     printf("\nOperator while and increment and decrement, start A = %d, B = %d.\n", a, b);
     printf("A:\tB:\t--A * 2:\tB++ * 3:\n");
@@ -120,38 +122,33 @@ void part_05(void)
         printf("%d\t%d", a, b);
         printf("\t%d\t\t%d\n", --a * 2, b++ * 3);
     }
-    // Приоритеты операций. Таблица в КР, дополнительно с.66.
+    // Приоритеты операций. Таблица в КР, дополнительно с.66. Прата, приложение Б, с.833.
     printf("\nOperators priority:\n");
     printf("Expression: --A + B++ * 5 = --%d + %d++ * 5 = ", a, b);
     // c = --a + (b + 2)++ * 5;
     // c = --a + b++ * (5 + b);
     c = --a + b++ * 5;
-    // printf("%d + %d * 5 = %d.\n", a, b, c);                 // Вопрос о результате.
+    // printf("%d + %d * 5 = %d.\n", a, b, c);                 // Вопрос о левостороннем значении для "++" и "--".
     printf("%d + %d * 5 = %d.\n", a, b - 1, c);
     /* Веселый дополнительный вопрос.
     a = 0; b = 0;
     printf("B = A++ + A++ = %d++ + %d++ = ", a, a);
     b = a++ + a++;
     printf("%d.\n", b);*/
-    // Выражения и операторы.
-    // Вопрос: что такое выражение.
+    // Вопрос. Выражения и операторы, можно кратко. Точка с запятой с выражением, пустой оператор и функция.
     printf("\nOperators and expressions:\n");
     a = 1;
     c = (a < (b = 2)) * 5;
     printf("Expression: (A < (B = 2)) * 5 = (%d < ([B] = %d)) * 5 = %d.\n", a, b, c);
-    // Вопрос: что такое оператор? Точка с запятой и пустой оператор.
     8;                                                      // Допустимое выражение но с предупреждением.
     // Рассмотреть несколько примеров выше: объявление, присваивание, цикл, вызов функции и возврата.
-    // Повторение: Кратко что-такое каждый из операторов.
-    // Побочные эффекты и точки следования.
-    // Побочный эффект, по смыслу "выхлоп". Точка следование - конкретное состояние автомата(Лучше Вики).
+    // Побочный эффект, по смыслу "выхлоп". Точка следования - конкретное состояние автомата(Лучше Вики).
     a = 5;                                                  // После - точка следования, без ветвлений.
     b = a + 2;                                              // Побочный эффект, выхлоп - присвоение переменным, а основное - вычисление выражения.
     // Вопрос: полное выражение, понятие. Завершенное, до следующего оператора.
-    while (b < a)
+    while (b < a)                                           // Вопрос. Оператор отношения.
         printf("Full operator upper, this line never executed.\n");
-    // Составной оператор. Вопрос уже был, так что для повторения.
-    // Обратить внимание на блоки и отступы.
+    // Составной оператор. Вопрос уже был, так что для повторения. Обратить внимание на блоки и отступы.
     // Преобразования типов. Общие правила и операция приведения.
     printf("\nType conversion:\n");
     short int i = 32767;                                    // Автоматически в int, но вопрос по компилятору.
@@ -163,11 +160,9 @@ void part_05(void)
     j = (unsigned char)((short int)a + (unsigned char)b);   // Явное преобразование, без предупреждений.
     // Еще немного про аргументы для функции.
     printf("Unsigned char after conversion: %hhu.\n", j);
-    // Повтоение: формальный и фактический аргумент или параметр функции.
+    // Повтоение: формальный и фактический аргумент или параметр функции, дополнить про void.
     printf("\nCalling function, parameters conversion:\n");
     part_05_add(USHRT_MAX, 'A');                            // Предупреждение, приведение вниз первого и нормальный второй аргумент.
     part_05_add('a', UCHAR_MAX + 'B');                      // Вверх и приведение вниз второго аргумента.
     part_05_add(SHRT_MAX, 'C');                             // Нормальный вызов, без превединия.
-    // Про стандарт и void.
-    // Повторение, с учетом резюме. По стандарту КР, float и double.
 }
