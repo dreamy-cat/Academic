@@ -1,0 +1,85 @@
+﻿C Programming Language.
+Based on Stephen Prata 'C Primer Plus' Sixth Edition.
+
+Part 6. C Control Statements: Looping.
+
+Simple loop using operator 'while':
+A: 1    B: 3    Sum: 4
+A: 2    B: 4    Sum: 6
+A: 3    B: 6    Sum: 9
+A: 4    B: 9    Sum: 13
+A: 5    B: 13   Sum: 18
+
+Logical statements in while.
+
+Just chars in ASCII table from code 'A' or 65 or 0x41: ABCDE
+
+Compare floating point numbers, error using 'while (f != g)':
+Floating point numbers (1.000 == 1.300).
+Floating point numbers (1.100 == 1.300).
+Floating point numbers (1.200 == 1.300).
+Floating point numbers (1.300 == 1.300).
+Floating point numbers (1.400 == 1.300).
+
+Logical statements A = (5 > 0) = 1, B = (3 < 0) = 0. C = A and B = 0.
+
+Compare with 0(zero) any of paramter A in while (...): 3 2 1
+
+Boolean type from <stdbool.h>: E = true = 1, size 1 and array[5] 5 bytes.
+
+Undefined loops and loops with defined counters.
+
+Undefined 'while' using random from start 3: 2 1 0
+
+Defined loop 'for' operator, integer i:
+N:      2 ^ N:
+1       2
+2       4
+3       8
+4       16
+5       32
+6       64
+7       128
+8       256
+
+Extra assign operators '+=', '-=', '*=', '/=', '%=':
+A:      Operator:       B:      Result:
+7       +=              3       10
+10      *=              3       30
+30      %=              3       0
+
+Operator 'for' and comma in init, parameter and sum: 0[0] 1[0] 2[1] 3[3] 4[6]
+
+Loop with post check 'do {...} while ();': 0:1:1 1:2:2 2:4:4 3:8:8 4:16:10 5:32:20 6:64:40 7:128:80
+
+Loops in loop using for or while.
+
+Multiplication table.
+        1       2       3       4       5       6       7       8       9
+1       1       2       3       4       5       6       7       8
+2       2       4       6       8       10      12      14      16
+3       3       6       9       12      15      18      21      24
+4       4       8       12      16      20      24      28      32
+5       5       10      15      20      25      30      35      40
+6       6       12      18      24      30      36      42      48
+7       7       14      21      28      35      42      49      56
+8       8       16      24      32      40      48      56      64
+9       9       18      27      36      45      54      63      72
+
+Simple arrays of data, integers for example, data[index]: 1[0] 3[1] 5[2] 7[3] 9[4]
+
+String as array of chars: 'Hello!'.
+Sizes of arrays of integer are 20 and chars 10 bytes.
+
+Testing loops with function bits_max:
+Bits:   Max:
+Bits is zero or more than max value 15, return 0.
+0       0
+1       2
+2       4
+3       8
+4       16
+5       32
+6       64
+7       128
+8       256
