@@ -1,0 +1,55 @@
+﻿C Programming Language.
+Based on Stephen Prata 'C Primer Plus' Sixth Edition.
+
+Part 7. C Control Statements: Branching and Jumps.
+
+Full operator IF.
+Values in range [-5, +5]: -5 -4 -3 -2 -1 0 2 4
+Negative 5 elements and 3 zero or positive elements.
+
+Input and output string line, using 'putchar' and 'getchar' functions.
+Input: abc def
+Output, size 7: abc def
+
+Library function 'is_alpha' from <ctype.h>, is 'd' alpha: yes.
+
+If-else combination in choice. A = 5, B = 3, C = 7.
+A is more than B, but less than C.
+
+Using if-else with {}, A = 5, B = 3.
+A is not equal 1.
+
+All dividers for 100 from [1..100]: 2 50 4 25 5 20 10 - total 7 numbers.
+
+Logical operators and combinations.
+
+Sequence of digits 1 - 1 - 3 - 4.
+If not((1 equal 1) and (3 not equal 4)) or (1 equal 7) = 0, no, expression is false.
+
+Digits [counter] in number 361830120: 0[2] 1[2] 2[1] 3[2] 4[0] 5[0] 6[1] 7[0] 8[1] 9[0]
+
+Using operator '?' IF (5 > 0) ? 1 : 0 = 1.
+
+Operators continue and break in simple loops:
+A:      B:      Loop command:
+10      0       continue and decrease A;
+9       0       break loop to increase B mod 2;
+8       2       continue and decrease A;
+7       2       break loop to increase B mod 2;
+6       4       continue and decrease A;
+5       4       break loop to increase B mod 2;
+
+Operator switch and break.
+Switch operator and logical statements 0 - not, 1 - or, 2 - and, 3,4 - (or not):
+Index:  A:      Operator:       B:      Result:
+0       1       not                     0;
+1       1       or              0       1;
+2       1       and             0       0;
+3               not             0       1;
+3       1       or              1       1;
+4       1       or              1       1;
+
+Operator 'goto', labels and starting parameter 0.
+A = 1, less than 3, goto 'label_a'.
+A = 2, less than 3, goto 'label_a'.
+A = 3 is equal 3, no goto operator and execute next code.
