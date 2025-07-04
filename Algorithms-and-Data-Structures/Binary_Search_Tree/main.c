@@ -660,7 +660,7 @@ short balance(struct binary_tree* dst, struct binary_tree* src)
     traverse(src, sr_node_left_right);
     dst->node_type = src->node_type; dst->object_size = src->object_size;
     short i, j, k, more, less, medium, diff;                    // Ищем среднее и раскидываем по направлениям.
-    for (k = 0; k < src->data_size; ++k, tree_nodes_size--) {
+    for (k = 0; k < src->data_size; ++k, --tree_nodes_size) {
         medium = 0; diff = src->data_size;
         for (i = 0; i < tree_nodes_size; ++i) {
             more = less = 0;
