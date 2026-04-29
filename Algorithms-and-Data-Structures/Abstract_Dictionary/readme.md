@@ -1,1 +1,1 @@
-﻿ Абстрактный словарь, полностью на динамической памяти.
+﻿ Abstract dictionary using dynamic memory, first version with system functions.
